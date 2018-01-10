@@ -5,7 +5,7 @@
 after_initialize do
 
   Discourse::Application.routes.append do
-    get "MrBug" => "MrBug#index"
+    get "mrbug" => "mrbug#index"
     get "zaips" => "zaips#index"
     post "oops" => "oops#add"
     post "troikopoisk" => "troikopoisk#find"
