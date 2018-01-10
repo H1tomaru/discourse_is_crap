@@ -1,3 +1,3 @@
 export default function() {
-  this.resource('MrBug', { path: '/MrBug' })
+  this.resource('mrbug', { path: '/mrbug' })
 }
