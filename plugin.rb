@@ -1,5 +1,5 @@
 # name: MrBug-TroikiPoisk
-# version: 7.7.7
+# version: 9.9.1
 # authors: MrBug
 
 #after_initialize do
