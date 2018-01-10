@@ -18,6 +18,8 @@
 # authors: DiscourseHosting.com, vinothkannans 
 # url: https://github.com/discoursehosting/discourse-sitemap
 
+PLUGIN_NAME = "discourse-sitemap".freeze
+
 after_initialize do
 
   module ::DiscourseSitemap
