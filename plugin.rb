@@ -18,10 +18,6 @@
 # authors: DiscourseHosting.com, vinothkannans 
 # url: https://github.com/discoursehosting/discourse-sitemap
 
-PLUGIN_NAME = "discourse-sitemap".freeze
-
-enabled_site_setting :sitemap_enabled
-
 after_initialize do
 
   module ::DiscourseSitemap
@@ -36,14 +32,6 @@ after_initialize do
   class DiscourseSitemap::SitemapController < ::ApplicationController
     layout false
     skip_before_action :preload_json, :check_xhr
-
-    def topics_query(since = nil)
-      category_ids = Category.where(read_restricted: false).pluck(:id)
-      query = Topic.where(category_id: category_ids, visible: true)
-      query = query.created_since(since) unless since.nil?
-      query = query.order(created_at: :desc)
-      query
-    end
 
     def index
       raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
@@ -67,14 +55,6 @@ after_initialize do
       render :plain => @output, content_type: 'text/xml; charset=UTF-8' unless performed?
     end
 
-    def default
-      raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
-      prepend_view_path "plugins/discourse_is_crap/app/views/"
-
-      page = Integer(params.require(:page))
-      sitemap(page)
-    end
-
     def sitemap(page)
       sitemap_size = SiteSetting.sitemap_topics_per_page
       offset = (page - 1) * sitemap_size
@@ -91,19 +71,6 @@ after_initialize do
       return @output
     end
 
-    def news
-      raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
-      prepend_view_path "plugins/discourse_is_crap/app/views/"
-
-      @output = Rails.cache.fetch("sitemap/news", expires_in: 5.minutes) do
-        dlocale = SiteSetting.default_locale.downcase
-        @locale = dlocale.gsub(/_.*/, '')
-        @locale = dlocale.sub('_', '-') if @locale === "zh"
-        @topics = topics_query(72.hours.ago).pluck(:id, :title, :slug, :created_at)
-        render :news, content_type: 'text/xml; charset=UTF-8'
-      end
-      render :plain => @output, content_type: 'text/xml; charset=UTF-8' unless performed?
-    end
   end
 
   Discourse::Application.routes.prepend do
@@ -112,8 +79,6 @@ after_initialize do
 
   DiscourseSitemap::Engine.routes.draw do
     get ".xml" => "sitemap#index"
-    get "news.xml" => "sitemap#news"
-    get ":page.xml" => "sitemap#default"
   end
 
 end
