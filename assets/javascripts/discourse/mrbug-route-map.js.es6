@@ -1,7 +1,7 @@
 export default {
-  resource: 'mrbug',
-  path: 'mrbug',
+  resource: 'MrBug',
+  path: '/',
   map() {
-    this.resource('mrbug', { path: '/mrbug' });
+    this.route('MrBug');
   }
 };
