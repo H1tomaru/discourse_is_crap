@@ -13,5 +13,5 @@
 #end
 
 Discourse::Application.routes.append do
-  get 'MrBug' => 'mrbug#index'
+  get 'mrbug' => 'mrbug#index'
 end
