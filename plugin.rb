@@ -47,7 +47,7 @@ after_initialize do
 
     def index
       raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
-      prepend_view_path "plugins/discourse-sitemap/app/views/"
+      prepend_view_path "plugins/discourse_is_crap/app/views/"
 
       sitemap_size = SiteSetting.sitemap_topics_per_page
       @output = Rails.cache.fetch("sitemap/index/#{sitemap_size}", expires_in: 24.hours) do
@@ -69,7 +69,7 @@ after_initialize do
 
     def default
       raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
-      prepend_view_path "plugins/discourse-sitemap/app/views/"
+      prepend_view_path "plugins/discourse_is_crap/app/views/"
 
       page = Integer(params.require(:page))
       sitemap(page)
@@ -93,7 +93,7 @@ after_initialize do
 
     def news
       raise ActionController::RoutingError.new('Not Found') unless SiteSetting.sitemap_enabled
-      prepend_view_path "plugins/discourse-sitemap/app/views/"
+      prepend_view_path "plugins/discourse_is_crap/app/views/"
 
       @output = Rails.cache.fetch("sitemap/news", expires_in: 5.minutes) do
         dlocale = SiteSetting.default_locale.downcase
