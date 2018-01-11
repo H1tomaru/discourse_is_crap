@@ -1,5 +1,5 @@
 export default {
-  resource: 'admin',
+  resource: 'admin/admin/plugins/mrbug',
   path: '/plugins',
   map() {
     this.route('mrbug');
