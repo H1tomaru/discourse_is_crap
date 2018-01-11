@@ -13,5 +13,5 @@
 #end
 
 Discourse::Application.routes.append do
-  get '/admin/plugins/purple-tentacle' => 'admin/plugins#index'
+  get '/admin/plugins/mrbug' => 'admin/mrbug#index'
 end
