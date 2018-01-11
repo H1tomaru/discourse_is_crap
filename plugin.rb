@@ -12,6 +12,8 @@
 #  end
 #end
 
-Discourse::Application.routes.append do
-  get 'mrbug' => 'mrbug#index'
+after_initialize do
+ Discourse::Application.routes.append do
+   get 'users/:username/mrbug' => 'mrbug#show'
+ end
 end
