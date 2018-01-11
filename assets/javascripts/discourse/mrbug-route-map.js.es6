@@ -1,5 +1,7 @@
-export default function() {
-   this.resource('user', function() {
-   this.route('mrbug', {path: 'mrbug'});
- });
-}`
+export default {
+ resource: 'user',
+ path: 'users/:username',
+ map() {
+  this.route('mrbug', { path: '/mrbug' })
+ }
+}
