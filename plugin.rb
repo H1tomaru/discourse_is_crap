@@ -12,8 +12,8 @@
 #  end
 #end
 
-after_initialize do
- Discourse::Application.routes.append do
-   get 'users/:username/mrbug' => 'mrbug#show', constraints: {username: USERNAME_ROUTE_FORMAT}
- end
+add_admin_route 'purple_tentacle.title', 'purple-tentacle'
+
+Discourse::Application.routes.append do
+  get '/admin/plugins/purple-tentacle' => 'admin/plugins#index'
 end
