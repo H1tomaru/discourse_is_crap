@@ -14,6 +14,6 @@
 
 after_initialize do
  Discourse::Application.routes.append do
-   get 'users/:username/mrbug' => 'users/:username/mrbug#show'
+   get 'users/:username/mrbug' => 'mrbug#show', constraints: {username: USERNAME_ROUTE_FORMAT}
  end
 end
