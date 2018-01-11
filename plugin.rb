@@ -14,6 +14,6 @@
 
 after_initialize do
  Discourse::Application.routes.append do
-   get 'users/:username/mrbug' => 'mrbug#show'
+   get 'users/:username/mrbug' => 'users/:username/mrbug#show'
  end
 end
