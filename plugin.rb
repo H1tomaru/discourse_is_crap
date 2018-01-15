@@ -13,5 +13,5 @@
 #end
 
 Discourse::Application.routes.append do
-  get '/admin/mrbug' => 'admin#index'
+  get '/admin/plugins/mrbug' => 'admin/plugins#index', constraints: StaffConstraint.new
 end
