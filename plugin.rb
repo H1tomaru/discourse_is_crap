@@ -45,7 +45,7 @@ after_initialize do
 	
   class ::MrBugController < ::ApplicationController
     def index
-      #stuff here
+      render nothing:true
     end
   end
 
