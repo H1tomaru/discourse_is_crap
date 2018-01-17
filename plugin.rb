@@ -13,5 +13,5 @@
 #end
 
 Discourse::Application.routes.append do
-  get '/admin/plugins/mrbug' => 'mrbug#index'
+  get '/admin/plugins/mrbug' => 'admin/plugins#huindex'
 end
