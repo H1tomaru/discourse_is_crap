@@ -9,7 +9,7 @@ after_initialize do
   Discourse::Application.routes.append do
     get '/home' => 'mrbug#test1'
     get '/home/page' => 'mrbug#test2'
-    get '/mrbug' => 'mrbug#show'
+    get '/MrBug' => 'mrbug#show'
   end
 
 #  class ::MrBugController < ActionController::Base
