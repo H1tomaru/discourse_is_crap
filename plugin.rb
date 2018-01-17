@@ -12,7 +12,7 @@ after_initialize do
     get '/MrBug' => 'mrbug#show'
   end
 
-  class ::MrBugController < ActionController::Base
+  class ::MrbugController < ActionController::Base
 
   	include CurrentUser
 
