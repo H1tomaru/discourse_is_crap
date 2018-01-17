@@ -22,7 +22,7 @@ after_initialize do
 
   Discourse::Application.routes.append do
     get '/home' => 'custom#index'
-    get '/home/page' => 'try#index'
+    get '/home/page' => 'try2#index'
     get '/mrbug' => 'mrbug#index'
   end
 
