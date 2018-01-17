@@ -4,35 +4,20 @@
 
 after_initialize do
 
-  require_dependency "application_controller"
+	require_dependency "application_controller"
 
-  Discourse::Application.routes.append do
-    get '/home' => 'mrbug#test1'
-    get '/home/page' => 'mrbug#test2'
-    get '/MrBug' => 'mrbug#show'
-  end
-
-#  class ::MrBugController < ActionController::Base
-class ::MrbugController < ::ApplicationController
-
-  	include CurrentUser
-
-    def test1
-	if (current_user)
-		redirect_to('/')
-	else
-	redirect_to('/home/page')
+	Discourse::Application.routes.append do
+		get '/MrBug' => 'mrbug#show'
 	end
-    end
 
-    def test2
-      render nothing:true
-    end
-	  
-    def show
-      render nothing:true
-    end 
+	class ::MrBugController < ::ApplicationController
 
-  end
+		include CurrentUser
+
+		def show
+			render nothing:true
+		end 
+
+	end
   
 end
