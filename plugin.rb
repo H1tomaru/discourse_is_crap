@@ -37,7 +37,7 @@ after_initialize do
     end
   end
 
-  class ::TryController < ::ApplicationController
+  class ::Try2Controller < ::ApplicationController
     def index
       render nothing:true
     end
