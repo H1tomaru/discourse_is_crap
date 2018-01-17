@@ -12,6 +12,32 @@
 #  end
 #end
 
-Discourse::Application.routes.append do
-  get '/admin/plugins/mrbug' => 'admin/plugins#index'
+#Discourse::Application.routes.append do
+#  get '/admin/plugins/mrbug' => 'admin/plugins#index'
+#end
+
+after_initialize do
+  require_dependency "application_controller"
+  Discourse::Application.routes.append do
+    get '/home' => 'custom#index'
+    get '/home/page' => 'try#index'
+  end
+
+  class ::CustomController < ActionController::Base
+  	include CurrentUser
+    def index
+   		if (current_user)
+   			redirect_to('/')
+			else
+				redirect_to('/home/page')
+			end
+    end
+  end
+
+  class ::TryController < ::ApplicationController
+    def index
+      render nothing:true
+    end
+  end
+
 end
