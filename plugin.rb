@@ -4,7 +4,7 @@
 
 after_initialize do
 
-	require_dependency "application_controller"
+#	require_dependency "application_controller"
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
