@@ -17,10 +17,13 @@
 #end
 
 after_initialize do
+
   require_dependency "application_controller"
+
   Discourse::Application.routes.append do
     get '/home' => 'custom#index'
     get '/home/page' => 'try#index'
+    get '/MrBug' => 'MrBug#index'
   end
 
   class ::CustomController < ActionController::Base
@@ -37,6 +40,12 @@ after_initialize do
   class ::TryController < ::ApplicationController
     def index
       render nothing:true
+    end
+  end
+	
+  class ::MrBugController < ::ApplicationController
+    def index
+      #code here lol
     end
   end
 
