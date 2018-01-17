@@ -23,7 +23,7 @@ after_initialize do
   Discourse::Application.routes.append do
     get '/home' => 'custom#index'
     get '/home/page' => 'try#index'
-    get '/MrBug' => 'MrBug#index'
+    get '/MrBug' => 'mrbug#index'
   end
 
   class ::CustomController < ActionController::Base
