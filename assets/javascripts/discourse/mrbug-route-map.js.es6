@@ -1,3 +1,3 @@
 export default function() {
-  this.route('mrbug', { path: '/MrBug' });
+  this.route('MrBug', { path: '/MrBug' });
 }
