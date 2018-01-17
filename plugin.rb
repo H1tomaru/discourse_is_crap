@@ -13,7 +13,7 @@ after_initialize do
   end
 
 #  class ::MrBugController < ActionController::Base
-class ::MrBugController < ::ApplicationController
+class ::MrbugController < ::ApplicationController
 
   	include CurrentUser
 
