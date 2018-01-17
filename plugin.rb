@@ -45,7 +45,7 @@ after_initialize do
 	
   class ::MrBugController < ::ApplicationController
     def index
-      #code here lol
+      redirect_to('/home/page')
     end
   end
 
