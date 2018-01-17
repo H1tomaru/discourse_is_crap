@@ -12,7 +12,8 @@ after_initialize do
     get '/mrbug' => 'mrbug#show'
   end
 
-  class ::MrbugController < ActionController::Base
+#  class ::MrBugController < ActionController::Base
+class ::MrBugController < ::ApplicationController
 
   	include CurrentUser
 
