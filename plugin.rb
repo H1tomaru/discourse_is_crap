@@ -22,7 +22,7 @@ after_initialize do
 
   Discourse::Application.routes.append do
     get '/home' => 'custom#index'
-    get '/home/page' => 'try2#index'
+    get '/home/page' => 'try#index'
     get '/mrbug' => 'mrbug#index'
   end
 
@@ -37,7 +37,7 @@ after_initialize do
     end
   end
 
-  class ::Try2Controller < ::ApplicationController
+  class ::TryController < ::ApplicationController
     def index
       render nothing:true
     end
