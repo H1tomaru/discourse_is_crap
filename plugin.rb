@@ -13,6 +13,7 @@ after_initialize do
   end
 
   class ::MrBugController < ActionController::Base
+
   	include CurrentUser
 
     def test1
