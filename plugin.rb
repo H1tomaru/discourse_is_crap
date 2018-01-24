@@ -2,6 +2,7 @@
 # version: 9.9.1
 # authors: MrBug
 
+gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
 after_initialize do
