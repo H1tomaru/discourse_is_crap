@@ -2,7 +2,7 @@
 # version: 9.9.1
 # authors: MrBug
 
-gem 'mongo'
+gem 'mongo', "2.5.0"
 
 after_initialize do
 	
