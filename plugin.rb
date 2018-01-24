@@ -2,7 +2,7 @@
 # version: 9.9.1
 # authors: MrBug
 
-require 'mongo'
+gem 'mongo'
 
 after_initialize do
 	
