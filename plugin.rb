@@ -18,16 +18,16 @@ after_initialize do
 	end
 	
 	
-	class ::MrbugController < ::ApplicationController
+#	class ::MrbugController < ::ApplicationController
 
 #		include CurrentUser
 
-		def show
+#		def show
 #			render nothing:true
 #			@test = "We fail"
-		end 
+#		end 
 
-	end
+#	end
 
 	class ::MrbugController < ActionController::Base
 
