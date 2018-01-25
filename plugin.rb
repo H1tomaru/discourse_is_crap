@@ -23,10 +23,6 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			App.ApplicationController = Ember.Controller.extend({
-			  firstName: "Trek",
-			  lastName: "Glowacki"
-			});
 			render json: { name: "donut", description: "delicious!" }
 		end 
 
