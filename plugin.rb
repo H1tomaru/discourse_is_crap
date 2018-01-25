@@ -1,14 +1,14 @@
 # name: MrBug-TroikiPoisk
-# version: 9.9.1
+# version: 9.9.9
 # authors: MrBug
 
 gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
 after_initialize do
-	
+
 	require 'mongo'
-	
+
 	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@91.134.133.218:33775/AutoZ_gameDB?authSource=admin')
 #	puts gamedb.collections
 #	test = gamedb.collections
@@ -16,24 +16,16 @@ after_initialize do
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 	end
-	
-	
-#	class ::MrbugController < ::ApplicationController
 
-#		include CurrentUser
 
-#		def show
-#			render nothing:true
-#			@test = "We fail"
-#		end 
+	class ::MrbugController < ::ApplicationController
 
-#	end
+		include CurrentUser
 
-	class ::MrbugController < ActionController::Base
+		def show
 
-	    def show
-		render test:"We Fail"
-	    end
+		end 
+
 	end
 
 end
