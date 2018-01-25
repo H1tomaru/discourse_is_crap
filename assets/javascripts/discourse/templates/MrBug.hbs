@@ -1,3 +1,8 @@
 <h1>Hello World 3</h1>
 <h3>1 {{test}} 1</h3>
 <h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
+<ul class="mitt_newpage">
+  {{#each model.newpages as |member|}}
+    <li>{{member.username}} TL {{member.trust_level}}</li>
+  {{/each}}
+</ul>
