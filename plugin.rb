@@ -22,7 +22,7 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			test = "We fail"
+			HandlebarsTemplates['MrBug']({ test: "We fail" })
 		end 
 
 	end
