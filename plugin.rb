@@ -22,10 +22,10 @@ after_initialize do
 
 #		include CurrentUser
 
-#		def show
+		def show
 #			render nothing:true
 #			@test = "We fail"
-#		end 
+		end 
 
 	end
   
