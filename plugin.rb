@@ -19,10 +19,15 @@ after_initialize do
 
 
 	class ::MrbugController < ::ApplicationController
+		
+		firstName: "Trek",
+ 		lastName: "Glowacki"
 
 		include CurrentUser
 
 		def show
+			firstName: "Trek2",
+	  		lastName: "Glowacki2"
 			render json: { name: "donut", description: "delicious!" }
 		end 
 
