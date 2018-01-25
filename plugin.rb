@@ -9,7 +9,7 @@ after_initialize do
 	
 	require 'mongo'
 	
-	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@127.0.0.1:33775/AutoZ_gameDB?authSource=admin')
+	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@91.134.133.218:33775/AutoZ_gameDB?authSource=admin')
 	puts gamedb.collections
 	test = gamedb.collections
 
