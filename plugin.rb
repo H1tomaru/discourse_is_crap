@@ -22,7 +22,8 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			render json: {test:"We fail"}
+			render html: "<strong>Not Found</strong>"
+#			render json: {test:"We fail"}
 		end 
 
 	end
