@@ -28,5 +28,12 @@ after_initialize do
 		end 
 
 	end
-  
+
+	class ::MrbugController < ActionController::Base
+
+	    def show
+		render nothing:true
+	    end
+	end
+
 end
