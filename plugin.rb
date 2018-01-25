@@ -23,7 +23,7 @@ after_initialize do
 		include CurrentUser
 
 		def show
-
+			render json: { name: "donut", description: "delicious!" }
 		end 
 
 	end
