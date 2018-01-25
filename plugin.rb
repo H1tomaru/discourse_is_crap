@@ -16,18 +16,5 @@ after_initialize do
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 	end
-
-	class ::MrbugController < ::ApplicationController
-
-		include CurrentUser
-
-		def show
-			render nothing:true
-#			render :text => "hello world!"
-#			@test = "We fail"
-#			render json: {test:"We fail"}
-		end 
-
-	end
   
 end
