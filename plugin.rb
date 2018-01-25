@@ -10,7 +10,8 @@ after_initialize do
 	require 'mongo'
 	
 	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@localhost:33775/AutoZ_gameDB?authSource=admin')
-	#gamedb.collection_names.each { |name| puts name }
+	puts gamedb.collection_names
+	test = gamedb.collection_names
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
@@ -21,7 +22,7 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			render nothing:true
+			render test:test
 		end 
 
 	end
