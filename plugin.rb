@@ -22,7 +22,7 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			render test:"We fail"
+			render json: { test: "We fail" }
 		end 
 
 	end
