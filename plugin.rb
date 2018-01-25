@@ -16,5 +16,17 @@ after_initialize do
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 	end
+	
+	
+	class ::MrbugController < ::ApplicationController
+
+#		include CurrentUser
+
+#		def show
+#			render nothing:true
+#			@test = "We fail"
+#		end 
+
+	end
   
 end
