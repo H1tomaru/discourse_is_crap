@@ -20,14 +20,13 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 		
-		firstName: "Trek",
- 		lastName: "Glowacki"
-
 		include CurrentUser
 
 		def show
-			firstName: "Trek2",
-	  		lastName: "Glowacki2"
+			App.ApplicationController = Ember.Controller.extend({
+			  firstName: "Trek",
+			  lastName: "Glowacki"
+			});
 			render json: { name: "donut", description: "delicious!" }
 		end 
 
