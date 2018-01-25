@@ -22,7 +22,8 @@ after_initialize do
 		include CurrentUser
 
 		def show
-			render :text => "hello world!"
+			render nothing:true
+#			render :text => "hello world!"
 #			@test = "We fail"
 #			render json: {test:"We fail"}
 		end 
