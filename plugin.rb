@@ -9,9 +9,9 @@ after_initialize do
 	
 	require 'mongo'
 	
-	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@localhost:33775/AutoZ_gameDB?authSource=admin')
-	puts gamedb.collection_names
-	test = gamedb.collection_names
+	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@127.0.0.1:33775/AutoZ_gameDB?authSource=admin')
+	puts gamedb.collections
+	test = gamedb.collections
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
