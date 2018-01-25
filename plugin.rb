@@ -32,7 +32,7 @@ after_initialize do
 	class ::MrbugController < ActionController::Base
 
 	    def show
-		render nothing:true
+		render test:"We Fail"
 	    end
 	end
 
