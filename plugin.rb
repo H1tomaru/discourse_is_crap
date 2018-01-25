@@ -7,6 +7,8 @@ gem 'mongo', "2.5.0"
 
 after_initialize do
 	
+	require 'mongo'
+	
 	gamedb = Mongo::Connection.new("localhost", 33775).db("AutoZ_gameDB")
 	auth = gamedb.authenticate("troiko_user", "47TTGLRLR3")
 	gamedb.collection_names.each { |name| puts name }
