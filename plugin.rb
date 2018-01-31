@@ -13,7 +13,12 @@ require 'mongo'
 
 after_initialize do
 
-	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@93.171.216.230:33775/AutoZ_gameDB?authSource=admin')
+	db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+	gamedb = db.use('AutoZ_gameDB')
+	userlistdb = db.use('AutoZ_gameZ')
+	userdb = db.use('userdb')
+	userfb = db.use('userfb')
+	#gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@93.171.216.230:33775/AutoZ_gameDB?authSource=admin')
 	#	puts gamedb.collections
 	#	test = gamedb.collections
 
