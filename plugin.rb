@@ -9,20 +9,23 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 
-gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@91.134.133.218:33775/AutoZ_gameDB?authSource=admin')
-#	puts gamedb.collections
-#	test = gamedb.collections
+after_initialize do
 
-Discourse::Application.routes.append do
-	get '/MrBug' => 'mrbug#show'
-end
+	gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@93.171.216.230:33775/AutoZ_gameDB?authSource=admin')
+	#	puts gamedb.collections
+	#	test = gamedb.collections
 
-class ::MrbugController < ::ApplicationController
+	Discourse::Application.routes.append do
+		get '/MrBug' => 'mrbug#show'
+	end
 
-#	include CurrentUser
+	class ::MrbugController < ::ApplicationController
 
-	def show
-		render json: { name: "donut", description: "delicious!" }
-	end 
+	#	include CurrentUser
 
+		def show
+			render json: { name: "donut", description: "delicious!" }
+		end 
+
+	end
 end
