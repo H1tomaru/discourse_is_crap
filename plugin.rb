@@ -5,11 +5,9 @@
 gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
-register_asset 'stylesheets/MrBug.scss'
-
-require_dependency "application_controller"
-
 require 'mongo'
+
+register_asset 'stylesheets/MrBug.scss'
 
 after_initialize do
 
