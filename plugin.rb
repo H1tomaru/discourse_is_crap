@@ -31,7 +31,7 @@ after_initialize do
 #			zapislist = userdb[:PS4db].find().limit( 10 )
 #			feedbacks = userfb[:userfb].find().limit( 10 )
 #			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, zapislist: zapislist, feedbacks: feedbacks }
-			@testthiscrap = "Bitch stupid!"
+			@title = "some custom page title"
 		end 
 
 	end
