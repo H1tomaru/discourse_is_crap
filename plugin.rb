@@ -18,17 +18,19 @@ after_initialize do
 	class ::MrbugController < ::ApplicationController
 
 	#	include CurrentUser
-		@db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
-		@gamedb = db.use('AutoZ_gameDB')
-		@userlistdb = db.use('AutoZ_gameZ')
-		@userdb = db.use('userdb')
-		@userfb = db.use('userfb')
+
 
 		def show
-			gamelist = @gamedb[:gameDB].find().limit( 10 )
-			userlist = @userlistdb[:ulistP4].find().limit( 10 )
-			zapislist = @userdb[:PS4db].find().limit( 10 )
-			feedbacks = @userfb[:userfb].find().limit( 10 )
+			db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+			gamedb = db.use('AutoZ_gameDB')
+			userlistdb = db.use('AutoZ_gameZ')
+			userdb = db.use('userdb')
+			userfb = db.use('userfb')
+			
+			gamelist = gamedb[:gameDB].find().limit( 10 )
+			userlist = userlistdb[:ulistP4].find().limit( 10 )
+			zapislist = userdb[:PS4db].find().limit( 10 )
+			feedbacks = userfb[:userfb].find().limit( 10 )
 			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, zapislist: zapislist, feedbacks: feedbacks }
 		end 
 
