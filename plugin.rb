@@ -7,7 +7,7 @@ gem 'mongo', "2.5.0"
 
 register_asset 'stylesheets/MrBug.scss'
 
-#require_dependency "application_controller"
+require_dependency "application_controller"
 
 require 'mongo'
 
