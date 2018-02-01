@@ -13,15 +13,6 @@ require 'mongo'
 
 after_initialize do
 
-	db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
-	gamedb = db.use('AutoZ_gameDB')
-	userlistdb = db.use('AutoZ_gameZ')
-	userdb = db.use('userdb')
-	userfb = db.use('userfb')
-	#gamedb = Mongo::Client.new('mongodb://troiko_user:47TTGLRLR3@93.171.216.230:33775/AutoZ_gameDB?authSource=admin')
-	#	puts gamedb.collections
-	#	test = gamedb.collections
-
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 	end
@@ -29,6 +20,11 @@ after_initialize do
 	class ::MrbugController < ::ApplicationController
 
 	#	include CurrentUser
+		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		gamedb = db.use('AutoZ_gameDB')
+		userlistdb = db.use('AutoZ_gameZ')
+		userdb = db.use('userdb')
+		userfb = db.use('userfb')
 
 		def show
 			gamelist = gamedb[:gameDB].find().limit( 10 )
