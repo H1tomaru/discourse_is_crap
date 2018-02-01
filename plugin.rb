@@ -18,7 +18,7 @@ after_initialize do
 	class ::MrbugController < ::ApplicationController
 
 	#	include CurrentUser
-		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		@db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@gamedb = db.use('AutoZ_gameDB')
 		@userlistdb = db.use('AutoZ_gameZ')
 		@userdb = db.use('userdb')
