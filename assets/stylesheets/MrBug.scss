@@ -1,21 +1,17 @@
 div.shinbakaz {
-
-	table.bagahe {
-		width: 100%;
-		text-align: center;
-		border-collapse: collapse;
-	}
-
-	table.bagahe {
-
-		caption a {
+	
+	.sosia {
+		
+		text-align: right;
+		
+		a {
 			padding: 0px 5px
 		}
-
-		caption a i {
+		
+		a i {
 			font-size: 18px
 		}
-
+		
 		.fa-vk {
 			color: #337ab7
 		}
@@ -31,6 +27,15 @@ div.shinbakaz {
 		.fa-google-plus-square {
 			color: #df5138
 		}
+	}
+
+	table.bagahe {
+		width: 100%;
+		text-align: center;
+		border-collapse: collapse;
+	}
+
+	table.bagahe {
 
 		a {
 			color: gray
