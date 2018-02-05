@@ -15,53 +15,53 @@ div.shinbakaz {
 		caption a i {
 			font-size: 18px
 		}
-		
+
 		.fa-vk {
-			
+			color: #337ab7
 		}
 
 		.fa-facebook-square {
-		    color: #3b5998
+			color: #3b5998
 		}
 
 		.fa-twitter-square {
-		    color: #2fc2ef
+			color: #2fc2ef
 		}
 
 		.fa-google-plus-square {
-		    color: #df5138
+			color: #df5138
 		}
-		
+
 		a {
 			color: gray
 		}
-		
+
 		a:hover {
 			color: inherit
 		}
-		
+
 		td {
 			padding: 40px 10px
 		}
-		
+
 		td:nth-child(odd) {
 			width: 30%
 		}
-		
+
 		td:nth-child(even) {
 			width: 70%;
 			box-shadow: 0 0 1px 0 rgba(0,0,0,.1);
 			border: 1px solid #eceff1;
 			border-radius: 3px;
 		}
-		
+
 		.headin {
 			font-weight: 700;
 			font-size: 26px;
 			position: relative;
 			color: gray
 		}
-		
+
 		.headin::before {
 			content: "";
 			width: 80px;
@@ -72,6 +72,13 @@ div.shinbakaz {
 			bottom: -10px;
 			left: 50%;
 			transform: translateX(-50%);
+		}
+
+		.bagabe {
+			background: url(https://i.imgur.com/6ubwJGR.gif);
+			background-size: 150px 90%;
+			background-repeat: no-repeat;
+			background-position: 47% 30%;
 		}
 
 	}
