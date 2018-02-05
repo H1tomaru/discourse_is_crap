@@ -27,6 +27,19 @@ div.shinbakaz {
 		.fa-google-plus-square {
 		    color: #df5138
 		}
+		
+		td:nth-child(odd), tr:nth-child(odd) a {
+			color: #c51b1e;
+			text-transform: uppercase;
+		}
+
+		td:nth-child(even) {
+			color: white
+		}
+		
+		td a:hover {
+			color: inherit;
+		}
 
 	}
 
