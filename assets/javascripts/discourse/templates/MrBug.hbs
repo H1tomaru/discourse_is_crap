@@ -1,10 +1,102 @@
-<h1>Hello World 3</h1>
-<h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
+<div class='shinbakaz'>
 
-<h1>{{model.name}}</h1>
+	<table class='bagahe'>
 
-<hr>
+		<caption>
+      <div style='float: right'>
+        <a title='Поделиться ВКонтакте' href='http://vk.com/share.php?url=https://union3.ru/MrBug/'><i class='fa fa-vk'></i></a>
+        <a title='Facebook' href='http://www.facebook.com/share.php?u=https://union3.ru/MrBug/'><i class='fa fa-facebook-square'></i></a>
+        <a title='Twitter' href='http://twitter.com/home?status=Организатор MrBug - Совместные покупки игр PS4 - https://union3.ru/MrBug/'><i class='fa fa-twitter-square'></i></a>
+        <a title='Google Plus' href='https://plus.google.com/share?url=https://union3.ru/MrBug/'><i class='fa fa-google-plus-square'></i></a>
+      </div>
+    </caption>
+    
+    <tbody>
 
-<p>{{model.description}}</p>
+      <tr>
+        <td>
+          <a href="/u/MrBug">
+            <h1 style="font-size: 4.5em">MrBug</h1>
+          </a>
+        </td>
+        <td>
+          <form action="{path}/troikopoisk" method="post">
+            <input class="poiskbox" minlength="20" maxlength="40" type="text" placeholder="Логин аккаунта игры целиком...." name="string" value="{troikopoisk.string}">
+            <button type="submit" class="poiskbutt"><i class="fa fa-search"></i></button>
+          </form>
+        </td>
+      </tr>
 
-<p>1{{title}}1</p>
+      <tr>
+        <td>
+          <h1 style="font-size: 4.5em">Правила</h1>
+        </td>
+        <td>
+					<div class="gege"><span>#1</span>Продал игру - сообщи организатору нового владельца</div>
+          <div class="gege"><span>#2</span>Купил игру - поменяй пароль, сообщи организатору новый пароль</div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <h1 style="font-size: 4.5em">Инструкции</h1>
+        </td>
+        <td>
+					<div class="gege"><a href="/post/20">Инструкции П1</a></div>
+          <div class="gege"><a href="/post/21">Инструкции П2</a></div>
+          <div class="gege"><a href="/post/22">Инструкции П3</a></div>
+          <div class="gege"><a href="/post/1715">Инструкции П4</a></div>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <h1 style="font-size: 4em">$$$</h1>
+        </td>
+        <td>
+					<img src="https://i.imgur.com/StWpB6n.png" alt="QIWI">
+					<img src="https://i.imgur.com/ye0B8ku.png" alt="Сбербанк">
+					<img src="https://i.imgur.com/zvYje84.png" alt="Webmoney">
+					<img src="https://i.imgur.com/FnWYUc9.png" alt="Yandex">
+					<img src="https://i.imgur.com/vIDuCPV.png" alt="Paypal">
+					<img src="https://i.imgur.com/uzOpHOw.png" alt="BTC">
+					<img src="https://i.imgur.com/xQOxbGu.png" alt="ETH">
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+				  <a href="https://letyshops.ru/?r=107535">
+						<h1 style="font-size: 3em">LetyShop</h1>
+					</a>
+        </td>
+        <td>
+          <a href="https://letyshops.ru/?r=107535">
+            CASHBACK2_2018 - все заказы кэшбэк +30%, до 15.03.18
+            CASHBACK2x1.5 - Aliexpress кэшбэк +50%, до 15.03.18
+            TOPCASHBACK-ALI5% - Aliexpress кэшбэк = 5%, до 25.02.18
+            CASHBACK2-ALI5% - Aliexpress кэшбэк = 5%, до 25.02.18
+            TOPCASHBACK_2018 - все заказы кэшбэк +30%, до 15.03.18
+            TOPCASHBACKx1.5 - Aliexpress кэшбэк +50%, до 15.03.18
+            ZOTOV_2018 - все заказы кэшбэк +30%, до 15.03.18
+           </a>
+        </td>
+      </tr>
+    
+    </tbody>
+  </table> 
+    
+ 
+
+  <h1>Hello World 3</h1>
+  <h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
+
+  <h1>{{model.name}}</h1>
+
+  <hr>
+
+  <p>{{model.description}}</p>
+
+  <p>1{{title}}1</p>
+
+</div>
