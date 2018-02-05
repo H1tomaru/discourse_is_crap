@@ -28,17 +28,17 @@ div.shinbakaz {
 		    color: #df5138
 		}
 		
-		td:nth-child(odd), tr:nth-child(odd) a {
-			color: #c51b1e;
-			text-transform: uppercase;
-		}
-
-		td:nth-child(even) {
-			color: white
+		a:hover {
+			color: inherit
 		}
 		
-		td a:hover {
-			color: inherit;
+		td {
+			width: 50%;
+			padding: 12px;
+			box-shadow: 0 0 1px 0 rgba(0,0,0,.1);
+			border: 1px solid #eceff1;
+			border-radius: 3px;
+			background: white;
 		}
 
 	}
