@@ -29,13 +29,13 @@
 
 			<tr>
 				<td>
-					<div class="headin" action="bagoPravila">Правила</div>
+					<button class="headin" {{action 'bagoPravila'}}>Правила</button>
 				</td>
 				<td>
-					<div class="headin" action="bagoGuidaz">Инструкции</div>
+					<button class="headin" {{action 'bagoGuidaz'}}>Инструкции</button>
 				</td>
 				<td>
-					<div class="headin" action="bagoPlati">Оплата</div>
+					<button class="headin" {{action 'bagoPlati'}}>Оплата</button>
 				</td>
 			</tr>
 			{{#if bagoPravila}}
@@ -102,17 +102,6 @@
 		</tbody>
 	</table>
 	
-	{{#if tentacleVisible}}
-	  <div class='tentacle'>
-	    <img src="http://eviltrout.com/images/tentacle.gif">
-	  </div>
-	{{/if}}
-
-	<div class='buttons'>
-	  {{d-button label="purple_tentacle.show" action="showTentacle" icon="eye"}}
-	</div>
-
-
 	<h1>Hello World 3</h1>
 	<h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
 
