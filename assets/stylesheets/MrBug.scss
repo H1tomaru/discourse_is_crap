@@ -80,7 +80,7 @@ div.shinbakaz {
 			transform: translateX(-50%);
 		}
 		
-		.headin:hover ~ .headin::before {
+		.headin:hover::before {
 			width: 20px;
 			background: gray;
 		}
