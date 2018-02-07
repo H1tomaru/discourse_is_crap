@@ -63,6 +63,10 @@ div.shinbakaz {
 			position: relative;
 			color: gray
 		}
+		
+		.headin:hover {
+			color: #00b0ff
+		}
 
 		.headin::before {
 			content: "";
@@ -74,6 +78,11 @@ div.shinbakaz {
 			bottom: -10px;
 			left: 50%;
 			transform: translateX(-50%);
+		}
+		
+		.headin:hover ~ .headin::before {
+			width: 20px;
+			background: gray;
 		}
 
 	}
