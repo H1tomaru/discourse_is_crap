@@ -9,13 +9,13 @@ export default Ember.Controller.extend({
       this.set('bagoGuidaz', false);
       this.set('bagoPlati', false);
       this.set('bagoPravila', true);
-    }
+    },
 
     bagoGuidaz() {
       this.set('bagoPravila', false);
       this.set('bagoPlati', false);
       this.set('bagoGuidaz', true);
-    }
+    },
 
     bagoPlati() {
       this.set('bagoPravila', false);
