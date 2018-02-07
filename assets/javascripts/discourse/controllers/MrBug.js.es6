@@ -21,6 +21,9 @@ export default Ember.Controller.extend({
       this.set('bagoPravila', false);
       this.set('bagoGuidaz', false);
       this.set('bagoPlati', true);
+    },
+    showTentacle() {
+      this.set('tentacleVisible', true);
     }
   }
 });
