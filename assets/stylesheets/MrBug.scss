@@ -61,11 +61,13 @@ div.shinbakaz {
 			font-weight: 700;
 			font-size: 26px;
 			position: relative;
-			color: gray
+			color: gray;
+			transition-duration: 0.7s;
 		}
 		
 		.headin:hover {
-			color: #00b0ff
+			color: #00b0ff;
+			transition-duration: 0.7s;
 		}
 
 		.headin::before {
@@ -78,11 +80,13 @@ div.shinbakaz {
 			bottom: -10px;
 			left: 50%;
 			transform: translateX(-50%);
+			transition-duration: 1s;
 		}
 		
 		.headin:hover::before {
 			width: 20px;
 			background: gray;
+			transition-duration: 1s;
 		}
 
 	}
