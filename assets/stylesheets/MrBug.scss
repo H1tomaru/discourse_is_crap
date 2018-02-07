@@ -90,7 +90,17 @@ div.shinbakaz {
 			background: gray;
 			transition-duration: 1s;
 		}
-
+		
+		.bi4 {
+			color: #00b0ff;
+			transition-duration: 0.7s;
+		}
+		
+		.bi4::before {
+			width: 20px;
+			background: gray;
+			transition-duration: 1s;
+		}
 	}
 
 }
