@@ -2,6 +2,7 @@ export default Ember.Controller.extend({
   bagoPravila: false,
   bagoGuidaz: false,
   bagoPlati: false,
+  tentacleVisible: false,
 
   actions: {
 
