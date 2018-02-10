@@ -20,8 +20,8 @@
 					<div class="headin"><a href="/u/MrBug">MrBug</a></div>
 				</td>
 				<td colspan="2">
-					<form action="{path}/troikopoisk" method="post">
-						<input class="poiskbox" minlength="20" maxlength="40" type="text" placeholder="Логин аккаунта игры целиком...." name="string" value="{troikopoisk.string}">
+					<form {{ action "troikopoisk" on="submit"}}>
+						{{input class="poiskbox" minlength="20" maxlength="40" type="text" placeholder="Логин аккаунта игры целиком...." value=troikopoisk}}
 						<button type="submit" class="poiskbutt"><i class="fa fa-search"></i></button>
 					</form>
 				</td>
@@ -109,6 +109,10 @@
 
 		</tbody>
 	</table>
+	
+	{{#if troikopoisk}}
+		<h1>{{troikopoisk}}</h1>
+	{{/if}}
 	
 	<h1>Hello World 3</h1>
 	<h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
