@@ -2,7 +2,8 @@ export default Ember.Controller.extend({
   bagoPravila: false,
   bagoGuidaz: false,
   bagoPlati: false,
-  tentacleVisible: false,
+  
+  troikopoisk: false,
 
   actions: {
 
@@ -22,6 +23,10 @@ export default Ember.Controller.extend({
       this.set('bagoPravila', false);
       this.set('bagoGuidaz', false);
       this.set('bagoPlati', true);
+    },
+
+    troikopoisk() {
+
     }
   }
 });
