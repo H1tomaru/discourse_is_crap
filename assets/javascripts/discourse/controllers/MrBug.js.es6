@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
-      this.set('troikopoiskresult', ajax('/MrBug/troikopoisk/ebatmiloakka.json'));
+      this.set('troikopoiskresult', ajax('/MrBug/troikopoisk/ebatmiloakka.json')),
       this.set('troikopoisk', true);
     }
   }
