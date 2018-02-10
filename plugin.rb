@@ -36,7 +36,7 @@ after_initialize do
 		
 		def troikopoisk
 			zapislist = @@userdb[:PS4db].find().limit( 10 )
-			render json: { poiskwin: "yes", troikopoisk: "email" }
+			render json: { poiskwin: "true", troikopoisk: "email" }
 		end 
 
 	end
