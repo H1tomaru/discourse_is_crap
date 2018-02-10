@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
   bagoPlati: false,
   
   troikopoisk: false,
+  troikopoiskresult: false,
 
   actions: {
 
@@ -26,7 +27,7 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
-      this.set('troikopoisk', 'Ebat Pashet!');
+      this.set('troikopoiskresult', 'Ebat Pashet!');
     }
   }
 });
