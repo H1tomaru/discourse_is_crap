@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
         url: '/MrBug/troikopoisk/ebatmiloakka.json',
         type: "GET"
 
-      }).then(resp => {
+      }).then(result => {
         this.set('troikopoisk', true);
         this.set('troikopoiskresult', resp);
       });
