@@ -67,6 +67,10 @@ div.shinbakaz {
 			border: none;
 		}
 		
+		.headin:focus {
+			border: none
+		}
+		
 		.headin:hover, .bi4 {
 			color: #00b0ff;
 			transition-duration: 0.7s;
