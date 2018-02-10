@@ -3,7 +3,7 @@ export default Ember.Controller.extend({
   bagoGuidaz: false,
   bagoPlati: false,
   
-  troikopoisk: false,
+  troikopoisk: '',
   troikopoiskresult: false,
 
   actions: {
