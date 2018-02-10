@@ -30,7 +30,7 @@ after_initialize do
 			gamelist = @@gamedb[:gameDB].find().limit( 10 )
 			userlist = @@userlistdb[:uListP4].find().limit( 10 )
 			feedbacks = @@userfb[:userfb].find().limit( 10 )
-			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, zapislist: zapislist, feedbacks: feedbacks }
+			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
 		end
 		
 		
