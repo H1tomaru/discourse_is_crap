@@ -88,8 +88,8 @@ div.shinbakaz {
 		}
 		
 		.gege {
+			display: inline-block;
 			text-align: left;
-			padding-left: 10%;
 		}
 		
 		.gege span {
@@ -105,6 +105,14 @@ div.shinbakaz {
 			padding: 15px;
 			border: 1px solid transparent;
 			border-radius: 0;
+		}
+		
+		.bleft {
+			float: left;
+		}
+		
+		.bright {
+			float: right;
 		}
 	}
 
