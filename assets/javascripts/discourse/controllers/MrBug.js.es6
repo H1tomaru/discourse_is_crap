@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
         type: "GET"
 
       }).then(resp => {
-        this.set('troikopoisk', true));
+        this.set('troikopoisk', true);
         this.set('troikopoiskresult', resp);
       });
     }
