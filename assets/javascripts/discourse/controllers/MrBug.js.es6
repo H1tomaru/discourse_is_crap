@@ -1,5 +1,3 @@
-import { ajax } from 'discourse/lib/ajax';
-
 export default Ember.Controller.extend({
   bagoPravila: false,
   bagoGuidaz: false,
@@ -29,9 +27,7 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
-      troikopoiskresult() { 
-        return ajax('/MrBug/troikopoisk/ebatmiloakka.json');
-      }
+      var troikopoiskresult = $.getJSON( "/MrBug/troikopoisk/ebatmiloakka.json" )
       this.set('troikopoiskresult', troikopoiskresult);
     }
   }
