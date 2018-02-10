@@ -110,9 +110,11 @@
 		</tbody>
 	</table>
 	
-	{{#if troikopoiskresult}}
+	{{#if troikopoiskresult.poiskwin == 'yes'}}
 		<h1>{{troikopoisk}}</h1>
 		<h1>{{troikopoiskresult}}</h1>
+		<h1>{{troikopoiskresult.poiskwin}}</h1>
+		<h1>{{troikopoisk}}</h1>
 	{{/if}}
 	
 	<h1>Hello World 3</h1>
