@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
         url: '/MrBug/troikopoisk/suka.json',
         type: "GET"
       }).then(result => {
-        this.set('troikopoisk', resp);
+        this.set('troikopoisk', result);
       });
     }
   }
