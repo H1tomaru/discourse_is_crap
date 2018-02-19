@@ -25,9 +25,13 @@ export default Ember.Controller.extend({
       this.set('bagoPlati', true);
     },
 
+    netmudal() {
+      this.set('bagamdal', false);
+    },
+
     troikopoisk() {
       Ember.$.ajax({
-        url: '/MrBug/troikopoisk/ebatmiloakka.json',
+        url: '/MrBug/troikopoisk/'+troikopoisk2+'.json',
         type: "GET"
       }).then(result => {
         this.set('bagamdal', true);
