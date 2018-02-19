@@ -21,7 +21,7 @@
 					<div class="headin"><a href="/u/MrBug">MrBug</a></div>
 				</td>
 				<td colspan="2">
-				<span class="smaladndark">кто владелец? я владелец! он владелец? проверь владельца!</span>
+				<span class="smaladndark">кто владелец? я владелец! он владелец? узнай владельца!</span>
 					<form {{ action "troikopoisk" on="submit"}}>
 						{{input class="poiskbox" minlength="20" maxlength="40" type="text" placeholder="Логин аккаунта игры целиком...." value=troikopoisk2}}
 						<button type="submit" class="poiskbutt"><i class="fa fa-search"></i></button>
@@ -130,14 +130,9 @@
 						</div>
 					{{/if}}
 				{{else}}
-					<div class="mudalcontent">
-						<div class="headin3">{{troikopoisk2}}<br>
+					<div class="mudalcontent headin3">
+						{{troikopoisk2}}<br>
 						Не найден
-						</div>
-						<br>1{{troikopoisk.poiskwin}}
-						<br>2{{troikopoisk.troikopoisk}}
-						<br>3{{poiskwin}}
-						<br>4{{troikopoisk}}
 					</div>
 				{{/if}}
 			{{/if}}
