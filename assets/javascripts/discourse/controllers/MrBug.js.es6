@@ -2,9 +2,8 @@ export default Ember.Controller.extend({
   bagoPravila: false,
   bagoGuidaz: false,
   bagoPlati: false,
-  
-  troikopoisk: '',
-  troikopoiskresult: false,
+
+  bagamdal: false,
 
   actions: {
 
@@ -27,12 +26,11 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
+      this.set('bagamdal', true);
       Ember.$.ajax({
         url: '/MrBug/troikopoisk/ebatmiloakka.json',
         type: "GET"
-
       }).then(result => {
-        this.set('troikopoisk', true);
         this.set('troikopoiskresult', resp);
       });
     }
