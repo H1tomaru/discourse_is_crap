@@ -113,23 +113,31 @@
 
 		</tbody>
 	</table>
-	
-	{{#if troikopoiskresult.poiskwin}}
-	111
-		<h1>{{troikopoisk}}</h1>
-		<h1>{{troikopoiskresult}}</h1>
-		<h1>{{troikopoiskresult.poiskwin}}</h1>
-		<h1>{{troikopoiskresult.troikopoisk}}</h1>
+
+	{{#if bagamdal}}
+		<div class="etomudal">
+			<div class="mudalcontent">
+
+				{{#if troikopoisk.poiskwin}}
+					{{#if troikopoisk.P41}}
+						<div style="display:table-cell; vertical-align:middle;">
+							Для записи на позицию П1 требуется залог.<br>Запись без залога доступна только для опытных участников.<br>Запись возможна только через личное сообщение <a class='repala bgblu' href='/user/mrbug'>Организатору</a>
+						</div>
+					{{else}}
+						<div style="display:table-cell; vertical-align:middle;">
+							Для записи на позицию П1 требуется залог.<br>Запись без залога доступна только для опытных участников.<br>Запись возможна только через личное сообщение <a class='repala bgblu' href='/user/mrbug'>Организатору</a>
+						</div>
+					{{/if}}
+				{{else}}
+					<div style="display:table-cell; vertical-align:middle;">
+						Ненашла!
+					</div>
+				{{/if}}
+
+			</div>
+		</div>
 	{{/if}}
-	
-	{{#if troikopoisk}}
-	222
-		<h1>{{troikopoisk}}</h1>
-		<h1>{{troikopoiskresult}}</h1>
-		<h1>{{troikopoiskresult.poiskwin}}</h1>
-		<h1>{{troikopoiskresult.troikopoisk}}</h1>
-	{{/if}}
-	
+
 	<h1>Hello World 3</h1>
 	<h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
 
