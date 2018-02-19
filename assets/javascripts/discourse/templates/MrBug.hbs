@@ -116,9 +116,10 @@
 
 	{{#if bagamdal}}
 		<div class="etomudal">
+			<button class="netmudal" {{action 'netmudal'}}></button>
 			<div class="mudalcontent">
 
-				{{#if troikopoisk.poiskwin}}
+				{{#if poiskmdal}}{{#if troikopoisk.poiskwin}}
 					{{#if troikopoisk.P41}}
 						<div style="display:table-cell; vertical-align:middle;">
 							Для записи на позицию П1 требуется залог.<br>Запись без залога доступна только для опытных участников.<br>Запись возможна только через личное сообщение <a class='repala bgblu' href='/user/mrbug'>Организатору</a>
@@ -129,14 +130,14 @@
 						</div>
 					{{/if}}
 				{{else}}
-					<div style="display:table-cell; vertical-align:middle;">
+					<div style="padding: 3% 0">
 						Ненашла!
 						<br>1{{troikopoisk.poiskwin}}
 						<br>2{{troikopoisk.troikopoisk}}
 						<br>3{{poiskwin}}
 						<br>4{{troikopoisk}}
 					</div>
-				{{/if}}
+				{{/if}}{{/if}}
 
 			</div>
 		</div>
