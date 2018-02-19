@@ -1,17 +1,17 @@
 div.shinbakaz {
-	
+
 	.sosia {
-		
+
 		text-align: right;
-		
+
 		a {
 			padding: 0px 5px
 		}
-		
+
 		a i {
 			font-size: 18px
 		}
-		
+
 		.fa-vk {
 			color: #337ab7
 		}
@@ -30,12 +30,10 @@ div.shinbakaz {
 	}
 
 	table.bagahe {
+
 		width: 100%;
 		text-align: center;
 		border-collapse: collapse;
-	}
-
-	table.bagahe {
 
 		a {
 			color: gray
@@ -58,11 +56,11 @@ div.shinbakaz {
 			background: none;
 			border: none;
 		}
-		
+
 		.headin:focus {
 			outline:none
 		}
-		
+
 		.headin:hover, .bi4 {
 			color: #00b0ff;
 			transition-duration: 0.7s;
@@ -80,25 +78,25 @@ div.shinbakaz {
 			transform: translateX(-50%);
 			transition-duration: 1s;
 		}
-		
+
 		.headin:hover::before, .bi4::before {
 			width: 20px;
 			background: gray;
 			transition-duration: 1s;
 		}
-		
+
 		.gege {
 			display: inline-block;
 			text-align: left;
 		}
-		
+
 		.gege span {
 			border-radius: 50%;
 			background: white;
 			padding: 5px;
 			margin-right: 5px;
 		}
-		
+
 		.bagarulez {
 			background-color: #d9edf7;
 			border-color: #bce8f1;
@@ -107,17 +105,17 @@ div.shinbakaz {
 			border: 1px solid transparent;
 			border-radius: 0;
 		}
-		
+
 		.bleft {
 			float: left;
 			margin-left: 20%;
 		}
-		
+
 		.bright {
 			float: right;
 			margin-right: 20%;
 		}
-		
+
 		.poiskbutt {
 		    background: #2980B9;
 		    border: 0;
@@ -125,7 +123,7 @@ div.shinbakaz {
 		    padding: 8px 15px;
 		    border-radius: 0 2px 2px 0;
 		}
-		
+
 		.poiskbox {
 		    border: 1px solid #303030;
 		    border-right: none;
@@ -136,21 +134,28 @@ div.shinbakaz {
 		    margin-right: -5px;
 		    text-align: center;
 		}
-		
+
 		.poiskbox:focus {
 			border-color: #08c
 		}
-		
+
 		form, input {
 			margin: 0	
 		}
-		
+
 		.Bagolet {
 			font-size: 0.75em	
 		}
-		
+
 		.Bagolet .headin2 {
 			font-size: 1.5em	
+		}
+
+		.smaladndark {
+		    color: #777;
+		    font-size: .75em;
+		    display: table;
+		    margin: 0 auto -5px;
 		}
 
 	}
