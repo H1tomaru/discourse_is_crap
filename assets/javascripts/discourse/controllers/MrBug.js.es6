@@ -4,6 +4,8 @@ export default Ember.Controller.extend({
   bagoPlati: false,
 
   bagamdal: false,
+  poiskmdal: false,
+  
 
   actions: {
 
@@ -27,6 +29,7 @@ export default Ember.Controller.extend({
 
     netmudal() {
       this.set('bagamdal', false);
+      this.set('poiskmdal', false);
     },
 
     troikopoisk() {
@@ -34,8 +37,9 @@ export default Ember.Controller.extend({
         url: '/MrBug/troikopoisk/'+troikopoisk2+'.json',
         type: "GET"
       }).then(result => {
-        this.set('bagamdal', true);
         this.set('troikopoisk', resp);
+        this.set('bagamdal', true);
+        this.set('poiskmdal', true);
       });
     }
   }
