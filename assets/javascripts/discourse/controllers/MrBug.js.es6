@@ -33,12 +33,12 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
+      this.set('bagamdal', true);
+      this.set('poiskmdal', true);
       this.Ember.$.ajax({
         url: '/MrBug/troikopoisk/'+troikopoisk2+'.json',
         type: "GET"
       }).then(result => {
-        this.set('bagamdal', true);
-        this.set('poiskmdal', true);
         this.set('troikopoisk', result);
       });
     }
