@@ -26,11 +26,11 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
-      this.set('bagamdal', true);
       Ember.$.ajax({
         url: '/MrBug/troikopoisk/ebatmiloakka.json',
         type: "GET"
       }).then(result => {
+        this.set('bagamdal', true);
         this.set('troikopoisk', resp);
       });
     }
