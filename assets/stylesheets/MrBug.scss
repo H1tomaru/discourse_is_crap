@@ -51,7 +51,7 @@ div.shinbakaz {
 
 		.headin, .headin2 {
 			font-weight: 700;
-			font-size: 26px;
+			font-size: 1.85em;
 			position: relative;
 			color: gray;
 			transition-duration: 0.7s;
@@ -139,6 +139,14 @@ div.shinbakaz {
 		
 		form, input {
 			margin: 0	
+		}
+		
+		.Bagolet {
+			font-size: 0.75em	
+		}
+		
+		.Bagolet .headin2 {
+			font-size: 1.5em	
 		}
 
 	}
