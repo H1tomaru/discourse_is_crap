@@ -8,21 +8,24 @@ export default Ember.Controller.extend({
 	poiskmdal: false,
 	
 	//encoding function
-	jsEncode: function (s, k) {
-		var enc = "";
-		var str = "";
-		// make sure that input is string
-		str = s.toString();
-		for (var i = 0; i < s.length; i++) {
-			// create block
-			var a = s.charCodeAt(i);
-			// bitwise XOR
-			var b = a ^ k;
-			enc = enc + String.fromCharCode(b);
+	jsEncode: function(e) {
+		e = e.replace(/\r\n/g, "\n");
+		var t = "";
+		for (var n = 0; n < e.length; n++) {
+			var r = e.charCodeAt(n);
+			if (r < 128) {
+				t += String.fromCharCode(r)
+			} else if (r > 127 && r < 2048) {
+				t += String.fromCharCode(r >> 6 | 192);
+				t += String.fromCharCode(r & 63 | 128)
+			} else {
+				t += String.fromCharCode(r >> 12 | 224);
+				t += String.fromCharCode(r >> 6 & 63 | 128);
+				t += String.fromCharCode(r & 63 | 128)
+			}
 		}
-		return enc;
-	},
-  
+		return t
+	}
 
 	actions: {
 
@@ -50,7 +53,7 @@ export default Ember.Controller.extend({
 		},
 
 		troikopoisk() {
-			this.set('troikopoisk2', this.jsEncode("Hello world!","123"));
+			this.set('troikopoisk2', this.jsEncode("Hello world!"));
 			this.set('bagamdal', true);
 			this.set('poiskmdal', true);
 			Ember.$.ajax({
