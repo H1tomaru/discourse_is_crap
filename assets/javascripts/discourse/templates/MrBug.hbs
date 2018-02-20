@@ -120,15 +120,33 @@
 
 			{{#if poiskmdal}}
 				{{#if troikopoisk.poiskwin}}
-					{{#if troikopoisk.P41}}
-						<div style="display:table-cell; vertical-align:middle;">
-							P41 Для записи на позицию П1 требуется залог.<br>Запись без залога доступна только для опытных участников.<br>Запись возможна только через личное сообщение <a class='repala bgblu' href='/user/mrbug'>Организатору</a>
-						</div>
-					{{else}}
-						<div style="display:table-cell; vertical-align:middle;">
-							P3 Для записи на позицию П1 требуется залог.<br>Запись без залога доступна только для опытных участников.<br>Запись возможна только через личное сообщение <a class='repala bgblu' href='/user/mrbug'>Организатору</a>
-						</div>
-					{{/if}}
+					<div class="mudalcontent headin3">
+						{{troikopoisk._id}}
+					</div>
+					<table class="mudaltable headin3"><tbody>
+						<tr>
+							<td colspan="2">{{troikopoisk.GAME}}</td>
+						</tr>
+						<tr>
+							<td>П2</td>
+							<td><a class="MrBugGN" href="/u/{{troikopoisk.P2LINK}}">{{troikopoisk.P2}}</a></td>
+						</tr>
+						{{#if troikopoisk.P41}}
+						<tr>
+							<td>П4</td>
+							<td><a class="MrBugGN" href="/u/{{troikopoisk.P41LINK}}">{{troikopoisk.P41}}</a></td>
+						</tr>
+						<tr>
+							<td>П4</td>
+							<td><a class="MrBugGN" href="/u/{{troikopoisk.P42LINK}}">{{troikopoisk.P42}}</a></td>
+						</tr>
+						{{else}}
+						<tr>
+							<td>П3</td>
+							<td><a class="MrBugGN" href="/u/{{troikopoisk.P3LINK}}">{{troikopoisk.P3}}</a></td>
+						</tr>
+						{{/if}}
+					</tbody></table>
 				{{else}}
 					<div class="mudalcontent headin3">
 						{{troikopoisk2}}<br>
