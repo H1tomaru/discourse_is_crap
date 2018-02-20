@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
     },
 
     troikopoisk() {
-      this.set('troikopoisk2', btoa(troikopoisk2)+'191');
+      this.set('troikopoisk2', jsEncode.encode("Hello world!","123"));
       this.set('bagamdal', true);
       this.set('poiskmdal', true);
       Ember.$.ajax({
@@ -43,5 +43,22 @@ export default Ember.Controller.extend({
         this.set('troikopoisk', result);
       });
     }
-  }
+  };
+  
+  var jsEncode = {
+	encode: function (s, k) {
+		var enc = "";
+		var str = "";
+		// make sure that input is string
+		str = s.toString();
+		for (var i = 0; i < s.length; i++) {
+			// create block
+			var a = s.charCodeAt(i);
+			// bitwise XOR
+			var b = a ^ k;
+			enc = enc + String.fromCharCode(b);
+		}
+		return enc;
+	}
+  };
 });
