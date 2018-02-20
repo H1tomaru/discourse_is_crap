@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
         this.set('troikopoisk', result);
       });
     }
-  };
+  }
   
   var jsEncode = {
 	encode: function (s, k) {
