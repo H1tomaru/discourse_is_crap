@@ -13,7 +13,7 @@ after_initialize do
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
-		get '/MrBug/troikopoisk/:ebatmiloakka' => 'mrbug#troikopoisk'
+		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -36,7 +36,7 @@ after_initialize do
 		
 		def troikopoisk
 			zapislist = @@userdb[:PS4db].find().limit( 10 )
-			render json: { poiskwin: false, troikopoisk: "email" }
+			render json: { poiskwin: false, troikopoisk: params.miloakka }
 		end 
 
 	end
