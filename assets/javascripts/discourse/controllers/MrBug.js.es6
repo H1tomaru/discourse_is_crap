@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 			enc = enc + String.fromCharCode(b);
 		}
 		return enc;
-	}
+	},
   
 
 	actions: {
