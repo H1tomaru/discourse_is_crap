@@ -60,5 +60,5 @@ export default Ember.Controller.extend({
 		}
 		return enc;
 	}
-  };
+  }
 });
