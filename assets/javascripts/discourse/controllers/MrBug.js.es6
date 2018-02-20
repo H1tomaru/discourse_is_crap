@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
 			}
 		}
 		return t
-	}
+	},
 
 	actions: {
 
