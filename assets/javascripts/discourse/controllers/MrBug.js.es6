@@ -1,4 +1,5 @@
 export default Ember.Controller.extend({
+	//default states
 	bagoPravila: false,
 	bagoGuidaz: false,
 	bagoPlati: false,
@@ -6,6 +7,7 @@ export default Ember.Controller.extend({
 	bagamdal: false,
 	poiskmdal: false,
 	
+	//encoding function
 	jsEncode: function (s, k) {
 		var enc = "";
 		var str = "";
