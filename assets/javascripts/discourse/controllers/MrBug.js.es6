@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
 		},
 
 		troikopoisk() {
-			this.set('troikopoisk2', this.btoa("Hello World!"));
+			this.set('troikopoisk2', btoa("Hello World!"));
 			this.set('bagamdal', true);
 			this.set('poiskmdal', true);
 			Ember.$.ajax({
