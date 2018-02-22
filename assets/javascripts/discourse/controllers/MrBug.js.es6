@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
 	bagamdal: false,
 	poiskmdal: false,
 	
-	var Base64 = {
+	Base64 = {
 
     		_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
 
