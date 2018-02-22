@@ -30,6 +30,7 @@ export default Ember.Controller.extend({
 		netmudal() {
 			this.set('bagamdal', false);
 			this.set('poiskmdal', false);
+			this.set('troikopoisk', '');
 		},
 
 		troikopoisk() {
