@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
 			this.set('poiskmdal', true);
 			//btoa(troikopoisk2);
 			Ember.$.ajax({
-				url: '/MrBug/troikopoisk/123'+troikopoisk2+'321.json',
+				url: "/MrBug/troikopoisk/123"+troikopoisk2+"321.json",
 				type: "GET"
 			}).then(result => {
 				this.set('troikopoisk', result);
