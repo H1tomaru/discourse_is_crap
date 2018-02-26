@@ -194,11 +194,15 @@ div.shinbakaz {
 	}
 
 	.mudalcontent {
-		margin: 10px auto;
+		margin: 0 auto;
 		top: 20%;
 		position: relative;
 		width: 50%;
 		background: white;
+	}
+	
+	.mudalcontent span {
+		font-size: 1.2rem
 	}
 	
 	.mudaladdon {
