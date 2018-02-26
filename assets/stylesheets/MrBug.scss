@@ -136,7 +136,6 @@ div.shinbakaz {
 		    padding: 5px 0px;
 		    width: 70%;
 		    border-radius: 2px 0 0 2px;
-		    font-style: italic;
 		    margin-right: -5px;
 		    text-align: center;
 		}
@@ -167,20 +166,20 @@ div.shinbakaz {
 	}
 	
 	.etomudal {
-		z-index:9999;
-		width:100%;
-		height:100%;
-		position:fixed;
+		z-index: 9999;
+		width: 100%;
+		height: 100%;
+		position: fixed;
 		top: 0;
 		left: 0;
-		background:rgba(0,0,0,0.7);
-		text-align:center;
+		background: rgba(0,0,0,0.7);
+		text-align: center;
 	}
 
 	.netmudal {
-		width:100%;
-		height:100%;
-		position:fixed;
+		width: 100%;
+		height: 100%;
+		position: fixed;
 		top: 0;
 		left: 0;
 		background: none;
@@ -189,10 +188,14 @@ div.shinbakaz {
 
 	.mudalcontent {
 		margin: 10px auto;
-		top:20%;
-		position:relative;
-		width:50%;
-		background:white;
+		top: 20%;
+		position: relative;
+		width: 50%;
+		background: white;
+	}
+	
+	.mudalcontent table {
+		text-align: left;
 	}
 	
 	.mudaladdon {
