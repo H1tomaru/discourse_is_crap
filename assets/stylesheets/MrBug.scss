@@ -228,13 +228,13 @@ div.shinbakaz {
 
 	.bagariban:before {
 		content: "";
+		width: 22px;
 		position: absolute;
-		border-width: 28px 35px 28px 25px;
 		border-style: solid;
 		border-color: #004666;
+		border-width: 28px 35px 28px 25px;
 		border-left-color: transparent;
 		border-right-color: #99dfff;
-		width: 22px;
 		top: 30px;
 		left: -47px;
 		z-index: -1;
@@ -242,7 +242,7 @@ div.shinbakaz {
 
 	.bagariban:after {
 		content: "";
-		width: 21px;
+		width: 22px;
 		height: 0;
 		position: absolute;
 		border-style: solid;
