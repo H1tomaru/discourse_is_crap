@@ -122,45 +122,34 @@
 				{{#if troikopoisk.poiskwin}}
 
 					<div class="mudalcontent mudaladdon headin3">
-						Account email
-						<span>by MrBug</span>
-					<h2 class="bagariban">Uber Game Name</h2>
-						P2 - Baka<br>
-						P3 - Suka<br>
-						P4 - MuSuka<br>
-					</div>
-
-					<div class="mudalcontent mudaladdon headin3">
 						{{troikopoisk.troikopoisk._id}}
-					</div>
-					<table class="mudalcontent headin3"><tbody>
-						<tr>
-							<td colspan="2">{{troikopoisk.troikopoisk.GAME}}</td>
-						</tr>
+					<h2 class="bagariban">{{troikopoisk.troikopoisk.GAME}}</h2>
+					<table><tbody>
 						<tr>
 							<td>П2</td>
-							<td><a class="MrBugGN" href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
-						</tr>
-						{{#if troikopoisk.troikopoisk.P41}}
-						<tr>
+							{{#if troikopoisk.troikopoisk.P41}}
 							<td>П4</td>
-							<td><a class="MrBugGN" href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>
-						</tr>
-						<tr>
 							<td>П4</td>
-							<td><a class="MrBugGN" href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
-						</tr>
-						{{else}}
-						<tr>
+							{{else}}
 							<td>П3</td>
-							<td><a class="MrBugGN" href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
+							{{/if}}
+							
 						</tr>
-						{{/if}}
+						<tr>
+							<td><a href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
+							{{#if troikopoisk.troikopoisk.P41}}
+							<td><a href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>>
+							<td><a href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
+							{{else}}
+							<td><a href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
+							{{/if}}
+						</tr>
 					</tbody></table>
+					</div>
 				{{else}}
 					<div class="mudalcontent mudaladdon headin3">
-						{{troikopoisk2}}<br>
-						Не найден
+						{{troikopoisk2}}
+						<h2 class="bagariban">Не найден</h2>
 					</div>
 				{{/if}}
 			{{/if}}
