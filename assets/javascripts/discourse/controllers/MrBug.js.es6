@@ -12,19 +12,19 @@ export default Ember.Controller.extend({
 		bagoPravila() {
 			this.set('bagoGuidaz', false);
 			this.set('bagoPlati', false);
-			this.set('bagoPravila', true);
+			this.toggleProperty('bagoPravila');
 		},
 
 		bagoGuidaz() {
 			this.set('bagoPravila', false);
 			this.set('bagoPlati', false);
-			this.set('bagoGuidaz', true);
+			this.toggleProperty('bagoGuidaz');
 		},
 
 		bagoPlati() {
 			this.set('bagoPravila', false);
 			this.set('bagoGuidaz', false);
-			this.set('bagoPlati', true);
+			this.toggleProperty('bagoPlati');
 		},
 
 		netmudal() {
