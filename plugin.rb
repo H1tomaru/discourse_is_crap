@@ -6,6 +6,7 @@ gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
 require 'mongo'
+require 'base64'
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -35,8 +36,9 @@ after_initialize do
 		
 		
 		def troikopoisk
+			troikopoisk = Base64.decode64(params[:miloakka])
 			zapislist = @@userdb[:PS4db].find().limit( 10 )
-			render json: { poiskwin: false, troikopoisk: params[:miloakka] }
+			render json: { poiskwin: false, troikopoisk: troikopoisk }
 		end 
 
 	end
