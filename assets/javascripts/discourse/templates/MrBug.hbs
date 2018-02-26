@@ -122,33 +122,23 @@
 				{{#if troikopoisk.poiskwin}}
 
 					<div class="mudalcontent mudaladdon headin3">
-						{{troikopoisk.troikopoisk._id}}
+						<span>{{troikopoisk.troikopoisk._id}}</span>
 					<div class="bagariban">{{troikopoisk.troikopoisk.GAME}}</div>
 					<table><tbody>
 						<tr>
-							<td>П2</td>
+							<td>П2<br><a href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
 							{{#if troikopoisk.troikopoisk.P41}}
-							<td>П4</td>
-							<td>П4</td>
+							<td>П4<br><a href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>
+							<td>П4<br>a href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
 							{{else}}
-							<td>П3</td>
-							{{/if}}
-							
-						</tr>
-						<tr>
-							<td><a href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
-							{{#if troikopoisk.troikopoisk.P41}}
-							<td><a href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>
-							<td><a href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
-							{{else}}
-							<td><a href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
+							<td>П3<br><a href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
 							{{/if}}
 						</tr>
 					</tbody></table>
 					</div>
 				{{else}}
 					<div class="mudalcontent mudaladdon headin3">
-						{{troikopoisk2}}
+						<span>{{troikopoisk2}}</span>
 						<div class="bagariban">Не найден</div>
 					</div>
 				{{/if}}
