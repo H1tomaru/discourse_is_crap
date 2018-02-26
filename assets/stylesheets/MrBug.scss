@@ -1,4 +1,8 @@
 div.shinbakaz {
+	
+	table {
+		width: 100%
+	}
 
 	.razdelhe {
 		color: gray;
@@ -37,7 +41,6 @@ div.shinbakaz {
 
 	table.bagahe {
 
-		width: 100%;
 		text-align: center;
 		border-collapse: collapse;
 
@@ -192,12 +195,6 @@ div.shinbakaz {
 		position: relative;
 		width: 50%;
 		background: white;
-	}
-	
-	.mudalcontent table {
-		text-align: left;
-		width: 90%;
-		margin: 0 auto;
 	}
 	
 	.mudaladdon {
