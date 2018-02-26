@@ -42,10 +42,10 @@ after_initialize do
 				if zapislist
 					render json: { poiskwin: true, troikopoisk: zapislist }
 				else
-					render json: { poiskwin: false, troikopoisk: troikopoisk }
+					render json: { poiskwin: false }
 				end
 			else 
-				render json: { poiskwin: false, troikopoisk: troikopoisk }
+				render json: { poiskwin: false }
 			end
 		end 
 
