@@ -39,7 +39,7 @@ after_initialize do
 			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, { DATE: 0 } )
-				unless zapislist
+				if zapislist.present?
 					render json: { poiskwin: true, troikopoisk: zapislist }
 				else
 					render json: { poiskwin: false }
