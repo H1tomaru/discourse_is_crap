@@ -36,16 +36,16 @@ after_initialize do
 		
 		
 		def troikopoisk
-			troikopoisk = Base64.decode64(params[:miloakka])
+			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk.strip.downcase }, { DATE: 0 } )
+				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, { DATE: 0 } )
 				if zapislist[0]
 					render json: { poiskwin: true, troikopoisk: zapislist }
 				else
-					render json: { poiskwin: false }
+					render json: { poiskwin: false, troikopoisk: zapislist }
 				end
 			else 
-				render json: { poiskwin: false }
+				render json: { poiskwin: false, troikopoisk: zapislist }
 			end
 		end 
 
