@@ -28,9 +28,14 @@ after_initialize do
 		@@userfb = db.use('userfb')
 
 		def show
-			gamelist = @@gamedb[:gameDB].find().limit( 10 )
-			userlist = @@userlistdb[:uListP4].find().limit( 10 )
-			feedbacks = @@userfb[:userfb].find().limit( 10 )
+			gamelist = @@gamedb[:gameDB].find( { _id: { $nin: [ '_encodedcodes' ]} } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+			userlist = @@userlistdb[:uListP4].find().to_a
+			feedbacks = @@userfb[:userfb].find().to_a
+			gamelist.each {
+				
+			}
+			
+			
 			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
 		end
 		
