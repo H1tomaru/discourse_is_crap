@@ -28,7 +28,7 @@ after_initialize do
 		@@userfb = db.use('userfb')
 
 		def show
-			glist = @@gamedb[:gameDB].find( { _id: { $nin: [ '_encodedcodes' ]} } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+			glist = @@gamedb[:gameDB].find( { _id: { $nin: [ '_encodedcodes' ] } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 			ulist = @@userlistdb[:uListP4].find().to_a
 			feedbacks = @@userfb[:userfb].find().to_a
 			qzlist = @@gamedb[:gameDB].find( _id: '_encodedcodes' ).to_a
