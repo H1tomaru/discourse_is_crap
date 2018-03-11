@@ -28,15 +28,15 @@ after_initialize do
 		@@userfb = db.use('userfb')
 
 		def show
-			glist = @@gamedb[:gameDB].find({ _id: { $ne => '_encodedcodes' } }).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+			glist = @@gamedb[:gameDB].find().sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 			ulist = @@userlistdb[:uListP4].find().to_a
 			feedbacks = @@userfb[:userfb].find().to_a
 			qzlist = @@gamedb[:gameDB].find({ _id: '_encodedcodes' }).to_a
 			#if viever registered, count his fb, if guest, just lol
 				
-			#glist.each {
+			glist.each {
 				
-			#}
+			}
 			
 			
 			render json: { CurrentUser: currentUser, gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
