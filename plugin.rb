@@ -31,8 +31,8 @@ after_initialize do
 			glist = @@gamedb[:gameDB].find( { _id: { $nin: [ '_encodedcodes' ]} } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 			ulist = @@userlistdb[:uListP4].find().to_a
 			feedbacks = @@userfb[:userfb].find().to_a
-			qzlist = @@gamedb[:gameDB].find( { _id: { $nin: [ '_encodedcodes' ]} } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
-			gamelist.each {
+			qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' ).to_a
+			glist.each {
 				
 			}
 			
@@ -42,7 +42,9 @@ after_initialize do
 		
 		
 		def troikopoisk
+			//decode shit
 			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
+			//do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
