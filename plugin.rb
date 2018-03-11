@@ -39,7 +39,7 @@ after_initialize do
 			}
 			
 			
-			render json: { currentuser: CurrentUser, gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
+			render json: { currentuser: currentUser, gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
 		end
 		
 		
