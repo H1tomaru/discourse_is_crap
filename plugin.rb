@@ -34,12 +34,12 @@ after_initialize do
 			qzlist = @@gamedb[:gameDB].find({ _id: '_encodedcodes' }).to_a
 			#if viever registered, count his fb, if guest, just lol
 				
-			glist.each {
+			#glist.each {
 				
-			}
+			#}
 			
 			
-			render json: { gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
+			render json: { CurrentUser: currentUser, gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
 		end
 		
 		
