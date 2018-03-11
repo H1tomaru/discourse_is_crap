@@ -32,19 +32,21 @@ after_initialize do
 			ulist = @@userlistdb[:uListP4].find().to_a
 			feedbacks = @@userfb[:userfb].find().to_a
 			qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' ).to_a
+			#if viever registered, count his fb, if guest, just lol
+				
 			glist.each {
 				
 			}
 			
 			
-			render json: { name: "donut", description: "delicious!", gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
+			render json: { currentuser: CurrentUser, gamelist: gamelist, userlist: userlist, feedbacks: feedbacks }
 		end
 		
 		
 		def troikopoisk
-			//decode shit
+			#decode shit
 			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
-			//do stuff when finding acc or not
+			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
