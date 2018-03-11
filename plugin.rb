@@ -39,7 +39,7 @@ after_initialize do
 			}
 			
 			
-			render json: { CurrentUser: Discourse.User.current(), gamelist: glist, userlist: ulist, feedbacks: feedbacks }
+			render json: { CurrentUser: Discourse.User.current().id, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
 		end
 		
 		
