@@ -30,23 +30,23 @@ after_initialize do
 
 		def show
 			#db variables
-			ulist = @@userlistdb['uListP4'].find().to_a
+			ulist = @@userlistdb[:uListP4].find().to_a
 			#other variables
 			finalvar = {}
-			finalvar['qzstuff'] = false
+			finalvar[:qzstuff] = false
 
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedbacks = @@userfb['userfb'].find( { UID: current_user['username'] } ).to_a
+				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
 				feedbacks.each {
-					if feedbacks['SCORE'] < 0
+					if feedbacks[:SCORE] < 0
 						fbcount = 0
 						break
 					end
-					fbcount = fbcount + feedbacks['SCORE']
+					fbcount = fbcount + feedbacks[:SCORE]
 				}
-				finalvar['qzstuff'] = true if fbcount >= 10
+				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
 			finalvar[:qzstuff] = true
@@ -65,7 +65,7 @@ after_initialize do
 			end
 			
 			
-			render json: { test: glist[0]['_id'], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
+			render json: { test: glist[0][:_id], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
 		end
 		
 		
