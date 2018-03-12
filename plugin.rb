@@ -31,6 +31,7 @@ after_initialize do
 			#db variables
 			ulist = @@userlistdb[:uListP4].find().to_a
 			#other variables
+			finalvar = {}
 			finalvar[:qzstuff] = false
 
 			#if viever registered, count his fb
