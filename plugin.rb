@@ -7,6 +7,7 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 require 'base64'
+require 'openssl'
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -52,10 +53,10 @@ after_initialize do
 			if finalvar[:qzstuff]
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
+				glist.each {
+					
+				}
 			end
-			glist.each {
-				
-			}
 			
 			
 			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
@@ -79,4 +80,23 @@ after_initialize do
 		end 
 
 	end
+end
+
+#encrypt decrypt stuff
+class String
+  def encrypt(key)
+    cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').encrypt
+    cipher.key = Digest::SHA1.hexdigest key
+    s = cipher.update(self) + cipher.final
+
+    s.unpack('H*')[0].upcase
+  end
+
+  def decrypt(key)
+    cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').decrypt
+    cipher.key = Digest::SHA1.hexdigest key
+    s = [self].pack("H*").unpack("C*").pack("c*")
+
+    cipher.update(s) + cipher.final
+  end
 end
