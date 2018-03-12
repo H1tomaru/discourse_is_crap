@@ -78,8 +78,8 @@ after_initialize do
 					else
 						encodedid = glist[5][:_id]#.encrypt('urban')
 					end
-					finalvar[:qzlist].push( encodedid => glist[:gameNAME] )
-					dbupdate.push( glist[:_id] => encodedid )
+					finalvar[:qzlist].push( encodedid => glist[5][:gameNAME] )
+					dbupdate.push( glist[5][:_id] => encodedid )
 				}
 			end
 
