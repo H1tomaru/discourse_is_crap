@@ -73,9 +73,8 @@ after_initialize do
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
-				glist.each do |game|
-					thisgame = game
-					dbupdate[x] = thisgame[:id]
+				glist.each
+					dbupdate[x] = glist
 					x = x+1
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
 				#		encodedid = qzlist[0][current_user[:username]][glist[:_id]]
