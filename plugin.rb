@@ -53,14 +53,14 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}
-				glist.each {
-					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
-						encodedid = qzlist[0][current_user[:username]][glist[:_id]]
+				glist.each { |game|
+					if (qzlist[0][current_user[:username]][game[:_id]] rescue false)
+						encodedid = qzlist[0][current_user[:username]][game[:_id]]
 					else
-						encodedid = glist[0][:_id].encrypt('urban')
+						encodedid = game[:_id].encrypt('urban')
 					end
-					finalvar[:qzlist].push( encodedid => glist[:gameNAME] )
-					dbupdate.push( glist[:_id] => encodedid )
+					finalvar[:qzlist].push( encodedid => game[:gameNAME] )
+					dbupdate.push( game[:_id] => encodedid )
 				}
 			end
 
