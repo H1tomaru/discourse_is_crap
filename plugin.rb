@@ -73,14 +73,13 @@ after_initialize do
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}
 				glist.each {
-					|game|
-					if (qzlist[0][current_user[:username]][game[:_id]] rescue false)
-						encodedid = qzlist[0][current_user[:username]][game[:_id]]
+					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
+						encodedid = qzlist[0][current_user[:username]][glist[:_id]]
 					else
-						encodedid = game[5][:_id].encrypt('urban')
+						encodedid = glist[5][:_id].encrypt('urban')
 					end
-					finalvar[:qzlist].push( encodedid => game[:gameNAME] )
-					dbupdate.push( game[:_id] => encodedid )
+					finalvar[:qzlist].push( encodedid => glist[:gameNAME] )
+					dbupdate.push( glist[:_id] => encodedid )
 				}
 			end
 
