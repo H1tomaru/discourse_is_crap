@@ -64,7 +64,7 @@ after_initialize do
 			end
 			
 			
-			render json: { finalvar: finalvar, ipvar: current_user[:ip_address][:addr], CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
+			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
 		end
 		
 		
