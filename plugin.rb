@@ -37,13 +37,13 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
-				feedbacks.each {
+				feedbacks.each
 					if feedbacks[:SCORE] < 0
 						fbcount = 0
 						break
 					end
 					fbcount = fbcount + feedbacks[:SCORE]
-				}
+				end
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
