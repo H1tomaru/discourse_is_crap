@@ -44,7 +44,7 @@ after_initialize do
 					end
 					fbcount = fbcount + feedbacks[:SCORE]
 				end
-				finalvar[:qzstuff] = true if fbcount >= 10
+				#finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
 			finalvar[:qzstuff] = true
@@ -53,7 +53,7 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}
-				glist.each
+				glist.each do |game|
 					if (qzlist[0][current_user[:username]][game[:_id]] rescue false)
 						encodedid = qzlist[0][current_user[:username]][game[:_id]]
 					else
