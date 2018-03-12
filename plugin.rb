@@ -73,7 +73,7 @@ after_initialize do
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
-				glist.each
+				glist.each {
 					dbupdate[x] = glist
 					x = x+1
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
@@ -83,7 +83,7 @@ after_initialize do
 				#	end
 				#	finalvar[:qzlist].push( encodedid => glist[5][:gameNAME] )
 				#	dbupdate[glist[5][:_id]] = encodedid
-				end
+				}
 			end
 
 			render json: { test: dbupdate, finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
