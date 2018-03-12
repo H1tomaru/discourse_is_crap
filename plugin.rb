@@ -36,7 +36,7 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedbacks = @@userfb[:userfb].find({ UID: current_user[:username] }).to_a
+				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
 				feedbacks.each {
 					if feedbacks[:SCORE] < 0
 						fbcount = 0
@@ -49,8 +49,8 @@ after_initialize do
 
 			#get all games from db and make a qz variable with codes and stuff
 			if finalvar[:qzstuff]
-				glist = @@gamedb[:gameDB].find( _id: { $in: [ 5,  ObjectId("507c35dd8fada716c89d0013") ] } ).sort( { gameNAME: 1 } ).to_a
-				qzlist = @@gamedb[:gameDB].find({ _id: '_encodedcodes' }).to_a
+				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
+				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 			end
 			glist.each {
 				
