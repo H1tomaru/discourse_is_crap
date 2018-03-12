@@ -68,8 +68,7 @@ after_initialize do
 					end
 				}
 			end
-			
-			
+
 			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
 		end
 		
