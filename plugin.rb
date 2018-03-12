@@ -56,14 +56,14 @@ after_initialize do
 				qzlist = @@gamedb['gameDB'].find( { _id: '_encodedcodes' } ).to_a
 				glist.each {
 					if (qzlist[0][current_user['username']][glist['_id']] rescue false)
-						#qzlist[0].dig(current_user[:username], glist[:_id])
+						#qzlist[0].dig(current_user['username'], glist['_id'])
 						finalvar['qzlist'] = {
 							glist['_id'] => {'gCODE' => qzlist[0][current_user['username']][glist['_id']]['gCODE'],
 									'gNAME' => glist['gameNAME']}
 						}
 					else
-						finalvar[:qzlist] = {
-							glist[:_id] => {'gCODE' => glist['_id'].encrypt('urban'),
+						finalvar['qzlist'] = {
+							glist['_id'] =>	{'gCODE' => glist['_id'].encrypt('urban'),
 									'gNAME' => glist['gameNAME']}
 						}
 					end
