@@ -30,41 +30,41 @@ after_initialize do
 
 		def show
 			#db variables
-			ulist = @@userlistdb[:uListP4].find().to_a
+			ulist = @@userlistdb['uListP4'].find().to_a
 			#other variables
 			finalvar = {}
-			finalvar[:qzstuff] = false
+			finalvar['qzstuff'] = false
 
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
+				feedbacks = @@userfb['userfb'].find( { UID: current_user['username'] } ).to_a
 				feedbacks.each {
-					if feedbacks[:SCORE] < 0
+					if feedbacks['SCORE'] < 0
 						fbcount = 0
 						break
 					end
-					fbcount = fbcount + feedbacks[:SCORE]
+					fbcount = fbcount + feedbacks['SCORE']
 				}
-				finalvar[:qzstuff] = true if fbcount >= 10
+				finalvar['qzstuff'] = true if fbcount >= 10
 			end
 
-			finalvar[:qzstuff] = true
+			finalvar['qzstuff'] = true
 			#get all games from db and make a qz variable with codes and stuff
-			if finalvar[:qzstuff]
-				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
-				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
+			if finalvar['qzstuff']
+				glist = @@gamedb['gameDB'].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
+				qzlist = @@gamedb['gameDB'].find( { _id: '_encodedcodes' } ).to_a
 				glist.each {
-					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
+					if (qzlist[0][current_user['username']][glist['_id']] rescue false)
 						#qzlist[0].dig(current_user[:username], glist[:_id])
-						finalvar[:qzlist] = {
-							glist[:_id] => {:gCODE => qzlist[0][current_user[:username]][glist[:_id]][:gCODE],
-									:gNAME => glist[:gameNAME]}
+						finalvar['qzlist'] = {
+							glist['_id'] => {'gCODE' => qzlist[0][current_user['username']][glist['_id']]['gCODE'],				
+									'gNAME' => glist['gameNAME']}
 						}
 					else
 						finalvar[:qzlist] = {
-							glist[:_id] => {:gCODE => glist[:_id].encrypt('urban'),
-									:gNAME => glist[:gameNAME]}
+							glist[:_id] => {'gCODE' => glist['_id'].encrypt('urban'),
+									'gNAME' => glist['gameNAME']}
 						}
 					end
 				}
@@ -76,10 +76,10 @@ after_initialize do
 		
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
+			troikopoisk = Base64.decode64(params['miloakka']).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
+				zapislist = @@userdb['PS4db'].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
 					render json: { poiskwin: true, troikopoisk: zapislist[0] }
 				else
