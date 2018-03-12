@@ -28,18 +28,36 @@ after_initialize do
 		@@userfb = db.use('userfb')
 
 		def show
-			glist = @@gamedb[:gameDB].find().sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+			#db variables
 			ulist = @@userlistdb[:uListP4].find().to_a
-			feedbacks = @@userfb[:userfb].find().to_a
-			qzlist = @@gamedb[:gameDB].find({ _id: '_encodedcodes' }).to_a
+			#other variables
+			finalvar[:qzstuff] = false
+
 			#if viever registered, count his fb, if guest, just lol
-				
+			if current_user
+				fbcount = 0
+				feedbacks = @@userfb[:userfb].find({ UID: current_user[:username] }).to_a
+				feedbacks.each {
+					if feedbacks[:SCORE] < 0
+						fbcount = 0
+						break
+					end
+					fbcount = fbcount + feedbacks[:SCORE]
+				}
+				finalvar[:qzstuff] = true if fbcount >= 10
+			end
+
+			#get all games from db and make a qz variable with codes and stuff
+			if finalvar[:qzstuff]
+				glist = @@gamedb[:gameDB].find().sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+				qzlist = @@gamedb[:gameDB].find({ _id: '_encodedcodes' }).to_a
+			end
 			glist.each {
 				
 			}
 			
 			
-			render json: { CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
+			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
 		end
 		
 		
