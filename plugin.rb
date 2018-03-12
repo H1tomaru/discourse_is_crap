@@ -55,17 +55,17 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				glist.each {
-					if qzlist[0][:current_user[:username]][:glist[:_id]]
-						finalvar[:qzlist][glist[:_id]][:gCODE] = qzlist[0][current_user[:username]][glist[:_id]]
-					else
-						finalvar[:qzlist][glist[:_id]][:gCODE] = glist[:gameNAME].encrypt('urban')
-					end
-					finalvar[:qzlist][:glist[:_id]][:gNAME] = glist[:gameNAME]
+				#	if qzlist[0][current_user[:username]][glist[:_id]]
+				#		finalvar[:qzlist][glist[:_id]][:gCODE] = qzlist[0][current_user[:username]][glist[:_id]]
+				#	else
+				#		finalvar[:qzlist][glist[:_id]][:gCODE] = glist[:gameNAME].encrypt('urban')
+				#	end
+				#	finalvar[:qzlist][:glist[:_id]][:gNAME] = glist[:gameNAME]
 				}
 			end
 			
 			
-			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
+			render json: { test: current_user[:addr], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
 		end
 		
 		
