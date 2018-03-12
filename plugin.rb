@@ -74,8 +74,8 @@ after_initialize do
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
 				glist.each do |game|
+					dbupdate[x] = game[:id]
 					x = x+1
-					dbupdate[x] = game
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
 				#		encodedid = qzlist[0][current_user[:username]][glist[:_id]]
 				#	else
