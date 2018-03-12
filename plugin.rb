@@ -65,7 +65,7 @@ after_initialize do
 			end
 			
 			
-			render json: { test: current_user.dig("ip_address", "addr"), finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
+			render json: { test: current_user["ip_address"], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist, feedbacks: feedbacks }
 		end
 		
 		
