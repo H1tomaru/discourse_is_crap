@@ -65,7 +65,7 @@ after_initialize do
 			end
 			
 			
-			render json: { test: current_user['username'], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
+			render json: { test: glist[0], finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
 		end
 		
 		
