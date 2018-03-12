@@ -71,8 +71,7 @@ after_initialize do
 			if finalvar[:qzstuff]
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
-				dbupdate = {}
-				finalvar[:qzlist] = {}
+				dbupdate = {}, finalvar[:qzlist] = {}
 				glist.each {
 					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
 						encodedid = qzlist[0][current_user[:username]][glist[:_id]]
