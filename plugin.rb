@@ -86,7 +86,7 @@ after_initialize do
 				end
 			end
 
-			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
+			render json: { test: dbupdate, finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
 		end
 
 		def troikopoisk
