@@ -76,7 +76,7 @@ after_initialize do
 					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
 						encodedid = qzlist[0][current_user[:username]][glist[:_id]]
 					else
-						encodedid = glist[5][:_id].encrypt('urban')
+						encodedid = glist[5][:_id]#.encrypt('urban')
 					end
 					finalvar[:qzlist].push( encodedid => glist[:gameNAME] )
 					dbupdate.push( glist[:_id] => encodedid )
