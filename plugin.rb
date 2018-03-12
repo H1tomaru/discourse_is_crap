@@ -55,14 +55,14 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				glist.each do |game| {
-					if qzlist[0][current_user[:username]][game[:_id]] rescue false
+					if (qzlist[0][current_user[:username]][game[:_id]] rescue false)
 						finalvar[:qzlist].push({ game[:_id] => [{
 							:gCODE => qzlist[0][current_user[:username]][game[:_id]][:gCODE],
 							:gNAME => game[:gameNAME] }] })
 					else
-						finalvar[:qzlist].push({ game[:_id] => [{ 
-							:gCODE => game[:_id].encrypt('urban'),
-							:gNAME => game[:gameNAME] }] })
+					#	finalvar[:qzlist].push({ game[:_id] => [{ 
+					#		:gCODE => game[:_id].encrypt('urban'),
+					#		:gNAME => game[:gameNAME] }] })
 					end
 				}
 			end
