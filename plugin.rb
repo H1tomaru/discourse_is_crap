@@ -53,7 +53,7 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}
-				glist.each do |game|
+				glist.each
 					if (qzlist[0][current_user[:username]][game[:_id]] rescue false)
 						encodedid = qzlist[0][current_user[:username]][game[:_id]]
 					else
@@ -87,4 +87,22 @@ after_initialize do
 	end
 end
 
+#encrypt decrypt stuff
+class String
+  def encrypt(key)
+    cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').encrypt
+    cipher.key = Digest::SHA1.hexdigest key
+    s = cipher.update(self) + cipher.final
+
+    s.unpack('H*')[0].upcase
+  end
+
+  def decrypt(key)
+    cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').decrypt
+    cipher.key = Digest::SHA1.hexdigest key
+    s = [self].pack("H*").unpack("C*").pack("c*")
+
+    cipher.update(s) + cipher.final
+  end
+end
 
