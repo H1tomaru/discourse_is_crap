@@ -44,7 +44,7 @@ after_initialize do
 					end
 					fbcount = fbcount + feedbacks[:SCORE]
 				end
-				#finalvar[:qzstuff] = true if fbcount >= 10
+				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
 			finalvar[:qzstuff] = true
