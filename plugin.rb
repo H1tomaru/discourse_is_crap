@@ -49,6 +49,7 @@ after_initialize do
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
+			finalvar[:qzstuff] = true
 			#get all games from db and make a qz variable with codes and stuff
 			if finalvar[:qzstuff]
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
