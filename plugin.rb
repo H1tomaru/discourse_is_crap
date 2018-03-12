@@ -53,6 +53,15 @@ after_initialize do
 				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
 				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
 				dbupdate = {}
+				glist.each
+					if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
+						encodedid = qzlist[0][current_user[:username]][glist[:_id]]
+					else
+						encodedid = glist[:_id].encrypt('urban')
+					end
+					finalvar[:qzlist].push( encodedid => glist[:gameNAME] )
+					dbupdate.push( glist[:_id] => encodedid )
+				end
 			end
 
 			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
