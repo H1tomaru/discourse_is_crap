@@ -48,27 +48,16 @@ after_initialize do
 			end
 
 			finalvar[:qzstuff] = true
-			#get all games from db and make a qz variable with codes and stuff
+			#get all games from db and make a qz variable
 			if finalvar[:qzstuff]
-				glist = @@gamedb[:gameDB].find( { _id: { '$ne': '_encodedcodes' } } ).sort( { gameNAME: 1 } ).to_a
-				qzlist = @@gamedb[:gameDB].find( { _id: '_encodedcodes' } ).to_a
-				dbupdate = {}, finalvar[:qzlist] = {}
-				x = 0
+				glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
+				finalvar[:qzlist] = []
 				glist.each do |game|
-					dbupdate[x] = game[:_id]
-					#dbupdate[x][:id] = game[:gameNAME]
-					x = x+1
-				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
-				#		encodedid = qzlist[0][current_user[:username]][glist[:_id]]
-				#	else
-				#		encodedid = glist[5][:_id]#.encrypt('urban')
-				#	end
-				#	finalvar[:qzlist].push( encodedid => glist[5][:gameNAME] )
-				#	dbupdate[glist[5][:_id]] = encodedid
+					finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 				end
 			end
 
-			render json: { test: dbupdate, finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
+			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
 		end
 
 		def troikopoisk
