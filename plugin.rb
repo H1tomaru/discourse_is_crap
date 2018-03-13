@@ -7,7 +7,6 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 require 'base64'
-require 'openssl'
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -20,26 +19,6 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 		
-		#encrypt decrypt stuff
-		def encrypt(key,string)
-			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
-			cipher.encrypt
-			cipher.key = Digest::SHA256.digest(key)
-			cipher.iv = initialization_vector = cipher.random_iv
-			cipher_text = cipher.update(string)
-			cipher_text << cipher.final
-			return initialization_vector + cipher_text
-		end
-
-		def decrypt(key,encrypted)
-			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
-			cipher.decrypt
-			cipher.key = Digest::SHA256.digest(key)    
-			cipher.iv = encrypted.slice!(0,16)
-			d = cipher.update(encrypted)
-			d << cipher.final
-		end
-
 		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
@@ -58,13 +37,13 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
-				feedbacks.each {
-					if feedbacks[:SCORE] < 0
+				feedbacks.each do |feedback|
+					if feedback[:SCORE] < 0
 						fbcount = 0
 						break
 					end
-					fbcount = fbcount + feedbacks[:SCORE]
-				}
+					fbcount = fbcount + feedback[:SCORE]
+				end
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
@@ -76,7 +55,7 @@ after_initialize do
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
 				glist.each do |game|
-					dbupdate[x] = encrypt('urban', game[:_id])
+					dbupdate[x] = game[:_id]
 					#dbupdate[x][:id] = game[:gameNAME]
 					x = x+1
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
