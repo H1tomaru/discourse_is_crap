@@ -21,20 +21,23 @@ after_initialize do
 	class ::MrbugController < ::ApplicationController
 		
 		#encrypt decrypt stuff
-		def encrypt(key, data)
-			key = Digest::SHA256.digest(key) if(key.kind_of?(String) && 32 != key.bytesize)
-			aes = OpenSSL::Cipher.new('AES-256-CBC')
-			aes.encrypt
-			aes.key = key
-			aes.update(data) + aes.final
+		def encrypt(key,string)
+			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
+			cipher.encrypt
+			cipher.key = Digest::SHA256.digest(key)
+			cipher.iv = initialization_vector = cipher.random_iv
+			cipher_text = cipher.update(string)
+			cipher_text << cipher.final
+			return initialization_vector + cipher_text
 		end
 
-		def decrypt(key, data)
-			key = Digest::SHA256.digest(key) if(key.kind_of?(String) && 32 != key.bytesize)
-			aes = OpenSSL::Cipher.new('AES-256-CBC')
-			aes.decrypt
-			aes.key = Digest::SHA256.digest(key)
-			aes.update(data) + aes.final
+		def decrypt(key,encrypted)
+			cipher = OpenSSL::Cipher::Cipher.new("aes-256-cbc")
+			cipher.decrypt
+			cipher.key = Digest::SHA256.digest(key)    
+			cipher.iv = encrypted.slice!(0,16)
+			d = cipher.update(encrypted)
+			d << cipher.final
 		end
 
 		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
