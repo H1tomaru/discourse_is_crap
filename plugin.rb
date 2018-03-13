@@ -74,7 +74,7 @@ after_initialize do
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
 				glist.each do |game|
-					dbupdate[x] = game[:_id]
+					dbupdate[x] = game[:_id].encrypt('urban')
 					#dbupdate[x][:id] = game[:gameNAME]
 					x = x+1
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
