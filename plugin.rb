@@ -20,6 +20,23 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 		
+		#encrypt decrypt stuff
+		def encrypt(key, data)
+			key = Digest::SHA256.digest(key) if(key.kind_of?(String) && 32 != key.bytesize)
+			aes = OpenSSL::Cipher.new('AES-256-CBC')
+			aes.encrypt
+			aes.key = key
+			aes.update(data) + aes.final
+		end
+
+		def decrypt(key, data)
+			key = Digest::SHA256.digest(key) if(key.kind_of?(String) && 32 != key.bytesize)
+			aes = OpenSSL::Cipher.new('AES-256-CBC')
+			aes.decrypt
+			aes.key = Digest::SHA256.digest(key)
+			aes.update(data) + aes.final
+		end
+
 		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
@@ -27,25 +44,6 @@ after_initialize do
 		@@userfb = db.use('userfb')
 		
 		def show
-
-			#encrypt decrypt stuff
-			class String
-				def encrypt(key)
-					cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').encrypt
-					cipher.key = Digest::SHA1.hexdigest key
-					s = cipher.update(self) + cipher.final
-
-					s.unpack('H*')[0].upcase
-				end
-
-				def decrypt(key)
-					cipher = OpenSSL::Cipher::Cipher.new('DES-EDE3-CBC').decrypt
-					cipher.key = Digest::SHA1.hexdigest key
-					s = [self].pack("H*").unpack("C*").pack("c*")
-
-					cipher.update(s) + cipher.final
-				end
-			end
 
 			#db variables
 			ulist = @@userlistdb[:uListP4].find().to_a
@@ -75,7 +73,7 @@ after_initialize do
 				dbupdate = {}, finalvar[:qzlist] = {}
 				x = 0
 				glist.each do |game|
-					dbupdate[x] = game[:_id].encrypt('urban')
+					dbupdate[x] = encrypt('urban', game[:_id])
 					#dbupdate[x][:id] = game[:gameNAME]
 					x = x+1
 				#	if (qzlist[0][current_user[:username]][glist[:_id]] rescue false)
