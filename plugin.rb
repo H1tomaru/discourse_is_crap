@@ -91,7 +91,7 @@ after_initialize do
 					end
 					fbcount = fbcount + feedback[:SCORE]
 				end
-				if fbcount < 10 && code[1] == 1
+				if fbcount < 10 && code[0] == 1
 					render json: { piadin: true }
 				else if fbcount == 777
 					render json: { banned: true }
@@ -102,6 +102,7 @@ after_initialize do
 						prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
 						prezaips[0] = prezaips[0].except(:imgLINKHQ)
 					end
+					prezaips[0][:position] = code[0]
 					render json: { prezaips: prezaips }
 				end
 			else
