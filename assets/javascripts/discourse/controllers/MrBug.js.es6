@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
 	prezaips: null,
 
 	bagamdal: false,
+	mdalready: false,
 	poiskmdal: false,
 	zaipsmdal: false,
 
@@ -35,6 +36,7 @@ export default Ember.Controller.extend({
 
 		netmudal() {
 			this.set('bagamdal', false);
+			this.set('mdalready', false);
 			this.set('poiskmdal', false);
 			this.set('zaipsmdal', false);
 			this.set('troikopoisk', null);
@@ -49,6 +51,7 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				this.set('troikopoisk', result);
 				this.set('poiskmdal', true);
+				this.set('mdalready', true);
 			});
 		},
 
@@ -65,6 +68,7 @@ export default Ember.Controller.extend({
 				}).then(result => {
 					this.set('prezaips', result);
 					this.set('zaipsmdal', true);
+					this.set('mdalready', true);
 				});
 			}
 		}
