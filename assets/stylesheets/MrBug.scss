@@ -309,5 +309,62 @@ div.shinbakaz {
 		}
 
 	}
+	
+	.prezaips {
+
+		.mudalcontent {
+			top: 10%	
+		}
+
+		div {
+			height: 450px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;
+			filter: saturate(1.5);
+		}
+
+		h1 {
+			color: #d3222a;
+			background-color: #FFF;
+			font-size: 1em;
+			padding: 16px 20px 0px;
+			position: absolute;
+			margin: -52px 0 0 20px;
+		}
+
+		button {
+			font-size: 0.8em;
+			border: none;
+			color: #fff;
+			padding: 19px 26px;
+		}
+
+		button:first-child {
+			width: 60%;
+			margin: 30px 2%;
+			text-transform: uppercase;
+			background-color: darkseagreen;
+		}
+
+		button:first-child:hover {
+			background-color: forestgreen;
+		}
+
+		button:last-child {
+			background-color: indianred;
+		}
+
+		button:last-child:hover {
+			background-color: darkred;
+		}
+
+		button:focus {
+			border: none;
+			text-decoration: none;
+			outline: 0;
+		}
+
+	}
 
 }
