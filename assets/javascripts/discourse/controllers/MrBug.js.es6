@@ -3,6 +3,8 @@ export default Ember.Controller.extend({
 	bagoPravila: false,
 	bagoGuidaz: false,
 	bagoPlati: false,
+	
+	qzselect: null,
 
 	bagamdal: false,
 	poiskmdal: false,
@@ -42,6 +44,10 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				this.set('troikopoisk', result);
 			});
+		},
+
+		qzselect(selected) {
+			this.set('qzselect', selected);
 		}
 
 	}
