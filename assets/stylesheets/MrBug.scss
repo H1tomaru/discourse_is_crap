@@ -340,23 +340,23 @@ div.shinbakaz {
 			padding: 19px 26px;
 		}
 
-		button:first-child {
+		button:first-of-type {
 			width: 60%;
 			margin: 30px 2%;
 			text-transform: uppercase;
 			background-color: darkseagreen;
 		}
 
-		button:first-child:hover {
+		button:first-of-type:hover {
 			background-color: forestgreen;
 		}
 
-		button:last-child {
-			background-color: indianred;
+		button:last-of-type {
+			background-color: indianred
 		}
 
-		button:last-child:hover {
-			background-color: darkred;
+		button:last-of-type:hover {
+			background-color: darkred
 		}
 
 		button:focus {
