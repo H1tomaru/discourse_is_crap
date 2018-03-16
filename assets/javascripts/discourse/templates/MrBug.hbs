@@ -118,7 +118,6 @@
 							{{/each}} 
 						</select>
 					</div>
-					{{qzselect}}
 				</td>
 			</tr>
 			{{/if}}
@@ -132,30 +131,44 @@
 		<div class="etomudal">
 			<button class="netmudal" {{action 'netmudal'}}></button>
 
-			{{#if poiskmdal}}
-				{{#if troikopoisk.poiskwin}}
+			{{#if mdalready}}
+			
+				{{#if poiskmdal}}
 
-					<div class="mudalcontent mudaladdon headin3">
-						<span>{{troikopoisk.troikopoisk._id}}</span>
-					<div class="bagariban">{{troikopoisk.troikopoisk.GAME}}</div>
-					<table><tbody>
-						<tr>
-							<td>П2<br><a href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
-							{{#if troikopoisk.troikopoisk.P41}}
-							<td>П4<br><a href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>
-							<td>П4<br><a href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
-							{{else}}
-							<td>П3<br><a href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
-							{{/if}}
-						</tr>
-					</tbody></table>
-					</div>
-				{{else}}
-					<div class="mudalcontent mudaladdon headin3">
-						<span>{{troikopoisk2}}</span>
-						<div class="bagariban">Не найден</div>
-					</div>
+					{{#if troikopoisk.poiskwin}}
+
+						<div class="mudalcontent mudaladdon headin3">
+							<span>{{troikopoisk.troikopoisk._id}}</span>
+						<div class="bagariban">{{troikopoisk.troikopoisk.GAME}}</div>
+						<table><tbody>
+							<tr>
+								<td>П2<br><a href="/u/{{troikopoisk.troikopoisk.P2}}">{{troikopoisk.troikopoisk.P2}}</a></td>
+								{{#if troikopoisk.troikopoisk.P41}}
+								<td>П4<br><a href="/u/{{troikopoisk.troikopoisk.P41}}">{{troikopoisk.troikopoisk.P41}}</a></td>
+								<td>П4<br><a href="/u/{{troikopoisk.troikopoisk.P42}}">{{troikopoisk.troikopoisk.P42}}</a></td>
+								{{else}}
+								<td>П3<br><a href="/u/{{troikopoisk.troikopoisk.P3}}">{{troikopoisk.troikopoisk.P3}}</a></td>
+								{{/if}}
+							</tr>
+						</tbody></table>
+						</div>
+					{{else}}
+						<div class="mudalcontent mudaladdon headin3">
+							<span>{{troikopoisk2}}</span>
+							<div class="bagariban">Не найден</div>
+						</div>
+					{{/if}}
+
 				{{/if}}
+				
+				{{#if zaipsmdal}}
+				
+				{{/if}}
+
+			{{else}}
+
+				<div class="bagaspin"></div>
+
 			{{/if}}
 
 		</div>
