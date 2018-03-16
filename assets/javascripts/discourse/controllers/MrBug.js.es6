@@ -3,11 +3,15 @@ export default Ember.Controller.extend({
 	bagoPravila: false,
 	bagoGuidaz: false,
 	bagoPlati: false,
-	
+
+	troikopoisk: null,
 	qzselect: null,
+	prezaips: null,
 
 	bagamdal: false,
 	poiskmdal: false,
+	zaipsmdal: false,
+
 	
 	actions: {
 
@@ -32,22 +36,37 @@ export default Ember.Controller.extend({
 		netmudal() {
 			this.set('bagamdal', false);
 			this.set('poiskmdal', false);
-			this.set('troikopoisk', '');
+			this.set('zaipsmdal', false);
+			this.set('troikopoisk', null);
+			this.set('prezaips', null);
 		},
 
 		troikopoisk() {
 			this.set('bagamdal', true);
-			this.set('poiskmdal', true);
 			Ember.$.ajax({
 				url: "/MrBug/troikopoisk/"+btoa(this.get('troikopoisk2'))+".json",
 				type: "GET"
 			}).then(result => {
 				this.set('troikopoisk', result);
+				this.set('poiskmdal', true);
 			});
 		},
 
 		qzselect(selected) {
 			this.set('qzselect', selected);
+		}
+		
+		qzaips(value) {
+			if (qzselect) {
+				this.set('bagamdal', true);
+				Ember.$.ajax({
+					url: "/MrBug/prezaips/"+btoa(value+qzselect+".json",
+					type: "GET"
+				}).then(result => {
+					this.set('prezaips', result);
+					this.set('zaipsmdal', true);
+				});
+			}
 		}
 
 	}
