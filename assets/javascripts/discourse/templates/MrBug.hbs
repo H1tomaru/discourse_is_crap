@@ -163,6 +163,13 @@
 				
 				{{#if zaipsmdal}}
 				
+					<div class="mudalcontent mudaladdon headin3">
+						<div style="background-image:url('{prezaips.imgLINK}')"></div>
+						<h1><a>{prezaips.gameNAME}</a> Запись</h1>
+						<button>Записаться на П{prezaips.position}</button>
+						<button {{action 'netmudal'}}>Нет, Отменить</button>
+					</div>
+
 				{{/if}}
 
 			{{else}}
