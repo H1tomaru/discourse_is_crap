@@ -16,6 +16,7 @@ after_initialize do
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
+		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -73,6 +74,38 @@ after_initialize do
 				end
 			else 
 				render json: { poiskwin: false }
+			end
+		end 
+		
+		def prezaips
+			#decode shit
+			code = Base64.decode64(URI.unescape(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
+			#if viever registered, count his fb
+			if current_user
+				fbcount = 0
+				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
+				feedbacks.each do |feedback|
+					if feedback[:SCORE] < 0
+						fbcount = 777
+						break
+					end
+					fbcount = fbcount + feedback[:SCORE]
+				end
+				if fbcount < 10 && code[1] == 1
+					render json: { piadin: true }
+				else if fbcount == 777
+					render json: { banned: true }
+				else
+					#get stuff from db
+					prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
+					if prezaips[0][:imgLINKHQ]
+						prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
+						prezaips[0] = prezaips[0].except(:imgLINKHQ)
+					end
+					render json: { prezaips: prezaips }
+				end
+			else
+				render json: { guest: true }
 			end
 		end 
 
