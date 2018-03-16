@@ -60,7 +60,7 @@ export default Ember.Controller.extend({
 		},
 		
 		qzaips(value) {
-			if (qzselect) {
+			if (this.get('qzselect')) {
 				this.set('bagamdal', true);
 				Ember.$.ajax({
 					url: "/MrBug/prezaips/"+btoa(decodeURI(encodeURI(value+qzselect)))+".json",
