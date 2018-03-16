@@ -163,12 +163,26 @@
 				
 				{{#if zaipsmdal}}
 				
+					{{#if prezaips.guest}}
+					
+					{{/if}}
+					
+					{{#if prezaips.piadin}}
+					
+					{{/if}}
+					
+					{{#if prezaips.banned}}
+					
+					{{/if}}
+				
+					{{#if prezaips.winrars}}
 					<div class="mudalcontent headin3 prezaips">
-						<div style="background-image:url('{prezaips.imgLINK}')"></div>
-						<h1><a>{prezaips.gameNAME}</a> Запись</h1>
-						<button>Записаться на П{prezaips.position}</button>
+						<div style="background-image:url('{prezaips.prezaips.imgLINK}')"></div>
+						<h1><a>{prezaips.prezaips.gameNAME}</a> Запись</h1>
+						<button>Записаться на П{prezaips.prezaips.position}</button>
 						<button {{action 'netmudal'}}>Нет, Отменить</button>
 					</div>
+					{{/if}}
 
 				{{/if}}
 
