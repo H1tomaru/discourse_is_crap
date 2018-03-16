@@ -103,7 +103,7 @@ after_initialize do
 						prezaips[0] = prezaips[0].except(:imgLINKHQ)
 					end
 					prezaips[0][:position] = code[0]
-					render json: { prezaips: prezaips }
+					render json: { winrars: true, prezaips: prezaips }
 				end
 			else
 				render json: { guest: true }
