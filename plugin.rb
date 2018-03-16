@@ -7,6 +7,7 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 require 'base64'
+require 'uri'
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -61,7 +62,7 @@ after_initialize do
 
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(params[:miloakka]).strip.downcase
+			troikopoisk = Base64.decode64(URI.unescape(params[:miloakka])).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
