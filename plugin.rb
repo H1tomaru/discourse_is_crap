@@ -91,7 +91,7 @@ after_initialize do
 					end
 					fbcount = fbcount + feedback[:SCORE]
 				end
-				if fbcount < 10 && code[0] == 1
+				if fbcount < 10 && code[0] == "1"
 					render json: { piadin: true }
 				elsif fbcount == 777
 					render json: { banned: true }
