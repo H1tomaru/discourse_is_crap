@@ -96,14 +96,26 @@ after_initialize do
 				elsif fbcount == 777
 					render json: { banned: true }
 				else
-					#get stuff from db
-					prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
-					if prezaips[0][:imgLINKHQ]
-						prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-						prezaips[0] = prezaips[0].except(:imgLINKHQ)
+					#find and count how many times user zaipsalsq
+					zcount = 0
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[1] ).to_a
+					gameuzers[0][:"P"+code[0]].each do |user|
+						if user[:NAME] == current_user[:username]
+							zcount = zcount + 1
+						end
 					end
-					prezaips[0][:position] = code[0]
-					render json: { winrars: true, prezaips: prezaips[0] }
+					if zcount > 2
+						render json: { banned: true }
+					else
+						#get stuff from db
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
+						if prezaips[0][:imgLINKHQ]
+							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
+							prezaips[0] = prezaips[0].except(:imgLINKHQ)
+						end
+						prezaips[0][:position] = code[0]
+						render json: { winrars: true, prezaips: prezaips[0] }
+					end
 				end
 			else
 				render json: { guest: true }
