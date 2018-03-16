@@ -26,7 +26,6 @@ after_initialize do
 		@@userfb = db.use('userfb')
 		
 		def show
-
 			#db variables
 			ulist = @@userlistdb[:uListP4].find().to_a
 			#other variables
@@ -57,7 +56,7 @@ after_initialize do
 				end
 			end
 
-			render json: { finalvar: finalvar, CurrentUser: current_user, gamelist: glist, userlist: ulist }
+			render json: { finalvar: finalvar }
 		end
 
 		def troikopoisk
