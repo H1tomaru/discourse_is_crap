@@ -45,7 +45,7 @@ export default Ember.Controller.extend({
 		troikopoisk() {
 			this.set('bagamdal', true);
 			Ember.$.ajax({
-				url: "/MrBug/troikopoisk/"+btoa(decodeURI(encodeURI(this.get('troikopoisk2'))))+".json",
+				url: "/MrBug/troikopoisk/"+btoa(unescape(encodeURIComponent(this.get('troikopoisk2'))))+".json",
 				type: "GET"
 			}).then(result => {
 				this.set('troikopoisk', result);
@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
 			if (this.get('qzselect')) {
 				this.set('bagamdal', true);
 				Ember.$.ajax({
-					url: "/MrBug/prezaips/"+btoa(decodeURI(encodeURI(value+this.get('qzselect'))))+".json",
+					url: "/MrBug/prezaips/"+btoa(unescape(encodeURIComponent(value+this.get('qzselect'))))+".json",
 					type: "GET"
 				}).then(result => {
 					this.set('prezaips', result);
