@@ -111,7 +111,7 @@
 					<button {{action 'qzaips' 4}}>П4</button>
 
 					<div>
-						<select required {{action 'qzselect' on='change'}}>
+						<select required onchange={{action "qzselect" value="target.value"}}>
 							<option disabled selected style="display: none"> -- Выбрать Игру -- </option>
 							{{#each model.finalvar.qzlist as |qzgame|}}
 							<option value={{qzgame.[0]}}>{{qzgame.[1]}}</option>
