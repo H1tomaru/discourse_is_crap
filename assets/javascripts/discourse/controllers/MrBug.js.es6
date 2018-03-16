@@ -57,7 +57,7 @@ export default Ember.Controller.extend({
 
 		qzselect(selected) {
 			this.set('qzselect', selected);
-		}
+		},
 		
 		qzaips(value) {
 			if (qzselect) {
