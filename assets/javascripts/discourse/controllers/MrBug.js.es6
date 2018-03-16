@@ -63,7 +63,7 @@ export default Ember.Controller.extend({
 			if (qzselect) {
 				this.set('bagamdal', true);
 				Ember.$.ajax({
-					url: "/MrBug/prezaips/"+btoa(value+qzselect+".json",
+					url: "/MrBug/prezaips/"+btoa(value+qzselect)+".json",
 					type: "GET"
 				}).then(result => {
 					this.set('prezaips', result);
