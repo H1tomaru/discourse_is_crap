@@ -93,7 +93,7 @@ after_initialize do
 				end
 				if fbcount < 10 && code[0] == 1
 					render json: { piadin: true }
-				else if fbcount == 777
+				elsif fbcount == 777
 					render json: { banned: true }
 				else
 					#get stuff from db
