@@ -5,7 +5,6 @@ export default Ember.Controller.extend({
 	bagoPlati: false,
 
 	troikopoisk: null,
-	qzselect: null,
 	prezaips: null,
 
 	bagamdal: false,
