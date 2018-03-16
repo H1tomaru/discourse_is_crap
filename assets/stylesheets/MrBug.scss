@@ -130,21 +130,21 @@ div.shinbakaz {
 		}
 
 		.poiskbutt {
-		    background: #2980B9;
-		    border: 0;
-		    color: #fff;
-		    padding: 8px 15px;
-		    border-radius: 0 2px 2px 0;
+			background: #2980B9;
+			border: 0;
+			color: #fff;
+			padding: 8px 15px;
+			border-radius: 0 2px 2px 0;
 		}
 
 		.poiskbox {
-		    border: 1px solid #303030;
-		    border-right: none;
-		    padding: 5px 0px;
-		    width: 70%;
-		    border-radius: 2px 0 0 2px;
-		    margin-right: -5px;
-		    text-align: center;
+			border: 1px solid #303030;
+			border-right: none;
+			padding: 5px 0px;
+			width: 70%;
+			border-radius: 2px 0 0 2px;
+			margin-right: -5px;
+			text-align: center;
 		}
 
 		.poiskbox:focus {
@@ -156,18 +156,18 @@ div.shinbakaz {
 		}
 
 		.Bagolet {
-			font-size: 0.75em	
-		}
+			font-size: 0.75em;
 
-		.Bagolet .headin2 {
-			font-size: 1.5em	
+			.headin2 {
+				font-size: 1.5em	
+			}
 		}
 
 		.smaladndark {
-		    color: #777;
-		    font-size: .75em;
-		    display: table;
-		    margin: 0 auto -5px;
+			color: #777;
+			font-size: .75em;
+			display: table;
+			margin: 0 auto -5px;
 		}
 
 	}
@@ -253,6 +253,38 @@ div.shinbakaz {
 		top: 30px;
 		right: -47px;
 		z-index: -1;
+	}
+	
+	.Bagoqz {
+
+		button {
+			width: 100px;
+			height: 70px;
+			background: #489BCF;
+			border: none;
+			color: #fff;
+			border-radius: 5px;
+			margin: 0 5px 10px;
+			font-size: 3.5em;	
+		}
+		
+		div {
+			overflow: hidden;
+			width: 330px;
+			border-radius: 5px;
+			height: 29px;
+			margin: auto;
+		}
+		
+		select {
+			background: #489BCF;
+			border: none;
+			padding: 5px;
+			width: 350px;
+			color: white;
+			text-align: center;
+		}
+
 	}
 
 }
