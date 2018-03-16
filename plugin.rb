@@ -98,8 +98,9 @@ after_initialize do
 				else
 					#find and count how many times user zaipsalsq
 					zcount = 0
+					position = :"P"+code[0]
 					gameuzers = @@userlistdb[:uListP4].find( _id: code[1] ).to_a
-					gameuzers[0][:"P"+code[0]].each do |user|
+					gameuzers[0][position].each do |user|
 						if user[:NAME] == current_user[:username]
 							zcount = zcount + 1
 						end
