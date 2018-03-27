@@ -128,10 +128,10 @@ after_initialize do
 		def zaips
 			#decode shit
 			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE
-			if current_user && code[2] && current_user == code[1]
+			if current_user && code[2] && current_user[:username] == code[1]
 				
 			else
-				render json: { zaipsfail: true, code: code, user: current_user }
+				render json: { zaipsfail: true }
 			end
 		end 
 
