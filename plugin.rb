@@ -131,7 +131,7 @@ after_initialize do
 			if current_user && code[2] && current_user == code[1]
 				
 			else
-				render json: { zaipsfail: true }
+				render json: { zaipsfail: true, code: code, user: current_user }
 			end
 		end 
 
