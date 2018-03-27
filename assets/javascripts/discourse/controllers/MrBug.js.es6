@@ -88,7 +88,7 @@ export default Ember.Controller.extend({
 		imgoingin(knopk, gcode) {
 			this.set('mdalready', false);
 			Ember.$.ajax({
-				url: "/MrBug/zaips/"+encodeURIComponent(btoa(knopk+"~"+currentUser[username]"~"+gcode))+".json",
+				url: "/MrBug/zaips/"+encodeURIComponent(btoa(knopk+"~"+currentUser.username+"~"+gcode))+".json",
 				type: "GET"
 			}).then(result => {
 				this.set('zaips', result);
