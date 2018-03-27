@@ -58,11 +58,11 @@ export default Ember.Controller.extend({
 			this.set('qzselect', selected);
 		},
 		
-		qzaips(value) {
+		qzaips(knopk) {
 			if (this.get('qzselect')) {
 				this.set('bagamdal', true);
 				Ember.$.ajax({
-					url: "/MrBug/prezaips/"+encodeURIComponent(btoa(value+"~"+this.get('qzselect')))+".json",
+					url: "/MrBug/prezaips/"+encodeURIComponent(btoa(knopk+"~"+this.get('qzselect')))+".json",
 					type: "GET"
 				}).then(result => {
 					this.set('prezaips', result);
@@ -70,6 +70,18 @@ export default Ember.Controller.extend({
 					this.set('mdalready', true);
 				});
 			}
+		},
+		
+		zaips(knopk, gcode) {
+			this.set('bagamdal', true);
+			Ember.$.ajax({
+				url: "/MrBug/prezaips/"+encodeURIComponent(btoa(knopk+"~"+gcode))+".json",
+				type: "GET"
+			}).then(result => {
+				this.set('prezaips', result);
+				this.set('zaipsmdal', true);
+				this.set('mdalready', true);
+			});
 		}
 
 	}
