@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
 
 	troikopoisk: null,
 	prezaips: null,
+	zaips: null,
 
 	bagamdal: false,
 	mdalready: false,
@@ -79,6 +80,18 @@ export default Ember.Controller.extend({
 				type: "GET"
 			}).then(result => {
 				this.set('prezaips', result);
+				this.set('zaipsmdal', true);
+				this.set('mdalready', true);
+			});
+		},
+		
+		imgoingin(knopk, gcode) {
+			this.set('mdalready', false);
+			Ember.$.ajax({
+				url: "/MrBug/zaips/"+encodeURIComponent(btoa(knopk+"~"+currentUser.username"~"+gcode))+".json",
+				type: "GET"
+			}).then(result => {
+				this.set('zaips', result);
 				this.set('zaipsmdal', true);
 				this.set('mdalready', true);
 			});
