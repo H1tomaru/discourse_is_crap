@@ -82,7 +82,7 @@ after_initialize do
 			#decode shit
 			code = Base64.decode64(URI.unescape(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
-			if current_user
+			if current_user && code[1]
 				fbcount = 0
 				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
 				feedbacks.each do |feedback|
@@ -122,6 +122,16 @@ after_initialize do
 				end
 			else
 				render json: { guest: true }
+			end
+		end
+		
+		def zaips
+			#decode shit
+			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE
+			if current_user && code[2] && current_user == code[1]
+				
+			else
+				render json: { zaipsfail: true }
 			end
 		end 
 
