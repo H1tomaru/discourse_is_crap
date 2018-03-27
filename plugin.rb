@@ -70,7 +70,7 @@ after_initialize do
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
 					zapislist[0][:poiskwin] = true
-					render json: { zapislist[0] }
+					render json: zapislist[0]
 				else
 					render json: { poiskwin: false }
 				end
@@ -119,7 +119,7 @@ after_initialize do
 						end
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
-						render json: { prezaips[0] }
+						render json: prezaips[0]
 					end
 				end
 			else
@@ -163,7 +163,7 @@ after_initialize do
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 						zaips = { winrars: true, position: code[0], gameNAME: code[3] }
-						render json: { zaips }
+						render json: zaips
 						#add message to chat
 					end
 				end
