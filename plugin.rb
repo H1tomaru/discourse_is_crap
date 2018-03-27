@@ -69,7 +69,8 @@ after_initialize do
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
-					render json: { poiskwin: true, troikopoisk: zapislist[0] }
+					zapislist[0][:poiskwin] = true
+					render json: { zapislist[0] }
 				else
 					render json: { poiskwin: false }
 				end
@@ -117,7 +118,8 @@ after_initialize do
 							prezaips[0] = prezaips[0].except(:imgLINKHQ)
 						end
 						prezaips[0][:position] = code[0]
-						render json: { winrars: true, prezaips: prezaips[0] }
+						prezaips[0][:winrars] = true
+						render json: { prezaips[0] }
 					end
 				end
 			else
@@ -127,9 +129,9 @@ after_initialize do
 		
 		def zaips
 			#decode shit
-			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE
+			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
-			if current_user && code[2] && current_user[:username] == code[1]
+			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
 				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
@@ -158,9 +160,10 @@ after_initialize do
 					else
 						#do actual zaips, wohoo
 						push = {}
-						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0}
-						zaips = @@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } ).to_a
-						render json: { zaips: zaips }
+						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
+						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
+						zaips = { winrars: true, position: code[0], gameNAME: code[3] }
+						render json: { zaips }
 						#add message to chat
 					end
 				end
