@@ -192,7 +192,7 @@
 								<div class="bagapi" style="background-image:url('{{prezaips.prezaips.imgLINK}}')"></div>
 								<h1><a>{{prezaips.prezaips.gameNAME}}</a> Запись</h1>
 							</div>
-							<button>Записаться на П{{prezaips.prezaips.position}}</button>
+							<button {{action 'imgoingin' prezaips.prezaips.position prezaips.prezaips._id}}>Записаться на П{{prezaips.prezaips.position}}</button>
 							<button {{action 'netmudal'}}>Нет, Отменить</button>
 						</div>
 					{{/if}}
