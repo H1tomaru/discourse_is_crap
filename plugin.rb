@@ -59,7 +59,7 @@ after_initialize do
 				end
 			end
 
-			render json: { finalvar: finalvar }
+			render json: finalvar
 		end
 
 		def troikopoisk
