@@ -128,8 +128,40 @@ after_initialize do
 		def zaips
 			#decode shit
 			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE
+			#do stuff if user is actual user and code is correct
 			if current_user && code[2] && current_user[:username] == code[1]
-				
+				#count feedbacks and how many zaips, again!
+				fbcount = 0
+				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
+				feedbacks.each do |feedback|
+					if feedback[:SCORE] < 0
+						fbcount = 777
+						break
+					end
+					fbcount = fbcount + feedback[:SCORE]
+				end
+				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
+					render json: { zaipsfail: true }
+				else
+					#find and count how many times user zaipsalsq
+					zcount = 0
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a
+					if gameuzers[0]
+						gameuzers[0]["P"+code[0]].each do |user|
+							if user[:NAME] == current_user[:username]
+								zcount = zcount + 1
+							end
+						end
+					end
+					if zcount > 2
+						render json: { zaipsfail: true }
+					else
+						#do actual zaips, wohoo
+						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0}
+						zaips = @@userlistdb[:uListP4].findOneAndUpdate( { _id: code[2] }, { $push: push }, { upsert: true } ).to_a
+						render json: { zaips: zaips }
+					end
+				end
 			else
 				render json: { zaipsfail: true }
 			end
