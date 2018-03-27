@@ -158,7 +158,7 @@ after_initialize do
 					else
 						#do actual zaips, wohoo
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0}
-						zaips = @@userlistdb[:uListP4].findOneAndUpdate( { _id: code[2] }, { $push: push }, { upsert: true } ).to_a
+						zaips = @@userlistdb[:uListP4].findOneAndUpdate( { _id: code[2] }, { "$push" => push }, { upsert: true } ).to_a
 						render json: { zaips: zaips }
 						#add message to chat
 					end
