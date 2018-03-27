@@ -100,7 +100,7 @@
 				</td>
 			</tr>
 
-			{{#if model.finalvar.qzstuff}}
+			{{#if model.qzstuff}}
 			<tr class="Bagoqz">
 				<td>
 					<div class="headin">Быстрозапись</div>
@@ -113,7 +113,7 @@
 					<div>
 						<select required onchange={{action "qzselect" value="target.value"}}>
 							<option disabled selected style="display: none"> -- Выбрать Игру -- </option>
-							{{#each model.finalvar.qzlist as |qzgame|}}
+							{{#each model.qzlist as |qzgame|}}
 							<option value={{qzgame.[0]}}>{{qzgame.[1]}}</option>
 							{{/each}} 
 						</select>
@@ -228,13 +228,5 @@
 
 	<h1>Hello World 3</h1>
 	<h1 class="mitt_newpage">Welcome {{currentUser.username}}</h1>
-
-	<h1>{{model.name}}</h1>
-
-	<hr>
-
-	<p>{{model.description}}</p>
-
-	<p>1{{title}}1</p>
 
 </div>
