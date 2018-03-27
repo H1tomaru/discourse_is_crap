@@ -87,6 +87,7 @@ export default Ember.Controller.extend({
 		
 		imgoingin(knopk, gcode) {
 			this.set('mdalready', false);
+			this.set('prezaips.winrars', false);
 			Ember.$.ajax({
 				url: "/MrBug/zaips/"+encodeURIComponent(btoa(knopk+"~"+this.get('currentUser.username')+"~"+gcode))+".json",
 				type: "GET"
