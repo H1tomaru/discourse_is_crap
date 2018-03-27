@@ -17,6 +17,7 @@ after_initialize do
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
+		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
 	end
 
 	class ::MrbugController < ::ApplicationController
