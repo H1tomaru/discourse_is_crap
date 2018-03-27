@@ -41,6 +41,7 @@ export default Ember.Controller.extend({
 			this.set('zaipsmdal', false);
 			this.set('troikopoisk', null);
 			this.set('prezaips', null);
+			this.set('zaips', null);
 		},
 
 		troikopoisk() {
