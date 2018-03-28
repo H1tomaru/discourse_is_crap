@@ -29,6 +29,8 @@ after_initialize do
 		@@userfb = db.use('userfb')
 		
 		def show
+			#get all user feedbacks
+			userFB = @@userfb[:userfb].find().to_a
 			#other variables
 			finalvar = {}
 			finalvar[:qzstuff] = false
@@ -62,6 +64,8 @@ after_initialize do
 			userDB = @@userlistdb[:uListP4].find().to_a
 			#start a loop for every game to display
 			gameDB.each do |game|
+				#special stuff for 
+				price1DISPLAY = price2DISPLAY = price3DISPLAY = 0
 				#create display prices
 				if game[:PRICE] > 0
 					p4PDOWN1 = p4PDOWN2 = p4PDOWN3 = 0
@@ -96,11 +100,81 @@ after_initialize do
 					game[:P1NO] = p1NO
 					game[:P2NO] = p2NO
 					game[:P3NO] = p3NO
-					#get how many troikas, roundup p4 number cos theres 2 per troika
-					game[:TROEK] = [p1NO, p2NO, p3NO.ceil].max
 					game[:TROIKI] = []
 					
-					for i in 0..game[:TROEK]-1
+					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
+						#tons of variables for everything
+						p1 = p2 = p3 = p4 = account = comment = ''
+						p1STATUS = p2STATUS = p3STATUS = p4STATUS = p1PRICE = p2PRICE = p3PRICE = 0
+						p1FEEDBACK = p2FEEDBACK = p3FEEDBACK = p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+						p1TAKEN = p2TAKEN = p3TAKEN = p4TAKEN = p1FBred = p2FBred = p3FBred = p4FBred = false
+						#fill user info
+						if users[:P1][i]
+							p1 = users[:P1][i][:NAME].strip
+							p1STATUS = users[:P1][i][:STAT]
+						end
+						if users[:P2][i]
+							p1 = users[:P2][i][:NAME].strip
+							p1STATUS = users[:P2][i][:STAT]
+						end
+						if users[:P4][2*i]
+							p1 = users[:P4][2*i][:NAME].strip
+							p1STATUS = users[:P4][2*i][:STAT]
+						end
+						if users[:P4][2*i+1]
+							p1 = users[:P4][2*i+1][:NAME].strip
+							p1STATUS = users[:P4][2*i+1][:STAT]
+						end
+						#find feedback for users
+						userFB.each do |feedback|
+							if p1 == feedback[:uNAME]
+								if feedback[:SCORE] > 0
+									p1FEEDBACK[:GOOD] = p1FEEDBACK[:GOOD] + feedback[:SCORE]
+								elsif feedback[:SCORE] < 0
+									p1FEEDBACK[:BAD] = p1FEEDBACK[:BAD] - feedback[:SCORE]
+								elsif feedback[:SCORE] == 0
+									p1FEEDBACK[:NEUTRAL] = p1FEEDBACK[:NEUTRAL] + 1
+								end
+							end
+							if p2 == feedback[:uNAME]
+								if feedback[:SCORE] > 0
+									p2FEEDBACK[:GOOD] = p2FEEDBACK[:GOOD] + feedback[:SCORE]
+								elsif feedback[:SCORE] < 0
+									p2FEEDBACK[:BAD] = p2FEEDBACK[:BAD] - feedback[:SCORE]
+								elsif feedback[:SCORE] == 0
+									p2FEEDBACK[:NEUTRAL] = p2FEEDBACK[:NEUTRAL] + 1
+								end
+							end
+							if p3 == feedback[:uNAME]
+								if feedback[:SCORE] > 0
+									p3FEEDBACK[:GOOD] = p3FEEDBACK[:GOOD] + feedback[:SCORE]
+								elsif feedback[:SCORE] < 0
+									p3FEEDBACK[:BAD] = p3FEEDBACK[:BAD] - feedback[:SCORE]
+								elsif feedback[:SCORE] == 0
+									p3FEEDBACK[:NEUTRAL] = p3FEEDBACK[:NEUTRAL] + 1
+								end
+							end
+							if p4 == feedback[:uNAME]
+								if feedback[:SCORE] > 0
+									p4FEEDBACK[:GOOD] = p4FEEDBACK[:GOOD] + feedback[:SCORE]
+								elsif feedback[:SCORE] < 0
+									p4FEEDBACK[:BAD] = p4FEEDBACK[:BAD] - feedback[:SCORE]
+								elsif feedback[:SCORE] == 0
+									p4FEEDBACK[:NEUTRAL] = p4FEEDBACK[:NEUTRAL] + 1
+								end
+							end
+						end
+						#find feedback percentage
+						p1FEEDBACK[:PERCENT] = (p1FEEDBACK[:GOOD]/(p1FEEDBACK[:GOOD] + p1FEEDBACK[:BAD]) * 100).floor if p1FEEDBACK[:GOOD] > 0
+						p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD]/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100).floor if p2FEEDBACK[:GOOD] > 0
+						p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD]/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100).floor if p3FEEDBACK[:GOOD] > 0
+						p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100).floor if p4FEEDBACK[:GOOD] > 0
+						#create comment and account variable if they exist
+						if (P4userDB[u].hasOwnProperty(t+1)) { 
+							if (P4userDB[u][t+1].ACCOUNT) ACCOUNT = P4userDB[u][t+1].ACCOUNT
+							if (P4userDB[u][t+1].COMMENT) COMMENT = P4userDB[u][t+1].COMMENT
+						}
+						
 						game[:TROIKI][i] = i
 					end
 				end
