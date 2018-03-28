@@ -100,9 +100,10 @@ after_initialize do
 					game[:TROEK] = [p1NO, p2NO, p3NO.ceil].max
 					game[:TROIKI] = []
 					
+					for i in 0..game[:TROEK]-1
+						game[:TROIKI][i] = i
+					end
 				end
-
-				game[:USERS] = users
 			end
 			finalvar[:gamedb] = gameDB
 
