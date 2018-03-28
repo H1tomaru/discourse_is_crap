@@ -83,8 +83,24 @@ after_initialize do
 				else
 					game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
 				end
-				
+				#see if we have users to display
 				users = userDB.find{ |h| h['_id'] == game[:_id] }
+				#do stuff if we do
+				if users
+					#somevariables
+					priceup = p1NO = p2NO = p3NO = 0
+					#find how many p1 p2 p3 we have, and how many troikas to display
+					p1NO = users[:P1].length if users[:P1]
+					p2NO = users[:P2].length if users[:P2]
+					p3NO = users[:P3].length / 2 if users[:P3] #fix because 2 P4 per troika
+					game[:P1NO] = p1NO
+					game[:P2NO] = p2NO
+					game[:P3NO] = p3NO
+					#get how many troikas, roundup p4 number cos theres 2 per troika
+					game[:TROEK] = [p1NO, p2NO, p3NO.ceil].max
+					game[:TROIKI] = []
+					
+				end
 
 				game[:USERS] = users
 			end
