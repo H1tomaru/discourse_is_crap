@@ -83,6 +83,10 @@ after_initialize do
 				else
 					game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
 				end
+				
+				users = userDB.find{ |h| h['_id'] == game[:_id] }
+
+				game[:USERS] = users
 			end
 			finalvar[:gamedb] = gameDB
 
