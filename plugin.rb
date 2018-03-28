@@ -92,7 +92,7 @@ after_initialize do
 				#do stuff if we do
 				if users
 					#somevariables
-					priceup = p1NO = p2NO = p3NO = 0
+					priceUP = p1NO = p2NO = p3NO = 0
 					#find how many p1 p2 p3 we have, and how many troikas to display
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
