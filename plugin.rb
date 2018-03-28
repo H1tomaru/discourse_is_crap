@@ -170,11 +170,11 @@ after_initialize do
 						p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD]/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100).floor if p3FEEDBACK[:GOOD] > 0
 						p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100).floor if p4FEEDBACK[:GOOD] > 0
 						#create comment and account variable if they exist
-						if (P4userDB[u].hasOwnProperty(t+1)) { 
-							if (P4userDB[u][t+1].ACCOUNT) ACCOUNT = P4userDB[u][t+1].ACCOUNT
-							if (P4userDB[u][t+1].COMMENT) COMMENT = P4userDB[u][t+1].COMMENT
-						}
-						
+						if users[i+1]
+							account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
+							comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
+						end
+
 						game[:TROIKI][i] = i
 					end
 				end
