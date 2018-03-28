@@ -29,8 +29,6 @@ after_initialize do
 		@@userfb = db.use('userfb')
 		
 		def show
-			#db variables
-			ulist = @@userlistdb[:uListP4].find().to_a
 			#other variables
 			finalvar = {}
 			finalvar[:qzstuff] = false
@@ -58,6 +56,35 @@ after_initialize do
 					finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 				end
 			end
+			#get all type 123 games
+			gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+			#get all users 2 list
+			userDB = @@userlistdb[:uListP4].find().to_a
+			#start a loop for every game to display
+			gameDB.each do |game|
+				#create display prices
+				if game[:PRICE] > 0
+					p4PDOWN1 = p4PDOWN2 = p4PDOWN3 = 0
+					p4PDOWN1 = game[:P4PDOWN1] if game[:P4PDOWN1]
+					p4PDOWN2 = game[:P4PDOWN2] if game[:P4PDOWN2]
+					p4PDOWN3 = game[:P4PDOWN3] if game[:P4PDOWN3]
+					
+					game[:P4PRICE3] = (game[:PRICE] * 0.75 / 100).floor * 100 / 2
+					game[:P4PRICE1] = ((game[:PRICE] - 2 * game[:P4PRICE3]) * 0.3 / 50).ceil * 50
+					game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
+					
+					p4UP = [100,200,0]
+					p4UP = [100,250,50] if game[:PRICE] > 5000
+					p4UP = [0,50,50] if game[:PRICE] < 2700
+
+					game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN1 + p4UP[0]
+					game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN2 + p4UP[1]
+					game[:P4PRICE3] = game[:P4PRICE3] - p4PDOWN3 + p4UP[2]
+				else
+					game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
+				end
+			end
+			finalvar[:gamedb] = gameDB
 
 			render json: finalvar
 		end
