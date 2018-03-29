@@ -60,6 +60,7 @@ after_initialize do
 			#get all users 2 list
 			userDB = @@userlistdb[:uListP4].find().to_a
 			#start a loop for every game to display
+			gameDB1 = gameDB2 = gameDB3 = []
 			gameDB.each do |game|
 				#somevariables
 				p1NO = p2NO = p3NO = price1DISPLAY = price2DISPLAY = price3DISPLAY = 0
@@ -233,8 +234,13 @@ after_initialize do
 				game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100 == (game[:P4PRICE1]/100).ceil
 				game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
 				game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
+				gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
+				gameDB2.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
+				gameDB3.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
-			finalvar[:gamedb] = gameDB
+			finalvar[:gamedb1] = gameDB1
+			finalvar[:gamedb2] = gameDB2
+			finalvar[:gamedb3] = gameDB3
 
 			render json: finalvar
 		end
