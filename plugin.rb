@@ -112,16 +112,16 @@ after_initialize do
 							p1STATUS = users[:P1][i][:STAT]
 						end
 						if users[:P2] && users[:P2][i]
-							p1 = users[:P2][i][:NAME].strip
-							p1STATUS = users[:P2][i][:STAT]
+							p2 = users[:P2][i][:NAME].strip
+							p2STATUS = users[:P2][i][:STAT]
 						end
 						if users[:P4] && users[:P4][2*i]
-							p1 = users[:P4][2*i][:NAME].strip
-							p1STATUS = users[:P4][2*i][:STAT]
+							p3 = users[:P4][2*i][:NAME].strip
+							p3STATUS = users[:P4][2*i][:STAT]
 						end
 						if users[:P4] && users[:P4][2*i+1]
-							p1 = users[:P4][2*i+1][:NAME].strip
-							p1STATUS = users[:P4][2*i+1][:STAT]
+							p4 = users[:P4][2*i+1][:NAME].strip
+							p4STATUS = users[:P4][2*i+1][:STAT]
 						end
 						#template variables for when p1 p2 p3 p4 are taken
 						(p1TAKEN = true; p1 = '') if p1 == -55
