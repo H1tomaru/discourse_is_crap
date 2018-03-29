@@ -102,10 +102,13 @@ after_initialize do
 					game[:TROIKI] = []
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 						#tons of variables for everything
-						p1 = p2 = p3 = p4 = account = comment = ''
-						p1STATUS = p2STATUS = p3STATUS = p4STATUS = p1PRICE = p2PRICE = p3PRICE = p1PDOWN = p2PDOWN = p3PDOWN = 0
-						p1FEEDBACK = p2FEEDBACK = p3FEEDBACK = p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
-						p1TAKEN = p2TAKEN = p3TAKEN = p4TAKEN = p1FBred = p2FBred = p3FBred = p4FBred = false
+						p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
+						p1STATUS = 0; p2STATUS = 0; p3STATUS = 0; p4STATUS = 0
+						p1PRICE = 0; p2PRICE = 0; p3PRICE = 0; p1PDOWN = 0; p2PDOWN = 0; p3PDOWN = 0
+						p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+						p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+						p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
+						p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false
 						#fill user info
 						if users[:P1] && users[:P1][i]
 							p1 = users[:P1][i][:NAME].strip
