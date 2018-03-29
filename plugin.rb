@@ -241,13 +241,9 @@ after_initialize do
 					game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
 				end
 				#make 3 variables for each game type
-				if game[:TYPE] == 1
-					gameDB1.push(game.except!(:PRICE, :TYPE))
-				elsif game[:TYPE] == 2
-					gameDB2.push(game.except!(:PRICE, :TYPE))
-				elsif game[:TYPE] == 3
-					gameDB3.push(game.except!(:PRICE, :TYPE))
-				end
+				gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
+				gameDB2.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
+				gameDB3.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
 			finalvar[:gamedb1] = gameDB1
 			finalvar[:gamedb2] = gameDB2
