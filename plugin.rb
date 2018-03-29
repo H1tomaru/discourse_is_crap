@@ -94,8 +94,8 @@ after_initialize do
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
 					p3NO = users[:P4].length / 2 if users[:P4] #fix because 2 P4 per troika
+
 					game[:TROIKI] = []
-					
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 						#tons of variables for everything
 						p1 = p2 = p3 = p4 = account = comment = ''
@@ -191,7 +191,7 @@ after_initialize do
 						p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 						p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 						#create final variable
-						game[:TROIKI][i].push( {
+						game[:TROIKI].push( {
 							P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
 							P3: p3, P3FEEDBACK: p3FEEDBACK, P4: p4, P4FEEDBACK: p4FEEDBACK,
 							P1PRICE: p1PRICE, P2PRICE: p2PRICE, P3PRICE: p3PRICE, ACCOUNT: account, COMMENT: comment,
