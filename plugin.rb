@@ -40,9 +40,9 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-
-				fbcount = feedback[:fbG] if !feedback[:fbB] if feedback
-
+				if feedback
+					fbcount = feedback[:fbG] if !feedback[:fbB]
+				end
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
