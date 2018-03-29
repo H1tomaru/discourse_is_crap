@@ -229,7 +229,7 @@ after_initialize do
 							price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
 						end
 						#remove this game users form userdb variable
-						userDB.delete_if{ |h| h['_id'] == game[:_id] }
+						#userDB.delete_if{ |h| h['_id'] == game[:_id] }
 					end
 					#set display users number
 					game[:P1NO] = p1NO
@@ -261,6 +261,8 @@ after_initialize do
 				@@gamelist = gameDB
 				@@glcachetime = Time.now
 			end
+			
+			#do current user stuff here
 
 			#gameDB1 = []; gameDB2 = []; gameDB3 = []
 			#make 3 variables for each game type
@@ -377,7 +379,14 @@ after_initialize do
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 						zaips = { winrars: true, position: code[0], gameNAME: code[3] }
+						#destroy cache
+						@@qzlist = []
+						@@gamelist = []
+						@@qzcachetime = Time.now - 5000
+						@@glcachetime = Time.now - 5000
+
 						render json: zaips
+
 						#add message to chat
 					end
 				end
