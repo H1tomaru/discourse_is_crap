@@ -56,7 +56,7 @@ after_initialize do
 				#delete cache if its old
 				@@qzlist = [] if Time.now - @@qzcachetime > 1800
 				#use or create cache
-				if @@qzlist
+				if @@qzlist.length > 0
 					finalvar[:qzlist] = @@qzlist
 				else
 					glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
@@ -73,7 +73,7 @@ after_initialize do
 			#delete cache if its old
 			@@gamelist = [] if Time.now - @@glcachetime > 1800
 			
-			if !@@gamelist
+			if @@gamelist.length == 0 
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 				#get all users 2 list
