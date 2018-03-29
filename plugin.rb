@@ -34,6 +34,7 @@ after_initialize do
 			#other variables
 			finalvar = {}
 			finalvar[:qzstuff] = false
+			priceSTEP = 50
 
 			#if viever registered, count his fb
 			if current_user
@@ -101,7 +102,7 @@ after_initialize do
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 						#tons of variables for everything
 						p1 = p2 = p3 = p4 = account = comment = ''
-						p1STATUS = p2STATUS = p3STATUS = p4STATUS = p1PRICE = p2PRICE = p3PRICE = 0
+						p1STATUS = p2STATUS = p3STATUS = p4STATUS = p1PRICE = p2PRICE = p3PRICE = p1PDOWN = p2PDOWN = p3PDOWN = 0
 						p1FEEDBACK = p2FEEDBACK = p3FEEDBACK = p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 						p1TAKEN = p2TAKEN = p3TAKEN = p4TAKEN = p1FBred = p2FBred = p3FBred = p4FBred = false
 						#fill user info
@@ -163,6 +164,24 @@ after_initialize do
 						if users[i+1]
 							account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
 							comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
+						end
+						#calculate prices
+						if game[:PRICE] > 0
+							priceUP = priceSTEP * (i / 10).floor
+							#get current pricedown
+							if users[i+1]
+								p1PDOWN = users[i+1][:PDOWN1] if users[i+1][:PDOWN1]
+								p2PDOWN = users[i+1][:PDOWN2] if users[i+1][:PDOWN2]
+								p3PDOWN = users[i+1][:PDOWN3] if users[i+1][:PDOWN3]
+							end
+							#create current troika prices
+							p1PRICE = game[:P4PRICE1] - p1PDOWN + priceUP
+							p2PRICE = game[:P4PRICE2] - p2PDOWN + priceUP
+							p3PRICE = game[:P4PRICE3] - p3PDOWN + priceUP
+							#set price to -10 if its x100
+							p1PRICE = p1PRICE - 10 if p1PRICE/100 == (p1PRICE/100).ceil
+							p2PRICE = p2PRICE - 10 if p2PRICE/100 == (p2PRICE/100).ceil
+							p3PRICE = p3PRICE - 10 if p3PRICE/100 == (p3PRICE/100).ceil
 						end
 
 						game[:TROIKI][i] = i
