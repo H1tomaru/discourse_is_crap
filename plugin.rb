@@ -103,19 +103,19 @@ after_initialize do
 						p1FEEDBACK = p2FEEDBACK = p3FEEDBACK = p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 						p1TAKEN = p2TAKEN = p3TAKEN = p4TAKEN = p1FBred = p2FBred = p3FBred = p4FBred = false
 						#fill user info
-						if users[:P1][i]
+						if users[:P1] && users[:P1][i]
 							p1 = users[:P1][i][:NAME].strip
 							p1STATUS = users[:P1][i][:STAT]
 						end
-						if users[:P2][i]
+						if users[:P2] && users[:P2][i]
 							p1 = users[:P2][i][:NAME].strip
 							p1STATUS = users[:P2][i][:STAT]
 						end
-						if users[:P4][2*i]
+						if users[:P4] && users[:P4][2*i]
 							p1 = users[:P4][2*i][:NAME].strip
 							p1STATUS = users[:P4][2*i][:STAT]
 						end
-						if users[:P4][2*i+1]
+						if users[:P4] && users[:P4][2*i+1]
 							p1 = users[:P4][2*i+1][:NAME].strip
 							p1STATUS = users[:P4][2*i+1][:STAT]
 						end
