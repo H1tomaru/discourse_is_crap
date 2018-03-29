@@ -94,10 +94,7 @@ after_initialize do
 					#find how many p1 p2 p3 we have, and how many troikas to display
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
-					p3NO = users[:P4].length if users[:P4] #fix because 2 P4 per troika
-					game[:TestaCrapaP4number] = p3NO / 2
-					game[:TestaCrapaP4number2] = p3NO.ceil
-					game[:TestaCrapaP4number3] = [p1NO, p2NO, p3NO.ceil].max-1
+					p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
 
 					game[:TROIKI] = []
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
@@ -165,10 +162,10 @@ after_initialize do
 							end
 						end
 						#find feedback percentage
-						p1FEEDBACK[:PERCENT] = (p1FEEDBACK[:GOOD]/(p1FEEDBACK[:GOOD] + p1FEEDBACK[:BAD]) * 100).floor if p1FEEDBACK[:GOOD] > 0
-						p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD]/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100).floor if p2FEEDBACK[:GOOD] > 0
-						p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD]/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100).floor if p3FEEDBACK[:GOOD] > 0
-						p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100).floor if p4FEEDBACK[:GOOD] > 0
+						p1FEEDBACK[:PERCENT] = (p1FEEDBACK[:GOOD]/(p1FEEDBACK[:GOOD] + p1FEEDBACK[:BAD]) * 100.0).floor if p1FEEDBACK[:GOOD] > 0
+						p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD]/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100.0).floor if p2FEEDBACK[:GOOD] > 0
+						p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD]/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
+						p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 						#create comment and account variable if they exist
 						if users[i+1]
 							account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
@@ -188,9 +185,9 @@ after_initialize do
 							p2PRICE = game[:P4PRICE2] - p2PDOWN + priceUP
 							p3PRICE = game[:P4PRICE3] - p3PDOWN + priceUP
 							#set price to -10 if its x100
-							p1PRICE = p1PRICE - 10 if p1PRICE/100 == (p1PRICE/100).ceil
-							p2PRICE = p2PRICE - 10 if p2PRICE/100 == (p2PRICE/100).ceil
-							p3PRICE = p3PRICE - 10 if p3PRICE/100 == (p3PRICE/100).ceil
+							p1PRICE = p1PRICE - 10 if p1PRICE/100.0 == (p1PRICE/100.0).ceil
+							p2PRICE = p2PRICE - 10 if p2PRICE/100.0 == (p2PRICE/100.0).ceil
+							p3PRICE = p3PRICE - 10 if p3PRICE/100.0 == (p3PRICE/100.0).ceil
 						end
 						#template again, is feedback green or red?
 						p1FBred = true if p1FEEDBACK[:PERCENT] < 100
@@ -236,9 +233,9 @@ after_initialize do
 						game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
 					end
 					#set price to -10 if its x100
-					game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100 == (game[:P4PRICE1]/100).ceil
-					game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
-					game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
+					game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
+					game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
+					game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 				end
 				#make 3 variables for each game type
 				gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
