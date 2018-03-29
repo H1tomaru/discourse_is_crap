@@ -122,42 +122,36 @@ after_initialize do
 							p1STATUS = users[:P4][2*i+1][:STAT]
 						end
 						#find feedback for users
-						userFB.each do |feedback|
-							if p1 == feedback[:uNAME]
-								if feedback[:SCORE] > 0
-									p1FEEDBACK[:GOOD] = p1FEEDBACK[:GOOD] + feedback[:SCORE]
-								elsif feedback[:SCORE] < 0
-									p1FEEDBACK[:BAD] = p1FEEDBACK[:BAD] - feedback[:SCORE]
-								elsif feedback[:SCORE] == 0
-									p1FEEDBACK[:NEUTRAL] = p1FEEDBACK[:NEUTRAL] + 1
-								end
+						if p1
+							feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
+							if feedbackp1
+								p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
+								p1FEEDBACK[:BAD] = feedbackp1[:fbB]
+								p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN]
 							end
-							if p2 == feedback[:uNAME]
-								if feedback[:SCORE] > 0
-									p2FEEDBACK[:GOOD] = p2FEEDBACK[:GOOD] + feedback[:SCORE]
-								elsif feedback[:SCORE] < 0
-									p2FEEDBACK[:BAD] = p2FEEDBACK[:BAD] - feedback[:SCORE]
-								elsif feedback[:SCORE] == 0
-									p2FEEDBACK[:NEUTRAL] = p2FEEDBACK[:NEUTRAL] + 1
-								end
+						end
+						if p2
+							feedbackp2 = userFB.find{ |h| h['_id'] == p2 }
+							if feedbackp2
+								p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
+								p2FEEDBACK[:BAD] = feedbackp2[:fbB]
+								p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
 							end
-							if p3 == feedback[:uNAME]
-								if feedback[:SCORE] > 0
-									p3FEEDBACK[:GOOD] = p3FEEDBACK[:GOOD] + feedback[:SCORE]
-								elsif feedback[:SCORE] < 0
-									p3FEEDBACK[:BAD] = p3FEEDBACK[:BAD] - feedback[:SCORE]
-								elsif feedback[:SCORE] == 0
-									p3FEEDBACK[:NEUTRAL] = p3FEEDBACK[:NEUTRAL] + 1
-								end
+						end
+						if p3
+							feedbackp3 = userFB.find{ |h| h['_id'] == p3 }
+							if feedbackp3
+								p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
+								p3FEEDBACK[:BAD] = feedbackp3[:fbB]
+								p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN]
 							end
-							if p4 == feedback[:uNAME]
-								if feedback[:SCORE] > 0
-									p4FEEDBACK[:GOOD] = p4FEEDBACK[:GOOD] + feedback[:SCORE]
-								elsif feedback[:SCORE] < 0
-									p4FEEDBACK[:BAD] = p4FEEDBACK[:BAD] - feedback[:SCORE]
-								elsif feedback[:SCORE] == 0
-									p4FEEDBACK[:NEUTRAL] = p4FEEDBACK[:NEUTRAL] + 1
-								end
+						end
+						if p4
+							feedbackp4 = userFB.find{ |h| h['_id'] == p4 }
+							if feedbackp4
+								p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
+								p4FEEDBACK[:BAD] = feedbackp4[:fbB]
+								p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN]
 							end
 						end
 						#find feedback percentage
