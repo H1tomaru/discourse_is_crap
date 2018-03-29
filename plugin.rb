@@ -87,6 +87,7 @@ after_initialize do
 				end
 				#see if we have users to display
 				users = userDB.find{ |h| h['_id'] == game[:_id] }
+				game[:TestaCrapausers] = users
 				#do stuff if we do
 				if users
 					#somevariables
@@ -236,9 +237,14 @@ after_initialize do
 					game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
 					game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
 				end
-				gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
-				gameDB2.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
-				gameDB3.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
+				#make 3 variables for each game type
+				if game[:TYPE] == 1
+					gameDB1.push(game.except!(:PRICE, :TYPE))
+				elsif game[:TYPE] == 2
+					gameDB2.push(game.except!(:PRICE, :TYPE))
+				elsif game[:TYPE] == 3
+					gameDB3.push(game.except!(:PRICE, :TYPE))
+				end
 			end
 			finalvar[:gamedb1] = gameDB1
 			finalvar[:gamedb2] = gameDB2
