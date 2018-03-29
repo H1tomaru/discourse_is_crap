@@ -126,7 +126,7 @@ after_initialize do
 						p3TAKEN = true; p3 = '' if p3 == -55
 						p4TAKEN = true; p4 = '' if p4 == -55
 						#find feedback for users
-						if p1
+						if p1.length > 0
 							feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
 							if feedbackp1
 								p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
@@ -134,7 +134,7 @@ after_initialize do
 								p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN]
 							end
 						end
-						if p2
+						if p2.length > 0
 							feedbackp2 = userFB.find{ |h| h['_id'] == p2 }
 							if feedbackp2
 								p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
@@ -142,7 +142,7 @@ after_initialize do
 								p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
 							end
 						end
-						if p3
+						if p3.length > 0
 							feedbackp3 = userFB.find{ |h| h['_id'] == p3 }
 							if feedbackp3
 								p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
@@ -150,7 +150,7 @@ after_initialize do
 								p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN]
 							end
 						end
-						if p4
+						if p4.length > 0
 							feedbackp4 = userFB.find{ |h| h['_id'] == p4 }
 							if feedbackp4
 								p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
@@ -201,9 +201,9 @@ after_initialize do
 							P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
 						} )
 						#if current troika has any free position, save its price to display on button, if not saved one already
-						price1DISPLAY = p1PRICE if !p1 && !price1DISPLAY
-						price2DISPLAY = p2PRICE if !p2 && !price2DISPLAY
-						price3DISPLAY = p3PRICE if (!p3 || !p4) && !price3DISPLAY
+						price1DISPLAY = p1PRICE if p1.length == 0 && price1DISPLAY == 0
+						price2DISPLAY = p2PRICE if p2.length == 0 && price2DISPLAY == 0
+						price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
 					end
 					#remove this game users form userdb variable
 					userDB.delete_if{ |h| h['_id'] == game[:_id] }
@@ -214,26 +214,26 @@ after_initialize do
 				game[:P3NO] = p3NO
 				#set the current display price, depending on amount of troek, if price is zero, don't touch it
 				if game[:PRICE] > 0
-					if price1DISPLAY
+					if price1DISPLAY > 0
 						game[:P4PRICE1] = price1DISPLAY
 					else
 						game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
 					end
-					if price2DISPLAY
+					if price2DISPLAY > 0
 						game[:P4PRICE2] = price2DISPLAY
 					else
 						game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
 					end
-					if price3DISPLAY
+					if price3DISPLAY > 0
 						game[:P4PRICE3] = price3DISPLAY
 					else
 						game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
 					end
+					#set price to -10 if its x100
+					game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100 == (game[:P4PRICE1]/100).ceil
+					game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
+					game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
 				end
-				#set price to -10 if its x100
-				game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100 == (game[:P4PRICE1]/100).ceil
-				game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
-				game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
 				gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
 				gameDB2.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
 				gameDB3.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
