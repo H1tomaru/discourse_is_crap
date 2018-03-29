@@ -60,13 +60,13 @@ after_initialize do
 			#get all users 2 list
 			userDB = @@userlistdb[:uListP4].find().to_a
 			#start a loop for every game to display
-			gameDB1 = gameDB2 = gameDB3 = []
+			gameDB1 = []; gameDB2 = []; gameDB3 = []
 			gameDB.each do |game|
 				#somevariables
-				p1NO = p2NO = p3NO = price1DISPLAY = price2DISPLAY = price3DISPLAY = 0
+				p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
 				#create display prices
 				if game[:PRICE] > 0
-					p4PDOWN1 = p4PDOWN2 = p4PDOWN3 = 0
+					p4PDOWN1 = 0; p4PDOWN2 = 0; p4PDOWN3 = 0
 					p4PDOWN1 = game[:P4PDOWN1] if game[:P4PDOWN1]
 					p4PDOWN2 = game[:P4PDOWN2] if game[:P4PDOWN2]
 					p4PDOWN3 = game[:P4PDOWN3] if game[:P4PDOWN3]
