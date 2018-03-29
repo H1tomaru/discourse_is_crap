@@ -208,7 +208,7 @@ after_initialize do
 					if feedback[:fbB]
 						fbcount = 777
 					else
-						fbcount = feedback[:fbG] 
+						fbcount = feedback[:fbG]
 					end
 				end
 
@@ -253,13 +253,13 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedbacks = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
-				feedbacks.each do |feedback|
-					if feedback[:SCORE] < 0
+				feedback = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
+				if feedback
+					if feedback[:fbB]
 						fbcount = 777
-						break
+					else
+						fbcount = feedback[:fbG]
 					end
-					fbcount = fbcount + feedback[:SCORE]
 				end
 				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
 					render json: { zaipsfail: true }
