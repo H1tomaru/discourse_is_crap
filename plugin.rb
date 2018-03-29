@@ -94,7 +94,7 @@ after_initialize do
 					#find how many p1 p2 p3 we have, and how many troikas to display
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
-					game[:TestaCrapaP4numberinside] = p3NO = users[:P4].length / 2 if users[:P4] #fix because 2 P4 per troika
+					p3NO = users[:P4].length if users[:P4] #fix because 2 P4 per troika
 					game[:TestaCrapaP4number] = p3NO
 					game[:TestaCrapaP4number2] = p3NO.ceil
 					game[:TestaCrapaP4number3] = [p1NO, p2NO, p3NO.ceil].max-1
