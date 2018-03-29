@@ -54,7 +54,7 @@ after_initialize do
 			#get all games from db and make a qz variable
 			if finalvar[:qzstuff]
 				#delete cache if its old
-				@@qzlist = [] if Time.now - @@qzcachetime > 1800
+				@@qzlist = [] if Time.now - @@qzcachetime > 900
 				#use or create cache
 				if @@qzlist.length > 0
 					finalvar[:qzlist] = @@qzlist
@@ -71,7 +71,7 @@ after_initialize do
 			end
 			
 			#delete cache if its old
-			@@gamelist = [] if Time.now - @@glcachetime > 1800
+			@@gamelist = [] if Time.now - @@glcachetime > 900
 			
 			if @@gamelist.length == 0 
 				#get all type 123 games
