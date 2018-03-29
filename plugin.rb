@@ -40,8 +40,8 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				if feedback
-					fbcount = feedback[:fbG] if !feedback[:fbB]
+				if feedback[0]
+					fbcount = feedback[:fbG] if feedback[:fbB] == 0
 				end
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
@@ -263,8 +263,8 @@ after_initialize do
 			if current_user && code[1]
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				if feedback
-					if feedback[:fbB]
+				if feedback[0]
+					if feedback[:fbB] > 0
 						fbcount = 777
 					else
 						fbcount = feedback[:fbG]
@@ -314,7 +314,7 @@ after_initialize do
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
 				if feedback
-					if feedback[:fbB]
+					if feedback[:fbB] > 0
 						fbcount = 777
 					else
 						fbcount = feedback[:fbG]
