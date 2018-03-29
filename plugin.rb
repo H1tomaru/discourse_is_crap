@@ -87,7 +87,6 @@ after_initialize do
 				end
 				#see if we have users to display
 				users = userDB.find{ |h| h['_id'] == game[:_id] }
-				game[:TestaCrapausers] = users
 				#do stuff if we do
 				if users
 					#somevariables
@@ -96,8 +95,8 @@ after_initialize do
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
 					p3NO = users[:P4].length / 2 if users[:P4] #fix because 2 P4 per troika
-					game[:TestaCrapaP4number] = p3NO
-					game[:TestaCrapaP4number2] = p3NO.ceil
+					game[:TestaCrapaP4number] = users[:P4].length
+					game[:TestaCrapaP4number2] = users[:P4].length / 2
 
 					game[:TROIKI] = []
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
