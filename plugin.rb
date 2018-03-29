@@ -40,9 +40,9 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				if feedback
-					fbcount = feedback[:fbG] if !feedback[:fbB]
-				end
+
+				fbcount = feedback[:fbG] if !feedback[:fbB] if feedback
+
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
@@ -61,8 +61,8 @@ after_initialize do
 			userDB = @@userlistdb[:uListP4].find().to_a
 			#start a loop for every game to display
 			gameDB.each do |game|
-				#special stuff for 
-				price1DISPLAY = price2DISPLAY = price3DISPLAY = 0
+				#somevariables
+				p1NO = p2NO = p3NO = price1DISPLAY = price2DISPLAY = price3DISPLAY = 0
 				#create display prices
 				if game[:PRICE] > 0
 					p4PDOWN1 = p4PDOWN2 = p4PDOWN3 = 0
@@ -89,14 +89,11 @@ after_initialize do
 				#do stuff if we do
 				if users
 					#somevariables
-					priceUP = p1NO = p2NO = p3NO = 0
+					priceUP = 0
 					#find how many p1 p2 p3 we have, and how many troikas to display
 					p1NO = users[:P1].length if users[:P1]
 					p2NO = users[:P2].length if users[:P2]
 					p3NO = users[:P4].length / 2 if users[:P4] #fix because 2 P4 per troika
-					game[:P1NO] = p1NO
-					game[:P2NO] = p2NO
-					game[:P3NO] = p3NO
 					game[:TROIKI] = []
 					
 					for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
@@ -207,8 +204,35 @@ after_initialize do
 						price2DISPLAY = p2PRICE if !p2 && !price2DISPLAY
 						price3DISPLAY = p3PRICE if (!p3 || !p4) && !price3DISPLAY
 					end
+					#remove this game users form userdb variable
+					userDB.delete_if{ |h| h['_id'] == game[:_id] }
 				end
-				
+				#set display users number
+				game[:P1NO] = p1NO
+				game[:P2NO] = p2NO
+				game[:P3NO] = p3NO
+				#set the current display price, depending on amount of troek, if price is zero, don't touch it
+				if game[:PRICE] > 0
+					if price1DISPLAY
+						game[:P4PRICE1] = price1DISPLAY
+					else
+						game[:P4PRICE1] = game[:P4PRICE1] + (priceSTEP * (p1NO / 10).floor
+					end
+					if price2DISPLAY
+						game[:P4PRICE2] = price2DISPLAY
+					else
+						game[:P4PRICE2] = game[:P4PRICE2] + (priceSTEP * (p2NO / 10).floor
+					end
+					if price3DISPLAY
+						game[:P4PRICE3] = price3DISPLAY
+					else
+						game[:P4PRICE3] = game[:P4PRICE3] + (priceSTEP * (p3NO / 10).floor
+					end
+				end
+				#set price to -10 if its x100
+				game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100 == (game[:P4PRICE1]/100).ceil
+				game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100 == (game[:P4PRICE2]/100).ceil
+				game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100 == (game[:P4PRICE3]/100).ceil
 			end
 			finalvar[:gamedb] = gameDB
 
