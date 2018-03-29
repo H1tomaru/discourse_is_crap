@@ -216,17 +216,17 @@ after_initialize do
 					if price1DISPLAY
 						game[:P4PRICE1] = price1DISPLAY
 					else
-						game[:P4PRICE1] = game[:P4PRICE1] + (priceSTEP * (p1NO / 10).floor
+						game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
 					end
 					if price2DISPLAY
 						game[:P4PRICE2] = price2DISPLAY
 					else
-						game[:P4PRICE2] = game[:P4PRICE2] + (priceSTEP * (p2NO / 10).floor
+						game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
 					end
 					if price3DISPLAY
 						game[:P4PRICE3] = price3DISPLAY
 					else
-						game[:P4PRICE3] = game[:P4PRICE3] + (priceSTEP * (p3NO / 10).floor
+						game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
 					end
 				end
 				#set price to -10 if its x100
