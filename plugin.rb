@@ -122,6 +122,11 @@ after_initialize do
 							p1 = users[:P4][2*i+1][:NAME].strip
 							p1STATUS = users[:P4][2*i+1][:STAT]
 						end
+						#template variables for when p1 p2 p3 p4 are taken
+						p1TAKEN = true; p1 = '' if p1 == -55
+						p2TAKEN = true; p2 = '' if p2 == -55
+						p3TAKEN = true; p3 = '' if p3 == -55
+						p4TAKEN = true; p4 = '' if p4 == -55
 						#find feedback for users
 						if p1
 							feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
@@ -183,10 +188,27 @@ after_initialize do
 							p2PRICE = p2PRICE - 10 if p2PRICE/100 == (p2PRICE/100).ceil
 							p3PRICE = p3PRICE - 10 if p3PRICE/100 == (p3PRICE/100).ceil
 						end
-
-						game[:TROIKI][i] = i
+						#template again, is feedback green or red?
+						p1FBred = true if p1FEEDBACK[:PERCENT] < 100
+						p2FBred = true if p2FEEDBACK[:PERCENT] < 100
+						p3FBred = true if p3FEEDBACK[:PERCENT] < 100
+						p4FBred = true if p4FEEDBACK[:PERCENT] < 100
+						#create final variable
+						game[:TROIKI][i].push( {
+							P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
+							P3: p3, P3FEEDBACK: p3FEEDBACK, P4: p4, P4FEEDBACK: p4FEEDBACK,
+							P1PRICE: p1PRICE, P2PRICE: p2PRICE, P3PRICE: p3PRICE, ACCOUNT: account, COMMENT: comment,
+							P1TAKEN: p1TAKEN, P2TAKEN: p2TAKEN, P3TAKEN: p3TAKEN, P4TAKEN: p4TAKEN,
+							P1FBred: p1FBred, P2FBred: p2FBred, P3FBred: p3FBred, P4FBred: p4FBred,
+							P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
+						} )
+						#if current troika has any free position, save its price to display on button, if not saved one already
+						price1DISPLAY = p1PRICE if !p1 && !price1DISPLAY
+						price2DISPLAY = p2PRICE if !p2 && !price2DISPLAY
+						price3DISPLAY = p3PRICE if (!p3 || !p4) && !price3DISPLAY
 					end
 				end
+				
 			end
 			finalvar[:gamedb] = gameDB
 
