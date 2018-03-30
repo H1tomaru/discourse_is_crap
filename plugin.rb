@@ -310,7 +310,7 @@ after_initialize do
 						if current_user[:username] == troika[:P4]
 							if troika[:P4STATUS] == 0
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE] } )
+								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
