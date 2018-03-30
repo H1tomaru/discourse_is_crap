@@ -110,6 +110,7 @@ after_initialize do
 					#see if we have users to display
 					users = userDB.find{ |h| h['_id'] == game[:_id] }
 					#do stuff if we do
+					game[:TROIKI] = []
 					if users
 						#somevariables
 						priceUP = 0
@@ -118,7 +119,6 @@ after_initialize do
 						p2NO = users[:P2].length if users[:P2]
 						p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
 
-						game[:TROIKI] = []
 						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 							#tons of variables for everything
 							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
@@ -270,7 +270,7 @@ after_initialize do
 
 			@@gamelist.each do |game|
 				#if not guest, check if user is in this troika
-				if current_user && game[:TROIKI].length > 0
+				if current_user
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
 						if current_user == troika[:P1]
