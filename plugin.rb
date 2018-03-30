@@ -263,6 +263,8 @@ after_initialize do
 				@@gamelist = gameDB
 				@@glcachetime = Time.now
 			end
+			
+			finalvar[:testthisshit] = @@gamelist
 
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
@@ -320,6 +322,8 @@ after_initialize do
 				finalvar[:gamedb2].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
 				finalvar[:gamedb3].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
+			
+			finalvar[:testthisshitafter] = @@gamelist
 
 			render json: finalvar
 		end
