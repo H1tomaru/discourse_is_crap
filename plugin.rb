@@ -84,6 +84,8 @@ after_initialize do
 				gameDB.each do |game|
 					#somevariables
 					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
+					#add template variables
+					game[:MODE1] = false; game[:MODE2] = false
 					#create display prices
 					if game[:PRICE] > 0
 						p4PDOWN1 = 0; p4PDOWN2 = 0; p4PDOWN3 = 0
@@ -264,11 +266,45 @@ after_initialize do
 
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
+			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
 
 			@@gamelist.each do |game|
-				
-				
-				
+				#if not guest, check if user is in this troika
+				if current_user
+					game[:TROIKI].each do |troika|
+						if current_user == troika[:P1]
+							if troika[:P1STATUS] == 0
+								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE] } )
+							else
+								finalvar[:maigamez2].push( { POSITION: 1, gNAME: game[:gameNAME] } )
+							end
+						end
+						if current_user == troika[:P2]
+							
+						end
+						if current_user == troika[:P3]
+							
+						end
+						if current_user == troika[:P4]
+							
+						end
+							//if user status 0, then red bg mode
+							if (gameDB[i][stuff.troiki][u].P1STATUS == 0) { DISPLAYMODE1 = true; troikitemp[u].VIEWERP1MODE1 = true; troikitemp[u].MODE1EXISTS = true } else {
+								//else green bg mode, but only if theres no red bg mode already
+								if (!DISPLAYMODE1) {DISPLAYMODE2 = true; troikitemp[u].MODE2EXISTS = true}
+							}
+							if (gameDB[i][stuff.troiki][u].P2STATUS == 0) { DISPLAYMODE1 = true; troikitemp[u].VIEWERP2MODE1 = true; troikitemp[u].MODE1EXISTS = true } else {
+								if (!DISPLAYMODE1) {DISPLAYMODE2 = true; troikitemp[u].MODE2EXISTS = true}
+							}
+							if (gameDB[i][stuff.troiki][u].P3STATUS == 0) { DISPLAYMODE1 = true; troikitemp[u].VIEWERP3MODE1 = true; troikitemp[u].MODE1EXISTS = true } else {
+								if (!DISPLAYMODE1) {DISPLAYMODE2 = true; troikitemp[u].MODE2EXISTS = true}
+							}
+							if (gameDB[i][stuff.troiki][u].P4STATUS == 0) { DISPLAYMODE1 = true; troikitemp[u].VIEWERP4MODE1 = true; troikitemp[u].MODE1EXISTS = true } else {
+								if (!DISPLAYMODE1) {DISPLAYMODE2 = true; troikitemp[u].MODE2EXISTS = true}
+							}
+					end
+				end
+				#fill 3 variables for each game type
 				finalvar[:gamedb1].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
 				finalvar[:gamedb2].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
 				finalvar[:gamedb3].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
