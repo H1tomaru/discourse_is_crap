@@ -288,7 +288,7 @@ after_initialize do
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
 						p1ADD = 0
-						p1ADD = troika[:NOP1ADD] if troika[:P1].length > 0
+						p1ADD = troika[:NOP1ADD] if troika[:P1].length == 0
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS] == 0
 								game[:MODE1] = true; troika[:MODE1] = true
