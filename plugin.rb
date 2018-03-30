@@ -397,7 +397,7 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { UID: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				if feedback[0]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
