@@ -261,18 +261,18 @@ after_initialize do
 				@@gamelist = gameDB
 				@@glcachetime = Time.now
 			end
-			
-			#do current user stuff here
 
-			#gameDB1 = []; gameDB2 = []; gameDB3 = []
 			#make 3 variables for each game type
-			#gameDB1.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
-			#gameDB2.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
-			#gameDB3.push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
-			#finalvar[:gamedb1] = gameDB1
-			#finalvar[:gamedb2] = gameDB2
-			#finalvar[:gamedb3] = gameDB3
-			finalvar[:gamedb] = @@gamelist
+			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
+
+			@@gamelist.each do |game|
+				
+				
+				
+				finalvar[:gamedb1].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 1
+				finalvar[:gamedb2].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 2
+				finalvar[:gamedb3].push(game.except!(:PRICE, :TYPE)) if game[:TYPE] == 3
+			end
 
 			render json: finalvar
 		end
