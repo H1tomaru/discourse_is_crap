@@ -270,7 +270,7 @@ after_initialize do
 
 			@@gamelist.each do |game|
 				#if not guest, check if user is in this troika
-				if current_user
+				if current_user && game[:TROIKI].length > 0
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
 						if current_user == troika[:P1]
