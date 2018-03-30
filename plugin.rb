@@ -80,6 +80,18 @@ after_initialize do
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
+				#find user for type 0 games and add those typ 0 games
+				userDB.each do |user|
+					#see if this user has game data
+					if userDB.any? {|h| h[:_id] == user[:_id]} == false
+						thisgame = @@gamedb[:gameDB].find( { _id: user[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
+						if thisgame[0]
+							gameDB.push(thisgame)
+						else
+							puts user[:_id]
+						end
+					end
+				end
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
