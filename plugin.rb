@@ -80,7 +80,7 @@ after_initialize do
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
-				#find user for type 0 games and add those typ 0 games
+				#find user for type 0 games and add those type 0 games
 				userDB.each do |user|
 					#see if this user has game data
 					if userDB.any? {|h| h[:_id] == user[:_id]} == false
