@@ -160,13 +160,6 @@ div.shinbakaz {
 			}
 		}
 
-		.smaladndark {
-			color: #777;
-			font-size: .75em;
-			display: table;
-			margin: 0 auto -5px;
-		}
-
 	}
 
 	.etomudal {
@@ -375,6 +368,7 @@ div.shinbakaz {
 		text-align: center;
 		position: relative;
 		background: #f9f9f9;
+		margin-bottom: 10px;
 		
 	}
 	
@@ -407,6 +401,14 @@ div.shinbakaz {
 	table.udak:before {
 			background-color: #27ae60;
 			content: "i";
+	}
+	
+	
+	.smaladndark {
+			color: #777;
+			font-size: .75em;
+			display: table;
+			margin: 0 auto -5px;
 	}
 	
 	.malabela {
