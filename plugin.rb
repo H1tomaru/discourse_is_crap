@@ -97,6 +97,8 @@ after_initialize do
 				end
 				#start a loop for every game to display
 				gameDB.each do |game|
+					#type 0 games have 0 price
+					game[:PRICE] = 0 if game[:TYPE] == 0
 					#somevariables
 					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
 					#add template variables
