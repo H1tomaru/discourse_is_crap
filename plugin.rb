@@ -83,7 +83,8 @@ after_initialize do
 				#find user for type 0 games and add those type 0 games
 				userDB.each do |user|
 					#see if this user has game data
-					if gameDB.any? {|h| h[:_id] == 11} #user[:_id]
+					x = user[:_id]
+					if gameDB.any? {|h| h[:_id] == x }
 						thisgame = @@gamedb[:gameDB].find( { _id: user[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 						if thisgame[0]
 							gameDB.push(thisgame)
