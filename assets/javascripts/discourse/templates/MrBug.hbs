@@ -129,10 +129,10 @@
 	<hr>
 
 	{{#if model.maigamez1}}
-		<table>
+		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td>Ожидает Оплату!</td>
+					<td><div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> ждем оплату</div></td>
 					<td>{{game.gNAME}}</td>
 					<td>Позиция<br>П{{game.POSITION}}</td>
 
@@ -152,10 +152,10 @@
 	{{/if}}
 	
 	{{#if model.maigamez2}}
-		<table>
+		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
-					<td>Оплачено!</td>
+					<td><div class='malabela bggr'><i class='fa fa-usd'></i> оплачено!</div></td>
 					<td>{{game.gNAME}}</td>
 					<td>Позиция<br>П{{game.POSITION}}</td>
 				</tr>
