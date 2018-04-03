@@ -372,5 +372,45 @@ div.shinbakaz {
 		}
 
 	}
+	
+	table.atats {
+		
+		text-align: center;
+		
+	}
+	
+	table.kadu {
+			border-left: 4px solid #f08080
+	}
+	
+	table.udak {
+			border-left: 4px solid #27ae60
+	}
+	
+	table.kadu:before, table.udak:before {
+			font-style: italic;
+			position: absolute;
+			top: 50%;
+			margin-top: -15px;
+			left: -17px;
+			color: #fff;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 30px;
+			font-size: 1em;
+			font-weight: 700;
+	}
+	
+	table.kadu:before {
+			background-color: #f08080;
+			content: "$";
+	}
+	
+	table.udak:before {
+			background-color: #27ae60;
+			content: "i";
+	}
 
 }
