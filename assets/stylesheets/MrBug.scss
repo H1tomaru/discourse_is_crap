@@ -4,10 +4,6 @@ div.shinbakaz {
 		width: 100%
 	}
 
-	td {
-		width: 30%
-	}
-
 	.razdelhe {
 		color: gray;
 		text-align: center;
@@ -57,7 +53,8 @@ div.shinbakaz {
 		}
 
 		td {
-			padding: 20px 10px
+			padding: 20px 10px;
+			width: 30%
 		}
 
 		.headin, .headin2 {
@@ -421,6 +418,13 @@ div.shinbakaz {
 		border-radius: .25em;
 		font-family: Roboto,sans-serif;
 	}
+	
+	.malabela2 {
+		font-size: 85%;
+		color: #fff;
+		white-space: nowrap;
+		margin-left: 15px;
+	}
 
 	.bgred {
 		background-color: red
@@ -454,6 +458,10 @@ div.shinbakaz {
 	
 	.CoL4 {
 	    width: 100px
+	}
+	
+	.CoL4 {
+	    width: 120px
 	}
 
 }
