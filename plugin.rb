@@ -82,7 +82,7 @@ after_initialize do
 				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
 				userDBids = userDB.map { |e| e[:_id] }
-				type0DB = gameDB.reject { |zero| userDBids.include?(zero[:_id]) }
+				type0DB = gameDB.reject { |zeroG| userDBids.include?(zeroG[:_id]) }
 				type0DB.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
@@ -91,17 +91,6 @@ after_initialize do
 						puts users[:_id]
 					end
 				end
-				#userDB.each do |users|
-					#see if this user has game data
-					#if gameDB.any? {|h| h[:_id] == users[:_id] }
-						#thisgame = @@gamedb[:gameDB].find( { _id: users[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
-						#if thisgame[0]
-						#	gameDB.push(thisgame)
-						#else
-						#	puts users[:_id]
-						#end
-					#end
-				#end
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
