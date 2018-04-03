@@ -31,8 +31,8 @@ after_initialize do
 		#caching vars
 		@@qzlist = []
 		@@gamelist = []
-		@@qzcachetime = Time.now - 5000
-		@@glcachetime = Time.now - 5000
+		@@qzcachetime = Time.now
+		@@glcachetime = Time.now
 		
 		def show
 			#variables, duh
@@ -72,8 +72,8 @@ after_initialize do
 			
 			#delete cache if its old
 			@@gamelist = [] if Time.now - @@glcachetime > 900
-			finalvar[:chachetime] = @@glcachetime
-			finalvar[:chachetime2] = @@glcachetime - 5000
+			finalvar[:chachetime] = Time.now
+			finalvar[:chachetime2] = @@glcachetime
 			finalvar[:chachetime3] = Time.now - @@glcachetime
 			
 			if @@gamelist.empty?
@@ -449,8 +449,6 @@ after_initialize do
 						#destroy cache
 						@@qzlist = []
 						@@gamelist = []
-						@@qzcachetime = Time.now - 5000
-						@@glcachetime = Time.now - 5000
 
 						render json: zaips
 
