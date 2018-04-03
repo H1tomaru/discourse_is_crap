@@ -81,14 +81,14 @@ after_initialize do
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
-				userDB.each_index do |i|
+				userDB.each do |users|
 					#see if this user has game data
-					if gameDB.find {|h| h[:_id] == userDB[i][:_id] } == false
-						thisgame = @@gamedb[:gameDB].find( { _id: userDB[i][:_id] }, projection: { imgLINKHQ: 0 } ).to_a
+					if gameDB.find {|h| h[:_id] == users[:_id] } == false
+						thisgame = @@gamedb[:gameDB].find( { _id: users[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 						if thisgame[0]
 							gameDB.push(thisgame)
 						else
-							puts userDB[i][:_id]
+							puts users[:_id]
 						end
 					end
 				end
