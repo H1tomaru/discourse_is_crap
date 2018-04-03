@@ -376,6 +376,8 @@ div.shinbakaz {
 	table.atats {
 		
 		text-align: center;
+		position: relative;
+		background: #f9f9f9;
 		
 	}
 	
@@ -388,19 +390,16 @@ div.shinbakaz {
 	}
 	
 	table.kadu:before, table.udak:before {
-			font-style: italic;
 			position: absolute;
 			top: 50%;
 			margin-top: -15px;
-			left: -17px;
+			left: -13px;
 			color: #fff;
 			width: 30px;
 			height: 30px;
 			border-radius: 50%;
-			text-align: center;
 			line-height: 30px;
-			font-size: 1em;
-			font-weight: 700;
+			font-size: 1.8em;
 	}
 	
 	table.kadu:before {
@@ -411,6 +410,50 @@ div.shinbakaz {
 	table.udak:before {
 			background-color: #27ae60;
 			content: "i";
+	}
+	
+	.malabela {
+		text-align: center;
+		padding: .2em .4em .2em;
+		font-size: 85%;
+		color: #fff;
+		white-space: nowrap;
+		border-radius: .25em;
+		font-family: Roboto,sans-serif;
+	}
+
+	.bgred {
+		background-color: red
+	}
+
+	.bgred2 {
+		background-color: #FFEEEE;
+		color: black;
+	}
+
+	.bgred3 {
+		background-color: lightcoral
+	}
+
+	.bggr {
+		background-color: #27ae60
+	}
+
+	.bggr2 {
+		background-color: green
+	}
+
+	.bggr3 {
+		background-color: #CFFACE;
+		color: black;
+	}
+	
+	.CoL2 {
+	    width: 40px
+	}
+	
+	.CoL4 {
+	    width: 100px
 	}
 
 }
