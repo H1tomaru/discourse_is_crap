@@ -111,7 +111,7 @@
 					<button {{action 'qzaips' 2}}>П2</button>
 					<button {{action 'qzaips' 4}}>П4</button>
 
-					<div>
+					<div class="select">
 						<select required onchange={{action "qzselect" value="target.value"}}>
 							<option disabled selected style="display: none"> -- Выбрать Игру -- </option>
 							{{#each model.qzlist as |qzgame|}}
@@ -142,7 +142,7 @@
 						{{#if game.P1ADD}}<span class="smaladndark">(+{{game.P1ADD}}р чтобы взять на троих без П1)</span>{{/if}}
 						</td>
 					{{else}}
-						<td>Цена позиции будет известна после поступления игры в продажу!</td>
+						<td>Цена позиции на данный момент неизвестна!</td>
 					{{/if}}
 				</tr>
 			{{/each}}
