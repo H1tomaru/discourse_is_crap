@@ -81,9 +81,10 @@ after_initialize do
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
+				finalvar[:tralala] = gameDB.any? {|h| h._id == userDB[0][:_id] }
 				userDB.each do |user|
 					#see if this user has game data
-					if gameDB.any? {|h| h._id == user._id } == false
+					if 10 == 11#gameDB.any? {|h| h._id == user[:_id] } == false
 						thisgame = @@gamedb[:gameDB].find( { _id: user[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 						if thisgame[0]
 							gameDB.push(thisgame)
