@@ -131,7 +131,8 @@
 	{{#if model.maigamez1}}
 		<table>
 			{{#each model.maigamez1 as |game|}}
-				<tr>
+				{{#if game.P1ADD}}<tr rowspan="2">{{else}}<tr>{{/if}}
+				<tr rowspan="2">
 					<td>{{game.gNAME}} позиция П{{game.POSITION}} ожидает оплату!</td>
 
 					{{#if game.PRICE}}
@@ -140,15 +141,14 @@
 						<td>Цена позиции будет известна после поступления игры в продажу!</td>
 					{{/if}}
 				</tr>
-
 				{{#if game.P1ADD}}
 				<tr>
 					<td>(+{{game.P1ADD}}р чтобы взять на троих без П1)</td>
 				</tr>
 				{{/if}}
 			{{/each}}
-			<tr><td colspan=2>В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!</td></tr>
-			<tr><td colspan=2>Реквизиты на оплату через Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></td></tr>
+			<tr><td colspan="2">В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!</td></tr>
+			<tr><td colspan="2">Реквизиты на оплату через Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></td></tr>
 		</table>
 	{{/if}}
 
