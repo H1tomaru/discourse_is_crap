@@ -72,6 +72,9 @@ after_initialize do
 			
 			#delete cache if its old
 			@@gamelist = [] if Time.now - @@glcachetime > 900
+			finalvar[:chachetime] = @@glcachetime
+			finalvar[:chachetime2] = @@glcachetime - 5000
+			finalvar[:chachetime3] = Time.now - @@glcachetime
 			
 			if @@gamelist.empty?
 				#get all type 123 games
@@ -82,17 +85,13 @@ after_initialize do
 				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
-				finalvar[:hui1111] = gameIDs
 				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
-				finalvar[:hui2222] = typ0
-				finalvar[:error] = ''
 				typ0.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
 						gameDB.push(thisgame[0])
 					else
-						puts game[:_id]
-						finalvar[:error] = finalvar[:error]+game[:_id]
+						finalvar[:error] = game[:_id]
 					end
 				end
 				#start a loop for every game to display
