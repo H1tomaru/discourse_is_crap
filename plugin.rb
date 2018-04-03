@@ -72,9 +72,6 @@ after_initialize do
 			
 			#delete cache if its old
 			@@gamelist = [] if Time.now - @@glcachetime > 900
-			finalvar[:chachetime] = Time.now
-			finalvar[:chachetime2] = @@glcachetime
-			finalvar[:chachetime3] = Time.now - @@glcachetime
 			
 			if @@gamelist.empty?
 				#get all type 123 games
