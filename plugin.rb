@@ -31,8 +31,9 @@ after_initialize do
 		#caching vars
 		@@qzlist = []
 		@@gamelist = []
-		@@qzcachetime = 8000#Time.now
-		@@glcachetime = 8000#Time.now
+		@@qzcachetime = Time.now
+		@@glcachetime = Time.now
+		@@testshit = 8000
 		
 		def show
 			#variables, duh
@@ -63,7 +64,8 @@ after_initialize do
 						finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 					end
 					@@qzlist = finalvar[:qzlist]
-					@@qzcachetime = 5000#Time.now
+					@@qzcachetime = Time.now
+					@@testshit = 5000
 				else
 					finalvar[:qzlist] = @@qzlist
 				end
@@ -75,6 +77,7 @@ after_initialize do
 			finalvar[:trololo11111] = Time.now
 			finalvar[:trololo22222] = @@glcachetime
 			finalvar[:trololo33333] = Time.now - @@glcachetime
+			finalvar[:trololo44444] = @@testshit
 			
 			if @@gamelist.empty?
 				#get all type 123 games
@@ -279,7 +282,8 @@ after_initialize do
 					end
 				end
 				@@gamelist = gameDB
-				@@glcachetime = 5000#Time.now
+				@@glcachetime = Time.now
+				@@testshit = 5000
 			end
 			
 			#make 3 variables for each game type
