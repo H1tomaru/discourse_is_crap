@@ -85,6 +85,7 @@ after_initialize do
 				finalvar[:hui1111] = gameIDs
 				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
 				finalvar[:hui2222] = typ0
+				finalvar[:error] = ''
 				typ0.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
