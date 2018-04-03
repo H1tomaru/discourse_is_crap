@@ -38,6 +38,11 @@ div.shinbakaz {
 			color: #df5138
 		}
 	}
+	
+	table.bagahe .smaladndark, table.atats + .smaladndark {
+		display: table;
+		margin: 0 auto -5px;		
+	}
 
 	table.bagahe {
 
@@ -56,7 +61,7 @@ div.shinbakaz {
 			padding: 20px 10px;
 			width: 30%
 		}
-
+		
 		.headin, .headin2 {
 			font-weight: 700;
 			font-size: 1.85em;
@@ -368,7 +373,11 @@ div.shinbakaz {
 		text-align: center;
 		position: relative;
 		background: #f9f9f9;
-		margin-bottom: 10px;
+		
+		.smaladndark {
+			display: table;
+			margin: -4px auto 0;
+		}
 		
 	}
 	
@@ -407,8 +416,6 @@ div.shinbakaz {
 	.smaladndark {
 			color: #777;
 			font-size: .75em;
-			display: table;
-			margin: 0 auto -5px;
 	}
 	
 	.malabela {
