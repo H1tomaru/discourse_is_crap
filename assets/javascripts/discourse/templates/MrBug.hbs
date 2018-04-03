@@ -128,6 +128,23 @@
 
 	<hr>
 
+	{{#if model.maigamez1}}
+		<ul>
+			{{#each model.maigamez1 as |game|}}
+				<li>{{game.gNAME}} позиция П{{game.POSITION}} ожидает оплату!</li>
+				<li>
+					{{#if game.PRICE}}
+						Сбер/QIWI +7 9169493363 {{game.PRICE}}р{{#if game.P1ADD}} (+{{game.P1ADD}}р чтобы взять на троих без П1){{/if}}
+					{{else}}
+						Цена позиции будет известна после поступления игры в продажу!
+					{{/if}}
+				</li>
+			{{/each}}
+			<li>В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!</li>
+			<li>Реквизиты на оплату через Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></li>
+		</ul>
+	{{/if}}
+
 	{{#if bagamdal}}
 		<div class="etomudal">
 
