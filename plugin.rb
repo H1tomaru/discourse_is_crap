@@ -86,7 +86,7 @@ after_initialize do
 				type0DB.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
-						gameDB.push(thisgame)
+						gameDB.push(thisgame[0])
 					else
 						puts users[:_id]
 					end
