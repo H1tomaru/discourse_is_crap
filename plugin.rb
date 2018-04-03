@@ -81,11 +81,11 @@ after_initialize do
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
-				userDBids = userDB.map { |e| e[:_id] }
-				finalvar[:hui1111] = userDBids
-				type0DB = gameDB.reject { |zeroG| userDBids.include?(zeroG[:_id]) }
-				finalvar[:hui2222] = type0DB
-				type0DB.each do |game|
+				gameIDs = gameDB.map { |e| e[:_id] }
+				finalvar[:hui1111] = gameIDs
+				typ0 = userDB.reject { |zeroG| gameIDs.include?(zeroG[:_id]) }
+				finalvar[:hui2222] = typ0
+				typ0.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
 						gameDB.push(thisgame[0])
