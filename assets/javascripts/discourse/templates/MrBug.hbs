@@ -131,7 +131,7 @@
 	{{#if model.maigamez1}}
 		<table>
 			{{#each model.maigamez1 as |game|}}
-				{{#if game.P1ADD}}<tr rowspan="2">{{else}}<tr>{{/if}}
+				<tr {{#if game.P1ADD}}rowspan="2"{{/if}}>
 					<td>{{game.gNAME}} позиция П{{game.POSITION}} ожидает оплату!</td>
 
 					{{#if game.PRICE}}
