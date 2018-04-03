@@ -94,8 +94,14 @@ export default Ember.Controller.extend({
 				type: "GET"
 			}).then(result => {
 				this.set('zaips', result);
-				this.set('zaipsmdal', true);
-				this.set('mdalready', true);
+				Ember.$.ajax({
+					url: "/MrBug.json",
+					type: "GET"
+				}).then(result => {
+					this.set('model', result);
+					this.set('zaipsmdal', true);
+					this.set('mdalready', true);
+				});
 			});
 		}
 
