@@ -132,7 +132,9 @@
 		<table>
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td>{{game.gNAME}} позиция П{{game.POSITION}} ожидает оплату!</td>
+					<td>Ожидает Оплату!</td>
+					<td>{{game.gNAME}}</td>
+					<td>Позиция<br>П{{game.POSITION}}</td>
 
 					{{#if game.PRICE}}
 						<td>
@@ -144,8 +146,21 @@
 					{{/if}}
 				</tr>
 			{{/each}}
-			<tr><td colspan=2>В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!</td></tr>
-			<tr><td colspan=2>Реквизиты на оплату через Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></td></tr>
+			<tr><td colspan=4>В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!</td></tr>
+			<tr><td colspan=4>Реквизиты на оплату через Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></td></tr>
+		</table>
+	{{/if}}
+	
+	{{#if model.maigamez2}}
+		<table>
+			{{#each model.maigamez2 as |game|}}
+				<tr>
+					<td>Оплачено!</td>
+					<td>{{game.gNAME}</td>
+					<td>Позиция<br>П{{game.POSITION}}</td>
+				</tr>
+			{{/each}}
+			<tr><td colspan=3>Раздача осуществляется в порядке П1 -> П4 -> П2<br>Ход и статус раздачи отслеживайте по списку ниже :)</td></tr>
 		</table>
 	{{/if}}
 
