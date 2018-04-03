@@ -90,7 +90,8 @@ after_initialize do
 					if thisgame[0]
 						gameDB.push(thisgame[0])
 					else
-						puts users[:_id]
+						puts game[:_id]
+						finalvar[:error] = finalvar[:error]+game[:_id]
 					end
 				end
 				#start a loop for every game to display
