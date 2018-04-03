@@ -31,8 +31,8 @@ after_initialize do
 		#caching vars
 		@@qzlist = []
 		@@gamelist = []
-		@@qzcachetime = Time.now
-		@@glcachetime = Time.now
+		@@qzcachetime = Time.now.to_i
+		@@glcachetime = Time.now.to_i
 		@@testshit = 8000
 		
 		def show
@@ -64,7 +64,7 @@ after_initialize do
 						finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 					end
 					@@qzlist = finalvar[:qzlist]
-					@@qzcachetime = Time.now
+					@@qzcachetime = Time.now.to_i
 					@@testshit = 5000
 				else
 					finalvar[:qzlist] = @@qzlist
@@ -282,7 +282,7 @@ after_initialize do
 					end
 				end
 				@@gamelist = gameDB
-				@@glcachetime = Time.now
+				@@glcachetime = Time.now.to_i
 				@@testshit = 5000
 			end
 			
