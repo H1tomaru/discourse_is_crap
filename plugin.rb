@@ -83,7 +83,7 @@ after_initialize do
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
 				finalvar[:hui1111] = gameIDs
-				typ0 = userDB.reject { |zeroG| gameIDs.include?(zeroG[:_id]) }
+				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
 				finalvar[:hui2222] = typ0
 				typ0.each do |game|
 					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
