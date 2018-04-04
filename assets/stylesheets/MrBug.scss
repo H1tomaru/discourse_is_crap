@@ -433,7 +433,7 @@ div.shinbakaz {
 		color: white;
 		background: black;
 		border-radius: 25px;
-		padding: .1em .4em .1em;
+		padding: .2em .4em .2em;
 		opacity: 0.5;
 		font-size: .75em;
 	}
@@ -478,6 +478,18 @@ div.shinbakaz {
 	.bggr3 {
 		background-color: #CFFACE;
 		color: black;
+	}
+
+	@media (max-width: 991px) {
+
+		table.bagahe {
+
+			td {
+				width: 100%;
+				display: block;
+			}
+		}
+
 	}
 
 }
