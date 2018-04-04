@@ -17,7 +17,7 @@ after_initialize do
 	@@gamedb = db.use('AutoZ_gameDB')
 	@@userlistdb = db.use('AutoZ_gameZ')
 	@@userdb = db.use('userdb')
-	@@userfb = db.use('userfb')
+	$userfb = db.use('userfb')
 
 	#caching vars
 	@@qzlist = []
@@ -45,7 +45,7 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = $userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				if feedback[0]
 					fbcount = feedback[0][:fbG] if feedback[0][:fbB] == 0
 				end
