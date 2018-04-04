@@ -331,16 +331,18 @@ div.shinbakaz {
 
 		button {
 			font-size: 0.8em;
-			border: none;
-			color: #fff;
+			color: white;
 			padding: 19px 26px;
+			white-space: nowrap;
+			overflow: hidden;
+			border: 10px solid white;
 		}
 
 		button:first-of-type {
-			width: 60%;
-			margin: 30px 2%;
 			text-transform: uppercase;
 			background-color: darkseagreen;
+			width: 70%;
+			border-right: none;
 		}
 
 		button:first-of-type:hover {
@@ -348,7 +350,9 @@ div.shinbakaz {
 		}
 
 		button:last-of-type {
-			background-color: indianred
+			background-color: indianred;
+			width: 30%;
+			border-left: none;
 		}
 
 		button:last-of-type:hover {
