@@ -31,9 +31,8 @@ after_initialize do
 		#caching vars
 		@@qzlist = []
 		@@gamelist = []
-		@@qzcachetime = Time.now.to_i
+		@@qzcachetime = 0
 		@@glcachetime = Time.now.to_i
-		@@testshit = 8000
 		
 		def show
 			#variables, duh
@@ -55,7 +54,7 @@ after_initialize do
 			#get all games from db and make a qz variable
 			if finalvar[:qzstuff]
 				#delete cache if its old
-				@@qzlist = [] if Time.now.to_i - @@qzcachetime > 900
+				@@qzlist = [] if @@qzcachetime > 10
 				#use or create cache
 				if @@qzlist.empty?
 					glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
@@ -64,8 +63,7 @@ after_initialize do
 						finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 					end
 					@@qzlist = finalvar[:qzlist]
-					@@qzcachetime = Time.now.to_i
-					@@testshit = 5000
+					@@qzcachetime = @@qzcachetime + 1
 				else
 					finalvar[:qzlist] = @@qzlist
 				end
@@ -74,10 +72,9 @@ after_initialize do
 			
 			#delete cache if its old
 			@@gamelist = [] if Time.now.to_i - @@glcachetime > 900
-			finalvar[:trololo11111] = Time.now.to_i
+			#finalvar[:trololo11111] = Time.now.to_i
 			finalvar[:trololo22222] = @@qzcachetime
-			finalvar[:trololo33333] = Time.now.to_i - @@qzcachetime
-			finalvar[:trololo44444] = @@testshit
+			#finalvar[:trololo33333] = Time.now.to_i - @@qzcachetime
 			
 			if @@gamelist.empty?
 				#get all type 123 games
@@ -283,7 +280,6 @@ after_initialize do
 				end
 				@@gamelist = gameDB
 				@@glcachetime = Time.now.to_i
-				@@testshit = 5000
 			end
 			
 			#make 3 variables for each game type
