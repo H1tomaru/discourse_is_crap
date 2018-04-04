@@ -476,21 +476,21 @@ div.shinbakaz {
 		color: black;
 	}
 
-	.hideoB {
+	.hideoS {
 		display: initial
 	}
 
-	.hideoS {
+	.hideoB {
 		display: none
 	}
 
 	@media (max-width: 600px) {
 		
-		.hideoB {
+		.hideoS {
 			display: none
 		}
 		
-		.hideoS {
+		.hideoB {
 			display: initial
 		}
 
@@ -506,6 +506,10 @@ div.shinbakaz {
 		
 			td:nth-child(1) {
 				width: 20px
+			}
+			
+			a {
+				font-size: 0.75em
 			}
 
 		}
