@@ -476,21 +476,21 @@ div.shinbakaz {
 		color: black;
 	}
 
-	hideoB {
+	.hideoB {
 		display: initial
 	}
 
-	hideoS {
+	.hideoS {
 		display: none
 	}
 
 	@media (max-width: 600px) {
 		
-		showhideobig {
+		.hideoB {
 			display: none
 		}
 		
-		showhideosmall {
+		.hideoS {
 			display: initial
 		}
 
