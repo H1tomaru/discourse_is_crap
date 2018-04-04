@@ -34,6 +34,8 @@ after_initialize do
 		$qzcachetime = 0
 		@@glcachetime = Time.now.to_i
 		
+		@@countme = 0
+		
 		def show
 			#variables, duh
 			finalvar = {}
@@ -75,6 +77,8 @@ after_initialize do
 			#finalvar[:trololo11111] = Time.now.to_i
 			finalvar[:trololo22222] = $qzcachetime
 			#finalvar[:trololo33333] = Time.now.to_i - @@qzcachetime
+			@@countme = @@countme + 1
+			finalvar[:trololo33333] = @@countme
 			
 			if @@gamelist.empty?
 				#get all type 123 games
