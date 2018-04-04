@@ -31,7 +31,7 @@ after_initialize do
 		#caching vars
 		@@qzlist = []
 		@@gamelist = []
-		@@qzcachetime = 0
+		$qzcachetime = 0
 		@@glcachetime = Time.now.to_i
 		
 		def show
@@ -54,7 +54,7 @@ after_initialize do
 			#get all games from db and make a qz variable
 			if finalvar[:qzstuff]
 				#delete cache if its old
-				@@qzlist = [] if @@qzcachetime > 10
+				@@qzlist = [] if $qzcachetime > 10
 				#use or create cache
 				if @@qzlist.empty?
 					glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
@@ -63,7 +63,7 @@ after_initialize do
 						finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
 					end
 					@@qzlist = finalvar[:qzlist]
-					@@qzcachetime = @@qzcachetime + 1
+					$qzcachetime = $qzcachetime + 1
 				else
 					finalvar[:qzlist] = @@qzlist
 				end
@@ -73,7 +73,7 @@ after_initialize do
 			#delete cache if its old
 			@@gamelist = [] if Time.now.to_i - @@glcachetime > 900
 			#finalvar[:trololo11111] = Time.now.to_i
-			finalvar[:trololo22222] = @@qzcachetime
+			finalvar[:trololo22222] = $qzcachetime
 			#finalvar[:trololo33333] = Time.now.to_i - @@qzcachetime
 			
 			if @@gamelist.empty?
