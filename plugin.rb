@@ -13,20 +13,6 @@ register_asset 'stylesheets/MrBug.scss'
 
 after_initialize do
 	
-	db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
-	$gamedb = db.use('AutoZ_gameDB')
-	$userlistdb = db.use('AutoZ_gameZ')
-	$userdb = db.use('userdb')
-	$userfb = db.use('userfb')
-
-	#caching vars
-	$qzlist = []
-	$gamelist = []
-	$qzcachetime = 0
-	$glcachetime = Time.now.to_i
-
-	$countme = 0
-	
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
@@ -36,16 +22,38 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 		
+		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		@@gamedb = db.use('AutoZ_gameDB')
+		@@userlistdb = db.use('AutoZ_gameZ')
+		@@cache = db.use('AutoZ_cache')
+		@@userdb = db.use('userdb')
+		@@userfb = db.use('userfb')
+		
 		def show
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
 			priceSTEP = 50
+			#cached vars
+			qzlist = []
+			gamelist = []
+			newcache = {}
+			
+			#get cache from db, drop it if its old
+			cacheDB = @@cache[:cache].find().to_a
+			if cacheDB[0]
+				if Time.now - cacheDB[0][:TIME] > 900
+					@@cache[:cache].drop()
+				else
+					qzlist = cacheDB[0][:qzlist]
+					gamelist = cacheDB[0][:gamelist]
+				end
+			end
 
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedback = $userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				if feedback[0]
 					fbcount = feedback[0][:fbG] if feedback[0][:fbB] == 0
 				end
@@ -53,45 +61,24 @@ after_initialize do
 			end
 
 			finalvar[:qzstuff] = true
-			#get all games from db and make a qz variable
-			if finalvar[:qzstuff]
-				#delete cache if its old
-				$qzlist = [] if $qzcachetime > 10
-				#use or create cache
-				if $qzlist.empty?
-					glist = $gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
-					finalvar[:qzlist] = []
-					glist.each do |game|
-						finalvar[:qzlist].push( [ game[:_id] , game[:gameNAME] ] )
-					end
-					$qzlist = finalvar[:qzlist]
-					$qzcachetime = $qzcachetime + 1
-				else
-					finalvar[:qzlist] = $qzlist
+			if gamelist.empty?
+				#create qzlist variable
+				glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
+				glist.each do |game|
+					qzlist.push( [ game[:_id] , game[:gameNAME] ] )
 				end
-				
-			end
-			
-			#delete cache if its old
-			$gamelist = [] if Time.now.to_i - $glcachetime > 900
-			#finalvar[:trololo11111] = Time.now.to_i
-			finalvar[:trololo22222] = $qzcachetime
-			#finalvar[:trololo33333] = Time.now.to_i - $qzcachetime
-			$countme = $countme + 1
-			finalvar[:trololo33333] = $countme
-			
-			if $gamelist.empty?
+
 				#get all type 123 games
-				gameDB = $gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 				#get all users 2 list
-				userDB = $userlistdb[:uListP4].find().to_a
+				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
-				userFB = $userfb[:userfb].find().to_a
+				userFB = @@userfb[:userfb].find().to_a
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
 				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
 				typ0.each do |game|
-					thisgame = $gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
+					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
 					if thisgame[0]
 						gameDB.push(thisgame[0])
 					else
@@ -282,15 +269,24 @@ after_initialize do
 						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 					end
 				end
-				$gamelist = gameDB
-				$glcachetime = Time.now.to_i
+				gamelist = gameDB
+				#save both lists to cache
+				newcache[:qzlist] = qzlist
+				newcache[:gamelist] = gameDB
+				newcache[:TIME] = Time.now
 			end
+			
+			#save cache to db if it exists
+			@@cache[:cache].insert(newcache) if newcache.any?
+			
+			#if displaying qzaips, add games list to finalvar
+			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
 			
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
 
-			$gamelist.each do |game|
+			gamelist.each do |game|
 				#if not guest, check if user is in this troika
 				if current_user
 					game[:TROIKI].each do |troika|
@@ -344,8 +340,9 @@ after_initialize do
 				finalvar[:gamedb2].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 2
 				finalvar[:gamedb3].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
-			
+
 			render json: finalvar
+
 		end
 
 		def troikopoisk
@@ -353,7 +350,7 @@ after_initialize do
 			troikopoisk = Base64.decode64(URI.unescape(params[:miloakka])).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = $userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
+				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
 				if zapislist[0]
 					zapislist[0][:poiskwin] = true
 					render json: zapislist[0]
@@ -364,14 +361,14 @@ after_initialize do
 				render json: { poiskwin: false }
 			end
 		end 
-		
+
 		def prezaips
 			#decode shit
 			code = Base64.decode64(URI.unescape(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
-				feedback = $userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				if feedback[0]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
@@ -387,7 +384,7 @@ after_initialize do
 				else
 					#find and count how many times user zaipsalsq
 					zcount = 0
-					gameuzers = $userlistdb[:uListP4].find( _id: code[1] ).to_a
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[1] ).to_a
 					if gameuzers[0] && gameuzers[0]["P"+code[0]]
 						gameuzers[0]["P"+code[0]].each do |user|
 							if user[:NAME] == current_user[:username]
@@ -399,7 +396,7 @@ after_initialize do
 						render json: { banned: true }
 					else
 						#get stuff from db
-						prezaips = $gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
 						if prezaips[0][:imgLINKHQ]
 							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
 							prezaips[0] = prezaips[0].except(:imgLINKHQ)
@@ -413,7 +410,7 @@ after_initialize do
 				render json: { guest: true }
 			end
 		end
-		
+
 		def zaips
 			#decode shit
 			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
@@ -421,7 +418,7 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = $userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				if feedback[0]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
@@ -434,7 +431,7 @@ after_initialize do
 				else
 					#find and count how many times user zaipsalsq
 					zcount = 0
-					gameuzers = $userlistdb[:uListP4].find( _id: code[2] ).to_a
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a
 					if gameuzers[0] && gameuzers[0]["P"+code[0]]
 						gameuzers[0]["P"+code[0]].each do |user|
 							if user[:NAME] == current_user[:username]
@@ -448,11 +445,10 @@ after_initialize do
 						#do actual zaips, wohoo
 						push = {}
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
-						$userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
+						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 						zaips = { winrars: true, position: code[0], gameNAME: code[3] }
 						#destroy cache
-						$qzlist = []
-						$gamelist = []
+						@@cache[:cache].drop()
 
 						render json: zaips
 
