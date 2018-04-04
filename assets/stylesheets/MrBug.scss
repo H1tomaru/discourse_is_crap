@@ -39,11 +39,6 @@ div.shinbakaz {
 		}
 	}
 	
-	table.bagahe .smaladndark, table.atats + .smaladndark {
-		display: table;
-		margin: 0 auto -5px;		
-	}
-
 	table.bagahe {
 
 		text-align: center;
@@ -368,6 +363,16 @@ div.shinbakaz {
 
 	}
 	
+	.smaladndark {
+			color: #777;
+			font-size: .75em;
+	}
+	
+	table.bagahe .smaladndark, table.atats + .smaladndark {
+		display: table;
+		margin: 0 auto -5px;		
+	}
+	
 	table.atats {
 		
 		text-align: center;
@@ -377,7 +382,6 @@ div.shinbakaz {
 		.smaladndark {
 			position: relative;
 			top: -2px;
-			
 		}
 		
 		td:nth-child(1) {
@@ -423,11 +427,6 @@ div.shinbakaz {
 	table.udak:before {
 			background-color: #27ae60;
 			content: "i";
-	}
-	
-	.smaladndark {
-			color: #777;
-			font-size: .75em;
 	}
 	
 	.blakarand {
