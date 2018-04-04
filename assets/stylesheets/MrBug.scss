@@ -384,7 +384,8 @@ div.shinbakaz {
 		}
 		
 		td:nth-child(1) {
-			padding-left: 15px
+			padding-left: 15px;
+			width: 120px;
 		}
 		
 	}
@@ -472,7 +473,7 @@ div.shinbakaz {
 		color: black;
 	}
 
-	@media (max-width: 991px) {
+	@media (max-width: 672px) {
 
 		table.bagahe {
 
@@ -481,6 +482,14 @@ div.shinbakaz {
 				display: block;
 			}
 		}
+		
+		table.atats {
+		
+		td:nth-child(1) {
+			display: none
+		}
+		
+	}
 
 	}
 
