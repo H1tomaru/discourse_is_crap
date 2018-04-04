@@ -132,13 +132,13 @@
 		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td><div class='malabela2 bgred3'><span class="hideoB">ждем оплату</span><span class="hideoS">$</span></div></td>
+					<td><div class='malabela2 bgred3'><span class="hideoS">ждем оплату</span><span class="hideoB">$</span></div></td>
 					<td><a>{{game.gNAME}}</a></td>
 
 					{{#if game.PRICE}}
 						<td>
 							<span class="blakarand">П{{game.POSITION}}</span> 
-							<span class="blakarand">Сбер / QIWI +7 9169493363</span> 
+							<span class="blakarand hideoS">Сбер / QIWI +7 9169493363</span> 
 							<span class="blakarand">{{game.PRICE}}р</span>
 						{{#if game.P1ADD}}<span class="smaladndark">+{{game.P1ADD}}р без П1</span>{{/if}}
 						</td>
@@ -147,6 +147,7 @@
 					{{/if}}
 				</tr>
 			{{/each}}
+			<tr class="hideoS"><td colspan=3>Сбер / QIWI +7 9169493363</td></tr>
 		</table>
 		<span class="smaladndark">В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!<br>
 		Реквизиты на оплату Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></span>
@@ -159,7 +160,7 @@
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
-					<td><div class='malabela2 bggr'><span class="hideoB">оплачено</span><span class="hideoS">i</span></div></td>
+					<td><div class='malabela2 bggr'><span class="hideoS">оплачено</span><span class="hideoB">i</span></div></td>
 					<td><a>{{game.gNAME}}</a></td>
 					<td><span class="blakarand">П{{game.POSITION}}</span></td>
 				</tr>
