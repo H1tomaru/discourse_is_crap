@@ -389,6 +389,11 @@ div.shinbakaz {
 			width: 100px;
 		}
 		
+		td:last-child {
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		
 	}
 	
 	table.kadu {
