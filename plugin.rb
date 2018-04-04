@@ -13,6 +13,20 @@ register_asset 'stylesheets/MrBug.scss'
 
 after_initialize do
 	
+	db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+	@@gamedb = db.use('AutoZ_gameDB')
+	@@userlistdb = db.use('AutoZ_gameZ')
+	@@userdb = db.use('userdb')
+	@@userfb = db.use('userfb')
+
+	#caching vars
+	@@qzlist = []
+	@@gamelist = []
+	$qzcachetime = 0
+	@@glcachetime = Time.now.to_i
+
+	@@countme = 0
+	
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
@@ -21,20 +35,6 @@ after_initialize do
 	end
 
 	class ::MrbugController < ::ApplicationController
-		
-		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
-		@@gamedb = db.use('AutoZ_gameDB')
-		@@userlistdb = db.use('AutoZ_gameZ')
-		@@userdb = db.use('userdb')
-		@@userfb = db.use('userfb')
-		
-		#caching vars
-		@@qzlist = []
-		@@gamelist = []
-		$qzcachetime = 0
-		@@glcachetime = Time.now.to_i
-		
-		@@countme = 0
 		
 		def show
 			#variables, duh
