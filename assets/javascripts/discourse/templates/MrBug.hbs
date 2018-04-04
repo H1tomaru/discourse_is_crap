@@ -132,13 +132,15 @@
 		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td><div class='malabela2 bgred3'>ждем оплату</div></td>
-					<td>П{{game.POSITION}} <a>{{game.gNAME}}</a></td>
+					<td><div class='malabela2 bgred3'><span class="hideoB">ждем оплату</span><span class="hideoS">$</span></div></td>
+					<td><a>{{game.gNAME}}</a></td>
 
 					{{#if game.PRICE}}
 						<td>
-							<span class="blakarand">Сбер / QIWI +7 9169493363</span> <span class="blakarand">{{game.PRICE}}р</span>
-						{{#if game.P1ADD}}<span class="smaladndark">+{{game.P1ADD}}р чтобы взять на троих без П1</span>{{/if}}
+							<span class="blakarand">П{{game.POSITION}}</span> 
+							<span class="blakarand">Сбер / QIWI +7 9169493363</span> 
+							<span class="blakarand">{{game.PRICE}}р</span>
+						{{#if game.P1ADD}}<span class="smaladndark">+{{game.P1ADD}}р без П1</span>{{/if}}
 						</td>
 					{{else}}
 						<td><span class="smaladndark">Цена позиции ещё неизвестна</span></td>
@@ -157,8 +159,9 @@
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
-					<td><div class='malabela2 bggr'>оплачено</div></td>
-					<td>П{{game.POSITION}} <a>{{game.gNAME}}</a></td>
+					<td><div class='malabela2 bggr'><span class="hideoB">оплачено</span><span class="hideoS">i</span></div></td>
+					<td><a>{{game.gNAME}}</a></td>
+					<td>П{{game.POSITION}}</td>
 				</tr>
 			{{/each}}
 		</table>
