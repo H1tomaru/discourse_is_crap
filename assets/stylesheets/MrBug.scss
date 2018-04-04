@@ -375,7 +375,6 @@ div.shinbakaz {
 	
 	table.atats {
 		
-		text-align: center;
 		position: relative;
 		background: #f9f9f9;
 		
@@ -385,15 +384,7 @@ div.shinbakaz {
 		}
 		
 		td:nth-child(1) {
-			width: 120px
-		}
-		
-		td:nth-child(2) {
-			width: 40px
-		}
-		
-		td:nth-child(n+3) {
-			text-align: left;
+			padding-left: 15px
 		}
 		
 	}
@@ -417,6 +408,7 @@ div.shinbakaz {
 			border-radius: 50%;
 			line-height: 30px;
 			font-size: 1.8em;
+			text-align: center;
 	}
 	
 	table.kadu:before {
@@ -451,6 +443,7 @@ div.shinbakaz {
 		font-size: 85%;
 		color: #fff;
 		white-space: nowrap;
+		text-align: center;
 	}
 
 	.bgred {
