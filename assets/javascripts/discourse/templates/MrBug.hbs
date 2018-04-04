@@ -132,9 +132,7 @@
 		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td><div class='malabela2 bgred3'>ждем оплату</div></td>
-					<td>П{{game.POSITION}}</td>
-					<td><a>{{game.gNAME}}</a></td>
+					<td>П{{game.POSITION}} <a>{{game.gNAME}}</a></td>
 
 					{{#if game.PRICE}}
 						<td>
@@ -144,6 +142,7 @@
 					{{else}}
 						<td><span class="smaladndark">Цена позиции ещё неизвестна</span></td>
 					{{/if}}
+					<td><div class='malabela2 bgred3'>ждем оплату</div></td>
 				</tr>
 			{{/each}}
 		</table>
@@ -158,9 +157,8 @@
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
+					<td>П{{game.POSITION}} <a>{{game.gNAME}}</a></td>
 					<td><div class='malabela2 bggr'>оплачено</div></td>
-					<td>П{{game.POSITION}}</td>
-					<td><a>{{game.gNAME}}</a></td>
 				</tr>
 			{{/each}}
 		</table>
