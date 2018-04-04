@@ -277,7 +277,7 @@ after_initialize do
 			end
 			
 			#save cache to db if it exists
-			@@cache[:cache].insert(newcache) if newcache.any?
+			@@cache[:cache].insert_one(newcache) if newcache.any?
 			
 			#if displaying qzaips, add games list to finalvar
 			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
