@@ -132,14 +132,14 @@
 		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td class="CoL5"><div class='malabela2 bgred3'>ждем оплату</div></td>
-					<td class="CoL2">П{{game.POSITION}}</td>
+					<td><div class='malabela2 bgred3'>ждем оплату</div></td>
+					<td>П{{game.POSITION}}</td>
 					<td><a>{{game.gNAME}}</a></td>
 
 					{{#if game.PRICE}}
 						<td>
 							Сбер / QIWI +7 9169493363 {{game.PRICE}}р
-						{{#if game.P1ADD}}<span class="smaladndark">(+{{game.P1ADD}}р чтобы взять на троих без П1)</span>{{/if}}
+						{{#if game.P1ADD}}<span class="smaladndark">+{{game.P1ADD}}р чтобы взять на троих без П1</span>{{/if}}
 						</td>
 					{{else}}
 						<td>Цена позиции на данный момент неизвестна!</td>
@@ -158,8 +158,8 @@
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
-					<td class="CoL5"><div class='malabela2 bggr'>оплачено</div></td>
-					<td class="CoL2">П{{game.POSITION}}</td>
+					<td><div class='malabela2 bggr'>оплачено</div></td>
+					<td>П{{game.POSITION}}</td>
 					<td><a>{{game.gNAME}}</a></td>
 				</tr>
 			{{/each}}
