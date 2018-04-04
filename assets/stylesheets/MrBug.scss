@@ -215,14 +215,13 @@ div.shinbakaz {
 			width: 106%;
 			left: -3%;
 		}
-
-		.bagariban:before {
+		
+		.bagariban:before, .bagariban:after {
 			content: "";
 			width: 22px;
 			position: absolute;
 			border-style: solid;
 			border-color: #004666;
-			border-width: 28px 35px 28px 25px;
 			border-left-color: transparent;
 			border-right-color: #99dfff;
 			top: 30px;
@@ -230,19 +229,12 @@ div.shinbakaz {
 			z-index: -1;
 		}
 
+		.bagariban:before {
+			border-width: 28px 35px 28px 25px;
+		}
+
 		.bagariban:after {
-			content: "";
-			width: 22px;
-			height: 0;
-			position: absolute;
-			border-style: solid;
-			border-color: #004666;
 			border-width: 28px 25px 28px 35px;
-			border-right-color: transparent;
-			border-left-color: #99dfff;
-			top: 30px;
-			right: -47px;
-			z-index: -1;
 		}
 
 		.bagaspin {
@@ -548,6 +540,10 @@ div.shinbakaz {
 				font-size: 1em
 			}
 			
+			.bagariban:before, .bagariban:after {
+				top: 20px;
+			}
+
 		}
 
 		.prezaips {
