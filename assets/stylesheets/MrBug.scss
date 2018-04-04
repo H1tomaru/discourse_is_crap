@@ -507,7 +507,13 @@ div.shinbakaz {
 			td {
 				width: 100%;
 				display: block;
+				padding: 0 0 10px 0;
 			}
+			
+			.headin::before {
+				bottom: -4px;
+			}
+			
 		}
 		
 		table.atats {
