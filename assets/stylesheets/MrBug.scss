@@ -377,6 +377,8 @@ div.shinbakaz {
 		
 		position: relative;
 		background: #f9f9f9;
+		white-space: nowrap;
+  		overflow: hidden;
 		
 		.smaladndark, .blakarand {
 			position: relative;
@@ -385,6 +387,7 @@ div.shinbakaz {
 		
 		td:nth-child(1) {
 			padding-left: 15px;
+			padding-right: 5px;
 			width: 120px;
 		}
 		
@@ -473,7 +476,23 @@ div.shinbakaz {
 		color: black;
 	}
 
+	hideoB {
+		display: initial
+	}
+
+	hideoS {
+		display: none
+	}
+
 	@media (max-width: 600px) {
+		
+		showhideobig {
+			display: none
+		}
+		
+		showhideosmall {
+			display: initial
+		}
 
 		table.bagahe {
 
@@ -486,7 +505,7 @@ div.shinbakaz {
 		table.atats {
 		
 			td:nth-child(1) {
-				display: none
+				width: 20px
 			}
 
 		}
