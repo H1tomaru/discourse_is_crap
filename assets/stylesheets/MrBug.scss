@@ -497,11 +497,11 @@ div.shinbakaz {
 	}
 
 	@media (max-width: 600px) {
-		
+
 		.hideoS {
 			display: none
 		}
-		
+
 		.hideoB {
 			display: inherit
 		}
@@ -519,9 +519,9 @@ div.shinbakaz {
 			}
 			
 		}
-		
+
 		table.atats {
-		
+
 			td:nth-child(1) {
 				width: 20px;
 				padding-left: 5px;
@@ -533,7 +533,11 @@ div.shinbakaz {
 			}
 
 		}
-		
+
+	}
+
+	@media (max-width: 900px) {
+
 		.etomudal {
 			
 			.mudalcontent {
@@ -541,7 +545,7 @@ div.shinbakaz {
 			}
 			
 		}
-		
+
 		.prezaips {
 			
 			.bagapi {
