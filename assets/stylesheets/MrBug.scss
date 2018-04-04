@@ -368,7 +368,7 @@ div.shinbakaz {
 			font-size: .75em;
 	}
 	
-	table.bagahe .smaladndark, table.atats + .smaladndark {
+	.smaladndark .tablq {
 		display: table;
 		margin: 0 auto -5px;		
 	}
@@ -435,6 +435,11 @@ div.shinbakaz {
 		padding: .2em .4em .2em;
 		opacity: 0.5;
 		font-size: .75em;
+	}
+	
+	.blakarand .big {
+		text-align: center;
+		font-size: 1em;
 	}
 	
 	.malabela {
@@ -508,7 +513,9 @@ div.shinbakaz {
 		table.atats {
 		
 			td:nth-child(1) {
-				width: 20px
+				width: 20px;
+				padding-left: 5px;
+				padding-right: 0;
 			}
 			
 			a {
