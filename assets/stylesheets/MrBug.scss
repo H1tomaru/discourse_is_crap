@@ -374,6 +374,17 @@ div.shinbakaz {
 		position: relative;
 		background: #f9f9f9;
 		
+		.smaladndark {
+			color: white;
+			background: black;
+			border-radius: 25px;
+			padding: .2em .4em .2em;
+			opacity: 0.7;
+			position: relative;
+			top: -2px;
+			
+		}
+		
 		td:nth-child(1) {
 			width: 120px
 		}
@@ -384,20 +395,6 @@ div.shinbakaz {
 		
 		td:nth-child(n+3) {
 			text-align: left;
-		}
-		
-		span {
-			z-index: 10;
-			display: none;
-			margin-top: 20px;
-			max-width: 200px;
-			position: absolute; 
-			color: white; 
-			background: black;
-			border-radius: 25px;
-			padding: .1em .4em .1em;
-			opacity: 0.7;
-			filter: alpha(opacity=70);
 		}
 		
 	}
