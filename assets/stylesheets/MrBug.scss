@@ -375,11 +375,6 @@ div.shinbakaz {
 		background: #f9f9f9;
 		
 		.smaladndark {
-			color: white;
-			background: black;
-			border-radius: 25px;
-			padding: .2em .4em .2em;
-			opacity: 0.7;
 			position: relative;
 			top: -2px;
 			
@@ -433,6 +428,15 @@ div.shinbakaz {
 	.smaladndark {
 			color: #777;
 			font-size: .75em;
+	}
+	
+	.blakarand {
+		color: white;
+		background: black;
+		border-radius: 25px;
+		padding: .1em .4em .1em;
+		opacity: 0.5;
+		font-size: .75em;
 	}
 	
 	.malabela {
