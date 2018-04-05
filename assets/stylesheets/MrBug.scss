@@ -328,10 +328,10 @@ div.shinbakaz {
 			white-space: nowrap;
 			overflow: hidden;
 			border: 10px solid white;
+			text-transform: uppercase;
 		}
 
 		button:first-of-type {
-			text-transform: uppercase;
 			background-color: darkseagreen;
 			width: 70%;
 			border-right: none;
@@ -485,6 +485,17 @@ div.shinbakaz {
 
 	.hideoB {
 		display: none
+	}
+	
+	.BagButon {
+		width: 100px;
+		height: 80px;
+		background-color: #fff;
+		color: #ddd;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		transition: all .3s ease-in-out;
+		text-align: center;
 	}
 
 	@media (max-width: 600px) {
