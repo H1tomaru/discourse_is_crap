@@ -14,6 +14,10 @@ export default Ember.Controller.extend({
 	zaipsmdal: false,
 	
 	showhideo: [true, true, true],
+	
+	showhideo1: Array.apply(false, Array(100)),
+	showhideo2: Array.apply(false, Array(100)),
+	showhideo3: Array.apply(false, Array(100)),
 
 	
 	actions: {
@@ -111,8 +115,8 @@ export default Ember.Controller.extend({
 			this.get('showhideo').toggleProperty(index);
 		},
 
-		showhideo2(index) {
-
+		showhideo2(index, index2) {
+			this.get('showhideo2').[index2].toggleProperty(index);
 		}
 
 	}
