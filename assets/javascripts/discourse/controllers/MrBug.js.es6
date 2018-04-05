@@ -116,6 +116,7 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
+			this.get('showhideo').toggleProperty(index);
 			this.get('showhideo1').toggleProperty(index);
 		},
 		
