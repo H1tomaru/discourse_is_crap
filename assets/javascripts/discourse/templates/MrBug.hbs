@@ -279,7 +279,7 @@
 		<div class='ghed' {{action 'showhideo' 0}}><i class='fa fa-users'></i>Просто Игры <small class='smaladndark'>Ждём ещё желающих</small></div>
 		<div class='MrBug'>
 
-		{{#if showhideo[0]}}
+		{{#if showhideo.0}}
 		{{#each model.gamedb1 as |game|}}
 			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" {{action 'showhideo2' @index}}>
 				<tr>
@@ -335,7 +335,7 @@
 		<div class='ghed' {{action 'showhideo' 1}}><i class='fa fa-tags'></i>Распродажи <small class='smaladndark'>Самые #$@&%*! скидки в PSN</small></div>
 		<div class='MrBug'>
 
-		{{#if showhideo[1]}}
+		{{#if showhideo.1}}
 		{{#each model.gamedb2 as |game|}}
 
 			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" {{action 'showhideo2' @index}}>
@@ -394,7 +394,7 @@
 		<div class='ghed' {{action 'showhideo' 2}}><i class='fa fa-history'></i>Предзаказы <small class='smaladndark'>Хотел купить, теперь не уверен</small></div>
 		<div class='MrBug'>
 
-		{{#if showhideo[2]}}
+		{{#if showhideo.2}}
 		{{#each model.gamedb3 as |game|}}
 
 			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" {{action 'showhideo2' @index}}>
