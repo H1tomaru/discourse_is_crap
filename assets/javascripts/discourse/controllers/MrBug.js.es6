@@ -115,7 +115,7 @@ export default Ember.Controller.extend({
 
 		showhideo1(index) {
 			//this.get('model.gamedb1').objectAt(index).toggleProperty('SHOWHIDEO');
-			this.set('himom', this.get('model.gamedb1').objectAt(index).get('SHOWHIDEO'));
+			this.set('himom', this.get('model.gamedb1').objectAt(0).get('SHOWHIDEO'));
 		},
 		
 		showhideo2(index) {
