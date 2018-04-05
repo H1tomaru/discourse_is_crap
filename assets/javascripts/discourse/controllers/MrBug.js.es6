@@ -15,9 +15,9 @@ export default Ember.Controller.extend({
 	
 	showhideo: [true, true, true],
 	
-	showhideo1: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-	showhideo2: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-	showhideo3: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	showhideo1: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	showhideo2: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	showhideo3: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
 
 	
 	actions: {
