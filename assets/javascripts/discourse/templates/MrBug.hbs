@@ -297,7 +297,7 @@
 						<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 					</td>
 					<td class='Butt'>
-						<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
+						<button {{action 'zaips' 1 game._id bubbles=false}} class='BagButon'>П1<br>
 							{{#if game.P4PRICE1}}
 								<h3>{{game.P4PRICE1}}</h3><br>рублей
 							{{else}}
@@ -307,7 +307,7 @@
 						{{#if game.P1NO}}<div class='statustr status-1'>{{game.P1NO}}</div>{{/if}}
 					</td>
 					<td class='Butt'>
-						<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
+						<button {{action 'zaips' 2 game._id bubbles=false}} class='BagButon'>П2<br>
 							{{#if game.P4PRICE2}}
 								<h3>{{game.P4PRICE2}}</h3><br>рублей
 							{{else}}
@@ -317,7 +317,7 @@
 						{{#if game.P1NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
 					</td>
 					<td class='Butt'>
-						<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
+						<button {{action 'zaips' 4 game._id bubbles=false}} class='BagButon'>П4<br>
 							{{#if game.P4PRICE3}}
 								<h3>{{game.P4PRICE3}}</h3><br>рублей
 							{{else}}
@@ -328,7 +328,8 @@
 					</td>
 				</tr>
 			</table>
-
+			xxx{{showhideo1.[index]}}xxx
+			xxx{{(lookup showhideo1 index)}}xxx
 			{{#if showhideo1.[index]}}
 			<table>
 				123123
