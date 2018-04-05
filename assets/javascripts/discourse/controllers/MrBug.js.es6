@@ -12,6 +12,8 @@ export default Ember.Controller.extend({
 	mdalready: false,
 	poiskmdal: false,
 	zaipsmdal: false,
+	
+	showhideo: [true, true, true],
 
 	
 	actions: {
@@ -59,7 +61,7 @@ export default Ember.Controller.extend({
 		qzselect(selected) {
 			this.set('qzselect', selected);
 		},
-		
+
 		qzaips(knopk) {
 			if (this.get('qzselect')) {
 				this.set('bagamdal', true);
@@ -73,7 +75,7 @@ export default Ember.Controller.extend({
 				});
 			}
 		},
-		
+
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true);
 			Ember.$.ajax({
@@ -85,7 +87,7 @@ export default Ember.Controller.extend({
 				this.set('mdalready', true);
 			});
 		},
-		
+
 		imgoingin() {
 			this.set('mdalready', false);
 			this.set('prezaips.winrars', false);
@@ -103,6 +105,14 @@ export default Ember.Controller.extend({
 					this.set('mdalready', true);
 				});
 			});
+		},
+
+		showhideo(index) {
+			this.toggleProperty(showhideo[index]);
+		},
+
+		showhideo2(index) {
+
 		}
 
 	}
