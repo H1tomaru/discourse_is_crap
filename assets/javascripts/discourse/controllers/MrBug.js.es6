@@ -117,11 +117,11 @@ export default Ember.Controller.extend({
 		},
 		
 		showhideo2(index) {
-			this.get('model.gamedb2').objectAt(index).toggleProperty('SHOWHIDEO');
+			this.set(this.get('model.gamedb2').objectAt(index),'SHOWHIDEO',true);
 		},
 
 		showhideo3(index) {
-			this.get('model.gamedb3').objectAt(index).toggleProperty('SHOWHIDEO');
+			this.set(this.get('model.gamedb3').objectAt(index),'SHOWHIDEO',true);
 		}
 
 	}
