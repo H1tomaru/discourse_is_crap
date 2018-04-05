@@ -281,8 +281,8 @@
 
 		{{#if showhideo.[0]}}
 		{{#each model.gamedb1 as |game index|}}
-			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" {{action 'showhideo1' 1}}>
-				<tr>
+			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}">
+				<tr {{action 'showhideo1' 1}}>
 					<td class='flagco'>{{#if game.MODE1}}<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
 					<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></td>
 					<td class='mainco'>
