@@ -92,7 +92,7 @@ after_initialize do
 					#somevariables
 					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
 					#add template variables
-					game[:MODE1] = false; game[:MODE2] = false; game[:SHOWHIDEO] = false
+					game[:MODE1] = false; game[:MODE2] = false
 					#create display prices
 					if game[:PRICE] > 0
 						p4PDOWN1 = 0; p4PDOWN2 = 0; p4PDOWN3 = 0
