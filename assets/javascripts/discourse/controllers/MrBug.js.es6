@@ -12,14 +12,10 @@ export default Ember.Controller.extend({
 	mdalready: false,
 	poiskmdal: false,
 	zaipsmdal: false,
-	
-	showhideo: [true, true, true],
-	
-	showhideo1: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-	showhideo2: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-	showhideo3: [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
 
-	
+	showhideo: [true, true, true],
+
+
 	actions: {
 
 		bagoPravila() {
@@ -116,15 +112,15 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			this.get('showhideo1').toggleProperty(index);
+			this.get('gamedb1')[index].toggleProperty('SHOWHIDEO');
 		},
 		
 		showhideo2(index) {
-			this.get('showhideo2').toggleProperty(index);
+			this.get('gamedb2')[index].toggleProperty('SHOWHIDEO');
 		},
 
 		showhideo3(index) {
-			this.get('showhideo3').toggleProperty(index);
+			this.get('gamedb3')[index].toggleProperty('SHOWHIDEO');
 		}
 
 	}
