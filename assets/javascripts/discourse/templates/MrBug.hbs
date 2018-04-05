@@ -329,7 +329,8 @@
 				</tr>
 			</table>
 			xxx{{index}}xxx
-			{{#if (get showhideo1 index)}}
+			xxx{{concat "showhideo1." index}}xxx
+			{{#if (concat "showhideo1." index)}}
 			<table>
 				123123
 			</table>
