@@ -15,9 +15,9 @@ export default Ember.Controller.extend({
 	
 	showhideo: [true, true, true],
 	
-	showhideo1: Array(100).fill(false),
-	showhideo2: Array(100).fill(false),
-	showhideo3: Array(100).fill(false),
+	showhideo1: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	showhideo2: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	showhideo3: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
 
 	
 	actions: {
@@ -116,7 +116,6 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			this.get('showhideo').toggleProperty(index);
 			this.get('showhideo1').toggleProperty(index);
 		},
 		
