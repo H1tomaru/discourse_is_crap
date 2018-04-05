@@ -112,16 +112,15 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			Ember.set(this.get('model.gamedb1').objectAt(index),'SHOWHIDEO',true)
-			//this.get('model.gamedb1').objectAt(index).toggleProperty('SHOWHIDEO');
+			Ember.set(this.get('model.gamedb1')[index],'SHOWHIDEO',!this.get('model.gamedb1')[index].SHOWHIDEO)
 		},
 		
 		showhideo2(index) {
-			this.set(this.get('model.gamedb2').objectAt(index),'SHOWHIDEO',true);
+			Ember.set(this.get('model.gamedb2')[index],'SHOWHIDEO',!this.get('model.gamedb2')[index].SHOWHIDEO);
 		},
 
 		showhideo3(index) {
-			this.set(this.get('model.gamedb3').objectAt(index),'SHOWHIDEO',true);
+			Ember.set(this.get('model.gamedb3')[index],'SHOWHIDEO',!this.get('model.gamedb3')[index].SHOWHIDEO);
 		}
 
 	}
