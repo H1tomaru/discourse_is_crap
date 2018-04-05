@@ -14,6 +14,8 @@ export default Ember.Controller.extend({
 	zaipsmdal: false,
 
 	showhideo: [true, true, true],
+	
+	himom: "ololo",
 
 
 	actions: {
@@ -112,7 +114,8 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			this.get('model.gamedb1').objectAt(index).toggleProperty('SHOWHIDEO');
+			//this.get('model.gamedb1').objectAt(index).toggleProperty('SHOWHIDEO');
+			this.set('himom', this.get('model.gamedb1').objectAt(index));
 		},
 		
 		showhideo2(index) {
