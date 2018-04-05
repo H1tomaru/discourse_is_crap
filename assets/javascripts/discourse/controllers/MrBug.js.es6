@@ -120,6 +120,9 @@ export default Ember.Controller.extend({
 			model[index].SHOWHIDEO = !model[index].SHOWHIDEO;
 			this.set('himom2', model[index].SHOWHIDEO);
 			this.set('model.gamedb1', model);
+			
+			var model = this.get('model').slice();
+			this.set('model', model);
 		},
 		
 		showhideo2(index) {
