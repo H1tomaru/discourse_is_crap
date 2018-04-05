@@ -275,161 +275,170 @@
 		</div>
 	{{/if}}
 	
-	{{#each model.gamedb1 as |game|}}
-		{{#if @first}}
-			<div class='ghed' onclick='showhideo(this)'><i class='fa fa-users'></i>Просто Игры <small class='smaladndark'>Ждём ещё желающих</small></div>
-			<div class='MrBug' style='display: block'>
-		{{/if}}
+	{{#if model.gamedb1}}
+		<div class='ghed' onclick='showhideo(this)'><i class='fa fa-users'></i>Просто Игры <small class='smaladndark'>Ждём ещё желающих</small></div>
+		<div class='MrBug' style='display: block'>
 
-		<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
-			<tr>
-				<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
-				<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
-				<td class='mainco'>
-					<span class='MrBugGN'>{{game.gameNAME}}</span><br>
-					<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-					<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
-						{{#if game.P4PRICE1}}
-							<h3>{{game.P4PRICE1}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-1'>{{game.P1NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
-						{{#if game.P4PRICE2}}
-							<h3>{{game.P4PRICE2}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
-						{{#if game.P4PRICE3}}
-							<h3>{{game.P4PRICE3}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
-				</td>
-			</tr>
-		</table>
+		{{#each model.gamedb1 as |game|}}
+			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
+				<tr>
+					<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
+					<td class='mainco'>
+						<span class='MrBugGN'>{{game.gameNAME}}</span><br>
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
+							{{#if game.P4PRICE1}}
+								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-1'>{{game.P1NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
+							{{#if game.P4PRICE2}}
+								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
+							{{#if game.P4PRICE3}}
+								<h3>{{game.P4PRICE3}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
+					</td>
+				</tr>
+			</table>
+			<table style='display: none'>
 
-                {{#if @last}}</div>{{/if}}
-	{{/each}}
-	
-	{{#each model.gamedb2 as |game|}}
-		{{#if @first}}
-			<div class='ghed' onclick='showhideo(this)'><i class='fa fa-tags'></i>Распродажи <small class='smaladndark'>Самые #$@&%*! скидки в PSN</small></div>
-			<div class='MrBug' style='display: block'>
-		{{/if}}
+			</table>
+		{{/each}}
 
-		<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
-			<tr>
-				<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
-				<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
-				<td class='mainco'>
-					<span class='MrBugGN'>{{game.gameNAME}}</span><br>
-					<span>Акция до {{game.DATE}}</span> 
-					<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-					<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
-						{{#if game.P4PRICE1}}
-							<h3>{{game.P4PRICE1}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-2'>{{game.P1NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
-						{{#if game.P4PRICE2}}
-							<h3>{{game.P4PRICE2}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
-						{{#if game.P4PRICE3}}
-							<h3>{{game.P4PRICE3}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
-				</td>
-			</tr>
-		</table>
+		</div>
+	{{/if}}
 
-                {{#if @last}}</div>{{/if}}
-	{{/each}}
-	
-	{{#each model.gamedb3 as |game|}}
-		{{#if @first}}
-			<div class='ghed' onclick='showhideo(this)'><i class='fa fa-history'></i>Предзаказы <small class='smaladndark'>Хотел купить, теперь не уверен</small></div>
-			<div class='MrBug' style='display: block'>
-		{{/if}}
+	{{#if model.gamedb2}}
+		<div class='ghed' onclick='showhideo(this)'><i class='fa fa-tags'></i>Распродажи <small class='smaladndark'>Самые #$@&%*! скидки в PSN</small></div>
+		<div class='MrBug' style='display: block'>
 
-		<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
-			<tr>
-				<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
-				<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
-				<td class='mainco'>
-					<span class='MrBugGN'>{{game.gameNAME}}</span><br>
-					<span>Дата выхода {{game.DATE}}</span> 
-					<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-					<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
-						{{#if game.P4PRICE1}}
-							<h3>{{game.P4PRICE1}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-3'>{{game.P1NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
-						{{#if game.P4PRICE2}}
-							<h3>{{game.P4PRICE2}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-3'>{{game.P2NO}}</div>{{/if}}
-				</td>
-				<td class='Butt' onclick='event.stopPropagation()'>
-					<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
-						{{#if game.P4PRICE3}}
-							<h3>{{game.P4PRICE3}}</h3><br>рублей
-						{{else}}
-							<h3>НЕТ</h3><br>цены
-						{{/if}}
-					</button>
-					{{#if game.P1NO}}<div class='statustr status-3'>{{game.P2NO}}</div>{{/if}}
-				</td>
-			</tr>
-		</table>
+		{{#each model.gamedb2 as |game|}}
 
-                {{#if @last}}</div>{{/if}}
-	{{/each}}
-	
+			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
+				<tr>
+					<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
+					<td class='mainco'>
+						<span class='MrBugGN'>{{game.gameNAME}}</span><br>
+						<span>Акция до {{game.DATE}}</span> 
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
+							{{#if game.P4PRICE1}}
+								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-2'>{{game.P1NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
+							{{#if game.P4PRICE2}}
+								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
+							{{#if game.P4PRICE3}}
+								<h3>{{game.P4PRICE3}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
+					</td>
+				</tr>
+			</table>
+
+			{{#if @last}}</div>{{/if}}
+		{{/each}}
+
+		</div>
+	{{/if}}
+
+	{{#if model.gamedb3}}
+		<div class='ghed' onclick='showhideo(this)'><i class='fa fa-history'></i>Предзаказы <small class='smaladndark'>Хотел купить, теперь не уверен</small></div>
+		<div class='MrBug' style='display: block'>
+
+		{{#each model.gamedb3 as |game|}}
+
+			<table class="headin{{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}" onclick='showhideo2(this)'>
+				<tr>
+					<td class='flagco'>{{if game.MODE1 "<div><i class='fa fa-exclamation fa-2x fa-pulse'></i></div>"}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><span><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></span></td>
+					<td class='mainco'>
+						<span class='MrBugGN'>{{game.gameNAME}}</span><br>
+						<span>Дата выхода {{game.DATE}}</span> 
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						<span class='smaladndark minihrenvnizu'> >> открыть составы << </span>
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 1 game._id}} class='BagButon'>П1<br>
+							{{#if game.P4PRICE1}}
+								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-3'>{{game.P1NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 2 game._id}} class='BagButon'>П2<br>
+							{{#if game.P4PRICE2}}
+								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-3'>{{game.P2NO}}</div>{{/if}}
+					</td>
+					<td class='Butt' onclick='event.stopPropagation()'>
+						<button {{action 'zaips' 4 game._id}} class='BagButon'>П4<br>
+							{{#if game.P4PRICE3}}
+								<h3>{{game.P4PRICE3}}</h3><br>рублей
+							{{else}}
+								<h3>НЕТ</h3><br>цены
+							{{/if}}
+						</button>
+						{{#if game.P1NO}}<div class='statustr status-3'>{{game.P2NO}}</div>{{/if}}
+					</td>
+				</tr>
+			</table>
+
+			{{#if @last}}</div>{{/if}}
+		{{/each}}
+
+		</div>
+	{{/if}}
+
 	<script>
 
 		function showhideo(element) {
