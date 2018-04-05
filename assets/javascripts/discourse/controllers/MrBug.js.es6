@@ -112,15 +112,15 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			this.get('gamedb1')[index].toggleProperty('SHOWHIDEO');
+			this.get('model.gamedb1')[index].toggleProperty('SHOWHIDEO');
 		},
 		
 		showhideo2(index) {
-			this.get('gamedb2')[index].toggleProperty('SHOWHIDEO');
+			this.get('model.gamedb2')[index].toggleProperty('SHOWHIDEO');
 		},
 
 		showhideo3(index) {
-			this.get('gamedb3')[index].toggleProperty('SHOWHIDEO');
+			this.get('model.gamedb3')[index].toggleProperty('SHOWHIDEO');
 		}
 
 	}
