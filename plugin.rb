@@ -153,10 +153,10 @@ after_initialize do
 								p4STATUS = users[:P4][2*i+1][:STAT]
 							end
 							#template variables for when p1 p2 p3 p4 are taken
-							(p1TAKEN = true; p1 = '') if p1 == '-55'
-							(p2TAKEN = true; p2 = '') if p2 == '-55'
-							(p3TAKEN = true; p3 = '') if p3 == '-55'
-							(p4TAKEN = true; p4 = '') if p4 == '-55'
+							(p1TAKEN = true; p1 = '') if p1 == 'fff'
+							(p2TAKEN = true; p2 = '') if p2 == 'fff'
+							(p3TAKEN = true; p3 = '') if p3 == 'fff'
+							(p4TAKEN = true; p4 = '') if p4 == 'fff'
 							#find feedback for users
 							if p1.length > 0
 								feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
