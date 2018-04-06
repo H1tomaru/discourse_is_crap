@@ -153,7 +153,8 @@
 		</table>
 		<span class="hideoB blakarand big">Сбер / QIWI +7 9169493363</span>
 		<span class="smaladndark tablq">В комментарии к платежу обязательно укажите ваш ник и игру! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!<br>
-		Реквизиты на оплату Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a></span>
+		Реквизиты на оплату Webmoney, Яндекс, Paypal, BTC, ETH спросите у меня через <a href='/u/MrBug'>Личные Сообщения</a><br>
+		Выписаться из состава можно только через <a href='/u/MrBug'>Личные Сообщения</a>, за злоупотребление возможны последствия :)</span>
 
 		<hr>
 
@@ -322,10 +323,16 @@
 					</td>
 				</tr>
 			</table>
-			{{game.SHOWHIDEO}}
+
 			{{#if game.SHOWHIDEO}}
 			<table>
-				123123
+				{{#each game.TROIKI as |users|}}
+					<tr>
+						<td>Пусто</td>
+					</tr>
+				{{else}}
+					<tr><td>Пусто</td></tr>
+				{{/each}}
 			</table>
 			{{/if}}
 
