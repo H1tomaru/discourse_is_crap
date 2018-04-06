@@ -268,7 +268,7 @@ div.shinbakaz {
 			margin: 0 5px 10px;
 			font-size: 3.5em;	
 		}
-		
+
 		div.select {
 			overflow: hidden;
 			width: 330px;
@@ -276,7 +276,7 @@ div.shinbakaz {
 			height: 29px;
 			margin: auto;
 		}
-		
+
 		select {
 			background: #489BCF;
 			border: none;
@@ -285,23 +285,23 @@ div.shinbakaz {
 			color: white;
 			text-align: center;
 		}
-		
+
 		select:focus {
 			color: white
 		}
 
 	}
-	
+
 	.mudalcontent.headin3.prezaips {
 		top: 10%	
 	}
-	
+
 	.prezaips {
 
 		.bagato {
 			position: relative
 		}
-		
+
 		.bagapi {
 			height: 50vh;
 			background-repeat: no-repeat;
@@ -357,48 +357,48 @@ div.shinbakaz {
 		}
 
 	}
-	
+
 	.smaladndark {
 			color: #777;
 			font-size: .75em;
 	}
-	
+
 	.smaladndark.tablq {
 		display: table;
 		margin: 0 auto -5px;		
 	}
-	
+
 	table.atats {
-		
+
 		position: relative;
 		background: #f9f9f9;
-		
+
 		.smaladndark, .blakarand {
 			position: relative;
 			top: -2px;
 		}
-		
+
 		td:nth-child(1) {
 			padding-left: 15px;
 			padding-right: 5px;
 			width: 100px;
 		}
-		
+
 		td:last-child {
 			white-space: nowrap;
 			overflow: hidden;
 		}
-		
+
 	}
-	
+
 	table.kadu {
 			border-left: 4px solid #f08080
 	}
-	
+
 	table.udak {
 			border-left: 4px solid #27ae60
 	}
-	
+
 	table.kadu:before, table.udak:before {
 			position: absolute;
 			top: 50%;
@@ -412,25 +412,29 @@ div.shinbakaz {
 			font-size: 1.8em;
 			text-align: center;
 	}
-	
+
 	table.kadu:before {
 			background-color: #f08080;
 			content: "$";
 	}
-	
+
 	table.udak:before {
 			background-color: #27ae60;
 			content: "i";
 	}
-	
+
 	.MrBug {
-		
+
 		table {
 			border-top: 1px solid #ddd	
 		}
-		
+
 		table:last-child {
 			border-bottom: 1px solid #ddd
+		}
+
+		td {
+			padding: .3em!important
 		}
 
 		.flagco {
@@ -453,7 +457,7 @@ div.shinbakaz {
 			}
 
 		}
-		
+
 		.flag {
 			display: inline-block;
 			height: 16px;
@@ -484,6 +488,14 @@ div.shinbakaz {
 
 		.ID {
 			background-position: 0 -1792px
+		}
+
+		.imgco {
+		    width: 180px
+		}
+
+		.mainco {
+		    width: 100%
 		}
 
 	}
