@@ -129,28 +129,28 @@ after_initialize do
 						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 							#tons of variables for everything
 							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
-							p1STATUS = 0; p2STATUS = 0; p3STATUS = 0; p4STATUS = 0
+							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]; p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
 							p1PRICE = 0; p2PRICE = 0; p3PRICE = 0; p1PDOWN = 0; p2PDOWN = 0; p3PDOWN = 0
 							p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
 							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false
-							#fill user info
+							#fill user info and template variables for statuses
 							if users[:P1] && users[:P1][i]
 								p1 = users[:P1][i][:NAME].strip
-								p1STATUS = users[:P1][i][:STAT]
+								p1STATUS[users[:P1][i][:STAT]] = true
 							end
 							if users[:P2] && users[:P2][i]
 								p2 = users[:P2][i][:NAME].strip
-								p2STATUS = users[:P2][i][:STAT]
+								p2STATUS[users[:P2][i][:STAT]] = true
 							end
 							if users[:P4] && users[:P4][2*i]
 								p3 = users[:P4][2*i][:NAME].strip
-								p3STATUS = users[:P4][2*i][:STAT]
+								p3STATUS[users[:P4][2*i][:STAT]] = true
 							end
 							if users[:P4] && users[:P4][2*i+1]
 								p4 = users[:P4][2*i+1][:NAME].strip
-								p4STATUS = users[:P4][2*i+1][:STAT]
+								p4STATUS[users[:P4][2*i+1][:STAT]] = true
 							end
 							#template variables for when p1 p2 p3 p4 are taken
 							(p1TAKEN = true; p1 = '') if p1 == '-55'
