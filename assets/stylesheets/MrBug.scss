@@ -429,16 +429,13 @@ div.shinbakaz {
 			padding: 30px;
 			font-size: 2.2em;
 			cursor: pointer;
+			white-space: nowrap;
 		}
 
 		.ghed:hover {
 			color: #2ba5f3
 		}
 
-		.ghed i {
-			min-width: 50px;
-			text-align: center;
-		}
 	}
 	
 	.blakarand {
@@ -551,6 +548,19 @@ div.shinbakaz {
 			
 			a {
 				font-size: .75em
+			}
+
+		}
+		
+		.MrBug {
+
+			.ghed {
+				padding: 30px 0;
+				font-size: 1.6em;
+				
+				.smaladndark {
+					font-size: .5em
+				}
 			}
 
 		}
