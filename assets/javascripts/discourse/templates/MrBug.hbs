@@ -333,7 +333,7 @@
 						<td>
 							П1 - 
 							{{#if users.P1}}
-								<a {{if users.P1PRICE "title='{{users.P1PRICE}}р'"}} href='/u/{{users.P1}}'>{{users.P1}}</a>
+								<a {{if users.P1PRICE (concat "title='" users.P1PRICE "р'")}} href='/u/{{users.P1}}'>{{users.P1}}</a>
 								<a class='repala {{if users.P1FBred "bgred" "bggr2"}}' href='/u/{{users.P1}}/kek'>
 									{{users.P1FEEDBACK.PERCENT}}%
 									<span>
@@ -346,7 +346,7 @@
 								{{#if users.P1TAKEN}}
 									Нету
 								{{else}}
-									Cвободно{{if users.P1PRICE users.P1PRICE}}
+									Cвободно{{if users.P1PRICE (concat users.P1PRICE "р")}}
 								{{/if}}
 							{{/if}}
 						</td>
