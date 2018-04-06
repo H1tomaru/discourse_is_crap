@@ -424,6 +424,7 @@ div.shinbakaz {
 	}
 	
 	.MrBug {
+
 		.ghed {
 			color: #337ab7;
 			padding: 30px;
@@ -434,6 +435,59 @@ div.shinbakaz {
 
 		.ghed:hover {
 			color: #2ba5f3
+		}
+		
+		.flagco {
+			text-align: center;
+			width: 16px;
+		}
+
+		.flagco {
+
+			div {
+				position: relative;
+				width: 0;
+				height: 0;
+			}
+
+			.fa-exclamation {
+				position: absolute;
+				left: -30px;
+				top: -5px;
+			}
+
+		}
+		
+		.flag {
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+			vertical-align: text-top;
+			background: url(https://i.imgur.com/mEbQIbg.png) no-repeat;
+		}
+
+		.US {
+			background-position: 0 -3664px
+		}
+
+		.RU {
+			background-position: 0 -3104px
+		}
+
+		.JP {
+			background-position: 0 -1984px
+		}
+
+		.HK {
+			background-position: 0 -1713px
+		}
+
+		.UK {
+			background-position: 0 -1455px
+		}
+
+		.ID {
+			background-position: 0 -1792px
 		}
 
 	}
