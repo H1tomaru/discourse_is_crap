@@ -327,8 +327,29 @@
 			{{#if game.SHOWHIDEO}}
 			<table>
 				{{#each game.TROIKI as |users|}}
+					{{#if users.ACCOUNT}}<tr><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
+					{{#if users.COMMENT}}<tr><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
 					<tr>
-						<td>Пусто</td>
+						<td>
+							П1 - 
+							{{#if users.P1}}
+								<a {{if users.P1PRICE "title='{{users.P1PRICE}}р'"}} href='/u/{{users.P1}}'>{{users.P1}}</a>
+								<a class='repala {{if users.P1FBred "bgred" "bggr2"}}' href='/u/{{users.P1}}/kek'>
+									{{users.P1FEEDBACK.PERCENT}}%
+									<span>
+										<i class='fa fa-smile-o'></i> {{users.P1FEEDBACK.GOOD}} 
+										<i class='fa fa-meh-o'></i> {{users.P1FEEDBACK.NEUTRAL}} 
+										<i class='fa fa-frown-o'></i> {{users.P1FEEDBACK.BAD}}
+									</span>
+								</a>
+							{{else}}
+								{{#if users.P1TAKEN}}
+									Нету
+								{{else}}
+									Cвободно{{if users.P1PRICE " {{users.P1PRICE}}р"}}
+								{{/if}}
+							{{/if}}
+						</td>
 					</tr>
 				{{else}}
 					<tr><td>Пусто</td></tr>
