@@ -294,7 +294,7 @@ after_initialize do
 						p1ADD = 0
 						p1ADD = troika[:NOP1ADD] if troika[:P1].length == 0
 						if current_user[:username] == troika[:P1]
-							if troika[:P1STATUS] == 0
+							if troika[:P1STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: p1ADD } )
 							else
@@ -304,7 +304,7 @@ after_initialize do
 							end
 						end
 						if current_user[:username] == troika[:P2]
-							if troika[:P2STATUS] == 0
+							if troika[:P2STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: p1ADD } )
 							else
@@ -314,7 +314,7 @@ after_initialize do
 							end
 						end
 						if current_user[:username] == troika[:P3]
-							if troika[:P3STATUS] == 0
+							if troika[:P3STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
 							else
@@ -324,7 +324,7 @@ after_initialize do
 							end
 						end
 						if current_user[:username] == troika[:P4]
-							if troika[:P4STATUS] == 0
+							if troika[:P4STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
 							else
