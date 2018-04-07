@@ -705,6 +705,11 @@ div.shinbakaz {
 	
 	@media (max-width: 600px) {
 
+		.shinbakaz {
+			position: absolute;
+			left: 0;
+		}
+
 		.hideoS {
 			display: none
 		}
