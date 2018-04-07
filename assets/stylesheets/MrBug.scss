@@ -602,6 +602,8 @@ div.shinbakaz {
 
 		table.djuke {
 
+			width: 97%;
+
 			tr {
 			    border-bottom: 1px dashed #ddd
 			}
@@ -618,10 +620,6 @@ div.shinbakaz {
 				padding-left: 3%;
 				white-space: nowrap;
 				overflow: hidden;
-			}
-
-			td:last-of-type {
-				padding-right: 3%
 			}
 
 		}
