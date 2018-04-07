@@ -243,9 +243,9 @@ after_initialize do
 						#userDB.delete_if{ |h| h['_id'] == game[:_id] }
 					end
 					#set display users number
-					game[:P1NO] = p1NO.to_s
-					game[:P2NO] = p2NO.to_s
-					game[:P3NO] = p3NO.to_s
+					game[:P1NO] = p1NO
+					game[:P2NO] = p2NO
+					game[:P3NO] = p3NO
 					#set the current display price, depending on amount of troek, if price is zero, don't touch it
 					if game[:PRICE] > 0
 						if price1DISPLAY > 0
