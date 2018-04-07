@@ -565,13 +565,16 @@ div.shinbakaz {
 
 			color: #fff;
 			background-color: #2ba5f3;
+
+			h3 {
+				text-shadow: 1px 1px grey
+			}
 		}
 
 		h3 {
 			font-size: 35px;
 			margin: -5px -10px -20px;
-			font-weight: 800;
-			text-shadow: 1px 1px grey;
+			font-weight: 400;
 		}
 
 		.repala {
