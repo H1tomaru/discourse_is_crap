@@ -510,8 +510,8 @@ div.shinbakaz {
 		}
 
 		.minihrenvnizu {
-		    display: table;
-		    margin: 5px auto -20px;
+			display: table;
+			margin: 5px auto -20px;
 		}
 
 		.status-1 {
@@ -554,8 +554,9 @@ div.shinbakaz {
 			width: 100px;
 			height: 80px;
 			background-color: #fff;
-			color: gainsboro;
+			color: silver;
 			border-radius: 3px;
+			border: 1px solid #ddd;
 			transition: all .3s ease-in-out;
 			padding: 0;
 		}
@@ -564,17 +565,13 @@ div.shinbakaz {
 
 			color: #fff;
 			background-color: #2ba5f3;
-
-			h3 {
-				text-shadow: 1px 1px grey;
-			}
 		}
 
 		h3 {
-		    text-shadow: 1px 1px grey;
-		    font-size: 35px;
-		    margin: -5px -10px -20px;
-		    font-weight: 800;
+			font-size: 35px;
+			margin: -5px -10px -20px;
+			font-weight: 800;
+			text-shadow: 1px 1px grey;
 		}
 
 	}
