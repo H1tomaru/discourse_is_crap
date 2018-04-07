@@ -491,11 +491,75 @@ div.shinbakaz {
 		}
 
 		.imgco {
-		    width: 180px
+			width: 180px
 		}
 
 		.mainco {
-		    width: 100%
+			width: 100%
+		}
+
+		.baga {
+			padding: .2em .6em .3em;
+			font-size: 75%;
+			color: #fff;
+			border-radius: .25em;
+		}
+
+		.baga-PS4 {
+			background-color: #337ab7
+		}
+
+		.minihrenvnizu {
+		    display: table;
+		    margin: 5px auto -20px;
+		}
+
+		.status-0, .status-1 {
+			color: white;
+			background: black;
+		}
+
+		.status-2 {
+			color: white;
+			background: green;
+		}
+
+		.status-3 {
+			color: black;
+			background: Gold;
+		}
+		
+		.statustr {
+			position: absolute;
+			right: -4px;
+			top: 4px;
+			padding: 2px 12px;
+			font-size: 10px;
+			border-radius: 3px 0 3px 3px;
+		}
+
+		.statustr::before {
+			position: absolute;
+			top: -4px;
+			width: 5px;
+			height: 4px;
+			content: "";
+			background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+			right: 0px;
+			border-radius: 0px 3px 0px 0px;
+		}
+		
+		.BagButon {
+			position: relative;
+			width: 100px;
+			height: 80px;
+			background-color: #fff;
+			color: #ddd;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			transition: all .3s ease-in-out;
+			text-align: center;
+			padding: 0;
 		}
 
 	}
@@ -576,18 +640,6 @@ div.shinbakaz {
 		display: none
 	}
 	
-	.BagButon {
-		width: 100px;
-		height: 80px;
-		background-color: #fff;
-		color: #ddd;
-		border: 1px solid #ddd;
-		border-radius: 3px;
-		transition: all .3s ease-in-out;
-		text-align: center;
-		padding: 0;
-	}
-
 	@media (max-width: 600px) {
 
 		.hideoS {
