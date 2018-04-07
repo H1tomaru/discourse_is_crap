@@ -783,7 +783,9 @@ div.shinbakaz {
 
 		.MrBug {
 
-			font-size: .75em;
+			table.ggg {
+				font-size: .75em
+			}
 
 			.flagco, .baga {
 				display: none	
@@ -836,6 +838,16 @@ div.shinbakaz {
 			
 			button {
 				font-size: 0.5em
+			}
+
+		}
+
+		table.djuke {
+			
+			font-size: .75em;
+			
+			td:nth-child(even) {
+				width: 70px
 			}
 
 		}
