@@ -751,6 +751,26 @@ div.shinbakaz {
 			}
 		}
 
+		table.ggg {
+			position: relative
+		}
+
+		.minihrenvnizu {
+			margin: 0;
+			position: absolute;
+			left: 0;
+			bottom: 6px;
+		}
+
+		.imgco {
+
+			width: 90px;
+
+			img {
+			    width: 90px
+			}
+		}
+
 	}
 
 	@media (max-width: 750px) {
@@ -763,21 +783,8 @@ div.shinbakaz {
 				display: none	
 			}
 
-			table.ggg {
-				position: relative
-			}
-
 			table.ggg td {
 				padding: 0
-			}
-
-			.imgco {
-
-				width: 90px;
-
-				img {
-				    width: 90px
-				}
 			}
 
 			h3 {
@@ -791,13 +798,6 @@ div.shinbakaz {
 			.statustr {
 				font-size: 9px;
 				width: 22px;
-			}
-
-			.minihrenvnizu {
-				margin: 0;
-				position: absolute;
-				left: 0;
-				bottom: 6px;
 			}
 
 		}
