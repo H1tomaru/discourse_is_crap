@@ -433,7 +433,7 @@ div.shinbakaz {
 			border-bottom: 1px solid #ddd
 		}
 
-		td {
+		table.ghead td {
 			padding: .3em
 		}
 
@@ -615,7 +615,9 @@ div.shinbakaz {
 			}
 
 			td:nth-child(odd) {
-				padding-left: 3%
+				padding-left: 3%;
+				white-space: nowrap;
+				overflow: hidden;
 			}
 
 			td:last-of-type {
