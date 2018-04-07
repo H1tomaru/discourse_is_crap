@@ -602,15 +602,22 @@ div.shinbakaz {
 
 		table.djuke {
 
+			tr {
+			    border-bottom: 1px dashed #ddd
+			}
+			
+			tr:last-child {
+			    border: none
+			}
+
 			td:nth-child(even) {
 				width: 100px
 			}
-			
-			
+
 			td:nth-child(odd) {
 				padding-left: 3%
 			}
-			
+
 			td:last-of-type {
 				padding-right: 3%
 			}
