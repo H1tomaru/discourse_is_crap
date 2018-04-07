@@ -434,7 +434,7 @@ div.shinbakaz {
 		}
 
 		td {
-			padding: .3em!important
+			padding: .3em
 		}
 
 		.flagco {
@@ -499,7 +499,7 @@ div.shinbakaz {
 		}
 
 		.baga {
-			padding: .2em .6em .3em;
+			padding: .3em .6em;
 			font-size: 75%;
 			color: #fff;
 			border-radius: .25em;
@@ -576,8 +576,7 @@ div.shinbakaz {
 
 		.repala {
 			border-radius: 25px;
-			padding: .1em .4em .1em;
-			font-family: Roboto,sans-serif;
+			padding: .05em .4em .1em;
 		}
 
 		a.repala span {
@@ -596,11 +595,24 @@ div.shinbakaz {
 		a.repala:hover span {
 			display:inline
 		}
+		
+		a:link.repala , a:visited.repala  {
+			color: white
+		}
 
 		table.djuke {
 
 			td:nth-child(even) {
 				width: 100px
+			}
+			
+			
+			td:nth-child(odd) {
+				padding-left: 3%
+			}
+			
+			td:last-of-type {
+				padding-right: 3%
 			}
 
 		}
