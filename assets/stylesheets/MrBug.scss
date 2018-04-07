@@ -438,11 +438,9 @@ div.shinbakaz {
 		}
 
 		.flagco {
+
 			text-align: center;
 			width: 16px;
-		}
-
-		.flagco {
 
 			div {
 				position: relative;
@@ -512,11 +510,12 @@ div.shinbakaz {
 		.minihrenvnizu {
 			display: table;
 			margin: 5px auto -20px;
+			cursor: pointer;
 		}
 
 		.status-1 {
 			color: white;
-			background: black;
+			background: dimgray;
 		}
 
 		.status-2 {
@@ -560,6 +559,7 @@ div.shinbakaz {
 			border: 1px solid #ddd;
 			transition: all .3s ease-in-out;
 			padding: 0;
+			line-height: normal;
 		}
 
 		.BagButon:hover {
@@ -743,10 +743,6 @@ div.shinbakaz {
 
 		}
 
-		.MrBug {
-
-		}
-
 		.ghed {
 
 			padding: 30px 0;
@@ -755,6 +751,57 @@ div.shinbakaz {
 			.smaladndark {
 				font-size: .5em
 			}
+		}
+
+	}
+
+	@media (max-width: 750px) {
+
+		.MrBug {
+
+			font-size: .75em;
+
+			.flagco, .baga {
+				display: none	
+			}
+
+			table.ggg {
+				position: relative
+			}
+
+			table.ggg td {
+				padding: 0
+			}
+
+			.imgco {
+
+				width: 90px;
+
+				img {
+				    width: 90px
+				}
+			}
+
+			h3 {
+				font-size: 25px
+			}
+
+			.BagButon {
+				width: 60px
+			}
+
+			.statustr {
+				font-size: 9px;
+				width: 22px;
+			}
+
+			.minihrenvnizu {
+				margin: 0;
+				position: absolute;
+				left: 0;
+				bottom: 6px;
+			}
+
 		}
 
 	}
