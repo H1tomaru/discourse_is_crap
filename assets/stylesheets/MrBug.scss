@@ -574,7 +574,6 @@ div.shinbakaz {
 		h3 {
 			font-size: 35px;
 			margin: -5px -10px -20px;
-			font-weight: 400;
 		}
 
 		.repala {
@@ -608,11 +607,11 @@ div.shinbakaz {
 			width: 97%;
 
 			tr {
-			    border-bottom: 1px dashed #ddd
+				border-bottom: 1px dashed #ddd
 			}
 			
 			tr:last-child {
-			    border: none
+				border: none
 			}
 
 			td:nth-child(even) {
