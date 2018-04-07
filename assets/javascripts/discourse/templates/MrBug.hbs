@@ -327,9 +327,9 @@
 			{{#if game.SHOWHIDEO}}
 			<table class="djuke">
 				{{#each game.TROIKI as |users|}}
-					{{#if users.ACCOUNT}}<tr><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
-					{{#if users.COMMENT}}<tr><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
-					<tr>
+					{{#if users.ACCOUNT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
+					{{#if users.COMMENT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
+					<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 						<td>
 							П1 - 
 							{{#if users.P1}}
@@ -505,9 +505,9 @@
 			{{#if game.SHOWHIDEO}}
 			<table class="djuke">
 				{{#each game.TROIKI as |users|}}
-					{{#if users.ACCOUNT}}<tr><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
-					{{#if users.COMMENT}}<tr><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
-					<tr>
+					{{#if users.ACCOUNT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
+					{{#if users.COMMENT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
+					<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 						<td>
 							П1 - 
 							{{#if users.P1}}
@@ -683,9 +683,9 @@
 			{{#if game.SHOWHIDEO}}
 			<table class="djuke">
 				{{#each game.TROIKI as |users|}}
-					{{#if users.ACCOUNT}}<tr><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
-					{{#if users.COMMENT}}<tr><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
-					<tr>
+					{{#if users.ACCOUNT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
+					{{#if users.COMMENT}}<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
+					<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 						<td>
 							П1 - 
 							{{#if users.P1}}
