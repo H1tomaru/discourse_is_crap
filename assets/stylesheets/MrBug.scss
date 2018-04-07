@@ -560,6 +560,16 @@ div.shinbakaz {
 			padding: 0;
 		}
 
+		.BagButon:hover {
+
+			color: #fff;
+			background-color: #2ba5f3;
+
+			h3 {
+				text-shadow: 1px 1px grey;
+			}
+		}
+
 		h3 {
 		    text-shadow: 1px 1px grey;
 		    font-size: 35px;
