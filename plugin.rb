@@ -197,8 +197,10 @@ after_initialize do
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 							#create comment and account variable if they exist
 							if users[i+1]
-								account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
-								comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
+								account = "Bakemon"
+								comment = "2Bakemon2"
+								#account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
+								#comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
 							end
 							#calculate prices
 							if game[:PRICE] > 0
