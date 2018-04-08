@@ -197,19 +197,17 @@ after_initialize do
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 							#create comment and account variable if they exist
 							if users[(i+1).to_s]
-								account = "Bakemon"
-								comment = "3Bakemon3"
-								#account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
-								#comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
+								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
+								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
 							end
 							#calculate prices
 							if game[:PRICE] > 0
 								priceUP = priceSTEP * (i / 10).floor
 								#get current pricedown
-								if users[i+1]
-									p1PDOWN = users[i+1][:PDOWN1] if users[i+1][:PDOWN1]
-									p2PDOWN = users[i+1][:PDOWN2] if users[i+1][:PDOWN2]
-									p3PDOWN = users[i+1][:PDOWN3] if users[i+1][:PDOWN3]
+								if users[(i+1).to_s]
+									p1PDOWN = users[(i+1).to_s][:PDOWN1] if users[(i+1).to_s][:PDOWN1]
+									p2PDOWN = users[(i+1).to_s][:PDOWN2] if users[(i+1).to_s][:PDOWN2]
+									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
 								end
 								#create current troika prices
 								p1PRICE = game[:P4PRICE1] - p1PDOWN + priceUP
