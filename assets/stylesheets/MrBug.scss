@@ -705,12 +705,6 @@ div.shinbakaz {
 	
 	@media (max-width: 600px) {
 
-		.shinbakaz {
-			position: absolute;
-			left: 0;
-			width: 100%;
-		}
-
 		.hideoS {
 			display: none
 		}
@@ -860,6 +854,16 @@ div.shinbakaz {
 
 		}
 
+	}
+
+}
+
+@media (max-width: 600px) {
+
+	div.shinbakaz {
+		position: absolute;
+		left: 0;
+		width: 100%;
 	}
 
 }
