@@ -196,7 +196,7 @@ after_initialize do
 							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD]/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD]/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 							#create comment and account variable if they exist
-							if users[:1]
+							if users[1]
 								account = "Bakemon"
 								comment = "3Bakemon3"
 								#account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
