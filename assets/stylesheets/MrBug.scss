@@ -779,7 +779,7 @@ div.shinbakaz {
 
 		.MrBug table.djuke {
 			
-			.malabela span, .repal {
+			.malabela span {
 				display: none
 			}
 
@@ -799,7 +799,7 @@ div.shinbakaz {
 				font-size: .75em
 			}
 
-			.flagco, .baga {
+			.flagco, .baga, .repala {
 				display: none	
 			}
 
@@ -818,6 +818,14 @@ div.shinbakaz {
 			.statustr {
 				font-size: 9px;
 				width: 22px;
+			}
+
+			table.djuke {
+
+				td {
+					padding: 0
+				}
+
 			}
 
 		}
