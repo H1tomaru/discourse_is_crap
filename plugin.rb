@@ -198,7 +198,7 @@ after_initialize do
 							#create comment and account variable if they exist
 							if users[:1]
 								account = "Bakemon"
-								comment = "2Bakemon2"
+								comment = "3Bakemon3"
 								#account = users[i+1][:ACCOUNT] if users[i+1][:ACCOUNT]
 								#comment = users[i+1][:COMMENT] if users[i+1][:COMMENT]
 							end
