@@ -777,10 +777,14 @@ div.shinbakaz {
 			}
 		}
 
-		table.djuke {
+		.MrBug table.djuke {
 			
-			.malabela span {
+			.malabela span, .repal {
 				display: none
+			}
+
+			td:nth-child(even) {
+				width: 10px
 			}
 
 		}
@@ -850,7 +854,7 @@ div.shinbakaz {
 
 		}
 
-		table.djuke {
+		.MrBug table.djuke {
 			
 			font-size: .75em;
 			
