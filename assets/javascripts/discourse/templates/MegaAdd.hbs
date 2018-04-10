@@ -32,9 +32,9 @@ MegaAdd List some Pokemans<br>
 
 {{#if p4lista}}
 	{{#each p4lista as |game|}}
-		<br>{{game.gameNAME}}:<br>
 		{{#each game.TROIKI as |troika|}}
 			{{#if troika.ACCOUNT}}
+				{{#if @first}}<br>{{game.gameNAME}}:<br>{{/if}}
 				<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
 			{{/if}}
 		{{/each}}
