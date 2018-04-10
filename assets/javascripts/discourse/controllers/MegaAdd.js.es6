@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
 		oops() {
 			Ember.$.ajax({
-				url: "/admin/MegaAdd",
+				url: "/admin/MegaAdd/",
 				type: "POST",
 				data: { "GAME": this.get('addstuff.GAME'),
 				      	"STRING": this.get('addstuff.STRING')}
