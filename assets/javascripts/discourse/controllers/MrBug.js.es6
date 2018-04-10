@@ -51,7 +51,7 @@ export default Ember.Controller.extend({
 			Ember.$.ajax({
 				url: "/MrBug/troikopoisk/",
 				type: "POST",
-				data: btoa(unescape(encodeURIComponent(this.get('troikopoisk2'))))
+				data: { "input": btoa(unescape(encodeURIComponent(this.get('troikopoisk2')))) }
 			}).then(result => {
 				this.set('troikopoisk', result);
 				this.set('poiskmdal', true);
