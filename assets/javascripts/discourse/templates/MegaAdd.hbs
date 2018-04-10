@@ -1,4 +1,4 @@
-MegaAdd some Pokemans<br>
+MegaAdd some Pokemans<br><br>
 
 <form class="MegaAdd" {{ action "oops" on="submit"}}>
 	{{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
@@ -8,7 +8,9 @@ MegaAdd some Pokemans<br>
 </form>
 
 <br>
-{{addstuff}}
+{{addstuff.GAME}}<br>
+{{addstuff.STRING}}<br>
+{{addstuff.NEWSTRING}}<br>
 {{#if addstuff.winrarP4}}
 	Winrars! P4:<br>
 	{{#each addstuff.RESULT as |game|}}
