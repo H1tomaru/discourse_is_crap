@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 		},
 		
 		Reset() {
-				this.set('addstuff', null);
+			this.set('addstuff', {});
 		}
 
 	}
