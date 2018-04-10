@@ -31,8 +31,7 @@ after_initialize do
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 		
-		db2 = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'megaadd', password: '3HXED926MT' )
-		@@userdb2 = db2.use('userdb')
+		@@userdb2 = Mongo::Client.new([ '93.171.216.230:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 
 		def show
 			#variables, duh
