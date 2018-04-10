@@ -23,3 +23,20 @@ MegaAdd some Pokemans<br><br>
 		{{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П3}}<br>
 	{{/each}}
 {{/if}}
+
+<br>
+
+MegaAdd List some Pokemans<br>
+
+<button {{action 'P4 Lista'}}>P4 lista:</button><br>
+
+{{#if p4lista}}
+	{{#each p4lista as |game|}}
+		<br>{{game.gameNAME}}:<br>
+		{{#each game.TROIKI as |troika|}}
+			{{#if troika.ACCOUNT}}
+				<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
+			{{/if}}
+		{{/each}}
+	{{/each}}
+{{/if}}
