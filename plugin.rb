@@ -12,24 +12,24 @@ require 'uri'
 register_asset 'stylesheets/MrBug.scss'
 
 after_initialize do
-	
+
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
-		get "/admin/MegaAdd" => "megaadd#show", constraints: AdminConstraint.new
+		get "/admin/MegaAdd" => "mrbug#megaadd", constraints: AdminConstraint.new
 	end
 
 	class ::MrbugController < ::ApplicationController
-		
+
 		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
 		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
-		
+
 		def show
 			#variables, duh
 			finalvar = {}
@@ -39,7 +39,7 @@ after_initialize do
 			qzlist = []
 			gamelist = []
 			newcache = {}
-			
+
 			#get cache from db, drop it if its old
 			cacheDB = @@cache[:cache].find().to_a
 			if cacheDB[0]
@@ -61,7 +61,6 @@ after_initialize do
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
 
-			finalvar[:qzstuff] = true
 			if gamelist.empty?
 				#create qzlist variable
 				glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
@@ -276,13 +275,13 @@ after_initialize do
 				newcache[:gamelist] = gameDB
 				newcache[:TIME] = Time.now
 			end
-			
+
 			#save cache to db if it exists
 			@@cache[:cache].insert_one(newcache) if newcache.any?
-			
+
 			#if displaying qzaips, add games list to finalvar
 			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
-			
+
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
@@ -461,16 +460,12 @@ after_initialize do
 			else
 				render json: { zaipsfail: true }
 			end
-		end 
+		end
 
-	end
-	
-	class ::MegaaddController < ::ApplicationController
-		
-		def show
+		def megaadd
 			render json: { name: "donut", description: "delicious!" }
 		end
-		
-	end
-end
 
+	end
+
+end
