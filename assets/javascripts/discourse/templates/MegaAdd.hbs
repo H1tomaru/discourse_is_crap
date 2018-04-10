@@ -1,25 +1,25 @@
 <title>MegaAdd some Pokemans</title>
 
 <form class="MegaAdd" {{ action "oops" on="submit"}}>
-  {{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
-  <button type="submit">GoGoGo</button>
-  <button {{action 'Reset'}}>Reset</button><br><br>
-  {{textarea rows="30" cols="48" value=addstuff.STRING}}
+	{{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
+	<button type="submit">GoGoGo</button>
+	<button {{action 'Reset'}}>Reset</button><br><br>
+	{{textarea rows="30" cols="48" value=addstuff.STRING}}
 </form>
 
 <br>
 
 {{#if addstuff.winrarP4}}
-  Winrars! P4:<br>
-  {{#each addstuff.RESULT as |game|}}
-    {{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П41}} {{game.П42}}<br>
-  {{/each}}
+	Winrars! P4:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П41}} {{game.П42}}<br>
+	{{/each}}
 {{/if}}
 
 
 {{#if addstuff.winrarP3}}
-  Winrars! P3:<br>
-  {{#each addstuff.RESULT as |game|}}
-    {{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П3}}<br>
-  {{/each}}
+	Winrars! P3:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П3}}<br>
+	{{/each}}
 {{/if}}
