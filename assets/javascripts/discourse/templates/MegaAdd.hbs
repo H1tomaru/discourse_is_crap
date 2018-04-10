@@ -34,8 +34,12 @@ MegaAdd List some Pokemans<br>
 	{{#each p4lista as |game|}}
 		{{#each game.TROIKI as |troika index|}}
 			{{#if troika.ACCOUNT}}
-				{{#if (eq index 0)}}<br>{{game.gameNAME}}:<br>{{/if}}
-				<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
+				{{#if index}}
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
+				{{else}}
+					<br>{{game.gameNAME}}:<br>
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
+				{{/if}}
 			{{/if}}
 		{{/each}}
 	{{/each}}
