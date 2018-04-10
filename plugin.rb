@@ -462,6 +462,10 @@ after_initialize do
 				render json: { zaipsfail: true }
 			end
 		end
+		
+		def showadd
+			render json: { name: "mydonut", description: "isdelicious!" }
+		end
 
 		def megaadd
 			render json: { name: "mydonut", description: "isdelicious!" }
