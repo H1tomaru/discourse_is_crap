@@ -2,6 +2,7 @@ export default Ember.Controller.extend({
 
 	addstuff: {"GAME": null,
 		  "STRING": null},
+	p4lista: null,
 	
 	actions: {
 
@@ -18,6 +19,16 @@ export default Ember.Controller.extend({
 		
 		Reset() {
 			this.set('addstuff', {});
+		},
+
+		P4Lista() {
+			Ember.$.ajax({
+				url: "/MrBug.json",
+				type: "GET"
+			}).then(result => {
+				result = result.gamedb1 + result.gamedb2 + result.gamedb3
+				this.set('p4lista', result);
+			});
 		}
 
 	}
