@@ -30,6 +30,9 @@ after_initialize do
 		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
+		
+		db2 = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'megaadd', password: '3HXED926MT' )
+		@@userdb2 = db2.use('userdb')
 
 		def show
 			#variables, duh
@@ -480,7 +483,7 @@ after_initialize do
 						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
-							@@userdb[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip }, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip }, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
 						end
 					end
 				else
@@ -489,7 +492,7 @@ after_initialize do
 						if sostav[0] && sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
-							@@userdb[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip }, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip }, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
 						end
 					end
 				end
