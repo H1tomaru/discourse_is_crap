@@ -464,7 +464,7 @@ after_initialize do
 		end
 		
 		def showadd
-			render json: { name: "mydonut", description: "isdelicious!" }
+			render json: { HiMom: "!!!" }
 		end
 
 		def megaadd
