@@ -479,7 +479,7 @@ after_initialize do
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
 						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
-							addstuff[:RESULT].push({ GAME: addstuff[:GAME], 'Mail': sostav[0].trim(), 'П2': sostav[1].trim(), 'П41': sostav[2].trim(), 'П42': sostav[3].trim()})
+							addstuff[:RESULT].push({ GAME: addstuff[:GAME], 'Mail': sostav[0].strip, 'П2': sostav[1].strip, 'П41': sostav[2].strip, 'П42': sostav[3].strip})
 						end
 					end
 				else
