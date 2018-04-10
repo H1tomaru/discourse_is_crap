@@ -474,7 +474,7 @@ after_initialize do
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\r")
 				#check if were doing p3 or p4
-				if addstuff[:STRING].include? "П4" #&& addstuff[:STRING].exclude? "П3"
+				if addstuff[:STRING].include? "П4" && addstuff[:STRING].exclude? "П3"
 					#p4 version
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
 						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
