@@ -1,6 +1,7 @@
 export default Ember.Controller.extend({
 
-	addstuff: null,
+	addstuff: {"GAME": null,
+		  "STRING": null},
 	
 	actions: {
 
