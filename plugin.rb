@@ -471,10 +471,10 @@ after_initialize do
 			addstuff = {}
 			addstuff = params
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff.GAME && addstuff.STRING
-				
-			end
+				addstuff.NEWSTRING = addstuff.STRING.gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\r")
 
-			render json: addstuff
+				render json: addstuff
+			end
 		end
 
 	end
