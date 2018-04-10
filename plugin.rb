@@ -463,7 +463,7 @@ after_initialize do
 		end
 
 		def megaadd
-			render json: { name: "donut", description: "delicious!" }
+			render json: { name: "mydonut", description: "isdelicious!" }
 		end
 
 	end
