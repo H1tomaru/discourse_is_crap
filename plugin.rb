@@ -18,7 +18,7 @@ after_initialize do
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
-		get '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
+		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 	end
 
 	class ::MrbugController < ::ApplicationController
