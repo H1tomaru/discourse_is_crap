@@ -468,7 +468,13 @@ after_initialize do
 		end
 
 		def megaadd
-			render json: { name: "mydonut", description: "isdelicious!" }
+			addstuff = {}
+			addstuff = params
+			if current_user && current_user[:username] == 'H1tomaru' && addstuff.GAME && addstuff.STRING
+				
+			end
+
+			render json: addstuff
 		end
 
 	end
