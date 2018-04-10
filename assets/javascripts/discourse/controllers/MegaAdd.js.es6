@@ -26,7 +26,7 @@ export default Ember.Controller.extend({
 				url: "/MrBug.json",
 				type: "GET"
 			}).then(result => {
-				result = result.gamedb1 + result.gamedb2 + result.gamedb3
+				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
 				this.set('p4lista', result);
 			});
 		}
