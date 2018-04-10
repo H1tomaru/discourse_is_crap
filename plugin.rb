@@ -15,7 +15,7 @@ after_initialize do
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
-		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
+		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
@@ -349,7 +349,7 @@ after_initialize do
 
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(URI.unescape(params[:miloakka])).strip.downcase
+			troikopoisk = Base64.decode64(URI.unescape(params).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
