@@ -18,6 +18,7 @@ after_initialize do
 		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
 		post '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		post '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
+		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 	end
 
