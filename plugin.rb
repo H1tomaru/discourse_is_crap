@@ -349,7 +349,7 @@ after_initialize do
 
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(URI.unescape(params)).strip.downcase
+			troikopoisk = Base64.decode64(URI.unescape(params[:input])).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
