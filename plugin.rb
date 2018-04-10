@@ -472,11 +472,11 @@ after_initialize do
 			addstuff = params
 			addstuff[:RESULT] = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
-				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\r")
+				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p3 or p4
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П3")
 					#p4 version
-					addstuff[:NEWSTRING].each_slice(4).to_a do |sostav|
+					addstuff[:NEWSTRING].each_slice(4) do |sostav|
 						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
@@ -485,7 +485,7 @@ after_initialize do
 					end
 				else
 					#p3 version
-					addstuff[:NEWSTRING].each_slice(3).to_a do |sostav|
+					addstuff[:NEWSTRING].each_slice(3) do |sostav|
 						if sostav[0] && sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
