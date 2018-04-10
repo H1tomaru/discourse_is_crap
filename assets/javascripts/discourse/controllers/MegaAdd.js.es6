@@ -13,6 +13,10 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				this.set('addstuff', result);
 			});
+		},
+		
+		Reset() {
+				this.set('addstuff', null);
 		}
 
 	}
