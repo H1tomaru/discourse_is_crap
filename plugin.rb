@@ -470,8 +470,8 @@ after_initialize do
 		def megaadd
 			addstuff = {}
 			addstuff = params
-			if current_user && current_user[:username] == 'H1tomaru' && addstuff.GAME && addstuff.STRING
-				addstuff.NEWSTRING = addstuff.STRING.gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\r")
+			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
+				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\r")
 
 				render json: addstuff
 			end
