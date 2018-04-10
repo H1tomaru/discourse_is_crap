@@ -18,6 +18,7 @@ after_initialize do
 		get '/MrBug/troikopoisk/:miloakka' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
+		get "/admin/MegaAdd" => "megaadd#show", constraints: AdminConstraint.new
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -462,6 +463,14 @@ after_initialize do
 			end
 		end 
 
+	end
+	
+	class ::MegaaddController < ::ApplicationController
+		
+		def show
+			render json: { name: "donut", description: "delicious!" }
+		end
+		
 	end
 end
 
