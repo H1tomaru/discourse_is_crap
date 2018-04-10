@@ -482,7 +482,7 @@ after_initialize do
 						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
-							@@userdb2[:PS4db].replace_one( { '_id': sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip }, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
+							@@userdb2[:PS4db].replace_one( { '_id': sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
 						end
 					end
 				else
@@ -491,7 +491,7 @@ after_initialize do
 						if sostav[0] && sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip }, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
+							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
 						end
 					end
 				end
