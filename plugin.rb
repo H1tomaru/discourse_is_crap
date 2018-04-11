@@ -165,33 +165,33 @@ after_initialize do
 							if p1.length > 0
 								feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
 								if feedbackp1
-									p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
-									p1FEEDBACK[:BAD] = feedbackp1[:fbB]
-									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN]
+									p1FEEDBACK[:GOOD] = feedbackp1[:fbG] if feedbackp1[:fbG]
+									p1FEEDBACK[:BAD] = feedbackp1[:fbB] if feedbackp1[:fbB]
+									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN] if feedbackp1[:fbN]
 								end
 							end
 							if p2.length > 0
 								feedbackp2 = userFB.find{ |h| h['_id'] == p2 }
 								if feedbackp2
-									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
-									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
-									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
+									p2FEEDBACK[:GOOD] = feedbackp2[:fbG] if feedbackp2[:fbG]
+									p2FEEDBACK[:BAD] = feedbackp2[:fbB] if feedbackp2[:fbB]
+									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN] if feedbackp2[:fbN]
 								end
 							end
 							if p3.length > 0
 								feedbackp3 = userFB.find{ |h| h['_id'] == p3 }
 								if feedbackp3
-									p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
-									p3FEEDBACK[:BAD] = feedbackp3[:fbB]
-									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN]
+									p3FEEDBACK[:GOOD] = feedbackp3[:fbG] if feedbackp3[:fbG]
+									p3FEEDBACK[:BAD] = feedbackp3[:fbB] if feedbackp3[:fbB]
+									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN] if feedbackp3[:fbN]
 								end
 							end
 							if p4.length > 0
 								feedbackp4 = userFB.find{ |h| h['_id'] == p4 }
 								if feedbackp4
-									p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
-									p4FEEDBACK[:BAD] = feedbackp4[:fbB]
-									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN]
+									p4FEEDBACK[:GOOD] = feedbackp4[:fbG] if feedbackp4[:fbG]
+									p4FEEDBACK[:BAD] = feedbackp4[:fbB] if feedbackp4[:fbB]
+									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
 								end
 							end
 							#find feedback percentage
