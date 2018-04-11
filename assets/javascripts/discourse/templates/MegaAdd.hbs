@@ -3,7 +3,9 @@ MegaAdd some Pokemans<br><br>
 <form class="MegaAdd" {{ action "oops" on="submit"}}>
 	{{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
 	<button type="submit">GoGoGo</button>
-	<button {{action 'Reset'}}>Reset</button><br><br>
+	<button {{action 'Reset'}}>Reset</button><br>
+	<button {{action 'Feedbacks'}}>Feedback?</button><br><br>
+	Add Feedback?: {{addstuff.ADDFB}}
 	{{textarea rows="30" cols="48" value=addstuff.STRING}}
 </form>
 
