@@ -1,7 +1,8 @@
 export default Ember.Controller.extend({
 
 	addstuff: {"GAME": null,
-		  "STRING": null},
+		  "STRING": null,
+		  "ADDFB": false},
 	p4lista: null,
 	
 	actions: {
@@ -11,7 +12,8 @@ export default Ember.Controller.extend({
 				url: "/admin/MegaAdd/",
 				type: "POST",
 				data: { "GAME": this.get('addstuff.GAME'),
-				      	"STRING": this.get('addstuff.STRING')}
+				      	"STRING": this.get('addstuff.STRING',
+					"ADDFB": this.get('addstuff.ADDFB' )}
 			}).then(result => {
 				this.set('addstuff', result);
 			});
@@ -19,6 +21,10 @@ export default Ember.Controller.extend({
 		
 		Reset() {
 			this.set('addstuff', {});
+		},
+
+		Feedbacks() {
+			this.toggleProperty('addstuff.ADDFB');
 		},
 
 		P4Lista() {
