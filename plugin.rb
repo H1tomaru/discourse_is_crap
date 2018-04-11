@@ -32,6 +32,7 @@ after_initialize do
 		@@userfb = db.use('userfb')
 		
 		@@userdb2 = Mongo::Client.new([ '93.171.216.230:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
+		@@userfb2 = @@userdb2.use('userfb')
 
 		def show
 			#variables, duh
@@ -473,6 +474,7 @@ after_initialize do
 			addstuff = {}
 			addstuff = params
 			addstuff[:RESULT] = []
+			feedbacks = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p3 or p4
@@ -483,6 +485,7 @@ after_initialize do
 							addstuff[:winrarP4] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
 							@@userdb2[:PS4db].replace_one( { '_id': sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
+							feedbacks.push(sostav[1].strip, sostav[2].strip, sostav[3].strip) if addstuff[:ADDFB]
 						end
 					end
 				else
@@ -492,7 +495,24 @@ after_initialize do
 							addstuff[:winrarP3] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
 							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { "$set": { GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip, DATE: Time.now.strftime("%Y.%m.%d") } }, { upsert: true } )
+							feedbacks.push(sostav[1].strip, sostav[2].strip) if addstuff[:ADDFB]
 						end
+					end
+				end
+				#add feedback of we're doing it
+				if addstuff[:ADDFB]
+					#delete duplicate users
+					feedbacks = feedbacks.uniq
+					feedbacks.each do |user|
+						@@userfb2[:userfb].find_one_and_update( { _id: user }, { "$push" => { 
+							FEEDBACKS: {
+								FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
+								pNAME: "H1tomaru",
+								DATE: Time.now.strftime("%Y.%m.%d"),
+								SCORE: 1,
+								DELETED: false
+							}
+						} }, { upsert: true } )
 					end
 				end
 				render json: addstuff
