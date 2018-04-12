@@ -2,6 +2,6 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Route.extend({
   model() {
-    return ajax('/u/:username/kek.json');
+    return ajax(window.location.href+'.json');
   }
 });
