@@ -20,6 +20,8 @@ after_initialize do
 		post '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
+		get 'users/:username/kek' => 'mrbug#feedbacks', constraints: {username: USERNAME_ROUTE_FORMAT}
+		get 'u/:username/kek' => 'mrbug#feedbacks', constraints: {username: USERNAME_ROUTE_FORMAT}
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -517,6 +519,10 @@ after_initialize do
 				end
 				render json: addstuff
 			end
+		end
+		
+		def feedbacks
+			render json: { HiMom: "!!!" }
 		end
 
 	end
