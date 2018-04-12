@@ -3,5 +3,5 @@ export default function() {
 	this.route('MegaAdd', { path: '/admin/MegaAdd' });
 	//this.route('KeK', { path: '/users/:username/kek' });
 	this.resource('user', { path: '/users/:username' }, function() {
-   	this.route('KeK', { path: '/kek' } });
+   	this.route('KeK', { path: '/kek' }); });
 };
