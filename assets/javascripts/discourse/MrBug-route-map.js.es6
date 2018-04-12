@@ -7,5 +7,5 @@ export default function() {
 	path: 'users/:username',
 	map() {
 	this.route('KeK', { path: '/kek' })
-	}
+	};
 };
