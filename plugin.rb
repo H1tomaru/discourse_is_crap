@@ -521,7 +521,7 @@ after_initialize do
 		end
 		
 		def feedbacks
-			render json: { HiMom: "!!!" }
+			render json: { name: "donut", description: "delicious!" }
 		end
 
 	end
