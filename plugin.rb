@@ -466,7 +466,7 @@ after_initialize do
 				render json: { zaipsfail: true }
 			end
 		end
-		
+
 		def showadd
 			render json: { HiMom: "!!!" }
 		end
@@ -519,9 +519,36 @@ after_initialize do
 				render json: addstuff
 			end
 		end
-		
+
 		def feedbacks
-			render json: { name: "donut", description: "delicious!" }
+			feedbacks = { MENOSHO: false, FOUND: false, fbG: 0, fbB: 0, fbN: 0 }
+			#template shit if user and viewer are the same
+			feedbacks[:MENOSHO] = true if current_user || current_user[:username] == params[:username]
+			#users with negative feedbacks cant do feedbacks!
+			viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+			feedbacks[:MENOSHO] = true if viewerfb[0] && viewerfb[0][:fbB] > 0
+			#find feedbacks from my database
+			userfb = @@userfb[:userfb].find( { _id: params[:username] } ).to_a
+
+			#if found, go
+			if userfb[0]
+				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS]
+				#count it and check if numbers match
+				userfb[0][:FEEDBACKS].each do |fb|
+					feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE] if fb[:SCORE] > 0
+					feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE] if fb[:SCORE] < 0
+					feedbacks[:fbN] = feedbacks[:fbN] + 1 if fb[:SCORE] == 0
+				end
+
+				if userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN]
+					feedbacks[:fbG] = userfb[0][:fbG]
+					feedbacks[:fbB] = userfb[0][:fbB]
+					feedbacks[:fbN] = userfb[0][:fbN]
+				else	
+				end
+			end
+
+			render json: feedbacks
 		end
 
 	end
