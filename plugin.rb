@@ -521,7 +521,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: false, FOUND: false, fbG: 0, fbB: 0, fbN: 0 }
+			feedbacks = { MENOSHO: false, fbG: 0, fbB: 0, fbN: 0 }
 			#template shit if user and viewer are the same
 			feedbacks[:MENOSHO] = true if current_user || current_user[:username] == params[:username]
 			#users with negative feedbacks cant do feedbacks!
@@ -539,12 +539,9 @@ after_initialize do
 					feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE] if fb[:SCORE] < 0
 					feedbacks[:fbN] = feedbacks[:fbN] + 1 if fb[:SCORE] == 0
 				end
-
-				if userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN]
-					feedbacks[:fbG] = userfb[0][:fbG]
-					feedbacks[:fbB] = userfb[0][:fbB]
-					feedbacks[:fbN] = userfb[0][:fbN]
-				else	
+				#update db with correct values if needed
+				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username] }, { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } )
 				end
 			end
 
