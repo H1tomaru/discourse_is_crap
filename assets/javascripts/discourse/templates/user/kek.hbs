@@ -1,9 +1,22 @@
-Oh my KEK! Big!
-
-<h1>{{model.name}}</h1>
-
+chart
+<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
+<button>Оставить отзыв</button>
 <hr>
+<table>
+{{#each model.FEEDBACKS as |feedback|}}
+	<tr>
+		<td><div class='malabela {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
+		<td>{{feedback.FEEDBACK}}</td>
+		<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
+		<td>{{feedback.DATE}}</td>
+	</tr>
+{{/each}}
+</table>
 
-<p>{{model.description}}</p>
-
-{{ebanidze}}
+<div style="text-align: center;">
+<ul class="pagination">
+<!-- BEGIN pages -->
+	<li><a href="/user/{user.userslug}/kek/@value">@value</a></li>
+<!-- END pages -->
+</ul>
+</div>
