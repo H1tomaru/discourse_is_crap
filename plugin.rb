@@ -522,12 +522,10 @@ after_initialize do
 
 		def feedbacks
 			feedbacks = { MENOSHO: false, fbG: 0, fbB: 0, fbN: 0 }
-			#template shit if user and viewer are the same
-			feedbacks[:MENOSHO] = true if current_user && current_user[:username] == params[:username]
-			#users with negative feedbacks cant do feedbacks!
+			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				feedbacks[:MENOSHO] = true if viewerfb[0] && viewerfb[0][:fbB] > 0
+				feedbacks[:MENOSHO] = true if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username] == params[:username]
 			end
 			#find feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username] } ).to_a
