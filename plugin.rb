@@ -541,7 +541,7 @@ after_initialize do
 				end
 				#update db with correct values if needed
 				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username] }, { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } )
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username] }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
 				end
 			end
 
