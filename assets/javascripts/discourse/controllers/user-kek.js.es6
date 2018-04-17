@@ -7,6 +7,6 @@ export default Ember.Controller.extend({
 		type: "GET"
 	}).then(result => {
 		this.set('ebanidze', result);
-	});
+	})
 
 });
