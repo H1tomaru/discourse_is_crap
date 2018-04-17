@@ -1,4 +1,4 @@
 export default Ember.Controller.extend({
-	ebanidze: currentURL()
+	ebanidze: user.kek
 	//params: params
 });
