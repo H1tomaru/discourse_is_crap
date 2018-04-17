@@ -1,6 +1,7 @@
 export default Ember.Controller.extend({
 
-	ebanidze: null
+	ebanidze: null,
+
 	Ember.$.ajax({
 		url: "window.location.href+'.json'",
 		type: "GET"
