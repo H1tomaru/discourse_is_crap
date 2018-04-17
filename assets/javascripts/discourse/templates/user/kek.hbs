@@ -1,27 +1,4 @@
-<div class='shinbakaz2'>
-	<div id="piechart"></div>
-	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
-	<br>
-	<button>Оставить отзыв</button>
-	<hr>
-	<table>
-	{{#each model.FEEDBACKS as |feedback|}}
-		<tr>
-			<td><div class='malabela2 {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
-			<td>{{feedback.FEEDBACK}}</td>
-			<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
-			<td>{{feedback.DATE}}</td>
-		</tr>
-	{{/each}}
-	</table>
-
-	<ul class="pagination">
-	{{#each pages as |page|}}
-		<li><button>{{page}}</button></li>
-	{{/each}}
-	</ul>
-</div>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(drawChart);
@@ -47,3 +24,26 @@
 	}
 </script>
 
+<div class='shinbakaz2'>
+	<div id="piechart"></div>
+	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
+	<br>
+	<button>Оставить отзыв</button>
+	<hr>
+	<table>
+	{{#each model.FEEDBACKS as |feedback|}}
+		<tr>
+			<td><div class='malabela2 {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
+			<td>{{feedback.FEEDBACK}}</td>
+			<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
+			<td>{{feedback.DATE}}</td>
+		</tr>
+	{{/each}}
+	</table>
+
+	<ul class="pagination">
+	{{#each pages as |page|}}
+		<li><button>{{page}}</button></li>
+	{{/each}}
+	</ul>
+</div>
