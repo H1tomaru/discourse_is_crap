@@ -31,9 +31,9 @@
 
 	var data = google.visualization.arrayToDataTable([
 		['Task', 'Hours per Day'],
-		['Good', 1},
-		['Neutral', 0],
-		['Bad', 0]
+-		['Good', {{if model.fbG model.fbG 1}}],
+-		['Neutral', {{model.fbN}}],
+-		['Bad', {{model.fbB}}]
 	]);
 
 	var options = {
