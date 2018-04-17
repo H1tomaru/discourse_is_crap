@@ -1,5 +1,5 @@
 <div class='shinbakaz2'>
-	chart<br>
+	<div id="piechart"></div>
 	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
 	<br>
 	<button>Оставить отзыв</button>
@@ -21,3 +21,30 @@
 	{{/each}}
 	</ul>
 </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+
+	var data = google.visualization.arrayToDataTable([
+		['Task', 'Hours per Day'],
+		['Good',  {{model.fbG}}],
+		['Neutral', {{model.fbN}}],
+		['Bad',    {{model.fbB}}]
+	]);
+
+	var options = {
+		width: 400,
+		height: 100,
+		colors: ['#27ae60', 'gray', 'lightcoral']
+	};
+
+	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+	chart.draw(data, options);
+	}
+</script>
+
