@@ -1,31 +1,14 @@
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(drawChart);
-
-	function drawChart() {
-
-	var data = google.visualization.arrayToDataTable([
-		['Task', 'Hours per Day'],
-		['Good', 1],
-		['Neutral', 1],
-		['Bad', 1]
-	]);
-
-	var options = {
-		width: 400,
-		height: 100,
-		colors: ['#27ae60', 'gray', 'lightcoral']
-	};
-
-	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-	chart.draw(data, options);
-	}
-</script>
-
 <div class='shinbakaz2'>
-	<div id="piechart"></div>
+	{{#if model.fbB}}
+		{{#if model.fbG}}
+			<img src='https://i.imgur.com/rmydNkF.png'>
+		{{else}}
+			<img src='https://i.imgur.com/OMygNKW.png'>
+		{{/if}}
+	{{else}}
+		<img src='https://i.imgur.com/ZcxqN8c.png'>
+	{{/if}}
+	<br>
 	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
 	<br>
 	<button>Оставить отзыв</button>
