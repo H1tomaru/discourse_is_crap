@@ -7,7 +7,8 @@ export default Ember.Route.extend({
 		str = str.substring(0, str.lastIndexOf("/"));
 		var count = str.length - str.replace("/", "").length;
 		if ( count > 4 ) str = str.substring(0, str.lastIndexOf("/"));
-		return ajax(str + '/kek.json');
+		//return ajax(str + '/kek.json');
+		return count;
 	}
 
 });
