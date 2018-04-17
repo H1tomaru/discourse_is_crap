@@ -1,14 +1,12 @@
 import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Route.extend({
-	
-	actions: {
-		didTransition: function() {
-			model() {
-//				var str = window.location.href;
-//				return ajax(str.substring(0, str.lastIndexOf("/")) + '/kek.json');
-				return ajax( window.location.href + '.json');
-			}
-		}
+
+	model() {
+		var str = window.location.href.substring(0, str.lastIndexOf("/"));
+		var count = str.length() - str.replace("/", "").length();
+		if ( count > 4 ) str = str.substring(0, str.lastIndexOf("/"));
+		return ajax(str + '/kek.json');
 	}
+
 });
