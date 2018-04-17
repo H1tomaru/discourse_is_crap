@@ -4,6 +4,6 @@ export default Ember.Route.extend({
 	
 	model(params) {
 		//return ajax(window.location.href+'.json');
-		return params;
+		return JSON.stringify(params);
 	}
 });
