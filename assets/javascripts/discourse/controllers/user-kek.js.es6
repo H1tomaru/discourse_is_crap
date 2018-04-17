@@ -1,4 +1,4 @@
 export default Ember.Controller.extend({
-	ebanidze: user.kek
+	ebanidze: Ember.getOwner(this).lookup('controller:application').get('currentRouteName')
 	//params: params
 });
