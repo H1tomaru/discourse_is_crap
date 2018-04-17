@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
 
 	init: function() {
 		Ember.$.ajax({
-			url: "window.location.href+'.json'",
+			url: window.location.href+".json",
 			type: "GET"
 		}).then(result => {
 			this.set('ebanidze', result);
