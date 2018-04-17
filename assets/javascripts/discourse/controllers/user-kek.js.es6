@@ -1,3 +1,3 @@
 export default Ember.Controller.extend({
-	ebanidze: 'tralala'
+	ebanidze: this.get('target').location.lastSetURL
 });
