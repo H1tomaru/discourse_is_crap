@@ -1,4 +1,4 @@
 export default Ember.Controller.extend({
-	ebanidze: Ember.getOwner(this).lookup('controller:application').get('currentRouteName')
+	ebanidze: this.router.generate('user.kek')
 	//params: params
 });
