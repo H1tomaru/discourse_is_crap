@@ -1,6 +1,7 @@
 export default Ember.Controller.extend({
 
 	ebanidze: null,
+	ebanidze2: window.location.href,
 
 	init: function() {
 		Ember.$.ajax({
