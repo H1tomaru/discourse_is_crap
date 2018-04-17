@@ -1,4 +1,11 @@
 export default Ember.Controller.extend({
-	ebanidze: this.router.generate('user.kek')
-	//params: params
+
+	ebanidze: null
+	Ember.$.ajax({
+		url: "window.location.href+'.json'",
+		type: "GET"
+	}).then(result => {
+		this.set('ebanidze', result);
+	});
+
 });
