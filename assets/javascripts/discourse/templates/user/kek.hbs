@@ -22,7 +22,7 @@
 	<table>
 		{{#each model.FEEDBACKS as |feedback|}}
 			<tr>
-				<td><div class='malabela2 {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
+				<td><div class='malabela2 {{feedback.COLOR}}'>{{feedback.SCORE}}</div></td>
 				<td>{{feedback.FEEDBACK}}</td>
 				<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
 				<td>{{feedback.DATE}}</td>
