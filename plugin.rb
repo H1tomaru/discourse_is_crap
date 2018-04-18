@@ -536,9 +536,9 @@ after_initialize do
 			if userfb[0]
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].each do |fb|
-					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE].to_i > 0
-					( feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE]; fb[:COLOR] = 'bgred3' ) if fb[:SCORE].to_i < 0
-					( feedbacks[:fbN] = feedbacks[:fbN] + 1; fb[:COLOR] = 'bggrey' ) if fb[:SCORE].to_i == 0
+					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE] > 0
+					( feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE]; fb[:COLOR] = 'bgred3' ) if fb[:SCORE] < 0
+					( feedbacks[:fbN] = feedbacks[:fbN] + 1; fb[:COLOR] = 'bggrey' ) if fb[:SCORE] == 0
 				end
 				#update db with correct values if needed
 				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
@@ -556,6 +556,7 @@ after_initialize do
 			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).strip.split("~") #0 - score, 1 - otziv
 			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
 			if current_user && fedbacks.length == 2
+				fedbacks[0] = fedbacks[0].to_i
 				fedbacks[0] = 1 if fedbacks[0] == 1
 				fedbacks[0] = 0 if fedbacks[0] == 2
 				fedbacks[0] = -1 if fedbacks[0] == 3
