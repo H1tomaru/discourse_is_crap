@@ -50,7 +50,7 @@
 							{{input type="checkbox" checked=checked3 change=(action selectOtz 3)}} <span style='color: lightcoral'>Отрицательно</span><br>
 							{{#if otzivsmall}}отзыв слишком короткий!{{/if}}
 							<button type="submit">Добавить отзыв</button><br>
-							{{input minlength="20" maxlength="200" type="text" value=Otziv}}
+							{{input minlength="20" maxlength="200" class="otzivtext" type="text" value=Otziv}}
 						</form>
 					</div>
 				{{/if}}
