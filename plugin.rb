@@ -506,7 +506,7 @@ after_initialize do
 					#delete duplicate users
 					feedbacks = feedbacks.uniq
 					feedbacks.each do |user|
-						@@userfb2[:userfb].find_one_and_update( { _id: user }, { "$push" => { 
+						@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
 							FEEDBACKS: {
 								FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
 								pNAME: "H1tomaru",
@@ -552,7 +552,26 @@ after_initialize do
 		end
 
 		def zafeedback
-			
+			#decode shit
+			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).strip.split("~") #0 - score, 1 - otziv
+			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
+			if current_user && fedbacks.length == 2
+				fedbacks[0] = 1 if fedbacks[0] == 1
+				fedbacks[0] = 0 if fedbacks[0] == 2
+				fedbacks[0] = -1 if fedbacks[0] == 3
+				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
+					FEEDBACKS: {
+						FEEDBACK: fedbacks[1],
+						pNAME: current_user[:username],
+						DATE: Time.now.strftime("%Y.%m.%d"),
+						SCORE: fedbacks[0],
+						DELETED: false
+					}
+				} }, { upsert: true } )
+				render json: { winrars: true }
+			else
+				render json: { fail: true }
+			end
 		end
 
 	end
