@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
 				type: "POST",
 				data: { "bagatrolit": btoa(this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME')) }
 			}).then(result => {
-				this.set('zaips', result);
+				this.set('otziv', result);
 				Ember.$.ajax({
 					url: "/u/" + str[4] + "/kek.json",
 					type: "GET"
