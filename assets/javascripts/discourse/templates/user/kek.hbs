@@ -44,9 +44,13 @@
 
 				{{#if otzivmdal}}
 					<div class="mudalcontent mudaladdon headin3">
-						good bad neutral<br>
-						input bar<br>
-						<button {{action 'OtzivZaips'}}>Добавить отзыв</button>
+						<form {{ action "OtzivZaips" on="submit"}}>
+							<input type="radio" value="1" checked> <span style='color: #27ae60'>Позитивно</span>
+							<input type="radio" value="2"> <span style='color: gray'>Нейтрально</span>
+							<input type="radio" value="3"> <span style='color: lightcoral'>Отрицательно</span><br>
+							<button type="submit">Добавить отзыв</button>
+							{{input minlength="20" maxlength="200" type="text" value=Otziv}}
+						</form>
 					</div>
 				{{/if}}
 
