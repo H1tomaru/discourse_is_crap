@@ -31,7 +31,7 @@
 	</table>
 
 	<ul class="pagination">
-		{{#each pages as |page|}}
+		{{#each model.PAGES as |page|}}
 			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 		{{/each}}
 	</ul>
