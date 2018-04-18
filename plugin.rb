@@ -545,9 +545,8 @@ after_initialize do
 					@@userfb2[:userfb].find_one_and_update( { _id: params[:username] }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
 				end
 				#save final variable
-				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS]
+				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].each_slice(50)
 				#do paginations
-				feedbacks[:FEEDBACKS] = feedbacks[:FEEDBACKS].each_slice(50)
 				feedbacks[:PAGES] = [*1..feedbacks[:FEEDBACKS].length]
 			end
 
