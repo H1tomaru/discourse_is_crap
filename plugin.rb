@@ -549,7 +549,7 @@ after_initialize do
 			end
 			#do paginations
 			feedbacks[:FEEDBACKS] = feedbacks[:FEEDBACKS].each_slice(50)
-			feedbacks[:PAGES] = feedbacks[:FEEDBACKS].length
+			feedbacks[:PAGES] = [*1..feedbacks[:FEEDBACKS].length]
 
 			render json: feedbacks
 		end
