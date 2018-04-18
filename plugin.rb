@@ -556,6 +556,14 @@ after_initialize do
 			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
 			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
 			if current_user && fedbacks.length == 2
+				#find if user gave feedback already today
+				ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
+				if ufb[0]
+					fedbacks[2] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+				end
+				if fedbacks[2]
+					render json: { gavas: true }
+				else
 				fedbacks[0] = fedbacks[0].to_i
 				fedbacks[0] = 1 if fedbacks[0] == 1
 				fedbacks[0] = 0 if fedbacks[0] == 2
@@ -570,6 +578,7 @@ after_initialize do
 					}
 				} }, { upsert: true } )
 				render json: { winrars: true }
+				end
 			else
 				render json: { fail: true }
 			end
