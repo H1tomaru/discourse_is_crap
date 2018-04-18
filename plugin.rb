@@ -547,7 +547,7 @@ after_initialize do
 				#save final variable
 				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].each_slice(50)
 				#do paginations
-				feedbacks[:PAGES] = userfb[0][:FEEDBACKS].length
+				feedbacks[:PAGES] = (userfb[0][:FEEDBACKS].length / 50.0).ceil
 			end
 
 			render json: feedbacks
