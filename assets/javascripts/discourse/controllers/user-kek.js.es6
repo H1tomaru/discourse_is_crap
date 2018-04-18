@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
 				this.set('otzivbig', false);
 				var str = window.location.href.split("/");
 				Ember.$.ajax({
-					url: "/u/" + str[4] + "/",
+					url: "/u/" + str[4] + "/kek",
 					type: "POST",
 					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('score')+"~"+this.get('otziv')))) }
 				}).then(result => {
