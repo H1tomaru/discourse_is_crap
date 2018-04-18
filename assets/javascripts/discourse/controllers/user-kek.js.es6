@@ -1,10 +1,14 @@
 export default Ember.Controller.extend({
 
+	checked1: true,
+	checked2: false,
+	checked3: false,
 	otziv: null,
 
 	bagamdal: false,
 	mdalready: false,
 	otzivmdal: false,
+	otzivsmall: false,
 
 	actions: {
 
@@ -12,6 +16,7 @@ export default Ember.Controller.extend({
 			this.set('bagamdal', false);
 			this.set('mdalready', false);
 			this.set('otzivmdal', false);
+			this.set('otzivsmall', false);
 			this.set('otziv', null);
 		},
 
@@ -22,23 +27,28 @@ export default Ember.Controller.extend({
 		},
 
 		OtzivZaips() {
-			this.set('mdalready', false);
-			this.set('otzivmdal', false);
-			var str = window.location.href.split("/");
-			Ember.$.ajax({
-				url: "/u/" + str[4] + "/",
-				type: "POST",
-				data: { "bagatrolit": btoa(this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME')) }
-			}).then(result => {
-				this.set('otziv', result);
+			if (this.get('otziv').length < 20) {
+				this.set('otzivsmall', true);
+			} else {
+				this.set('mdalready', false);
+				this.set('otzivmdal', false);
+				this.set('otzivsmall', false);
+				var str = window.location.href.split("/");
 				Ember.$.ajax({
-					url: "/u/" + str[4] + "/kek.json",
-					type: "GET"
+					url: "/u/" + str[4] + "/",
+					type: "POST",
+					data: { "bagatrolit": btoa(this.get('currentUser.username')+"~"+this.get('otziv')) }
 				}).then(result => {
-					this.set('model', result);
-					this.set('mdalready', true);
+					this.set('otziv', result);
+					Ember.$.ajax({
+						url: "/u/" + str[4] + "/kek.json",
+						type: "GET"
+					}).then(result => {
+						this.set('model', result);
+						this.set('mdalready', true);
+					});
 				});
-			});
+			}
 		}
 
 	}
