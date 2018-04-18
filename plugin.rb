@@ -527,6 +527,7 @@ after_initialize do
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
 				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username] == params[:username]
 			end
+			feedbacks[:MENOSHO] = true
 			#find feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username] } ).to_a
 
