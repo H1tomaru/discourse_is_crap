@@ -521,11 +521,11 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: false, fbG: 0, fbB: 0, fbN: 0 }
+			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0 }
 			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				feedbacks[:MENOSHO] = true if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username] == params[:username]
+				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username] == params[:username]
 			end
 			#find feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username] } ).to_a
