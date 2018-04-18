@@ -11,7 +11,7 @@
 	<br>
 	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
 	<br>
-	<button>Оставить отзыв</button>
+	<button {{action 'addOtziv'}}>Оставить отзыв</button>
 	<hr>
 	<table>
 	{{#each model.FEEDBACKS as |feedback|}}
@@ -26,7 +26,46 @@
 
 	<ul class="pagination">
 	{{#each pages as |page|}}
-		<li><button>{{page}}</button></li>
+		<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 	{{/each}}
 	</ul>
 </div>
+
+{{#if bagamdal}}
+	<div class="etomudal">
+
+		{{#if mdalready}}
+
+			<button class="netmudal" {{action 'netmudal'}}></button>
+
+			{{#if otziv.prezaips}}
+				<div class="mudalcontent mudaladdon headin3">
+					good bad neutral<br>
+					input bar<br>
+					<button {{action 'addOtziv'}}>Добавить отзыв</button>
+				</div>
+			{{/if}}
+
+			{{#if otziv.winrars}}
+				<div class="mudalcontent mudaladdon headin3">
+					<span>Отзыв</span>
+					<span>Успешно записан!</span>
+				</div>
+			{{/if}}
+
+			{{#if otziv.fail}}
+				<div class="mudalcontent headin3 prezaips">
+					<div class="bagato">
+						<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
+					</div>
+				</div>
+			{{/if}}
+
+		{{else}}
+
+			<div class="bagaspin"></div>
+
+		{{/if}}
+
+	</div>
+{{/if}}
