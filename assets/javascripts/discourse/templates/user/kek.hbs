@@ -45,9 +45,9 @@
 				{{#if otzivmdal}}
 					<div class="mudalcontent mudaladdon headin3">
 						<form {{ action "OtzivZaips" on="submit"}}>
-							{{input type="checkbox" checked=checked1 change=(action selectOtz 1)}} <span style='color: #27ae60'>Позитивно</span>
-							{{input type="checkbox" checked=checked2 change=(action selectOtz 2)}} <span style='color: gray'>Нейтрально</span>
-							{{input type="checkbox" checked=checked3 change=(action selectOtz 3)}} <span style='color: lightcoral'>Отрицательно</span><br>
+							<input type="checkbox" checked={{checked1}} {{action 'selectOtz' 1 on="change"}}/> <span style='color: #27ae60'>Позитивно</span>
+							<input type="checkbox" checked={{checked2}} {{action 'selectOtz' 2 on="change"}}/> <span style='color: gray'>Нейтрально</span>
+							<input type="checkbox" checked={{checked3}} {{action 'selectOtz' 3 on="change"}}/> <span style='color: lightcoral'>Отрицательно</span><br>
 							{{#if otzivsmall}}отзыв слишком короткий!{{/if}}
 							<button type="submit">Добавить отзыв</button><br>
 							{{input minlength="20" maxlength="200" class="otzivtext" type="text" value=Otziv}}
