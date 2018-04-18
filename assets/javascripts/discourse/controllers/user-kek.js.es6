@@ -49,6 +49,22 @@ export default Ember.Controller.extend({
 					});
 				});
 			}
+		},		
+
+		selectOtz(input) {
+			if ( input == 1 ) {
+				this.set('checked1', true);
+				this.set('checked2', false);
+				this.set('checked3', false);
+			} else if ( input == 2 ) {
+				this.set('checked1', false);
+				this.set('checked2', true);
+				this.set('checked3', false);
+			} else if ( input == 3 ) {
+				this.set('checked1', false);
+				this.set('checked2', false);
+				this.set('checked3', true);
+			} 
 		}
 
 	}
