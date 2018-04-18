@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
 	mdalready: false,
 	otzivmdal: false,
 	otzivsmall: false,
+	otzivbig: false,
 
 	actions: {
 
@@ -18,6 +19,7 @@ export default Ember.Controller.extend({
 			this.set('mdalready', false);
 			this.set('otzivmdal', false);
 			this.set('otzivsmall', false);
+			this.set('otzivbig', false);
 			this.set('otziv', null);
 		},
 
@@ -30,10 +32,13 @@ export default Ember.Controller.extend({
 		OtzivZaips() {
 			if (this.get('otziv').length < 20) {
 				this.set('otzivsmall', true);
+			} else if (this.get('otziv').length > 200) {
+				this.set('otzivbig', true);
 			} else {
 				this.set('mdalready', false);
 				this.set('otzivmdal', false);
 				this.set('otzivsmall', false);
+				this.set('otzivbig', false);
 				var str = window.location.href.split("/");
 				Ember.$.ajax({
 					url: "/u/" + str[4] + "/",
