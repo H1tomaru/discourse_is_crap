@@ -30,9 +30,9 @@ export default Ember.Controller.extend({
 		},
 
 		OtzivZaips() {
-			if (this.get('otziv').length < 20) {
+			if (this.get('pisanina').length < 20) {
 				this.set('otzivsmall', true);
-			} else if (this.get('otziv').length > 200) {
+			} else if (this.get('pisanina').length > 200) {
 				this.set('otzivbig', true);
 			} else {
 				this.set('mdalready', false);
