@@ -183,89 +183,83 @@
 		<div class="etomudal">
 
 			{{#if mdalready}}
-			
+
 				<button class="netmudal" {{action 'netmudal'}}></button>
-			
-				{{#if poiskmdal}}
 
-					{{#if troikopoisk.poiskwin}}
+				{{#if troikopoisk.poiskwin}}
 
-						<div class="mudalcontent mudaladdon headin3">
-							<div class="bagariban">{{troikopoisk.GAME}}</div>
-							<span>{{troikopoisk._id}}</span>
-							<table><tbody>
-								<tr>
-									<td>П2<br><a href="/u/{{troikopoisk.P2}}">{{troikopoisk.P2}}</a></td>
-									{{#if troikopoisk.P41}}
-									<td>П4<br><a href="/u/{{troikopoisk.P41}}">{{troikopoisk.P41}}</a></td>
-									<td>П4<br><a href="/u/{{troikopoisk.P42}}">{{troikopoisk.P42}}</a></td>
-									{{else}}
-									<td>П3<br><a href="/u/{{troikopoisk.P3}}">{{troikopoisk.P3}}</a></td>
-									{{/if}}
-								</tr>
-							</tbody></table>
-						</div>
-					{{else}}
-						<div class="mudalcontent mudaladdon headin3">
-							<div class="bagariban">Не найден</div>
-							<span>{{troikopoisk2}}</span>
-						</div>
-					{{/if}}
-
+					<div class="mudalcontent mudaladdon headin3">
+						<div class="bagariban">{{troikopoisk.GAME}}</div>
+						<span>{{troikopoisk._id}}</span>
+						<table><tbody>
+							<tr>
+								<td>П2<br><a href="/u/{{troikopoisk.P2}}">{{troikopoisk.P2}}</a></td>
+								{{#if troikopoisk.P41}}
+								<td>П4<br><a href="/u/{{troikopoisk.P41}}">{{troikopoisk.P41}}</a></td>
+								<td>П4<br><a href="/u/{{troikopoisk.P42}}">{{troikopoisk.P42}}</a></td>
+								{{else}}
+								<td>П3<br><a href="/u/{{troikopoisk.P3}}">{{troikopoisk.P3}}</a></td>
+								{{/if}}
+							</tr>
+						</tbody></table>
+					</div>
 				{{/if}}
 
-				{{#if zaipsmdal}}
+				{{#if troikopoisk.poiskfail}}
+					<div class="mudalcontent mudaladdon headin3">
+						<div class="bagariban">Не найден</div>
+						<span>{{troikopoisk2}}</span>
+					</div>
+				{{/if}}
 
-					{{#if prezaips.guest}}
-						<div class="mudalcontent mudaladdon headin3">
-							<div class="bagariban">Внимание</div>
-							<span>Для участия в совместной покупке игр требуется <a href='/signup'>Регистрация</a></span>
+				{{#if prezaips.guest}}
+					<div class="mudalcontent mudaladdon headin3">
+						<div class="bagariban">Внимание</div>
+						<span>Для участия в совместной покупке игр требуется <a href='/signup'>Регистрация</a></span>
+					</div>
+				{{/if}}
+
+				{{#if prezaips.piadin}}
+					<div class="mudalcontent mudaladdon headin3">
+						<div class="bagariban">Внимание</div>
+						<span>Для записи на позицию П1 требуется залог<br>
+						Запись без залога доступна только для опытных участников<br>
+						Запись возможна только через личное сообщение <a href='/u/MrBug'>Организатору</a></span>
+					</div>
+				{{/if}}
+
+				{{#if prezaips.banned}}
+					<div class="mudalcontent mudaladdon headin3">
+						<div class="bagariban">Внимание</div>
+						<span>Запись возможна только через личное сообщение <a href='/u/MrBug'>Организатору</a></span>
+					</div>
+				{{/if}}
+
+				{{#if prezaips.winrars}}
+					<div class="mudalcontent headin3 prezaips">
+						<div class="bagato">
+							<div class="bagapi" style="background-image:url('{{prezaips.imgLINK}}')"></div>
+							<h1><a>{{prezaips.gameNAME}}</a> Запись</h1>
 						</div>
-					{{/if}}
+						<button {{action 'imgoingin'}}>Записаться на П{{prezaips.position}}</button><button {{action 'netmudal'}}>Закрыть</button>
+					</div>
+				{{/if}}
 
-					{{#if prezaips.piadin}}
-						<div class="mudalcontent mudaladdon headin3">
-							<div class="bagariban">Внимание</div>
-							<span>Для записи на позицию П1 требуется залог<br>
-							Запись без залога доступна только для опытных участников<br>
-							Запись возможна только через личное сообщение <a href='/u/MrBug'>Организатору</a></span>
+				{{#if zaips.winrars}}
+					<div class="mudalcontent mudaladdon headin3">
+						<span>Запись</span>
+						<span>на позицию П{{zaips.position}}</span>
+						<div class="bagariban">{{zaips.gameNAME}}</div>
+						<span>Успешно произведена!</span>
+					</div>
+				{{/if}}
+
+				{{#if zaips.zaipsfail}}
+					<div class="mudalcontent headin3 prezaips">
+						<div class="bagato">
+							<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
 						</div>
-					{{/if}}
-
-					{{#if prezaips.banned}}
-						<div class="mudalcontent mudaladdon headin3">
-							<div class="bagariban">Внимание</div>
-							<span>Запись возможна только через личное сообщение <a href='/u/MrBug'>Организатору</a></span>
-						</div>
-					{{/if}}
-
-					{{#if prezaips.winrars}}
-						<div class="mudalcontent headin3 prezaips">
-							<div class="bagato">
-								<div class="bagapi" style="background-image:url('{{prezaips.imgLINK}}')"></div>
-								<h1><a>{{prezaips.gameNAME}}</a> Запись</h1>
-							</div>
-							<button {{action 'imgoingin'}}>Записаться на П{{prezaips.position}}</button><button {{action 'netmudal'}}>Закрыть</button>
-						</div>
-					{{/if}}
-
-					{{#if zaips.winrars}}
-						<div class="mudalcontent mudaladdon headin3">
-							<span>Запись</span>
-							<span>на позицию П{{zaips.position}}</span>
-							<div class="bagariban">{{zaips.gameNAME}}</div>
-							<span>Успешно произведена!</span>
-						</div>
-					{{/if}}
-
-					{{#if zaips.zaipsfail}}
-						<div class="mudalcontent headin3 prezaips">
-							<div class="bagato">
-								<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
-							</div>
-						</div>
-					{{/if}}
-
+					</div>
 				{{/if}}
 
 			{{else}}
