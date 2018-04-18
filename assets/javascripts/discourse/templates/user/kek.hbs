@@ -48,8 +48,8 @@
 							<input type="checkbox" disabled="disabled" checked={{checked1}}/> <button class='atzivBI' {{action 'selectOtz' 1}}>Позитивно</button>
 							<input type="checkbox" disabled="disabled" checked={{checked2}}/> <button class='atzivBI' {{action 'selectOtz' 2}}>Нейтрально</button>
 							<input type="checkbox" disabled="disabled" checked={{checked3}}/> <button class='atzivBI' {{action 'selectOtz' 3}}>Отрицательно</button>
-							{{#if otzivsmall}}отзыв слишком короткий!<br>{{/if}}
-							{{#if otzivsbig}}отзыв слишком длинный!<br>{{/if}}
+							{{#if otzivsmall}}<br>отзыв слишком короткий!{{/if}}
+							{{#if otzivsbig}}<br>отзыв слишком длинный!{{/if}}
 							<br><br><button type="submit">Добавить отзыв</button><br><br>
 							{{input minlength="20" maxlength="200" class="otzivtext" type="text" value=otziv}}
 						</form>
