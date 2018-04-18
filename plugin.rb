@@ -553,7 +553,7 @@ after_initialize do
 
 		def zafeedback
 			#decode shit
-			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).strip.split("~") #0 - score, 1 - otziv
+			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
 			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
 			if current_user && fedbacks.length == 2
 				fedbacks[0] = fedbacks[0].to_i
@@ -562,7 +562,7 @@ after_initialize do
 				fedbacks[0] = -1 if fedbacks[0] == 3
 				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
 					FEEDBACKS: {
-						FEEDBACK: fedbacks[1],
+						FEEDBACK: fedbacks[1].strip,
 						pNAME: current_user[:username],
 						DATE: Time.now.strftime("%Y.%m.%d"),
 						SCORE: fedbacks[0],
