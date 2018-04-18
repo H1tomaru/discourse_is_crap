@@ -10,24 +10,26 @@
 	{{/if}}
 	<br>
 	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
-	<br>
-	<button {{action 'addOtziv'}}>Оставить отзыв</button>
+	{{#if model.MENOSHO}}
+		<br>
+		<button {{action 'addOtziv'}}>Оставить отзыв</button>
+	{{/if}}
 	<hr>
 	<table>
-	{{#each model.FEEDBACKS as |feedback|}}
-		<tr>
-			<td><div class='malabela2 {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
-			<td>{{feedback.FEEDBACK}}</td>
-			<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
-			<td>{{feedback.DATE}}</td>
-		</tr>
-	{{/each}}
+		{{#each model.FEEDBACKS as |feedback|}}
+			<tr>
+				<td><div class='malabela2 {{feedback.COLOR}}'>+{{feedback.SCORE}}</div></td>
+				<td>{{feedback.FEEDBACK}}</td>
+				<td><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></td>
+				<td>{{feedback.DATE}}</td>
+			</tr>
+		{{/each}}
 	</table>
 
 	<ul class="pagination">
-	{{#each pages as |page|}}
-		<li><button {{action 'PageChange' page}}>{{page}}</button></li>
-	{{/each}}
+		{{#each pages as |page|}}
+			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
+		{{/each}}
 	</ul>
 </div>
 
@@ -42,7 +44,7 @@
 				<div class="mudalcontent mudaladdon headin3">
 					good bad neutral<br>
 					input bar<br>
-					<button {{action 'addOtziv'}}>Добавить отзыв</button>
+					<button {{action 'OtzivZaips'}}>Добавить отзыв</button>
 				</div>
 			{{/if}}
 
