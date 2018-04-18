@@ -551,6 +551,10 @@ after_initialize do
 			render json: feedbacks
 		end
 
+		def zafeedback
+			
+		end
+
 	end
 
 end
