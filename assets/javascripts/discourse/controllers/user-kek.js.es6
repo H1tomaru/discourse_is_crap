@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
 				Ember.$.ajax({
 					url: "/u/" + str[4] + "/",
 					type: "POST",
-					data: { "bagatrolit": btoa(this.get('score')+"~"+this.get('otziv')) }
+					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('score')+"~"+this.get('otziv')))) }
 				}).then(result => {
 					this.set('otziv', result);
 					Ember.$.ajax({
