@@ -362,10 +362,10 @@ after_initialize do
 					zapislist[0][:poiskwin] = true
 					render json: zapislist[0]
 				else
-					render json: { poiskwin: false }
+					render json: { poiskfail: true }
 				end
 			else 
-				render json: { poiskwin: false }
+				render json: { poiskfail: true }
 			end
 		end 
 
