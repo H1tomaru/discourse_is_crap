@@ -10,8 +10,6 @@ export default Ember.Controller.extend({
 
 	bagamdal: false,
 	mdalready: false,
-	poiskmdal: false,
-	zaipsmdal: false,
 
 	showhideo: [true, true, true],
 
@@ -39,8 +37,6 @@ export default Ember.Controller.extend({
 		netmudal() {
 			this.set('bagamdal', false);
 			this.set('mdalready', false);
-			this.set('poiskmdal', false);
-			this.set('zaipsmdal', false);
 			this.set('troikopoisk', null);
 			this.set('prezaips', null);
 			this.set('zaips', null);
@@ -54,7 +50,6 @@ export default Ember.Controller.extend({
 				data: { "input": btoa(unescape(encodeURIComponent(this.get('troikopoisk2')))) }
 			}).then(result => {
 				this.set('troikopoisk', result);
-				this.set('poiskmdal', true);
 				this.set('mdalready', true);
 			});
 		},
@@ -72,7 +67,6 @@ export default Ember.Controller.extend({
 					data: { "bagakruta": btoa(knopk+"~"+this.get('qzselect')) }
 				}).then(result => {
 					this.set('prezaips', result);
-					this.set('zaipsmdal', true);
 					this.set('mdalready', true);
 				});
 			}
@@ -86,7 +80,6 @@ export default Ember.Controller.extend({
 				data: { "bagakruta": btoa(knopk+"~"+gcode) }
 			}).then(result => {
 				this.set('prezaips', result);
-				this.set('zaipsmdal', true);
 				this.set('mdalready', true);
 			});
 		},
@@ -105,7 +98,6 @@ export default Ember.Controller.extend({
 					type: "GET"
 				}).then(result => {
 					this.set('model', result);
-					this.set('zaipsmdal', true);
 					this.set('mdalready', true);
 				});
 			});
