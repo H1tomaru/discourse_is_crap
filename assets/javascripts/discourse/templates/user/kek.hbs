@@ -49,12 +49,9 @@
 							<input type="checkbox" disabled="disabled" checked={{checked2}}/> <button style='color: gray' {{action 'selectOtz' 2}}>Нейтрально</button>
 							<input type="checkbox" disabled="disabled" checked={{checked3}}/> <button style='color: lightcoral' {{action 'selectOtz' 3}}>Отрицательно</button><br>
 							{{#if otzivsmall}}отзыв слишком короткий!<br>{{/if}}
+							{{#if otzivsbig}}отзыв слишком длинный!<br>{{/if}}
 							<button type="submit">Добавить отзыв</button><br>
-							{{input minlength="20" maxlength="200" class="otzivtext" type="text" value=otziv}}<br>
-							{{checked1}}<br>
-							{{checked2}}<br>
-							{{checked3}}<br>
-							{{score}}<br>
+							{{input minlength="20" maxlength="200" class="otzivtext" type="text" value=otziv}}
 						</form>
 					</div>
 				{{/if}}
