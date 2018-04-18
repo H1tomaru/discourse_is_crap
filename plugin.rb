@@ -525,7 +525,7 @@ after_initialize do
 			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
-				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username] == params[:username]
+				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
 			end
 			feedbacks[:MENOSHO] = true
 			#find feedbacks from my database
