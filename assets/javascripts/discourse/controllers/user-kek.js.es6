@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
-
+	
 	actions: {
 
 		netmudal() {
