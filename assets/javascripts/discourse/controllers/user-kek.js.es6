@@ -3,6 +3,7 @@ export default Ember.Controller.extend({
 	checked1: true,
 	checked2: false,
 	checked3: false,
+	score: 1,
 	otziv: null,
 
 	bagamdal: false,
@@ -37,7 +38,7 @@ export default Ember.Controller.extend({
 				Ember.$.ajax({
 					url: "/u/" + str[4] + "/",
 					type: "POST",
-					data: { "bagatrolit": btoa(this.get('currentUser.username')+"~"+this.get('otziv')) }
+					data: { "bagatrolit": btoa(this.get('score')+"~"+this.get('otziv')) }
 				}).then(result => {
 					this.set('otziv', result);
 					Ember.$.ajax({
@@ -56,14 +57,17 @@ export default Ember.Controller.extend({
 				this.set('checked1', true);
 				this.set('checked2', false);
 				this.set('checked3', false);
+				this.set('score', 1);
 			} else if ( input == 2 ) {
 				this.set('checked1', false);
 				this.set('checked2', true);
 				this.set('checked3', false);
+				this.set('score', 2);
 			} else if ( input == 3 ) {
 				this.set('checked1', false);
 				this.set('checked2', false);
 				this.set('checked3', true);
+				this.set('score', 3);
 			} 
 		}
 
