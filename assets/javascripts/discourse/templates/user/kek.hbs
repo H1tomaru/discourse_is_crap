@@ -1,20 +1,24 @@
-<div class='shinbakaz2'>
-	{{#if model.fbB}}
-		<img src='https://i.imgur.com/ZcxqN8c.png'>
-	{{else}}
-		{{#if model.fbG}}
-			<img src='https://i.imgur.com/rmydNkF.png'>
+<div class='shinbakaz'>
+	<div class='atzav'>
+		{{#if model.fbB}}
+			<img src='https://i.imgur.com/ZcxqN8c.png'>
 		{{else}}
-			<img src='https://i.imgur.com/OMygNKW.png'>
+			{{#if model.fbG}}
+				<img src='https://i.imgur.com/rmydNkF.png'>
+			{{else}}
+				<img src='https://i.imgur.com/OMygNKW.png'>
+			{{/if}}
 		{{/if}}
-	{{/if}}
-	<br>
-	<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
-	{{#if model.MENOSHO}}
 		<br>
-		<button {{action 'addOtziv'}}>Оставить отзыв</button>
-	{{/if}}
+		<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
+		{{#if model.MENOSHO}}
+			<br>
+			<button {{action 'addOtziv'}}>Оставить отзыв</button>
+		{{/if}}
+	</div>
+
 	<hr>
+
 	<table>
 		{{#each model.FEEDBACKS as |feedback|}}
 			<tr>
@@ -31,43 +35,43 @@
 			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 		{{/each}}
 	</ul>
+	{{#if bagamdal}}
+		<div class="etomudal">
+
+			{{#if mdalready}}
+
+				<button class="netmudal" {{action 'netmudal'}}></button>
+
+				{{#if otzivmdal}}
+					<div class="mudalcontent mudaladdon headin3">
+						good bad neutral<br>
+						input bar<br>
+						<button {{action 'OtzivZaips'}}>Добавить отзыв</button>
+					</div>
+				{{/if}}
+
+				{{#if otziv.winrars}}
+					<div class="mudalcontent mudaladdon headin3">
+						<span>Отзыв</span>
+						<span>Успешно записан!</span>
+					</div>
+				{{/if}}
+
+				{{#if otziv.fail}}
+					<div class="mudalcontent headin3 prezaips">
+						<div class="bagato">
+							<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
+						</div>
+					</div>
+				{{/if}}
+
+			{{else}}
+
+				<div class="bagaspin"></div>
+
+			{{/if}}
+
+		</div>
+	{{/if}}
 </div>
 
-{{#if bagamdal}}
-	<div class="etomudal">
-
-		{{#if mdalready}}
-
-			<button class="netmudal" {{action 'netmudal'}}></button>
-
-			{{#if otzivmdal}}
-				<div class="mudalcontent mudaladdon headin3">
-					good bad neutral<br>
-					input bar<br>
-					<button {{action 'OtzivZaips'}}>Добавить отзыв</button>
-				</div>
-			{{/if}}
-
-			{{#if otziv.winrars}}
-				<div class="mudalcontent mudaladdon headin3">
-					<span>Отзыв</span>
-					<span>Успешно записан!</span>
-				</div>
-			{{/if}}
-
-			{{#if otziv.fail}}
-				<div class="mudalcontent headin3 prezaips">
-					<div class="bagato">
-						<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
-					</div>
-				</div>
-			{{/if}}
-
-		{{else}}
-
-			<div class="bagaspin"></div>
-
-		{{/if}}
-
-	</div>
-{{/if}}
