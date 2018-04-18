@@ -720,17 +720,33 @@ div.shinbakaz {
 		background: none;
 		border: none;
 	}
-	
+
 	.atzivBI:nth-of-type(1) {
 		color: #27ae60
 	}
-	
+
 	.atzivBI:nth-of-type(2) {
 		color: gray
 	}
-	
+
 	.atzivBI:nth-of-type(3) {
 		color: lightcoral
+	}
+
+	.nuahuenno {
+
+		td:first-of-type {
+			width: 50px
+		}
+
+		td:last-of-type {
+			width: 80px
+		}
+
+		td:nth-of-type(2), td:nth-of-type(3) {
+			padding-left: 16px
+		}
+
 	}
 
 	@media (max-width: 600px) {
