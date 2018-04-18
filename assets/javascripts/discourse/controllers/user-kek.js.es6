@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
 		},
 
 		OtzivZaips() {
-			if (this.get('Otziv').length < 20) {
+			if (this.get('otziv').length < 20) {
 				this.set('otzivsmall', true);
 			} else {
 				this.set('mdalready', false);
@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
 					});
 				});
 			}
-		},		
+		},
 
 		selectOtz(input) {
 			if ( input == 1 ) {
