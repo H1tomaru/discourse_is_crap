@@ -40,15 +40,15 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false);
 				this.set('otzivsmall', false);
 				this.set('otzivbig', false);
-				var str = window.location.href.split("/");
+				var str = this.modelFor("user").username;
 				Ember.$.ajax({
-					url: "/u/" + str[4] + "/kek",
+					url: "/u/" + encodeURIComponent(str) + "/kek",
 					type: "POST",
 					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('score')+"~"+this.get('pisanina')))) }
 				}).then(result => {
 					this.set('otziv', result);
 					Ember.$.ajax({
-						url: "/u/" + str[4] + "/kek.json",
+						url: "/u/" + encodeURIComponent(str) + "/kek.json",
 						type: "GET"
 					}).then(result => {
 						this.set('model', result);
