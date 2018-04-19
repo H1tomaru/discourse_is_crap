@@ -15,16 +15,16 @@ export default Ember.Controller.extend({
 				      	"STRING": this.get('addstuff.STRING'),
 					"ADDFB": this.get('addstuff.ADDFB' )}
 			}).then(result => {
-				this.set('addstuff', result);
-			});
+				this.set('addstuff', result)
+			})
 		},
 		
 		Reset() {
-			this.set('addstuff', {});
+			this.set('addstuff', {})
 		},
 
 		Feedbacks() {
-			this.toggleProperty('addstuff.ADDFB');
+			this.toggleProperty('addstuff.ADDFB')
 		},
 
 		P4Lista() {
@@ -33,10 +33,10 @@ export default Ember.Controller.extend({
 				type: "GET"
 			}).then(result => {
 				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
-				this.set('p4lista', result);
-			});
+				this.set('p4lista', result)
+			})
 		}
 
 	}
 
-});
+})
