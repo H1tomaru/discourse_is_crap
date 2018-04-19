@@ -48,8 +48,8 @@
 							<button {{action 'selectOtz' 1}}>Позитивно</button>
 							<button {{action 'selectOtz' 2}}>Нейтрально</button>
 							<button {{action 'selectOtz' 3}}>Отрицательно</button>
-							{{#if otzivsmall}}<br>отзыв слишком короткий!<br>{{/if}}
-							{{#if otzivsbig}}<br>отзыв слишком длинный!<br>{{/if}}
+							{{#if otzivsmall}}<br>отзыв слишком короткий!{{/if}}
+							{{#if otzivsbig}}<br>отзыв слишком длинный!{{/if}}
 							<br><button type="submit">Добавить отзыв</button><br>
 							{{input minlength="20" maxlength="200" type="text" value=pisanina}}
 						</form>
