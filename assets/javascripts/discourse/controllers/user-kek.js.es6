@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
+	pageFB: null,
 
 	bagamdal: false,
 	mdalready: false,
@@ -39,7 +40,7 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				if (pageFB) this.set('otzivbig', false)//pageFB = null
+				this.set('pageFB', null)
 				var str = window.location.href.split("/")
 				Ember.$.ajax({
 					url: "/u/" + encodeURIComponent(str[4]) + "/kek",
@@ -78,8 +79,8 @@ export default Ember.Controller.extend({
 		},
 
 		PageChange(value) {
-			if (!pageFB) var pageFB = this.get('model.FEEDBACKS')
-			this.set('model.FEEDBACKS.[0]', pageFB[value-1])
+			if (!this.get('pageFB')) this.set('pageFB', this.get('model.FEEDBACKS'))
+			this.set('model.FEEDBACKS.[0]', this.get('pageFB')[value-1])
 		}
 
 	}
