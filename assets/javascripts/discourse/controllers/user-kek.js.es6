@@ -5,16 +5,15 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
+	pageFB: function () {
+		return this.get('model.FEEDBACKS')[0]
+	},
 
 	bagamdal: false,
 	mdalready: false,
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
-	
-	init: function () {
-		this.set('pageFB', this.get('model.FEEDBACKS')[0]);
-	},
 	
 	actions: {
 		
