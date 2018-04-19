@@ -60,7 +60,7 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				if feedback[0]
 					fbcount = feedback[0][:fbG] if feedback[0][:fbB] == 0
 				end
@@ -165,7 +165,7 @@ after_initialize do
 							(p4TAKEN = true; p4 = '') if p4 == '-55'
 							#find feedback for users
 							if p1.length > 0
-								feedbackp1 = userFB.find{ |h| h['_id'] == p1 }
+								feedbackp1 = userFB.find{ |h| h['_id'] == p1.downcase }
 								if feedbackp1
 									p1FEEDBACK[:GOOD] = feedbackp1[:fbG] if feedbackp1[:fbG]
 									p1FEEDBACK[:BAD] = feedbackp1[:fbB] if feedbackp1[:fbB]
@@ -173,7 +173,7 @@ after_initialize do
 								end
 							end
 							if p2.length > 0
-								feedbackp2 = userFB.find{ |h| h['_id'] == p2 }
+								feedbackp2 = userFB.find{ |h| h['_id'] == p2.downcase }
 								if feedbackp2
 									p2FEEDBACK[:GOOD] = feedbackp2[:fbG] if feedbackp2[:fbG]
 									p2FEEDBACK[:BAD] = feedbackp2[:fbB] if feedbackp2[:fbB]
@@ -181,7 +181,7 @@ after_initialize do
 								end
 							end
 							if p3.length > 0
-								feedbackp3 = userFB.find{ |h| h['_id'] == p3 }
+								feedbackp3 = userFB.find{ |h| h['_id'] == p3.downcase }
 								if feedbackp3
 									p3FEEDBACK[:GOOD] = feedbackp3[:fbG] if feedbackp3[:fbG]
 									p3FEEDBACK[:BAD] = feedbackp3[:fbB] if feedbackp3[:fbB]
@@ -189,7 +189,7 @@ after_initialize do
 								end
 							end
 							if p4.length > 0
-								feedbackp4 = userFB.find{ |h| h['_id'] == p4 }
+								feedbackp4 = userFB.find{ |h| h['_id'] == p4.downcase }
 								if feedbackp4
 									p4FEEDBACK[:GOOD] = feedbackp4[:fbG] if feedbackp4[:fbG]
 									p4FEEDBACK[:BAD] = feedbackp4[:fbB] if feedbackp4[:fbB]
@@ -376,7 +376,7 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				if feedback[0]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
@@ -426,7 +426,7 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				if feedback[0]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
@@ -525,12 +525,12 @@ after_initialize do
 			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0 }
 			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
-				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username] } ).to_a
+				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
 			end
 			feedbacks[:MENOSHO] = true
 			#find feedbacks from my database
-			userfb = @@userfb[:userfb].find( { _id: params[:username] } ).to_a
+			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
 
 			#if found, go
 			if userfb[0]
@@ -542,7 +542,7 @@ after_initialize do
 				end
 				#update db with correct values if needed
 				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username] }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
 				end
 				#save final variable
 				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].each_slice(50)
