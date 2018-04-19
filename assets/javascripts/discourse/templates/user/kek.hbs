@@ -43,11 +43,11 @@
 				<button class="netmudal" {{action 'netmudal'}}></button>
 
 				{{#if otzivmdal}}
-					<div class="mudalcontent mudaladdon headin3{{if checked1 " zelenoeb"}} {{if checked2 " seroeb"}} {{if checked3 " krasnoeb"}}">
+					<div class="mudalcontent mudaladdon headin3 atziv {{if checked1 " zelenoeb"}} {{if checked2 " seroeb"}} {{if checked3 " krasnoeb"}}">
 						<form {{action "OtzivZaips" on="submit"}}>
-							<button class='atzivBI' {{action 'selectOtz' 1}}>Позитивно</button>
-							<button class='atzivBI' {{action 'selectOtz' 2}}>Нейтрально</button>
-							<button class='atzivBI' {{action 'selectOtz' 3}}>Отрицательно</button>
+							<button {{action 'selectOtz' 1}}>Позитивно</button>
+							<button {{action 'selectOtz' 2}}>Нейтрально</button>
+							<button {{action 'selectOtz' 3}}>Отрицательно</button>
 							{{#if otzivsmall}}<br>отзыв слишком короткий!<br>{{/if}}
 							{{#if otzivsbig}}<br>отзыв слишком длинный!<br>{{/if}}
 							<br><button type="submit">Добавить отзыв</button><br>
