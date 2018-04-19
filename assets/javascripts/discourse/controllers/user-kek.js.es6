@@ -78,7 +78,7 @@ export default Ember.Controller.extend({
 
 		PageChange(value) {
 			if (!pageFB) var pageFB = this.get('model.FEEDBACKS')
-			this.set('model.FEEDBACKS.0', tpageFB[value-1]);
+			this.set('model.FEEDBACKS.[0]', tpageFB[value-1]);
 		}
 
 	}
