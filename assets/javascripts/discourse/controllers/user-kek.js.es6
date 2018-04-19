@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				if (pageFB) pageFB = null
+				if (pageFB) this.set('otzivbig', false)//pageFB = null
 				var str = window.location.href.split("/")
 				Ember.$.ajax({
 					url: "/u/" + encodeURIComponent(str[4]) + "/kek",
