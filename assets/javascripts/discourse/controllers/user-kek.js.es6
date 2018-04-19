@@ -39,21 +39,22 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				var str = this.modelFor("user").username;
+				if (pageFB) pageFB = null
+				var str = this.modelFor("user").username
 				Ember.$.ajax({
 					url: "/u/" + encodeURIComponent(str) + "/kek",
 					type: "POST",
 					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('score')+"~"+this.get('pisanina')))) }
 				}).then(result => {
-					this.set('otziv', result);
+					this.set('otziv', result)
 					Ember.$.ajax({
 						url: "/u/" + encodeURIComponent(str) + "/kek.json",
 						type: "GET"
 					}).then(result => {
 						this.set('model', result)
 						this.set('mdalready', true)
-					});
-				});
+					})
+				})
 			}
 		},
 
@@ -67,7 +68,7 @@ export default Ember.Controller.extend({
 				this.set('checked1', false)
 				this.set('checked2', true)
 				this.set('checked3', false)
-				this.set('score', 2);
+				this.set('score', 2)
 			} else if ( input == 3 ) {
 				this.set('checked1', false)
 				this.set('checked2', false)
@@ -83,4 +84,4 @@ export default Ember.Controller.extend({
 
 	}
 
-});
+})
