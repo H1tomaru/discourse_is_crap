@@ -749,6 +749,29 @@ div.shinbakaz {
 
 	}
 
+	.pagination {
+
+		margin: 20px 0;
+		text-align: center;
+
+		li {
+			display: inline	
+		}
+
+		button {
+			background: none;
+			border: none;
+			padding: 10px 16px;
+			color: #337ab7;
+		}
+
+		button:hover {
+			color: #23527c;
+			background-color: #eee;
+		}
+
+	}
+
 	@media (max-width: 600px) {
 
 		.hideoS {
