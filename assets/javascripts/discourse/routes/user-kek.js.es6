@@ -4,7 +4,7 @@ export default Ember.Route.extend({
 
 	model() {
 		var usermodel = this.modelFor("user");
-		var str = usermodel.params.username;
+		var str = usermodel.username;
 		//var str = window.location.href.split("/");
 		//return ajax('/u/' + str[4] + '/kek.json');
 		return ajax('/u/' + str + '/kek.json');
