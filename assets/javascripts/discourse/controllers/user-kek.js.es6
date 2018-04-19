@@ -5,7 +5,6 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageFB: this.get('model.FEEDBACKS')[0],
 
 	bagamdal: false,
 	mdalready: false,
@@ -78,7 +77,8 @@ export default Ember.Controller.extend({
 		},
 
 		PageChange(value) {
-			this.set('pageFB', this.get('model.FEEDBACKS')[value-1]);
+			if (!pageFB) var pageFB = this.get('model.FEEDBACKS')
+			this.set('model.FEEDBACKS.0', tpageFB[value-1]);
 		}
 
 	}
