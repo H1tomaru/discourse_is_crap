@@ -5,7 +5,6 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	//pageFB: this.get('model.FEEDBACKS'),
 
 	bagamdal: false,
 	mdalready: false,
@@ -13,8 +12,12 @@ export default Ember.Controller.extend({
 	otzivsmall: false,
 	otzivbig: false,
 	
+	init: function () {
+		this.set('pageFB', this.get('model.FEEDBACKS')[0]);
+	},
+	
 	actions: {
-
+		
 		netmudal() {
 			this.set('bagamdal', false);
 			this.set('mdalready', false);
