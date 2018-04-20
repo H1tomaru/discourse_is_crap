@@ -420,6 +420,7 @@ after_initialize do
 							topic_id: 22,
 							raw: 'megusta testa!'
 						)
+					end
 
 				end
 			else
