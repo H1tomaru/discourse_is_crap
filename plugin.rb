@@ -413,13 +413,6 @@ after_initialize do
 						prezaips[0][:winrars] = true
 						render json: prezaips[0]
 						
-						#add message to chat test
-						PostCreator.create(
-							Discourse.system_user,
-							skip_validations: true,
-							topic_id: 22,
-							raw: 'megusta testa!'
-						)
 					end
 
 				end
@@ -470,6 +463,12 @@ after_initialize do
 						render json: zaips
 
 						#add message to chat
+						PostCreator.create(
+							Discourse.system_user,
+							skip_validations: true,
+							topic_id: 22,
+							raw: current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
+						)
 					end
 				end
 			else
