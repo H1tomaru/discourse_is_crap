@@ -412,7 +412,15 @@ after_initialize do
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
 						render json: prezaips[0]
-					end
+						
+						#add message to chat test
+						PostCreator.create(
+							Discourse.system_user,
+							skip_validations: true,
+							topic_id: 22,
+							raw: 'megusta testa!'
+						)
+
 				end
 			else
 				render json: { guest: true }
