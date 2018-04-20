@@ -26,14 +26,14 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 
-		db = Mongo::Client.new([ '93.171.216.230:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		db = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
 		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 		
-		@@userdb2 = Mongo::Client.new([ '93.171.216.230:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
+		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 
 		def show
