@@ -553,7 +553,7 @@ after_initialize do
 					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
 				end
 				#save final variable
-				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].each_slice(50)
+				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].reverse.each_slice(50)
 				#do paginations
 				feedbacks[:PAGES] = [*1..(userfb[0][:FEEDBACKS].length / 50.0).ceil]
 			end
