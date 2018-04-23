@@ -606,7 +606,7 @@ after_initialize do
 				#if uid[0]
 					thisuserfb = []
 					fb.each do |ufb|
-						thisuserfb.push({ FEEDBACK: ufb[:FEEDBACK] }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
+						thisuserfb.push({ FEEDBACK: "TESTA" }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
 					finalfb.push( {_id: "MaestraBaga", FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
 				#else
