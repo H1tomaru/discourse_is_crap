@@ -612,7 +612,7 @@ after_initialize do
 			
 			lost.each do |remake|
 				remake[:FEEDBACKS].each do |feedme|
-					feedme = 0
+					feedme[:FEEDBACK] = 'himom'
 				end
 				#remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
 			end
