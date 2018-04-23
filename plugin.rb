@@ -596,6 +596,7 @@ after_initialize do
 
 		def part1
 			lost = []
+			lost2 = []
 			feedback3 = @@userfb[:userfb2].find().to_a
 			feedback3 = feedback3.group_by{|h| h[:UID]}
 			uid = feedback3.keys
@@ -606,22 +607,22 @@ after_initialize do
 					fb.each do |ufb|
 						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false }
 					end
-					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
+					lost.push( { _id: uid[i], FEEDBACKS2: thisuserfb[1] } )
 					i = i + 1
 			end
-			test = []
 			lost.each do |remake|
-				remake[:FEEDBACKS].each do |feedme|
-					test = feedme
+				thisuserfb = []
+				remake[:FEEDBACKS2].each do |feedme|
+					thisuserfb.push({ FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false }
 				end
-				#remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
+				lost2.push( { _id: lost[:_id], FEEDBACKS2: thisuserfb[1] } )
 			end
 			
 			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
 			#db7 = db6.use('nodebb_union')
 			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 
-			render json: { test: test, winrars: lost }
+			render json: { winrars: lost2 }
 		end
 
 	end
