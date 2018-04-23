@@ -621,7 +621,7 @@ after_initialize do
 			#db7 = db6.use('nodebb_union')
 			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 
-			render json: { loserars: himom, winrars: lost }
+			render json: { winrars: lost }
 		end
 
 	end
