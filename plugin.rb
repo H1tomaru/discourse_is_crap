@@ -606,7 +606,7 @@ after_initialize do
 					fb.each do |ufb|
 						thisuserfb[:FEEDBACKS].push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
-					lost.push( {_id: uid[i], thisuserfb } )
+					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb } )
 					i = i + 1
 			end
 			
