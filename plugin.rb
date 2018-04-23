@@ -615,11 +615,11 @@ after_initialize do
 				
 			end
 
-			if broken
-				render json: broken
-			else
+			#if broken
+			#	render json: broken
+			#else
 				render json: feedback3
-			end
+			#end
 		end
 
 	end
