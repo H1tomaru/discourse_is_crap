@@ -597,6 +597,7 @@ after_initialize do
 		def part1
 			lost = []
 			lost2 = []
+			fails = []
 			feedback3 = @@userfb[:userfb2].find().to_a
 			feedback3 = feedback3.group_by{|h| h[:UID]}
 			uid = feedback3.keys
@@ -620,11 +621,15 @@ after_initialize do
 				remake[:FEEDBACKS2].each do |feedme|
 					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
 				end
-				lost2.push( { _id: userbb[0], FEEDBACKS: thisuserfb } )
+				if userbb[0]
+					lost2.push( { _id: userbb[0][:username].downcase, FEEDBACKS: thisuserfb } )
+				else
+					fails.push(uid[i])	
+				end
 				i = i + 1
 			end
 
-			render json: { winrars: lost2 }
+			render json: { fails: fails, winrars: lost2 }
 		end
 
 	end
