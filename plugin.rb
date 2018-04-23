@@ -615,7 +615,7 @@ after_initialize do
 				remake[:FEEDBACKS2].each do |feedme|
 					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
 				end
-				lost2.push( { _id: lost[:_id], FEEDBACKS2: thisuserfb } )
+				lost2.push( { _id: remake[:_id], FEEDBACKS2: thisuserfb } )
 			end
 
 			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
