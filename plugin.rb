@@ -537,7 +537,6 @@ after_initialize do
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
 			end
-			feedbacks[:MENOSHO] = true
 			#find feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
 
@@ -566,7 +565,7 @@ after_initialize do
 			#decode shit
 			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
 			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
-			if current_user && fedbacks.length == 2
+			if current_user && fedbacks.length == 2 && current_user[:username].downcase != params[:username].downcase
 				#find if user gave feedback already today
 				ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
 				if ufb[0]
