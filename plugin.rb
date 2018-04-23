@@ -611,7 +611,10 @@ after_initialize do
 			end
 			
 			lost.each do |remake|
-				remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
+				remake[:FEEDBACKS].each do |feedme|
+					feedme = 0
+				end
+				#remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
 			end
 			
 			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
