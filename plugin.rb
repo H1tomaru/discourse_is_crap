@@ -599,16 +599,16 @@ after_initialize do
 			feedback3 = feedback3.group_by{|h| h[:UID]}
 			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
 			db7 = db6.use('nodebb_union')
-			finalfb = []
+			finalfb66 = []
 			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 			feedback3.each do |fb|
 				#uid = uids.select {|father| father["uid"] == fb[0][:UID] }
 				#if uid[0]
 					thisuserfb = []
 					fb.each do |ufb|
-						thisuserfb.push({ FEEDBACK: "TESTA" }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
+						thisuserfb.push({ FEEDBACK: ufb }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
-					finalfb.push( {_id: "MaestraBaga", FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
+					finalfb66.push( {_id: "MaestraBaga", FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
 				#else
 				#	broken = {uid: fb[0][:UID] }
 				#end
@@ -618,7 +618,7 @@ after_initialize do
 			#if broken
 			#	render json: broken
 			#else
-				render json: finalfb
+				render json: finalfb66
 			#end
 		end
 
