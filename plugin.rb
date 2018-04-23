@@ -607,7 +607,7 @@ after_initialize do
 						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false }
 					end
 					thisuserfb[1].each do |remake|
-						remake = { FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
+						remake = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
 					end
 					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
 					i = i + 1
