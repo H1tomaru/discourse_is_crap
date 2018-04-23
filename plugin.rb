@@ -602,16 +602,16 @@ after_initialize do
 			finalfb66 = []
 			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 			feedback3.each do |fb|
-				#uid = uids.select {|father| father["uid"] == fb[0][:UID] }
-				#if uid[0]
+				uid = uids.select {|father| father["uid"] == fb[0][:UID] }
+				if uid[0]
 					thisuserfb = []
 					fb.each do |ufb|
 						thisuserfb.push({ FEEDBACK: ufb }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
-					finalfb66.push( {_id: "MaestraBaga", FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
+					finalfb66.push( {_id: uid[0][:username].downcase, FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
 				#else
 				#	broken = {uid: fb[0][:UID] }
-				#end
+				end
 				
 			end
 
