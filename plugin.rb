@@ -603,24 +603,26 @@ after_initialize do
 			i = 0
 			feedback3.each do |fb|
 					thisuserfb = []
-					#userbb = uids.select {|father| father[:uid] == uid[i] }
 					fb.each do |ufb|
 						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false }
 					end
 					lost.push( { _id: uid[i], FEEDBACKS2: thisuserfb[1] } )
 					i = i + 1
 			end
+
+			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
+			db7 = db6.use('nodebb_union')
+			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
+			i = 0
 			lost.each do |remake|
 				thisuserfb = []
+				userbb = uids.select {|father| father[:uid] == uid[i] || father[:uid] == uid[i].to_s }
 				remake[:FEEDBACKS2].each do |feedme|
 					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
 				end
-				lost2.push( { _id: remake[:_id], FEEDBACKS2: thisuserfb } )
+				lost2.push( { _id: userbb[0][:username], FEEDBACKS: thisuserfb } )
+				i = i + 1
 			end
-
-			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
-			#db7 = db6.use('nodebb_union')
-			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 
 			render json: { winrars: lost2 }
 		end
