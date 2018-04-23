@@ -601,7 +601,7 @@ after_initialize do
 			db7 = db6.use('nodebb_union')
 			finalfb = []
 			feedback3.each do |fb|
-				uid = db7[:objects].find({ _key:"user:"+fb[0][:UID].to_s, uid: fb[0][:UID] }).to_a
+				uid = db7[:objects].find({ _key:"user:"+fb.0.[:UID], uid: fb.0.[:UID] }).to_a
 				if uid[0]
 					thisuserfb = []
 					fb.each do |ufb|
