@@ -600,6 +600,7 @@ after_initialize do
 			feedback3 = feedback3.group_by{|h| h[:UID]}
 			uid = feedback3.keys
 			i = 0
+			himom = true
 			feedback3.each do |fb|
 					thisuserfb = []
 					#userbb = uids.select {|father| father[:uid] == uid[i] }
@@ -608,6 +609,7 @@ after_initialize do
 					end
 					thisuserfb[1].each do |remake|
 						remake = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
+						himom = false
 					end
 					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
 					i = i + 1
@@ -617,7 +619,7 @@ after_initialize do
 			#db7 = db6.use('nodebb_union')
 			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 
-			render json: { loserars: feedback3, winrars: lost }
+			render json: { loserars: himom, winrars: lost }
 		end
 
 	end
