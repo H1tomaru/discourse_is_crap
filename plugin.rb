@@ -609,7 +609,7 @@ after_initialize do
 					feedbacks.each do |ufb|
 						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
-					finalfb66.push( {_id: uid[i], FEEDBACKS: thisuserfb } ) #userbb[0][:username].downcase
+					#finalfb66.push( {_id: uid[i], FEEDBACKS: thisuserfb } ) #userbb[0][:username].downcase
 					i = i + 1
 			end
 
