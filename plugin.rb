@@ -613,7 +613,7 @@ after_initialize do
 					i = i + 1
 			end
 
-			render json: feedback3
+			render json: finalfb66
 		end
 
 	end
