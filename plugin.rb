@@ -600,8 +600,9 @@ after_initialize do
 			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
 			db7 = db6.use('nodebb_union')
 			finalfb = []
+			uids = db7[:objects].find({ _key: uid: { $exists: true }, uid: { $exists: true }, username: { $exists: true } }).to_a
 			feedback3.each do |fb|
-				uid = db7[:objects].find({ uid: fb[0][:UID] }).to_a #{ _key: "user:"+fb[0][:UID], uid: fb[0][:UID] }
+				uid = uids.select {|father| father["uid"] == fb[0][:UID] }
 				if uid[0]
 					thisuserfb = []
 					fb.each do |ufb|
