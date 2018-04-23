@@ -23,7 +23,6 @@ after_initialize do
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
 		get '/part1' => 'mrbug#part1'
-		get '/part2' => 'mrbug#part2'
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -536,7 +535,7 @@ after_initialize do
 			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
+				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
 			end
 			feedbacks[:MENOSHO] = true
 			#find feedbacks from my database
@@ -595,15 +594,21 @@ after_initialize do
 				render json: { fail: true }
 			end
 		end
-		
+
 		def part1
 			feedback3 = @@userfb[:userfb2].find().to_a
 			feedback3 = feedback3.group_by{|h| h[:UID]}
+			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
+			db7 = db6.use('nodebb_union')
+			finalfb = []
+			feedback3.each do |fb|
+				uid = db7[:objects].find({ _key:"user:"+fb[0][:UID], uid: fb[0][:UID] }).to_a
+				if uid[0]
+					finalfb.push( [ game[:_id] , game[:gameNAME] ] )
+				end
+				
+			end
 			render json: feedback3
-		end
-		
-		def part2
-			render json: { HiMom: "!!!" }
 		end
 
 	end
