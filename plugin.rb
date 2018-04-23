@@ -604,7 +604,7 @@ after_initialize do
 			feedback3.each do |fb|
 					thisuserfb = []
 					fb.each do |ufb|
-						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false }
+						thisuserfb.push(ufb)
 					end
 					lost.push( { _id: uid[i], FEEDBACKS2: thisuserfb[1] } )
 					i = i + 1
@@ -620,7 +620,7 @@ after_initialize do
 				remake[:FEEDBACKS2].each do |feedme|
 					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
 				end
-				lost2.push( { _id: userbb[0][:username], FEEDBACKS: thisuserfb } )
+				lost2.push( { _id: userbb[0][:username].downcase, FEEDBACKS: thisuserfb } )
 				i = i + 1
 			end
 
