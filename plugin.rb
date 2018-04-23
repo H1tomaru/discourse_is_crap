@@ -466,7 +466,7 @@ after_initialize do
 						PostCreator.create(
 							Discourse.system_user,
 							skip_validations: true,
-							topic_id: 22,
+							topic_id: 21,
 							raw: current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
 						)
 					end
