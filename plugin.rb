@@ -609,10 +609,10 @@ after_initialize do
 					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
 					i = i + 1
 			end
-			
+			test = []
 			lost.each do |remake|
 				remake[:FEEDBACKS].each do |feedme|
-					feedme[:FEEDBACK] = 'himom'
+					test = feedme
 				end
 				#remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
 			end
@@ -621,7 +621,7 @@ after_initialize do
 			#db7 = db6.use('nodebb_union')
 			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
 
-			render json: { winrars: lost }
+			render json: { test: test, winrars: lost }
 		end
 
 	end
