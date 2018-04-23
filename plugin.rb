@@ -22,6 +22,8 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
+		get '/part1' => 'mrbug#part1'
+		get '/part2' => 'mrbug#part2'
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -592,6 +594,14 @@ after_initialize do
 			else
 				render json: { fail: true }
 			end
+		end
+		
+		def part1
+			render json: { HiMom: "!!!" }
+		end
+		
+		def part2
+			render json: { HiMom: "!!!" }
 		end
 
 	end
