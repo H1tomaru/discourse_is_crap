@@ -604,11 +604,22 @@ after_initialize do
 			feedback3.each do |fb|
 				uid = db7[:objects].find({ _key:"user:"+fb[0][:UID], uid: fb[0][:UID] }).to_a
 				if uid[0]
-					finalfb.push( [ game[:_id] , game[:gameNAME] ] )
+					thisuserfb = []
+					fb.each do |ufb|
+						thisuserfb.push( { FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false } )
+					end
+					finalfb.push( {_id: uid[0][:username].downcase, FEEDBACKS: thisuserfb } )
+				else
+					broken = {uid: fb[0][:UID] }
 				end
 				
 			end
-			render json: feedback3
+
+			if broken
+				render json: broken
+			else
+				render json: feedback3
+			end
 		end
 
 	end
