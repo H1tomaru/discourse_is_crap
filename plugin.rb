@@ -601,24 +601,24 @@ after_initialize do
 			db7 = db6.use('nodebb_union')
 			finalfb = []
 			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
-			feedback3.each do |fb|
-				uid = uids.select {|father| father["uid"] == fb[0][:UID] }
-				if uid[0]
-					thisuserfb = []
-					fb.each do |ufb|
-						thisuserfb.push( { FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false } )
-					end
-					finalfb.push( {_id: uid[0][:username].downcase, FEEDBACKS: thisuserfb } )
-				else
-					broken = {uid: fb[0][:UID] }
-				end
-				
-			end
+			#feedback3.each do |fb|
+			#	uid = uids.select {|father| father["uid"] == fb[0][:UID] }
+			#	if uid[0]
+			#		thisuserfb = []
+			#		fb.each do |ufb|
+			#			thisuserfb.push( { FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false } )
+			#		end
+			#		finalfb.push( {_id: uid[0][:username].downcase, FEEDBACKS: thisuserfb } )
+			#	else
+			#		broken = {uid: fb[0][:UID] }
+			#	end
+			#	
+			#end
 
 			if broken
 				render json: broken
 			else
-				render json: feedback3
+				render json: uids#feedback3
 			end
 		end
 
