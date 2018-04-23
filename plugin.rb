@@ -604,7 +604,7 @@ after_initialize do
 					thisuserfb = []
 					#userbb = uids.select {|father| father[:uid] == uid[i] }
 					fb.each do |ufb|
-						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
+						thisuserfb.push(ufb[1]) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
 					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb } )
 					i = i + 1
