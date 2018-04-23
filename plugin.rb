@@ -601,13 +601,16 @@ after_initialize do
 			db7 = db6.use('nodebb_union')
 			finalfb66 = []
 			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
-			feedback3.each do |uid feedbacks|
+			uid = feedback3.keys
+			i = 0
+			feedback3.each do |feedbacks|
 					thisuserfb = []
-					userbb = uids.select {|father| father[:uid] == uid }
+					userbb = uids.select {|father| father[:uid] == uid[i] }
 					feedbacks.each do |ufb|
 						thisuserfb.push({ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false })
 					end
 					finalfb66.push( {_id: userbb[:username].downcase, FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
+					i = i + 1
 			end
 
 			render json: feedback3
