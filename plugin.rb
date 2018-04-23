@@ -597,7 +597,9 @@ after_initialize do
 		end
 		
 		def part1
-			render json: { HiMom: "!!!" }
+			feedback = @@userfb[:userfb].find().to_a
+			feedback.group_by{|h| h[:UID]}.values
+			render json: feedback
 		end
 		
 		def part2
