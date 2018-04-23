@@ -629,7 +629,7 @@ after_initialize do
 				i = i + 1
 			end
 			
-			@@userfb2[:userfb].insertMany(lost2)
+			@@userfb2[:userfb].insert_many(lost2)
 
 			render json: { winrars: lost2 }
 		end
