@@ -598,7 +598,7 @@ after_initialize do
 		
 		def part1
 			feedback = @@userfb[:userfb2].find().to_a
-			feedback.group_by{|h| h[:UID]}.values
+			feedback = feedback.group_by{|h| h[:UID]}.values
 			render json: feedback
 		end
 		
