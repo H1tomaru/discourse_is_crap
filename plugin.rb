@@ -600,19 +600,18 @@ after_initialize do
 			feedback3 = feedback3.group_by{|h| h[:UID]}
 			uid = feedback3.keys
 			i = 0
-			himom = true
 			feedback3.each do |fb|
 					thisuserfb = []
 					#userbb = uids.select {|father| father[:uid] == uid[i] }
 					fb.each do |ufb|
 						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: ufb[:PNAME], DATE: ufb[:DATE], SCORE: ufb[:SCORE].to_i, DELETED: false }
 					end
-					thisuserfb[1].each do |remake|
-						remake = {himon: 0} #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
-						himom = false
-					end
 					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
 					i = i + 1
+			end
+			
+			lost.each do |remake|
+				remake[:FEEDBACKS] = 0 #{ FEEDBACK: remake[:FEEDBACK], pNAME: remake[:PNAME], DATE: remake[:DATE], SCORE: remake[:SCORE].to_i, DELETED: false }
 			end
 			
 			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
