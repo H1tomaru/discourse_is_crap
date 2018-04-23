@@ -597,24 +597,20 @@ after_initialize do
 		def part1
 			feedback3 = @@userfb[:userfb2].find().to_a
 			feedback3 = feedback3.group_by{|h| h[:UID]}
-			#db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
-			#db7 = db6.use('nodebb_union')
-			#finalfb66 = []
-			#uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
-			#feedback3.each do |fb|
-					#thisuserfb = []
-					#fb.each do |ufb|
-					#	uid = uids.select {|father| father[:uid] == ufb[:UID] }
-					#	thisuserfb.push({ FEEDBACK: ufb }) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
-					#end
-			#		finalfb66.push( {_id: uid[:username].downcase, FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
-			#end
+			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
+			db7 = db6.use('nodebb_union')
+			finalfb66 = []
+			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
+			feedback3.each do |uid feedbacks|
+					thisuserfb = []
+					userbb = uids.select {|father| father[:uid] == uid }
+					feedbacks.each do |ufb|
+						thisuserfb.push({ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false })
+					end
+					finalfb66.push( {_id: userbb[:username].downcase, FEEDBACKS: thisuserfb } ) #uid[0][:username].downcase
+			end
 
-			#if broken
-			#	render json: broken
-			#else
-				render json: feedback3
-			#end
+			render json: feedback3
 		end
 
 	end
