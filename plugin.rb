@@ -620,7 +620,7 @@ after_initialize do
 				remake[:FEEDBACKS2].each do |feedme|
 					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
 				end
-				lost2.push( { _id: userbb, FEEDBACKS: thisuserfb } )
+				lost2.push( { _id: userbb[0], FEEDBACKS: thisuserfb } )
 				i = i + 1
 			end
 
