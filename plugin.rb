@@ -15,9 +15,9 @@ after_initialize do
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
-		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
-		post '/MrBug/prezaips' => 'mrbug#prezaips'
-		post '/MrBug/zaips' => 'mrbug#zaips'
+		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
+		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
+		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
