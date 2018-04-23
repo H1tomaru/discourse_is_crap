@@ -601,12 +601,12 @@ after_initialize do
 			uid = feedback3.keys
 			i = 0
 			feedback3.each do |fb|
-					thisuserfb[:FEEDBACKS] = []
+					thisuserfb = []
 					#userbb = uids.select {|father| father[:uid] == uid[i] }
 					fb.each do |ufb|
-						thisuserfb[:FEEDBACKS].push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
+						thisuserfb.push(ufb) #{ FEEDBACK: ufb[:FEEDBACK], pNAME: fb[:PNAME], DATE: fb[:DATE], SCORE: fb[:SCORE].to_i, DELETED: false }
 					end
-					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb } )
+					lost.push( {_id: uid[i], FEEDBACKS: thisuserfb[1] } )
 					i = i + 1
 			end
 			
