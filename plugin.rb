@@ -15,6 +15,7 @@ after_initialize do
 
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
+		get '/renta-haleguu' => 'mrbug#rentagama'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
@@ -22,7 +23,6 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
-		get '/admin/part1' => 'mrbug#part1', constraints: AdminConstraint.new
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -593,45 +593,9 @@ after_initialize do
 				render json: { fail: true }
 			end
 		end
-
-		def part1
-			lost = []
-			lost2 = []
-			fails = []
-			feedback3 = @@userfb[:userfb2].find().to_a
-			feedback3 = feedback3.group_by{|h| h[:UID]}
-			uid = feedback3.keys
-			i = 0
-			feedback3.each do |fb|
-					thisuserfb = []
-					fb.each do |ufb|
-						thisuserfb.push(ufb)
-					end
-					lost.push( { _id: uid[i], FEEDBACKS2: thisuserfb[1] } )
-					i = i + 1
-			end
-
-			db6 = Mongo::Client.new([ '104.244.76.126:33775' ], user: 'h1tomaru', password: 'BZDD7D8BUZ' )
-			db7 = db6.use('nodebb_union')
-			uids = db7[:objects].find({ _key: { '$exists': true }, uid: { '$exists': true }, userslug: { '$exists': true } }).to_a
-			i = 0
-			lost.each do |remake|
-				thisuserfb = []
-				userbb = uids.select {|father| father[:uid] == uid[i] || father[:uid] == uid[i].to_s }
-				remake[:FEEDBACKS2].each do |feedme|
-					thisuserfb.push( { FEEDBACK: feedme[:FEEDBACK], pNAME: feedme[:PNAME], DATE: feedme[:DATE], SCORE: (feedme[:SCORE]).to_i, DELETED: false } )
-				end
-				if userbb[0]
-					lost2.push( { _id: userbb[0][:username].downcase, FEEDBACKS: thisuserfb } )
-				else
-					fails.push(uid[i])	
-				end
-				i = i + 1
-			end
-			
-			@@userfb2[:userfb].insert_many(lost2)
-
-			render json: { winrars: lost2 }
+		
+		def rentagama
+			render json: { HiMom: "!!!" }
 		end
 
 	end
