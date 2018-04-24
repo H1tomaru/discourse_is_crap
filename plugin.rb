@@ -378,7 +378,7 @@ after_initialize do
 			if current_user && code[1]
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0]
+				if feedback[0] && feedback[0][:fbB]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
 					else
