@@ -6,8 +6,6 @@ export default Ember.Controller.extend({
 	score: 1,
 	otziv: null,
 	pageFB: null,
-	test: 0,
-	test2: [],
 
 	bagamdal: false,
 	mdalready: false,
@@ -84,8 +82,6 @@ export default Ember.Controller.extend({
 			if (!this.get('pageFB')) this.set('pageFB', this.get('model.FEEDBACKS'))
 			this.set('model.FEEDBACKS.[0]', this.get('pageFB')[value-1])
 			this.set('model.FEEDBACKS.[0]', this.get('model.FEEDBACKS'))
-			this.set('test', JSON.stringify(this.get('model.FEEDBACKS')))
-			this.set('test2', JSON.stringify(this.get('model.FEEDBACKS')))
 		}
 
 	}
