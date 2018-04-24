@@ -83,8 +83,9 @@ export default Ember.Controller.extend({
 		PageChange(value) {
 			if (!this.get('pageFB')) this.set('pageFB', this.get('model.FEEDBACKS'))
 			this.set('model.FEEDBACKS.[0]', this.get('pageFB')[value-1])
-			this.set('test', this.get('model.FEEDBACKS'))
-			this.set('test2', this.get('model.FEEDBACKS'))
+			this.set('model.FEEDBACKS.[0]', this.get('model.FEEDBACKS'))
+			this.set('test', JSON.stringify(this.get('model.FEEDBACKS')))
+			this.set('test2', JSON.stringify(this.get('model.FEEDBACKS')))
 		}
 
 	}
