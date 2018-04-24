@@ -24,6 +24,8 @@
 			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 		{{/each}}
 	</ul>
+	
+	{{page}}
 
 	<table class='nuahuenno'>
 		{{#each model.FEEDBACKS.[0] as |feedback|}}
@@ -41,7 +43,7 @@
 			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 		{{/each}}
 	</ul>
-
+	
 	{{#if bagamdal}}
 		<div class="etomudal">
 
