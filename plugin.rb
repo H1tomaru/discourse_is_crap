@@ -62,8 +62,8 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0]
-					fbcount = feedback[0][:fbG] if feedback[0][:fbB] == 0
+				if feedback[0] && feedback[0][:fbB]
+					fbcount = feedback[0][:fbG]
 				end
 				finalvar[:qzstuff] = true if fbcount >= 10
 			end
@@ -430,7 +430,7 @@ after_initialize do
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0]
+				if feedback[0] && feedback[0][:fbB]
 					if feedback[0][:fbB] > 0
 						fbcount = 777
 					else
