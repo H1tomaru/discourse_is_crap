@@ -24,9 +24,9 @@
 			<li><button {{action 'PageChange' page}}>{{page}}</button></li>
 		{{/each}}
 	</ul>
-	{{test}}
+	{{pageNO}}
 	<table class='nuahuenno'>
-		{{#each model.FEEDBACKS.[0] as |feedback|}}
+		{{#each pageFB as |feedback|}}
 			<tr>
 				<td><div class='malabela2 {{feedback.COLOR}}'>{{feedback.SCORE}}</div></td>
 				<td>{{feedback.FEEDBACK}}</td>
