@@ -5,8 +5,9 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageFB: Ember.computed('pageFB', function() {
-		return this.get('model.FEEDBACKS')[0];
+	pageNO: 0,
+	pageFB: Ember.computed('pageNO', function() {
+		return this.get('model.FEEDBACKS')[this.get('pageNO')];
  	}),
 
 	bagamdal: false,
@@ -81,7 +82,7 @@ export default Ember.Controller.extend({
 		},
 
 		PageChange(value) {
-			this.set('pageFB', this.get('model.FEEDBACKS')[value-1])
+			this.set('pageNO', value-1)
 		}
 
 	}
