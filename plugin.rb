@@ -22,7 +22,6 @@ after_initialize do
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
-		get '/u/:username/kek/fix' => 'mrbug#feedbackfix', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
 	end
 
@@ -550,6 +549,8 @@ after_initialize do
 
 			#if found, go
 			if userfb[0]
+				#remove duplicates
+				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] ) if userfb[0][:FEEDBACKS].uniq!
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].each do |fb|
 					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE] > 0
@@ -569,23 +570,6 @@ after_initialize do
 			render json: feedbacks
 		end
 		
-		def feedbackfix
-			if current_user
-				#find feedbacks from my database
-				userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-
-				#if found, go
-				if userfb[0]
-					#remove duplicates
-					userfb[0][:FEEDBACKS] = userfb[0][:FEEDBACKS].uniq
-					
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] )
-				end
-
-				render json: userfb[0]
-			end
-		end
-
 		def zafeedback
 			#decode shit
 			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
