@@ -511,7 +511,7 @@ after_initialize do
 					end
 				end
 				#add feedback of we're doing it
-				if addstuff[:ADDFB]
+				if addstuff[:ADDFB] == 'true'
 					#delete duplicate users
 					feedbacks = feedbacks.uniq
 					feedbacks.each do |user|
