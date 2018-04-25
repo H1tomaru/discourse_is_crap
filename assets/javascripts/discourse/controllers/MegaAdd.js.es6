@@ -2,7 +2,7 @@ export default Ember.Controller.extend({
 
 	addstuff: {"GAME": null,
 		  "STRING": null,
-		  "ADDFB": false},
+		  "ADDFB": null},
 	p4lista: null,
 	
 	actions: {
@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
 		},
 		
 		FeedbacksStop() {
-			this.set('addstuff.ADDFB', false)
+			this.set('addstuff.ADDFB', null)
 		},
 
 		P4Lista() {
