@@ -579,7 +579,7 @@ after_initialize do
 					#remove duplicates
 					userfb[0][:FEEDBACKS] = userfb[0][:FEEDBACKS].uniq
 					
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { userfb[0] } )
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] )
 				end
 
 				render json: userfb[0]
