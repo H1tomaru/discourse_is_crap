@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
 				type: "POST",
 				data: { "GAME": this.get('addstuff.GAME'),
 				      	"STRING": this.get('addstuff.STRING'),
-					"ADDFB": this.get('addstuff.ADDFB' )}
+					"ADDFB": this.get('addstuff.ADDFB')}
 			}).then(result => {
 				this.set('addstuff', result)
 			})
