@@ -524,7 +524,7 @@ after_initialize do
 							@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
 								FEEDBACKS: {
 									FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
-									pNAME: "H1tomaru",
+									pNAME: "MrBug",
 									DATE: Time.now.strftime("%Y.%m.%d"),
 									SCORE: 1,
 									DELETED: false
