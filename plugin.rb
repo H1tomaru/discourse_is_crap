@@ -515,15 +515,22 @@ after_initialize do
 					#delete duplicate users
 					feedbacks = feedbacks.uniq
 					feedbacks.each do |user|
-						@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
-							FEEDBACKS: {
-								FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
-								pNAME: "H1tomaru",
-								DATE: Time.now.strftime("%Y.%m.%d"),
-								SCORE: 1,
-								DELETED: false
-							}
-						} }, { upsert: true } )
+						#find if user gave feedback already today
+						ufb = @@userfb[:userfb].find( { _id: user.downcase } ).to_a
+						if ufb[0]
+							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+						end
+						unless hasfb
+							@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
+								FEEDBACKS: {
+									FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
+									pNAME: "H1tomaru",
+									DATE: Time.now.strftime("%Y.%m.%d"),
+									SCORE: 1,
+									DELETED: false
+								}
+							} }, { upsert: true } )
+						end
 					end
 				end
 				render json: addstuff
