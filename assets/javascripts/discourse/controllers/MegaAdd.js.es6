@@ -23,8 +23,12 @@ export default Ember.Controller.extend({
 			this.set('addstuff', {})
 		},
 
-		Feedbacks() {
-			this.toggleProperty('addstuff.ADDFB')
+		FeedbacksGo() {
+			this.set('addstuff.ADDFB', true)
+		},
+		
+		FeedbacksStop() {
+			this.set('addstuff.ADDFB', false)
 		},
 
 		P4Lista() {
