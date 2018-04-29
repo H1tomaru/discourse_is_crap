@@ -5,7 +5,9 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageNO: 0,
+	pageNO: Ember.computed('model', function() {
+		return 0;
+ 	}),
 	pageFB: Ember.computed('model', 'pageNO', function() {
 		return this.get('model.FEEDBACKS')[this.get('pageNO')];
  	}),
@@ -56,7 +58,7 @@ export default Ember.Controller.extend({
 						type: "GET"
 					}).then(result => {
 						this.set('model', result)
-						this.set('pageFB', this.get('model.FEEDBACKS')[0])
+						//this.set('pageFB', this.get('model.FEEDBACKS')[0])
 						this.set('mdalready', true)
 					})
 				})
