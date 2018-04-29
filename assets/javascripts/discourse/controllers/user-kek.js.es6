@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 	score: 1,
 	otziv: null,
 	pageNO: 0,
-	pageFB: Ember.computed('pageNO', function() {
+	pageFB: Ember.computed('model', 'pageNO', function() {
 		return this.get('model.FEEDBACKS')[this.get('pageNO')];
  	}),
 
