@@ -5,10 +5,11 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageNO: Ember.computed('model', function() {
-		return 0;
+	pageNO: 0,
+	pageFB: Ember.computed('model', function() {
+		return this.get('model.FEEDBACKS')[0];
  	}),
-	pageFB: Ember.computed('model', 'pageNO', function() {
+	pageFB: Ember.computed('pageNO', function() {
 		return this.get('model.FEEDBACKS')[this.get('pageNO')];
  	}),
 
