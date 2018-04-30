@@ -14,9 +14,6 @@ export default Ember.Controller.extend({
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
-	test: Ember.computed('model', function() {
-		return this.modelFor("user").username;
-	}),
 	
 	actions: {
 		
