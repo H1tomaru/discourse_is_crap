@@ -625,7 +625,7 @@ after_initialize do
 				end
 			end
 			
-			render json: finalrenta
+			render json: { rentaGAMEZ: finalrenta }
 		end
 
 	end
