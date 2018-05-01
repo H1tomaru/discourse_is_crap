@@ -71,7 +71,21 @@
 						{{else}}
 							<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 						{{/if}}
+
 						{{game.GNAME}}
+
+						{{#if game.GNEW}}
+							<img src="https://i.imgur.com/84UQp3G.gif">
+						{{/if}}
+
+						<span class='textright'>
+							{{#if game.STATUS}}
+								до {{game.STATUS}}
+							{{/if}}
+							{{#if game.LINE}}
+								+{{game.LINE}} в очереди
+							{{/if}}
+						</span>
 					</div>
 				{{/each}}
 			</div>
