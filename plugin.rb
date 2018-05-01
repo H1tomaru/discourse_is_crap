@@ -607,8 +607,25 @@ after_initialize do
 		end
 		
 		def rentagama
+			rentagamez = @@rentadb[:rentagadb].find().to_a
+			rentagamez.sort_by! { |k| k["_id"].downcase }
+			finalrenta = []
+			rentagamez.each do |games|
+				gTYPE = [false,false,false]
+				gTYPE[0] = true if games[:GTYPE] == 1
+				gTYPE[1] = true if games[:GTYPE] == 2
+				gTYPE[2] = true if games[:GTYPE] == 3
+				games[:GITEMS].each do |game|
+					finalrenta.push( {
+						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
+						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], GNEW: games[:GNEW],
+						POSITION: game[:POSITION], PRICE: game[:PRICE], STATUS: game[:STATUS],
+						LINE: game[:LINE]
+					} )
+				end
+			end
 			
-			render json: { HiMom: "!!!" }
+			render json: finalrenta
 		end
 
 	end
