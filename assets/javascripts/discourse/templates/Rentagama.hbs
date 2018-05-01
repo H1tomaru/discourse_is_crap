@@ -53,7 +53,14 @@
 	</div>
 	{{/if}}
 
-	<div id="rent-o-{haleguu}">
+	<div class='rentbox'>
+
+		<div class='title'>
+			Всего игр в прокате: <span>{{model.count.0}}</span>
+			<input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Игры чтобы играть: <span>{{model.count.1}}</span>
+			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легкие и короткие платины: <span>{{model.count.2}}</span>
+			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Легкие и короткие без платины: <span>{{model.count.3}}</span>
+		</div>
 		<input class="search" placeholder="Поиск" />
 		<br><br>
 		<button class="sort" data-sort="gname">По названию</button>
