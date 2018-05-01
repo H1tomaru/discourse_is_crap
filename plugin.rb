@@ -34,6 +34,8 @@ after_initialize do
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 		
+		@@rentadb = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'rentagadb', user: 'rentaga', password: 'A75Z3E9R66' )
+		
 		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 
@@ -605,6 +607,7 @@ after_initialize do
 		end
 		
 		def rentagama
+			
 			render json: { HiMom: "!!!" }
 		end
 
