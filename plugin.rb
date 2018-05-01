@@ -605,16 +605,18 @@ after_initialize do
 				render json: { fail: true }
 			end
 		end
-		
+
 		def rentagama
 			rentagamez = @@rentadb[:rentagadb].find().to_a
 			rentagamez.sort_by! { |k| k["_id"].downcase }
 			finalrenta = []
+			count = [0,0,0,0]
 			rentagamez.each do |games|
 				gTYPE = [false,false,false]
-				gTYPE[0] = true if games[:GTYPE] == 1
-				gTYPE[1] = true if games[:GTYPE] == 2
-				gTYPE[2] = true if games[:GTYPE] == 3
+				count[0] = count[0] + 1
+				( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
+				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
+				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
 				games[:GITEMS].each do |game|
 					finalrenta.push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
@@ -624,8 +626,8 @@ after_initialize do
 					} )
 				end
 			end
-			
-			render json: { rentaGAMEZ: finalrenta }
+
+			render json: { rentaGAMEZ: finalrenta, count: count }
 		end
 
 	end
