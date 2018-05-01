@@ -61,27 +61,15 @@
 			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легкие и короткие платины: <span>{{model.count.2}}</span>
 			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Легкие и короткие без платины: <span>{{model.count.3}}</span>
 		</div>
-		<input class="search" placeholder="Поиск" />
-		<br><br>
-		<button class="sort" data-sort="gname">По названию</button>
-		<button onclick="$('.rentaimg').toggleClass('P1Hideo')">Убить <img style="height: 18px" src="https://i.imgur.com/QKQkzwB.gif"></button>
-		<br><br>
-		<table class="list">
-		<!-- BEGIN rentDB -->
-		<tbody>
-			<tr>
-				<td class="gname" rowspan="{rentDB.ROWLEN}"><h3>{rentDB._id}</h3></td>
-				<td class="rentaimg" colspan="3" ><img src="{rentDB.GPIC}"><span>{rentDB.GCOMMENT}</span></td>
-			</tr>
-			<!-- BEGIN rentDB.GITEMS -->
-				<tr>
-					<!-- IF rentDB.GITEMS.STATUS --><td class="malabela2 bgred3">Занят до <span>{rentDB.GITEMS.STATUS}</span><!-- IF rentDB.GITEMS.LINE --><br>+<span>{rentDB.GITEMS.LINE}</span> в очереди<!-- ENDIF rentDB.GITEMS.LINE --></td><!-- ELSE --><td class="malabela2 bggr">Cвободен</td><!-- ENDIF rentDB.GITEMS.STATUS -->
-					<td class="malabela2"><strong>{rentDB.GITEMS.POSITION}</strong></td>
-					<td class="malabela2 jojo">{rentDB.GITEMS.PRICE}</td>
-				</tr>
-			<!-- END rentDB.GITEMS -->
-		</tbody>
-		<!-- END rentDB -->
-		</table>
+
+		<div class='innerbox'>
+			<div class='tree'>
+				{{#each model.rentaGAMEZ as |game|}}
+					<div>
+					 <span><b>[</b> {{game.STATUS}} <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>{{game.GNAME}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
 	</div>
 </div>
