@@ -67,7 +67,7 @@
 				{{#each model.rentaGAMEZ as |game|}}
 					<div>
 						{{#if game.STATUS}}
-							<span class='red'><b>[</b> Занят <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+							<span class='red'><b>[</b> Занят до<b>]</b> <b>[</b> {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 						{{else}}
 							<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 						{{/if}}
@@ -79,12 +79,7 @@
 						{{/if}}
 
 						<span class='textright'>
-							{{#if game.STATUS}}
-								до {{game.STATUS}}
-							{{/if}}
-							{{#if game.LINE}}
-								+{{game.LINE}} в очереди
-							{{/if}}
+							{{game.GCOMMENT}}<br>{{game.PRICE}}
 						</span>
 					</div>
 				{{/each}}
