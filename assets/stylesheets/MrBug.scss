@@ -1146,4 +1146,18 @@ div.rentobaka {
 
 	}
 
+	@media (max-width: 750px) {
+
+		.innerbox {
+
+			font-size: .75em;
+
+			.textright {
+				font-size: 100%;
+			}
+
+		}
+
+	}
+
 }
