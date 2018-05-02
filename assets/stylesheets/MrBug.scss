@@ -1005,7 +1005,7 @@ div.shinbakaz {
 
 @media (max-width: 600px) {
 
-	div.shinbakaz {
+	div.shinbakaz, div.rentobaka {
 		position: absolute;
 		left: 0;
 		width: 100%;
@@ -1150,14 +1150,41 @@ div.rentobaka {
 
 	@media (max-width: 750px) {
 
+		.bagalert {
+
+			font-size: .75em;
+			padding: 20px 0;
+
+			ul {
+				margin: 0 0 0 10px
+			}
+
+			h3 {
+				font-size: 1.4em
+			}
+
+		}
+
 		.innerbox {
 
 			font-size: .75em;
 
-			.textright {
-				font-size: 100%;
+		}
+
+		.gname {
+
+			h2 {
+				font-size: 150%
 			}
 
+		}
+
+		.rentbox {
+			padding: 0
+		}
+
+		.green, .red {
+			font-size: 75%
 		}
 
 	}
