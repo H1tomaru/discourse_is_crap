@@ -61,9 +61,10 @@
 			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span><br>
 			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Прочих Легких и Коротких Игр: <span>{{model.count.[3]}}</span>
 		</div>
-
+		<span class="textright2">Неделя / Месяц</span>
 		<div class='innerbox'>
 			{{#each model.rentaGAMEZ as |game|}}
+				{{#if showTYPE1}}{{#if game.TYPE1}}
 				<div>
 					{{#if game.STATUS}}
 						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
@@ -78,9 +79,48 @@
 					{{/if}}
 
 					<span class='textright'>
-						{{game.GCOMMENT}} {{game.PRICE}}
+						{{game.PRICE}}
 					</span>
 				</div>
+				{{/if}}{{/if}}
+				{{#if showTYPE2}}{{#if game.TYPE2}}
+				<div>
+					{{#if game.STATUS}}
+						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{else}}
+						<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{/if}}
+
+					{{game.GNAME}}
+
+					{{#if game.GNEW}}
+						<img src="https://i.imgur.com/84UQp3G.gif">
+					{{/if}}
+
+					<span class='textright'>
+						{{game.GCOMMENT}} / {{game.PRICE}}
+					</span>
+				</div>
+				{{/if}}{{/if}}
+				{{#if showTYPE3}}{{#if game.TYPE3}}
+				<div>
+					{{#if game.STATUS}}
+						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{else}}
+						<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{/if}}
+
+					{{game.GNAME}}
+
+					{{#if game.GNEW}}
+						<img src="https://i.imgur.com/84UQp3G.gif">
+					{{/if}}
+
+					<span class='textright'>
+						{{game.PRICE}}
+					</span>
+				</div>
+				{{/if}}{{/if}}
 			{{/each}}
 		</div>
 	</div>
