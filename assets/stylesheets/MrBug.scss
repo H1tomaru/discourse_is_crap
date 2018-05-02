@@ -1050,6 +1050,7 @@ div.rentobaka {
 			font-size: 80%;
 			margin-bottom: 20px;
 			width: 100%;
+			overflow: hidden;
 		}
 
 		button:before, button:after {
@@ -1070,6 +1071,25 @@ div.rentobaka {
 		button:after {
 			left: 0.5em;
 			margin-right: -50%;
+		}
+
+	}
+
+	.rentbox {
+
+		padding: 15px 0px 15px 15px;
+		border: 1px solid #c8c8c8;
+		margin: 20px 0;
+
+		.title {
+
+			color: #5e5e5e;
+
+			span {
+				font-weight: bold;
+				color: #205990;
+			}
+
 		}
 
 	}
