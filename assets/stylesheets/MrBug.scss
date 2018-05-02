@@ -1111,6 +1111,11 @@ div.rentobaka {
 			div {
 				color: #000080;
 				cursor: pointer;
+				clear: both;
+			}
+
+			div:hover {
+				background-color: #8ca8c2
 			}
 
 			.green {
