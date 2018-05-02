@@ -1023,7 +1023,13 @@ form.MegaAdd {
 
 div.rentobaka {
 
-	h3, h2, h6 {
+	bagalert {
+		font-size: 85%;
+		background-color: #d9edf7;
+		padding: 25px;
+	}
+
+	h2, h3, h5, h6 {
 		color: #337ab7;
 		overflow: hidden;
 		font-weight: 400;
@@ -1042,7 +1048,7 @@ div.rentobaka {
 			border: none;
 			background: none;
 			font-size: 80%;
-			margin: 0;
+			margin-bottom: 20px;
 			width: 100%;
 		}
 
