@@ -1033,6 +1033,10 @@ div.rentobaka {
 		h3 {
 			font-size: 24px
 		}
+
+		h5 {
+			font-size: 14px
+		}
 	}
 
 	h2, h3, h5, h6 {
@@ -1096,6 +1100,26 @@ div.rentobaka {
 				color: #205990;
 			}
 
+		}
+
+		.innerbox {
+
+			height: 685px;
+			overflow: auto;
+			margin: 20px 0;
+
+			div {
+				color: #000080;
+				cursor: pointer;
+			}
+
+			.green {
+				color: #008000
+			}
+
+			.red {
+				color: crimson
+			}
 		}
 
 	}
