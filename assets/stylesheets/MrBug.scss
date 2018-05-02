@@ -1025,14 +1025,44 @@ div.rentobaka {
 
 	text-align: center;
 
-	h2 {
-		font-size: 30px
-	}
-
 	h3, h2, h6 {
 		color: #337ab7;
 		overflow: hidden;
 		font-weight: 400;
+	}
+
+	.gname {
+
+		h2 {
+			font-size: 30px
+		}
+
+		button {
+			color: #337ab7;
+			border: none;
+			background: none;
+			font-size: 80%;
+		}
+		
+		button:before, button:after {
+			background-color: #337ab7;
+			content: "";
+			display: inline-block;
+			height: 1px;
+			position: relative;
+			vertical-align: middle;
+			width: 50%;
+		}
+
+		button:before {
+			right: 0.5em;
+			margin-left: -50%;
+		}
+		button:after {
+			left: 0.5em;
+			margin-right: -50%;
+		}
+
 	}
 
 }
