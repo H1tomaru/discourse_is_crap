@@ -1134,12 +1134,14 @@ div.rentobaka {
 				color: crimson
 			}
 
-			.textright {
-				float: right;
+			.textright, .t2text {
 				font-size: 75%;
-				text-align: right;
 				color: #205990;
 				margin-top: 2px;
+			}
+
+			.textright {
+				float: right;
 			}
 
 		}
