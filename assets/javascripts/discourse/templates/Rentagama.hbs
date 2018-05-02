@@ -5,7 +5,7 @@
 	</div>
 
 	{{#if rulez}}
-	<div class="alert alert-info">
+	<div class="bagalert">
 		<ul>
 			<h3>Для подачи заявки на игру необходимо выполнить следующие действия</h3>
 			<li>Определиться с выбором игры и уведомить <a href="/u/MrBug">MrBug</a>, написав ему личное сообщение: Название игры и срок на который Вы хотите взять игру в прокат</li>
@@ -57,9 +57,9 @@
 
 		<div class='title'>
 			Всего игр в прокате: <span>{{model.count.[0]}}</span><br>
-			<input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Реально игр: <span>{{model.count.[1]}}</span><br>
-			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и коротких платин: <span>{{model.count.[2]}}</span><br>
-			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Прочих Легких и коротких игр: <span>{{model.count.[3]}}</span>
+			<input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Реально Игр: <span>{{model.count.[1]}}</span><br>
+			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span><br>
+			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Прочих Легких и Коротких Игр: <span>{{model.count.[3]}}</span>
 		</div>
 
 		<div class='innerbox'>
