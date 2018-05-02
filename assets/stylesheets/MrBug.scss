@@ -1023,8 +1023,6 @@ form.MegaAdd {
 
 div.rentobaka {
 
-	text-align: center;
-
 	h3, h2, h6 {
 		color: #337ab7;
 		overflow: hidden;
@@ -1032,6 +1030,8 @@ div.rentobaka {
 	}
 
 	.gname {
+
+		text-align: center;
 
 		h2 {
 			font-size: 30px
@@ -1042,6 +1042,8 @@ div.rentobaka {
 			border: none;
 			background: none;
 			font-size: 80%;
+			margin: 0;
+			width: 100%;
 		}
 
 		button:before, button:after {
