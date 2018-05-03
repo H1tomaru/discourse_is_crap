@@ -136,7 +136,7 @@
 			{{#each model.rentaGAMEZ1 as |game|}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="{{if sgame.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="{{if game.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
@@ -157,7 +157,7 @@
 			{{#each model.rentaGAMEZ2 as |game|}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="{{if sgame.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="{{if game.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
