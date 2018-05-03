@@ -126,8 +126,108 @@
 	</div>
 
 	<div class="rentbox2">
-		<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
-		<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
+		<div class='mimu'>
+			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
+			<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
+		</div>
+
+		<table class="list">
+			{{#each model.rentaGAMEZ as |game|}}
+			{{#if game.GNEW}}{{#if showGAMEZ}}{{#if game.TYPE1}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="{{if sgame.LINE "5" "4"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
+						{{#if game.LINE}}
+							<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>
+						{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
+			</tbody>
+			{{/if}}{{/if}}{{/if}}
+			{{/each}}
+			
+			{{#each model.rentaGAMEZ as |game|}}
+			{{#unless game.GNEW}}{{#if showGAMEZ}}{{#if game.TYPE1}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="{{if sgame.LINE "5" "4"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
+						{{#if game.LINE}}
+							<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>
+						{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
+			</tbody>
+			{{/unless}}{{/if}}{{/if}}
+			{{/each}}
+			
+			{{#each model.rentaGAMEZ as |game|}}
+			{{#if game.GNEW}}{{#if showCRAP}}{{#unless game.TYPE1}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="{{if sgame.LINE "5" "4"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
+						{{#if game.LINE}}
+							<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>
+						{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
+			</tbody>
+			{{/if}}{{/if}}{{/if}}
+			{{/each}}
+			
+			{{#each model.rentaGAMEZ as |game|}}
+			{{#unless game.GNEW}}{{#if showCRAP}}{{#unless game.TYPE1}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="{{if sgame.LINE "5" "4"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
+						{{#if game.LINE}}
+							<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>
+						{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
+			</tbody>
+			{{/unless}}{{/if}}{{/if}}
+			{{/each}}
+		</table>
 	</div>
 
 </div>
