@@ -67,9 +67,9 @@
 				{{#if showTYPE1}}{{#if game.TYPE1}}
 				<div>
 					{{#if game.STATUS}}
-						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fa fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{else}}
-						<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fa fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{/if}}
 
 					{{game.GNAME}}
@@ -86,9 +86,9 @@
 				{{#if showTYPE2}}{{#if game.TYPE2}}
 				<div>
 					{{#if game.STATUS}}
-						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fa fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{else}}
-						<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fa fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{/if}}
 
 					{{game.GNAME}} <span class='t2text'>{{game.GCOMMENT}}</span>
@@ -105,9 +105,9 @@
 				{{#if showTYPE3}}{{#if game.TYPE3}}
 				<div>
 					{{#if game.STATUS}}
-						<span class='red'><b>[</b> Занят до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fa fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{else}}
-						<span class='green'><b>[</b> Cвободен <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fa fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{/if}}
 
 					{{game.GNAME}}
