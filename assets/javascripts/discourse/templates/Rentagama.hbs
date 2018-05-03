@@ -136,13 +136,15 @@
 			{{#each model.rentaGAMEZ1 as |game|}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="{{if game.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
 					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
-						{{#if game.LINE}}<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>{{/if}}
+						<td class="malabela2 bgred3">
+							Занят до {{game.STATUS}}
+							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
+						</td>
 					{{else}}
 					<td class="malabela2 bggr">Cвободен</td>
 					{{/if}}
@@ -157,13 +159,15 @@
 			{{#each model.rentaGAMEZ2 as |game|}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="{{if game.LINE "4" "3"}}"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
 					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">Занят до <span>{{game.STATUS}}</span></td>
-						{{#if game.LINE}}<td class="malabela2 bgred3">+<span>{{game.LINE}}</span> в очереди</td>{{/if}}
+						<td class="malabela2 bgred3">
+							Занят до {{game.STATUS}}
+							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
+						</td>
 					{{else}}
 					<td class="malabela2 bggr">Cвободен</td>
 					{{/if}}
