@@ -385,6 +385,10 @@ div.shinbakaz {
 			top: -2px;
 		}
 
+		tr {
+			border-bottom: 1px solid #e9e9e9
+		}
+
 		td:nth-child(1) {
 			padding-left: 15px;
 			padding-right: 5px;
@@ -1026,6 +1030,10 @@ form.MegaAdd {
 }
 
 div.rentobaka {
+
+	tr {
+		border: none	
+	}
 
 	.hideoS {
 		display: initial
