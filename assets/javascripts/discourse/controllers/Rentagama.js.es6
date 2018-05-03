@@ -4,6 +4,8 @@ export default Ember.Controller.extend({
 	showTYPE2: true,
 	showTYPE3: true,
 	rulez: false,
+	showGAMEZ: true,
+	showCRAP: false,
 
 	actions: {
 
@@ -21,6 +23,16 @@ export default Ember.Controller.extend({
 		
 		showTYPE3() {
 			this.toggleProperty('showTYPE3')
+		},
+		
+		showGAMEZ() {
+			this.set('showGAMEZ', true)
+			this.set('showCRAP', false)
+		},
+		
+		showCRAP() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', true)
 		}
 
 	}
