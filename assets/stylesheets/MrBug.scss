@@ -1281,7 +1281,7 @@ div.rentobaka {
 			td.malabela2:last-of-type {
 				width: 100%
 			}
-			
+
 			td.malabela2.bggr {
 				background-color: #27ae60;
 				color: #fff;
@@ -1289,6 +1289,18 @@ div.rentobaka {
 
 			td.malabela2.bgred3 {
 				background-color: #f08080
+			}
+
+			@media (max-width: 750px) {
+
+				tr {
+					display: block
+				}
+
+				.gname {
+					display: block
+				}
+
 			}
 
 		}
