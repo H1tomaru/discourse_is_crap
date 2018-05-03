@@ -608,7 +608,7 @@ after_initialize do
 
 		def rentagama
 			rentagamez = @@rentadb[:rentagadb].find().to_a
-			rentagamez.sort_by! { |k| k["_id"].downcase }
+			rentagamez.sort_by! { |k| [k["GNEW"], k["_id"].downcase] }
 			finalrenta = []
 			count = [0,0,0,0]
 			rentagamez.each do |games|
@@ -618,16 +618,30 @@ after_initialize do
 				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
 				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
 				games[:GITEMS].each do |game|
-					finalrenta.push( {
+					finalrenta[:rentaGAMEZ1].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], GNEW: games[:GNEW],
 						POSITION: game[:POSITION], PRICE: game[:PRICE], STATUS: game[:STATUS],
 						LINE: game[:LINE]
-					} )
+					} ) if games[:GTYPE] == 1
+					finalrenta[:rentaGAMEZ2].push( {
+						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
+						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], GNEW: games[:GNEW],
+						POSITION: game[:POSITION], PRICE: game[:PRICE], STATUS: game[:STATUS],
+						LINE: game[:LINE]
+					} ) if games[:GTYPE] == 2
+					finalrenta[:rentaGAMEZ3].push( {
+						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
+						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], GNEW: games[:GNEW],
+						POSITION: game[:POSITION], PRICE: game[:PRICE], STATUS: game[:STATUS],
+						LINE: game[:LINE]
+					} ) if games[:GTYPE] == 3
 				end
 			end
 
-			render json: { rentaGAMEZ: finalrenta, count: count }
+			finalrenta[:count] = count
+
+			render json: finalrenta 
 		end
 
 	end
