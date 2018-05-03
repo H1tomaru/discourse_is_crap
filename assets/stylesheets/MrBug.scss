@@ -8,6 +8,11 @@ div.shinbakaz {
 		border: none	
 	}
 
+	button:focus {
+		outline: none;
+		text-decoration: none;
+	}
+
 	.razdelhe {
 		color: gray;
 		text-align: center;
@@ -69,10 +74,6 @@ div.shinbakaz {
 			transition-duration: 0.7s;
 			background: none;
 			border: none;
-		}
-
-		.headin:focus {
-			outline:none
 		}
 
 		.headin:hover, .bi4 {
@@ -356,11 +357,6 @@ div.shinbakaz {
 
 		button:last-of-type:hover {
 			background-color: darkred
-		}
-
-		button:focus {
-			text-decoration: none;
-			outline: 0;
 		}
 
 	}
@@ -1035,6 +1031,11 @@ div.rentobaka {
 		border: none	
 	}
 
+	button:focus {
+		outline: none;
+		text-decoration: none;
+	}
+
 	.hideoS {
 		display: initial
 	}
@@ -1181,10 +1182,6 @@ div.rentobaka {
 			width: 50%;
 		}
 		
-		button:focus {
-			outline:none
-		}
-
 		button:hover, button.bi4 {
 			color: #00b0ff;
 			transition-duration: 0.7s;
