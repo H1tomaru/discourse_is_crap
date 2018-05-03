@@ -1273,7 +1273,11 @@ div.rentobaka {
 				box-shadow: 0 1px 1px #000;
 				height: 10px;
 			}
-			
+
+			td.malabela2:nth-child(-n+2) {
+				text-align: center
+			}
+
 			td.malabela2:last-of-type {
 				width: 100%
 			}
