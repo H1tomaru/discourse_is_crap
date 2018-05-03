@@ -1214,9 +1214,13 @@ div.rentobaka {
 				color: transparent;
 			}
 
+			tbody tr:last-of-type {
+				line-height: 11px
+			}
+
 			td.gname {
-			    padding-top: 20px;
-			    width: 100%;
+				width: 100%;
+				vertical-align: bottom;
 			}
 
 			h3 {
@@ -1253,12 +1257,13 @@ div.rentobaka {
 				min-width: 538px;
 				max-height: 70px;
 				box-shadow: 0 1px 2px #000;
+				margin-left: 30px;
 			}
 
 			td.rentaimg span {
 				transform: translateX(-100%);
 				position: absolute;
-				bottom: 0px;
+				bottom: 0;
 				background: rgba(0, 0, 0, 0.75);
 				padding: 2px 8px;
 				color: white;
