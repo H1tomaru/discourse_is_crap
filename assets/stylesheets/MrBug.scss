@@ -1023,6 +1023,14 @@ form.MegaAdd {
 
 div.rentobaka {
 
+	.hideoS {
+		display: initial
+	}
+
+	.hideoB {
+		display: none
+	}
+
 	.bagalert {
 
 		font-size: 85%;
@@ -1144,6 +1152,18 @@ div.rentobaka {
 				float: right;
 			}
 
+		}
+
+	}
+
+	@media (max-width: 600px) {
+
+		.hideoS {
+			display: none
+		}
+
+		.hideoB {
+			display: inherit
 		}
 
 	}
