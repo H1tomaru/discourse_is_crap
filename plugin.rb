@@ -609,7 +609,6 @@ after_initialize do
 
 		def rentagama
 			rentagamez = @@rentadb[:rentagadb].find().to_a
-			rentagamez.sort_by! { |k| [-k["GNEW"], k["_id"].downcase] }
 			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 			count = [0,0,0,0]
 			rentagamez.each do |games|
@@ -639,6 +638,10 @@ after_initialize do
 					} ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
 				end
 			end
+			#sort this shit
+			finalrenta[:rentaGAMEZ].sort_by! { |k| [-k["GNEW"], k["_id"].downcase] }
+			finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k["PRICE"], k["_id"].downcase] }
+			finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k["PRICE"], k["_id"].downcase] }
 
 			finalrenta[:count] = count
 
