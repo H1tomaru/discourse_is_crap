@@ -5,8 +5,8 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageFB: Ember.computed('model', 'model.pageNO', function() {
-		return this.get('model.FEEDBACKS')[this.get('model.pageNO')-1]
+	pageFB: Ember.computed( function() {
+		return this.get('model.FEEDBACKS')[0]
  	}),
 
 	bagamdal: false,
@@ -55,7 +55,7 @@ export default Ember.Controller.extend({
 						type: "GET"
 					}).then(result => {
 						this.set('model', result)
-						//this.set('pageFB', this.get('model.FEEDBACKS')[0])
+						this.set('pageFB', this.get('model.FEEDBACKS')[0])
 						this.set('mdalready', true)
 					})
 				})
@@ -82,7 +82,7 @@ export default Ember.Controller.extend({
 		},
 
 		PageChange(value) {
-			this.set('model.pageNO', value)
+			this.set('pageFB', this.get('model.FEEDBACKS')[value-1])
 		}
 
 	}
