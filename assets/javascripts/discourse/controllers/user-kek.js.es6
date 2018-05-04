@@ -56,7 +56,6 @@ export default Ember.Controller.extend({
 						type: "GET"
 					}).then(result => {
 						this.set('model', result)
-						//this.set('pageFB', this.get('model.FEEDBACKS')[0])
 						this.set('mdalready', true)
 					})
 				})
