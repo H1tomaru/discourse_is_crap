@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 	score: 1,
 	otziv: null,
 	pageFB: Ember.computed('model', 'model.pageNO', function() {
-		if ( this.get('model.pageNO') ) return this.get('model.FEEDBACKS')[this.get('model.pageNO')-1]
+		return this.get('model.FEEDBACKS')[this.get('model.pageNO')-1]
  	}),
 
 	bagamdal: false,
