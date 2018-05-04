@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	otziv: null,
-	pageFB: Ember.computed( function() {
+	pageFB: Ember.computed('model', function() {
 		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS')[0]
  	}),
 
