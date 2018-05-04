@@ -1302,16 +1302,18 @@ div.rentobaka {
 
 			@media (max-width: 750px) {
 
-				tr {
-					display: block
-				}
-
-				.gname {
+				tr, .gname {
 					display: block
 				}
 
 				img {
 					min-width: initial
+				}
+
+				td.rentaimg {
+					display: block;
+					max-width: 538px;
+					margin: auto;
 				}
 
 			}
