@@ -540,7 +540,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, FEEDBACKS: null }
+			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, FEEDBACKS: false }
 			#page owners and users with negative feedbacks cant do feedbacks! 
 			if current_user
 				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
