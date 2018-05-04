@@ -567,7 +567,7 @@ after_initialize do
 				#save final variable
 				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].reverse.each_slice(50)
 				#do paginations
-				feedbacks[:pageNO] = 0
+				feedbacks[:pageNO] = 1
 				feedbacks[:PAGES] = [*1..(userfb[0][:FEEDBACKS].length / 50.0).ceil]
 			end
 
