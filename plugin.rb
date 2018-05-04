@@ -640,8 +640,8 @@ after_initialize do
 			end
 			#sort this shit
 			finalrenta[:rentaGAMEZ].sort_by! { |k| [-k["GNEW"], k["_id"].downcase] }
-			finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k["PRICE"], k["_id"].downcase] }
-			finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k["PRICE"], k["_id"].downcase] }
+			finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k["GNEW"], -k["PRICE"], k["_id"].downcase] }
+			finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k["GNEW"], -k["PRICE"], k["_id"].downcase] }
 
 			finalrenta[:count] = count
 
