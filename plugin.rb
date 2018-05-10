@@ -375,7 +375,7 @@ after_initialize do
 
 		def prezaips
 			#decode shit
-			code = URI.unescape(Base64.decode64(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
+			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
