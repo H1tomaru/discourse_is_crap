@@ -358,7 +358,7 @@ after_initialize do
 
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(URI.unescape(params[:input])).strip.downcase
+			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
 				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0 } ).to_a
@@ -375,7 +375,7 @@ after_initialize do
 
 		def prezaips
 			#decode shit
-			code = Base64.decode64(URI.unescape(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
+			code = URI.unescape(Base64.decode64(params[:bagakruta])).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
@@ -426,7 +426,7 @@ after_initialize do
 
 		def zaips
 			#decode shit
-			code = Base64.decode64(URI.unescape(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
+			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
@@ -575,7 +575,7 @@ after_initialize do
 		
 		def zafeedback
 			#decode shit
-			fedbacks = Base64.decode64(URI.unescape(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
+			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
 			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
 			if current_user && fedbacks.length == 2 && current_user[:username].downcase != params[:username].downcase
 				#find if user gave feedback already today
