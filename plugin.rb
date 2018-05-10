@@ -459,7 +459,7 @@ after_initialize do
 						push = {}
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
-						zaips = { winrars: true, position: code[0], gameNAME: code[3].encode("utf-8") }
+						zaips = { winrars: true, position: code[0], gameNAME: code[3].force_encoding('UTF-8') }
 						#destroy cache
 						@@cache[:cache].drop()
 
