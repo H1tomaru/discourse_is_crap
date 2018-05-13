@@ -633,6 +633,10 @@ div.shinbakaz {
 				white-space: nowrap;
 				overflow: hidden;
 			}
+			
+			td:last-child {
+				padding-right: 2%
+			}
 
 			.uddah {
 				text-align: center
@@ -919,6 +923,10 @@ div.shinbakaz {
 
 			.malabela span, td:nth-child(odd) span {
 				display: none
+			}
+
+			td:first-child, td:last-child {
+				padding: 0
 			}
 
 		}
