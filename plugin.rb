@@ -583,7 +583,7 @@ after_initialize do
 				if ufb[0]
 					fedbacks[2] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 				end
-				if fedbacks[2] && current_user[:username] != 'H1tomaru'
+				if fedbacks[2] && current_user[:username] != 'MrBug'
 					render json: { gavas: true }
 				else
 				fedbacks[0] = fedbacks[0].to_i
