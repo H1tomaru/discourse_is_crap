@@ -4,10 +4,8 @@ export default Ember.Route.extend({
 	model() {
 		return ajax('/MrBug.json');
 	},
-	titleToken: function() {
-		var model = this.modelFor('MrBug');
-		if (model) {
-			return "TestTestTest";
-		}
+	titleToken() {
+		test = 'TestTestTest';
+		return test;
 	}
 });
