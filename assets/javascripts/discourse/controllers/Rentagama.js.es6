@@ -1,6 +1,6 @@
 export default Ember.Controller.extend({
 
-	title: "Аренда игр PS4 от MrBug",
+	title: "Аренда игр PS4 от MrBug - Union3",
 	showTYPE1: true,
 	showTYPE2: true,
 	showTYPE3: true,
