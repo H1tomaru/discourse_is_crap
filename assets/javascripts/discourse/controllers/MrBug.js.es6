@@ -1,5 +1,6 @@
 export default Ember.Controller.extend({
 	//default states
+	title: "Union3 - Совместная покупка игр для PS4 на четверых",
 	bagoPravila: false,
 	bagoGuidaz: false,
 	bagoPlati: false,
