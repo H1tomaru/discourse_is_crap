@@ -352,8 +352,6 @@ after_initialize do
 				finalvar[:gamedb3].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
 			
-			finalvar[:title] = 'Совместная покупка игр для PS4 на четверых - Union3'
-
 			render json: finalvar
 
 		end
