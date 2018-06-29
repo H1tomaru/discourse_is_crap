@@ -5,6 +5,6 @@ export default Ember.Route.extend({
 		return ajax('/MrBug.json');
 	},
 	titleToken() {
-		return "TestTestTest";
+		return I18n.t("about.simple_title");
 	}
 });
