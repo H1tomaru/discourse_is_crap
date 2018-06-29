@@ -113,10 +113,6 @@ export default Ember.Controller.extend({
 
 		showhideo3(index) {
 			Ember.set(this.get('model.gamedb3')[index],'SHOWHIDEO',!this.get('model.gamedb3')[index].SHOWHIDEO)
-		},
-		
-		didTransition: function() {
-			Ember.$('title').text('Совместная покупка игр для PS4 на четверых - Union3');      
 		}
 
 	}
