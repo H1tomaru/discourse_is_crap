@@ -2,10 +2,13 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Route.extend({
 
-	model(params) {
-		params[:title] = 'TestTest';
+	model() {
 		var str = this.modelFor("user").username;
 		return ajax('/u/' + encodeURIComponent(str) + '/kek.json');
+	},
+
+	titleToken() {
+		return "TestTestTest";
 	}
 
 });
