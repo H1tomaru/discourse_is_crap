@@ -56,10 +56,11 @@
 	<div class='rentbox'>
 
 		<div class='title'>
-			Всего игр в прокате: <span>{{model.count.[0]}}</span>
+			Всего игр в прокате: <span>{{model.count.[0]}}</span><br>
 			<input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Реально Игр: <span>{{model.count.[1]}}</span>
 			<input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span>
-			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Легких и Коротких Игр: <span>{{model.count.[3]}}</span>
+			<input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Легких и Коротких Игр: <span>{{model.count.[3]}}</span><br>
+			<input type="checkbox" checked {{action "showTYPE4" on="change"}}/> Хиты Для Избранных: <span>{{model.count.[4]}}</span>
 		</div>
 		<span class="textright2">Неделя / Месяц</span>
 		<div class='innerbox'>
@@ -121,6 +122,25 @@
 					</span>
 				</div>
 				{{/if}}{{/if}}
+				{{#if showTYPE4}}{{#if game.TYPE4}}
+				<div>
+					{{#if game.STATUS}}
+						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fa fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{else}}
+						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fa fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+					{{/if}}
+
+					{{game.GNAME}}
+
+					{{#if game.GNEW}}
+						<img src="https://i.imgur.com/84UQp3G.gif">
+					{{/if}}
+
+					<span class='textright'>
+						{{game.PRICE}}
+					</span>
+				</div>
+				{{/if}}{{/if}}
 			{{/each}}
 		</div>
 	</div>
@@ -130,6 +150,7 @@
 		<div class='mimu'>
 			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
+			<button class="{{if showSHITS "bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
 		</div>
 		<br>
 		<table class="list">
@@ -158,6 +179,29 @@
 
 			{{#if showCRAP}}
 			{{#each model.rentaGAMEZ2 as |game|}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">
+							Занят до {{game.STATUS}}
+							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
+			</tbody>
+			{{/each}}
+			{{/if}}
+			
+			{{#if showSHITS}}
+			{{#each model.rentaGAMEZ3 as |game|}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
