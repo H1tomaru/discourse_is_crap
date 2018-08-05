@@ -1192,7 +1192,7 @@ div.rentobaka {
 			transition-duration: 0.7s;
 			background: none;
 			border: none;
-			width: 50%;
+			width: 33%;
 		}
 		
 		button:hover, button.bi4 {
@@ -1349,6 +1349,14 @@ div.rentobaka {
 	}
 
 	@media (max-width: 750px) {
+
+		.rentbox2 {
+
+			button {
+				font-size: 1.15em;
+			}
+
+		}
 
 		.bagalert {
 
