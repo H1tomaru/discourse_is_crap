@@ -1,9 +1,9 @@
 export default Ember.Controller.extend({
 
 	showTYPE1: true,
-	showTYPE2: true,
-	showTYPE3: true,
-	showTYPE4: true,
+	showTYPE2: false,
+	showTYPE3: false,
+	showTYPE4: false,
 	rulez: false,
 	showGAMEZ: true,
 	showCRAP: false,
