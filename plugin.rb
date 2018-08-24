@@ -219,7 +219,7 @@ after_initialize do
 									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
 								end
 								#create current troika prices
-								p1PRICE = game[:P4PRICE1] - p1PDOWN + priceUP
+								p1PRICE = game[:P4PRICE1] - p1PDOWN
 								p2PRICE = game[:P4PRICE2] - p2PDOWN + priceUP
 								p3PRICE = game[:P4PRICE3] - p3PDOWN + priceUP
 								#set price to -10 if its x100
