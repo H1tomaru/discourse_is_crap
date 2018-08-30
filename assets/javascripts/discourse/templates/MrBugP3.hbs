@@ -284,8 +284,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 1 game._id bubbles=false}} class='BagButon'>П1<br>
-							{{#if game.P4PRICE1}}
-								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{#if game.P3PRICE1}}
+								<h3>{{game.P3PRICE1}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -294,8 +294,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 2 game._id bubbles=false}} class='BagButon'>П2<br>
-							{{#if game.P4PRICE2}}
-								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{#if game.P3PRICE2}}
+								<h3>{{game.P3PRICE2}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -303,9 +303,9 @@
 						</button>
 					</td>
 					<td>
-						<button {{action 'zaips' 4 game._id bubbles=false}} class='BagButon'>П4<br>
-							{{#if game.P4PRICE3}}
-								<h3>{{game.P4PRICE3}}</h3><br>рублей
+						<button {{action 'zaips' 3 game._id bubbles=false}} class='BagButon'>П3<br>
+							{{#if game.P3PRICE3}}
+								<h3>{{game.P3PRICE3}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -340,17 +340,8 @@
 									Cвободно {{if users.P1PRICE (concat users.P1PRICE "р")}}
 								{{/if}}
 							{{/if}}
-						</td>
-						<td>
-							{{#if users.P1}}
-								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
-						</td>
-						<td>
-							П2<span> - </span>
+							<br>
+							П1<span> - </span>
 							{{#if users.P2}}
 								<a title='{{if users.P2PRICE (concat users.P2PRICE "р")}}' href='/u/{{users.P2}}'>{{users.P2}}</a>
 								<a class='repala {{if users.P2FBred "bgred" "bggr2"}}' href='/u/{{users.P2}}/kek'>
@@ -370,6 +361,12 @@
 							{{/if}}
 						</td>
 						<td>
+							{{#if users.P1}}
+								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
 							{{#if users.P2}}
 								{{#if users.P2STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P2STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
@@ -378,7 +375,7 @@
 							{{/if}}
 						</td>
 						<td>
-							П4<span> - </span>
+							П2<span> - </span>
 							{{#if users.P3}}
 								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P3}}'>{{users.P3}}</a>
 								<a class='repala {{if users.P3FBred "bgred" "bggr2"}}' href='/u/{{users.P3}}/kek'>
@@ -396,10 +393,19 @@
 									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
 								{{/if}}
 							{{/if}}
-							<br>
-							П4<span> - </span>
+						</td>
+						<td>
+							{{#if users.P3}}
+								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
+						</td>
+						<td>
+							П3<span> - </span>
 							{{#if users.P4}}
-								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
+								<a title='{{if users.P4PRICE (concat users.P4PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
 								<a class='repala {{if users.P4FBred "bgred" "bggr2"}}' href='/u/{{users.P4}}/kek'>
 									{{users.P4FEEDBACK.PERCENT}}%
 									<span>
@@ -412,17 +418,11 @@
 								{{#if users.P4TAKEN}}
 									Нету
 								{{else}}
-									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
+									Cвободно {{if users.P4PRICE (concat users.P4PRICE "р")}}
 								{{/if}}
 							{{/if}}
 						</td>
 						<td>
-							{{#if users.P3}}
-								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
 							{{#if users.P4}}
 								{{#if users.P4STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P4STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
@@ -462,8 +462,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 1 game._id bubbles=false}} class='BagButon'>П1<br>
-							{{#if game.P4PRICE1}}
-								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{#if game.P3PRICE1}}
+								<h3>{{game.P3PRICE1}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -472,8 +472,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 2 game._id bubbles=false}} class='BagButon'>П2<br>
-							{{#if game.P4PRICE2}}
-								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{#if game.P3PRICE2}}
+								<h3>{{game.P3PRICE2}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -481,9 +481,9 @@
 						</button>
 					</td>
 					<td>
-						<button {{action 'zaips' 4 game._id bubbles=false}} class='BagButon'>П4<br>
-							{{#if game.P4PRICE3}}
-								<h3>{{game.P4PRICE3}}</h3><br>рублей
+						<button {{action 'zaips' 3 game._id bubbles=false}} class='BagButon'>П4<br>
+							{{#if game.P3PRICE3}}
+								<h3>{{game.P3PRICE3}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -518,17 +518,8 @@
 									Cвободно {{if users.P1PRICE (concat users.P1PRICE "р")}}
 								{{/if}}
 							{{/if}}
-						</td>
-						<td>
-							{{#if users.P1}}
-								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
-						</td>
-						<td>
-							П2<span> - </span>
+							<br>
+							П1<span> - </span>
 							{{#if users.P2}}
 								<a title='{{if users.P2PRICE (concat users.P2PRICE "р")}}' href='/u/{{users.P2}}'>{{users.P2}}</a>
 								<a class='repala {{if users.P2FBred "bgred" "bggr2"}}' href='/u/{{users.P2}}/kek'>
@@ -548,6 +539,12 @@
 							{{/if}}
 						</td>
 						<td>
+							{{#if users.P1}}
+								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
 							{{#if users.P2}}
 								{{#if users.P2STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P2STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
@@ -556,7 +553,7 @@
 							{{/if}}
 						</td>
 						<td>
-							П4<span> - </span>
+							П2<span> - </span>
 							{{#if users.P3}}
 								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P3}}'>{{users.P3}}</a>
 								<a class='repala {{if users.P3FBred "bgred" "bggr2"}}' href='/u/{{users.P3}}/kek'>
@@ -574,10 +571,19 @@
 									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
 								{{/if}}
 							{{/if}}
-							<br>
-							П4<span> - </span>
+						</td>
+						<td>
+							{{#if users.P3}}
+								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
+						</td>
+						<td>
+							П3<span> - </span>
 							{{#if users.P4}}
-								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
+								<a title='{{if users.P4PRICE (concat users.P4PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
 								<a class='repala {{if users.P4FBred "bgred" "bggr2"}}' href='/u/{{users.P4}}/kek'>
 									{{users.P4FEEDBACK.PERCENT}}%
 									<span>
@@ -590,17 +596,11 @@
 								{{#if users.P4TAKEN}}
 									Нету
 								{{else}}
-									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
+									Cвободно {{if users.P4PRICE (concat users.P4PRICE "р")}}
 								{{/if}}
 							{{/if}}
 						</td>
 						<td>
-							{{#if users.P3}}
-								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
 							{{#if users.P4}}
 								{{#if users.P4STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P4STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
@@ -640,8 +640,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 1 game._id bubbles=false}} class='BagButon'>П1<br>
-							{{#if game.P4PRICE1}}
-								<h3>{{game.P4PRICE1}}</h3><br>рублей
+							{{#if game.P3PRICE1}}
+								<h3>{{game.P3PRICE1}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -650,8 +650,8 @@
 					</td>
 					<td>
 						<button {{action 'zaips' 2 game._id bubbles=false}} class='BagButon'>П2<br>
-							{{#if game.P4PRICE2}}
-								<h3>{{game.P4PRICE2}}</h3><br>рублей
+							{{#if game.P3PRICE2}}
+								<h3>{{game.P3PRICE2}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -659,9 +659,9 @@
 						</button>
 					</td>
 					<td>
-						<button {{action 'zaips' 4 game._id bubbles=false}} class='BagButon'>П4<br>
-							{{#if game.P4PRICE3}}
-								<h3>{{game.P4PRICE3}}</h3><br>рублей
+						<button {{action 'zaips' 3 game._id bubbles=false}} class='BagButon'>П4<br>
+							{{#if game.P3PRICE3}}
+								<h3>{{game.P3PRICE3}}</h3><br>рублей
 							{{else}}
 								<h3>НЕТ</h3><br>цены
 							{{/if}}
@@ -696,17 +696,8 @@
 									Cвободно {{if users.P1PRICE (concat users.P1PRICE "р")}}
 								{{/if}}
 							{{/if}}
-						</td>
-						<td>
-							{{#if users.P1}}
-								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
-						</td>
-						<td>
-							П2<span> - </span>
+							<br>
+							П1<span> - </span>
 							{{#if users.P2}}
 								<a title='{{if users.P2PRICE (concat users.P2PRICE "р")}}' href='/u/{{users.P2}}'>{{users.P2}}</a>
 								<a class='repala {{if users.P2FBred "bgred" "bggr2"}}' href='/u/{{users.P2}}/kek'>
@@ -726,6 +717,12 @@
 							{{/if}}
 						</td>
 						<td>
+							{{#if users.P1}}
+								{{#if users.P1STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P1STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P1STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P1STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
 							{{#if users.P2}}
 								{{#if users.P2STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P2STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
@@ -734,7 +731,7 @@
 							{{/if}}
 						</td>
 						<td>
-							П4<span> - </span>
+							П2<span> - </span>
 							{{#if users.P3}}
 								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P3}}'>{{users.P3}}</a>
 								<a class='repala {{if users.P3FBred "bgred" "bggr2"}}' href='/u/{{users.P3}}/kek'>
@@ -752,10 +749,19 @@
 									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
 								{{/if}}
 							{{/if}}
-							<br>
-							П4<span> - </span>
+						</td>
+						<td>
+							{{#if users.P3}}
+								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
+								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
+								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
+								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
+							{{/if}}
+						</td>
+						<td>
+							П3<span> - </span>
 							{{#if users.P4}}
-								<a title='{{if users.P3PRICE (concat users.P3PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
+								<a title='{{if users.P4PRICE (concat users.P4PRICE "р")}}' href='/u/{{users.P4}}'>{{users.P4}}</a>
 								<a class='repala {{if users.P4FBred "bgred" "bggr2"}}' href='/u/{{users.P4}}/kek'>
 									{{users.P4FEEDBACK.PERCENT}}%
 									<span>
@@ -768,17 +774,11 @@
 								{{#if users.P4TAKEN}}
 									Нету
 								{{else}}
-									Cвободно {{if users.P3PRICE (concat users.P3PRICE "р")}}
+									Cвободно {{if users.P4PRICE (concat users.P4PRICE "р")}}
 								{{/if}}
 							{{/if}}
 						</td>
 						<td>
-							{{#if users.P3}}
-								{{#if users.P3STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
-								{{#if users.P3STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
-								{{#if users.P3STATUS.[2]}}<div class='malabela bgred'><i class='fa fa-spinner fa-pulse'></i> <span>получил данные</span></div>{{/if}}
-								{{#if users.P3STATUS.[3]}}<div class='malabela bggr'><i class='fa fa-check'></i> <span>скачал</span></div>{{/if}}
-							{{/if}}
 							{{#if users.P4}}
 								{{#if users.P4STATUS.[0]}}<div class='malabela bgred3'><i class='fa fa-usd fa-spin'></i> <span>ждем оплату</span></div>{{/if}}
 								{{#if users.P4STATUS.[1]}}<div class='malabela bggr'><i class='fa fa-usd'></i> <span>оплатил</span></div>{{/if}}
