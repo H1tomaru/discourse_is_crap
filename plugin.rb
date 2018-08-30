@@ -792,7 +792,6 @@ after_initialize do
 				finalvar[:gamedb1].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 1 || game[:TYPE] == 0
 				finalvar[:gamedb2].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 2
 				finalvar[:gamedb3].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 3
-				finalvar[:P3MODE] = true	##dif
 			end
 			
 			render json: finalvar
