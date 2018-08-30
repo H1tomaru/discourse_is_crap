@@ -485,7 +485,7 @@ after_initialize do
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
-			priceSTEP = 50
+			priceSTEP = 0	##dif
 			#cached vars
 			qzlist = []
 			gamelist = []
@@ -556,8 +556,7 @@ after_initialize do
 						game[:P3PRICE2] = game[:PRICE] - game[:P3PRICE3] - 2 * game[:P3PRICE1]
 
 						p3UP = [0,100,200]
-						p3UP = [0,150,250] if game[:PRICE] > 5000
-						p3UP = [0,50,150] if game[:PRICE] < 2700
+						p3UP = [0,150,300] if game[:PRICE] > 5500
 
 						game[:P3PRICE1] = game[:P3PRICE1] - p3PDOWN1 + p3UP[0]
 						game[:P3PRICE2] = game[:P3PRICE2] - p3PDOWN2 + p3UP[1]
@@ -573,10 +572,9 @@ after_initialize do
 						#somevariables
 						priceUP = 0; nop1ADD = 0
 						#find how many p1 p2 p3 we have, and how many troikas to display ##dif down
-						p1NO = users[:P1].length / 2.0 if users[:P1] #fix because 2 P1 per troika
+						p1NO = users[:P1].length if users[:P1]
 						p2NO = users[:P2].length if users[:P2]
 						p3NO = users[:P3].length if users[:P3]
-						p1NO = p1NO + users[:P12].length / 2.0 if users[:P1] && users[:P12]
 
 						for i in 0..[p1NO.ceil, p2NO, p3NO].max-1 #get how many troikas, roundup p1 number cos theres 2 per troika
 							#tons of variables for everything
