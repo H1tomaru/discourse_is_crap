@@ -901,7 +901,7 @@ after_initialize do
 						@@userlistdb[:uListP3].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )	##dif
 						zaips = { winrars: true, position: code[0], gameNAME: code[3].force_encoding('UTF-8') }
 						#destroy cache
-						@@cache[:cache].drop()
+						@@cache[:cachep3].drop()	##dif
 
 						render json: zaips
 
