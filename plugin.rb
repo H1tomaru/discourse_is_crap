@@ -573,13 +573,14 @@ after_initialize do
 					game[:TROIKI] = []
 					if users
 						#somevariables
-						priceUP = 0
-						#find how many p1 p2 p3 we have, and how many troikas to display
-						p1NO = users[:P1].length if users[:P1]
+						priceUP = 0; nop1ADD = 0
+						#find how many p1 p2 p3 we have, and how many troikas to display ##dif down
+						p1NO = users[:P1].length / 2.0 if users[:P1] #fix because 2 P1 per troika
 						p2NO = users[:P2].length if users[:P2]
-						p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						p3NO = users[:P3].length if users[:P3]
+						p1NO = p1NO + users[:P12].length / 2.0 if users[:P1] && users[:P12]
 
-						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
+						for i in 0..[p1NO.ceil, p2NO, p3NO].max-1 #get how many troikas, roundup p1 number cos theres 2 per troika
 							#tons of variables for everything
 							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
 							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]; p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
@@ -593,17 +594,17 @@ after_initialize do
 								p1 = users[:P1][i][:NAME].strip
 								p1STATUS[users[:P1][i][:STAT]] = true
 							end
+							if users[:P12] && users[:P12][i]
+								p2 = users[:P12][i][:NAME].strip
+								p2STATUS[users[:P12][i][:STAT]] = true
+							end
 							if users[:P2] && users[:P2][i]
-								p2 = users[:P2][i][:NAME].strip
-								p2STATUS[users[:P2][i][:STAT]] = true
+								p3 = users[:P2][i][:NAME].strip
+								p3STATUS[users[:P2][i][:STAT]] = true
 							end
-							if users[:P4] && users[:P4][2*i]
-								p3 = users[:P4][2*i][:NAME].strip
-								p3STATUS[users[:P4][2*i][:STAT]] = true
-							end
-							if users[:P4] && users[:P4][2*i+1]
-								p4 = users[:P4][2*i+1][:NAME].strip
-								p4STATUS[users[:P4][2*i+1][:STAT]] = true
+							if users[:P3] && users[:P3][i]
+								p4 = users[:P3][i][:NAME].strip
+								p4STATUS[users[:P3][i][:STAT]] = true	##dif up
 							end
 							#template variables for when p1 p2 p3 p4 are taken
 							(p1TAKEN = true; p1 = '') if p1 == '-55'
@@ -663,9 +664,9 @@ after_initialize do
 									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
 								end
 								#create current troika prices
-								p1PRICE = game[:P4PRICE1] - p1PDOWN
-								p2PRICE = game[:P4PRICE2] - p2PDOWN + priceUP
-								p3PRICE = game[:P4PRICE3] - p3PDOWN + priceUP
+								p1PRICE = game[:P3PRICE1] - p1PDOWN	##dif
+								p2PRICE = game[:P3PRICE2] - p2PDOWN + priceUP	##dif
+								p3PRICE = game[:P3PRICE3] - p3PDOWN + priceUP	##dif
 								#set price to -10 if its x100
 								p1PRICE = p1PRICE - 10 if p1PRICE/100.0 == (p1PRICE/100.0).ceil
 								p2PRICE = p2PRICE - 10 if p2PRICE/100.0 == (p2PRICE/100.0).ceil
@@ -677,7 +678,8 @@ after_initialize do
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
-							nop1ADD = (p1PRICE / 30.0).ceil * 10
+							nop1ADD = p1PRICE if !p1 && !p2	##dif
+							nop1ADD = p1PRICE / 2 if (p1 && !p2) || (!p1 && p2)	##dif
 							#create final variable
 							game[:TROIKI].push( {
 								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
