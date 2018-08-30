@@ -133,7 +133,7 @@ after_initialize do
 					game[:TROIKI] = []
 					if users
 						#somevariables
-						priceUP = 0
+						priceUP = 0; nop1ADD = 0
 						#find how many p1 p2 p3 we have, and how many troikas to display
 						p1NO = users[:P1].length if users[:P1]
 						p2NO = users[:P2].length if users[:P2]
@@ -237,7 +237,7 @@ after_initialize do
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
-							nop1ADD = (p1PRICE / 30.0).ceil * 10
+							nop1ADD = (p1PRICE / 30.0).ceil * 10 if !p1
 							#create final variable
 							game[:TROIKI].push( {
 								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
@@ -304,12 +304,10 @@ after_initialize do
 				if current_user
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
-						p1ADD = 0
-						p1ADD = troika[:NOP1ADD] if troika[:P1].length == 0
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -319,7 +317,7 @@ after_initialize do
 						if current_user[:username] == troika[:P2]
 							if troika[:P2STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -329,7 +327,7 @@ after_initialize do
 						if current_user[:username] == troika[:P3]
 							if troika[:P3STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -339,7 +337,7 @@ after_initialize do
 						if current_user[:username] == troika[:P4]
 							if troika[:P4STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -690,9 +688,9 @@ after_initialize do
 								P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
 							} )
 							#if current troika has any free position, save its price to display on button, if not saved one already
-							price1DISPLAY = p1PRICE if p1.length == 0 && price1DISPLAY == 0
-							price2DISPLAY = p2PRICE if p2.length == 0 && price2DISPLAY == 0
-							price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
+							price1DISPLAY = p1PRICE if (p1.length == 0 || p2.length == 0) && price1DISPLAY == 0	##dif
+							price2DISPLAY = p2PRICE if p3.length == 0 && price2DISPLAY == 0	##dif
+							price3DISPLAY = p3PRICE if p4.length == 0 && price3DISPLAY == 0	##dif
 						end
 						#remove this game users form userdb variable
 						#userDB.delete_if{ |h| h['_id'] == game[:_id] }
@@ -704,24 +702,24 @@ after_initialize do
 					#set the current display price, depending on amount of troek, if price is zero, don't touch it
 					if game[:PRICE] > 0
 						if price1DISPLAY > 0
-							game[:P4PRICE1] = price1DISPLAY
+							game[:P3PRICE1] = price1DISPLAY	##dif down
 						else
-							game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
+							game[:P3PRICE1] = game[:P3PRICE1] + priceSTEP * (p1NO / 10).floor
 						end
 						if price2DISPLAY > 0
-							game[:P4PRICE2] = price2DISPLAY
+							game[:P3PRICE2] = price2DISPLAY
 						else
-							game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
+							game[:P3PRICE2] = game[:P3PRICE2] + priceSTEP * (p2NO / 10).floor
 						end
 						if price3DISPLAY > 0
-							game[:P4PRICE3] = price3DISPLAY
+							game[:P3PRICE3] = price3DISPLAY
 						else
-							game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
+							game[:P3PRICE3] = game[:P3PRICE3] + priceSTEP * (p3NO / 10).floor
 						end
 						#set price to -10 if its x100
-						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
-						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
-						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
+						game[:P3PRICE1] = game[:P3PRICE1] - 10 if game[:P3PRICE1]/100.0 == (game[:P3PRICE1]/100.0).ceil
+						game[:P3PRICE2] = game[:P3PRICE2] - 10 if game[:P3PRICE2]/100.0 == (game[:P3PRICE2]/100.0).ceil
+						game[:P3PRICE3] = game[:P3PRICE3] - 10 if game[:P3PRICE3]/100.0 == (game[:P3PRICE3]/100.0).ceil	##dif up
 					end
 				end
 				gamelist = gameDB
@@ -732,7 +730,7 @@ after_initialize do
 			end
 
 			#save cache to db if it exists
-			@@cache[:cache].insert_one(newcache) if newcache.any?
+			@@cache[:cachep3].insert_one(newcache) if newcache.any?	##dif
 
 			#if displaying qzaips, add games list to finalvar
 			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
@@ -746,12 +744,10 @@ after_initialize do
 				if current_user
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
-						p1ADD = 0
-						p1ADD = troika[:NOP1ADD] if troika[:P1].length == 0
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -761,7 +757,7 @@ after_initialize do
 						if current_user[:username] == troika[:P2]
 							if troika[:P2STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -771,7 +767,7 @@ after_initialize do
 						if current_user[:username] == troika[:P3]
 							if troika[:P3STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -781,7 +777,7 @@ after_initialize do
 						if current_user[:username] == troika[:P4]
 							if troika[:P4STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: p1ADD } )
+								finalvar[:maigamez1].push( { POSITION: 4, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -802,7 +798,7 @@ after_initialize do
 
 		end
 
-		def troikopoisk
+		def troikopoiskp3	##dif
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
@@ -819,7 +815,7 @@ after_initialize do
 			end
 		end 
 
-		def prezaips
+		def prezaipsp3	##dif
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
@@ -841,7 +837,7 @@ after_initialize do
 				else
 					#find and count how many times user zaipsalsq
 					zcount = 0
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[1] ).to_a
+					gameuzers = @@userlistdb[:uListP3].find( _id: code[1] ).to_a	##dif
 					if gameuzers[0] && gameuzers[0]["P"+code[0]]
 						gameuzers[0]["P"+code[0]].each do |user|
 							if user[:NAME] == current_user[:username]
@@ -870,7 +866,7 @@ after_initialize do
 			end
 		end
 
-		def zaips
+		def zaipsp3	##dif
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
@@ -890,7 +886,7 @@ after_initialize do
 				else
 					#find and count how many times user zaipsalsq
 					zcount = 0
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a
+					gameuzers = @@userlistdb[:uListP3].find( _id: code[2] ).to_a	##dif
 					if gameuzers[0] && gameuzers[0]["P"+code[0]]
 						gameuzers[0]["P"+code[0]].each do |user|
 							if user[:NAME] == current_user[:username]
@@ -904,7 +900,7 @@ after_initialize do
 						#do actual zaips, wohoo
 						push = {}
 						push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
-						@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
+						@@userlistdb[:uListP3].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )	##dif
 						zaips = { winrars: true, position: code[0], gameNAME: code[3].force_encoding('UTF-8') }
 						#destroy cache
 						@@cache[:cache].drop()
