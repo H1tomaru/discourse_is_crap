@@ -560,6 +560,7 @@ after_initialize do
 						p3UP = [0,100,200]
 						p3UP = [0,150,300] if game[:PRICE] > 5500
 						p3UP = [0,50,200] if game[:PRICE] < 2000
+						p3UP = [0,50,150] if game[:PRICE] < 1000
 
 						#game[:P3PRICE1] = game[:P3PRICE1] - p3PDOWN1 + p3UP[0]
 						game[:P3PRICE2] = game[:P3PRICE2] - p3PDOWN2 + p3UP[1]
