@@ -748,7 +748,7 @@ after_initialize do
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS][0]		##dif down
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: troika[:NOP1ADD] } )
+								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: 0 } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -758,7 +758,7 @@ after_initialize do
 						if current_user[:username] == troika[:P2]
 							if troika[:P2STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: troika[:NOP1ADD] } )
+								finalvar[:maigamez1].push( { POSITION: 1, gNAME: game[:gameNAME], PRICE: troika[:P1PRICE], P1ADD: 0 } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -768,7 +768,7 @@ after_initialize do
 						if current_user[:username] == troika[:P3]
 							if troika[:P3STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: troika[:NOP1ADD] } )
+								finalvar[:maigamez1].push( { POSITION: 2, gNAME: game[:gameNAME], PRICE: troika[:P2PRICE], P1ADD: troika[:NOP1ADD0] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
@@ -778,7 +778,7 @@ after_initialize do
 						if current_user[:username] == troika[:P4]
 							if troika[:P4STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
-								finalvar[:maigamez1].push( { POSITION: 3, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD] } )
+								finalvar[:maigamez1].push( { POSITION: 3, gNAME: game[:gameNAME], PRICE: troika[:P3PRICE], P1ADD: troika[:NOP1ADD1] } )
 							else
 								game[:MODE2] = true if !game[:MODE1]
 								troika[:MODE2] = true if !troika[:MODE1]
