@@ -675,7 +675,7 @@ after_initialize do
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
 							nop1ADD = (p1PRICE/100.0).ceil * 100 - 50 if p1 == '' && p2 == ''	##dif
-							nop1ADD = p1PRICE / 2 if (p1 != '' && p2 == '') || (p1 == '' && p2 != '')	##dif
+							nop1ADD = (p1PRICE/100.0).ceil * 100 / 2 if (p1 != '' && p2 == '') || (p1 == '' && p2 != '')	##dif
 							#create final variable
 							game[:TROIKI].push( {
 								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
