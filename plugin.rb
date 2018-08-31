@@ -541,7 +541,7 @@ after_initialize do
 					#type 0 games have 0 price
 					game[:PRICE] = 0 if game[:TYPE] == 0
 					#somevariables
-					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
+					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0; nop1ADD2 = 0; nop1ADD3 = 0
 					#add template variables
 					game[:MODE1] = false; game[:MODE2] = false; game[:SHOWHIDEO] = false
 					#create display prices
@@ -552,12 +552,14 @@ after_initialize do
 						p3PDOWN3 = game[:P3PDOWN3] if game[:P3PDOWN3]
 
 						game[:P3PRICE1] = (game[:PRICE] * 0.15 / 50).ceil * 50
-						game[:P3PRICE3] = (game[:PRICE] * 0.65 / 50).ceil * 50 - game[:P3PRICE1]
-						game[:P3PRICE2] = game[:PRICE] - game[:P3PRICE3] - 2 * game[:P3PRICE1]
+						nop1ADD3 = (game[:P3PRICE1] * 2 * 0.6 / 100).floor * 100
+						nop1ADD2 = game[:P3PRICE1] * 2 - nop1ADD3
+						game[:P3PRICE3] = (game[:PRICE] * 0.63 / 50).floor * 50 - nop1ADD3
+						game[:P3PRICE2] = game[:PRICE] - game[:P3PRICE3] - nop1ADD2
 
-						p3UP = [0,100,200]
+						p3UP = [0,150,150]
 						p3UP = [0,150,300] if game[:PRICE] > 5500
-						p3UP = [0,150,150] if game[:PRICE] < 2000
+						p3UP = [0,100,150] if game[:PRICE] < 2000
 
 						game[:P3PRICE1] = game[:P3PRICE1] - p3PDOWN1 + p3UP[0]
 						game[:P3PRICE2] = game[:P3PRICE2] - p3PDOWN2 + p3UP[1]
@@ -571,7 +573,7 @@ after_initialize do
 					game[:TROIKI] = []
 					if users
 						#somevariables
-						priceUP = 0; nop1ADD = 0
+						priceUP = 0; nop1ADD0 = 0; nop1ADD1 = 0
 						#find how many p1 p2 p3 we have, and how many troikas to display ##dif down
 						p1NO = users[:P1].length if users[:P1]
 						p2NO = users[:P2].length if users[:P2]
@@ -675,13 +677,13 @@ after_initialize do
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
-							nop1ADD = (p1PRICE/100.0).ceil * 100 - 50 if p1 == '' && p2 == ''	##dif
-							nop1ADD = (p1PRICE/100.0).ceil * 100 / 2 if (p1 != '' && p2 == '') || (p1 == '' && p2 != '')	##dif
+							(nop1ADD0 = nop1ADD2; nop1ADD1 = nop1ADD3) if p1 == '' && p2 == ''	##dif
+							(nop1ADD0 = nop1ADD/2; nop1ADD1 = nop1ADD3/2) if (p1 != '' && p2 == '') || (p1 == '' && p2 != '')	##dif
 							#create final variable
 							game[:TROIKI].push( {
 								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
 								P3: p3, P3FEEDBACK: p3FEEDBACK, P4: p4, P4FEEDBACK: p4FEEDBACK,
-								P1PRICE: p1PRICE, P2PRICE: p2PRICE, P3PRICE: p3PRICE, NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
+								P1PRICE: p1PRICE, P2PRICE: p2PRICE, P3PRICE: p3PRICE, NOP1ADD0: nop1ADD0, NOP1ADD1: nop1ADD1, ACCOUNT: account, COMMENT: comment,
 								P1TAKEN: p1TAKEN, P2TAKEN: p2TAKEN, P3TAKEN: p3TAKEN, P4TAKEN: p4TAKEN,
 								P1FBred: p1FBred, P2FBred: p2FBred, P3FBred: p3FBred, P4FBred: p4FBred,
 								P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
