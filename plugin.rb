@@ -552,7 +552,7 @@ after_initialize do
 						p3PDOWN3 = game[:P3PDOWN3] if game[:P3PDOWN3]
 
 						game[:P3PRICE1] = (game[:PRICE] * 0.15 / 50).ceil * 50 - p3PDOWN1
-						nop1ADD3 = (game[:P3PRICE1] * 2 * 0.6 / 100).floor * 100
+						nop1ADD3 = (game[:P3PRICE1] * 2 * 0.6 / 50).floor * 50
 						nop1ADD2 = game[:P3PRICE1] * 2 - nop1ADD3
 						game[:P3PRICE3] = (game[:PRICE] * 0.63 / 50).floor * 50 - nop1ADD3
 						game[:P3PRICE2] = game[:PRICE] - game[:P3PRICE3] - (game[:P3PRICE1] * 2)
