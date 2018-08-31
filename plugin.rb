@@ -551,7 +551,7 @@ after_initialize do
 						p3PDOWN2 = game[:P3PDOWN2] if game[:P3PDOWN2]
 						p3PDOWN3 = game[:P3PDOWN3] if game[:P3PDOWN3]
 
-						game[:P3PRICE1] = (game[:PRICE] * 0.15 / 50).ceil * 50
+						game[:P3PRICE1] = (game[:PRICE] * 0.15 / 50).ceil * 50 - p3PDOWN1
 						nop1ADD3 = (game[:P3PRICE1] * 2 * 0.6 / 100).floor * 100
 						nop1ADD2 = game[:P3PRICE1] * 2 - nop1ADD3
 						game[:P3PRICE3] = (game[:PRICE] * 0.63 / 50).floor * 50 - nop1ADD3
@@ -561,7 +561,7 @@ after_initialize do
 						p3UP = [0,150,300] if game[:PRICE] > 5500
 						p3UP = [0,100,150] if game[:PRICE] < 2000
 
-						game[:P3PRICE1] = game[:P3PRICE1] - p3PDOWN1 + p3UP[0]
+						#game[:P3PRICE1] = game[:P3PRICE1] - p3PDOWN1 + p3UP[0]
 						game[:P3PRICE2] = game[:P3PRICE2] - p3PDOWN2 + p3UP[1]
 						game[:P3PRICE3] = game[:P3PRICE3] - p3PDOWN3 + p3UP[2]
 					else
