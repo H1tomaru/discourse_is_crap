@@ -14,14 +14,14 @@ register_asset 'stylesheets/MrBug.scss'
 after_initialize do
 
 	Discourse::Application.routes.append do
+		get '/MrBugP4' => 'mrbug#showold'
+		get '/MrBugP4/troikopoisk/:input' => 'mrbug#troikopoiskold'
+		get '/MrBugP4/prezaips/:bagakruta' => 'mrbug#prezaipsold'
+		get '/MrBugP4/zaips/:bagatrolit' => 'mrbug#zaipsold'
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
-		get '/MrBugP3' => 'mrbug#showp3'
-		get '/MrBugP3/troikopoisk/:input' => 'mrbug#troikopoiskp3'
-		get '/MrBugP3/prezaips/:bagakruta' => 'mrbug#prezaipsp3'
-		get '/MrBugP3/zaips/:bagatrolit' => 'mrbug#zaipsp3'
 		get '/renta-haleguu' => 'mrbug#rentagama'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
@@ -43,7 +43,7 @@ after_initialize do
 		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 
-		def show
+		def showold
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
@@ -358,7 +358,7 @@ after_initialize do
 
 		end
 
-		def troikopoisk
+		def troikopoiskold
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
@@ -375,7 +375,7 @@ after_initialize do
 			end
 		end 
 
-		def prezaips
+		def prezaipsold
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
@@ -426,7 +426,7 @@ after_initialize do
 			end
 		end
 
-		def zaips
+		def zaipsold
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
@@ -481,7 +481,7 @@ after_initialize do
 			end
 		end
 
-		def showp3	##dif
+		def show
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
@@ -799,7 +799,7 @@ after_initialize do
 
 		end
 
-		def troikopoiskp3	##dif
+		def troikopoisk
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
@@ -816,7 +816,7 @@ after_initialize do
 			end
 		end 
 
-		def prezaipsp3	##dif
+		def prezaips
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
@@ -867,7 +867,7 @@ after_initialize do
 			end
 		end
 
-		def zaipsp3	##dif
+		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
