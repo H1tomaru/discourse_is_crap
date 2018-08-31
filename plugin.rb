@@ -552,7 +552,7 @@ after_initialize do
 						p3PDOWN3 = game[:P3PDOWN3] if game[:P3PDOWN3]
 
 						game[:P3PRICE1] = (game[:PRICE] * 0.15 / 50).ceil * 50
-						game[:P3PRICE3] = (game[:PRICE] * 0.6 / 50).floor * 50 - game[:P3PRICE1]
+						game[:P3PRICE3] = (game[:PRICE] * 0.65 / 50).ceil * 50 - game[:P3PRICE1]
 						game[:P3PRICE2] = game[:PRICE] - game[:P3PRICE3] - 2 * game[:P3PRICE1]
 
 						p3UP = [0,100,200]
@@ -674,7 +674,7 @@ after_initialize do
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
-							nop1ADD = p1PRICE if p1 == '' && p2 == ''	##dif
+							nop1ADD = (p1PRICE/100.0).ceil * 100 - 50 if p1 == '' && p2 == ''	##dif
 							nop1ADD = p1PRICE / 2 if (p1 != '' && p2 == '') || (p1 == '' && p2 != '')	##dif
 							#create final variable
 							game[:TROIKI].push( {
