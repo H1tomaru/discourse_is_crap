@@ -5,6 +5,8 @@ export default Ember.Controller.extend({
 		  "ADDFB": false},
 
 	p4lista: null,
+	
+	p3lista: null,
 
 	actions: {
 
@@ -40,6 +42,18 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
 				this.set('p4lista', result)
+			})
+		}
+		
+		,
+
+		P3Lista() {
+			Ember.$.ajax({
+				url: "/MrBug.json",
+				type: "GET"
+			}).then(result => {
+				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
+				this.set('p3lista', result)
 			})
 		}
 
