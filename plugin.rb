@@ -14,11 +14,11 @@ register_asset 'stylesheets/MrBug.scss'
 after_initialize do
 
 	Discourse::Application.routes.append do
-		get '/MrBug' => 'mrbug#showold'
+		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
-		get '/MrBugP3' => 'mrbug#show'
+		get '/MrBugP3' => 'mrbug#showp3'
 		get '/MrBugP3/troikopoisk/:input' => 'mrbug#troikopoiskp3'
 		get '/MrBugP3/prezaips/:bagakruta' => 'mrbug#prezaipsp3'
 		get '/MrBugP3/zaips/:bagatrolit' => 'mrbug#zaipsp3'
