@@ -14,14 +14,14 @@ register_asset 'stylesheets/MrBug.scss'
 after_initialize do
 
 	Discourse::Application.routes.append do
-		get '/MrBugP4' => 'mrbug#showold'
-		get '/MrBugP4/troikopoisk/:input' => 'mrbug#troikopoiskold'
-		get '/MrBugP4/prezaips/:bagakruta' => 'mrbug#prezaipsold'
-		get '/MrBugP4/zaips/:bagatrolit' => 'mrbug#zaipsold'
-		get '/MrBug' => 'mrbug#show'
+		get '/MrBug' => 'mrbug#showold'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
 		get '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
+		get '/MrBugP3' => 'mrbug#show'
+		get '/MrBugP3/troikopoisk/:input' => 'mrbug#troikopoiskp3'
+		get '/MrBugP3/prezaips/:bagakruta' => 'mrbug#prezaipsp3'
+		get '/MrBugP3/zaips/:bagatrolit' => 'mrbug#zaipsp3'
 		get '/renta-haleguu' => 'mrbug#rentagama'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
@@ -43,11 +43,11 @@ after_initialize do
 		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 
-		def showold
+		def show
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
-			priceSTEP = 50
+			priceSTEP = 0
 			#cached vars
 			qzlist = []
 			gamelist = []
@@ -117,9 +117,9 @@ after_initialize do
 						game[:P4PRICE1] = ((game[:PRICE] - 2 * game[:P4PRICE3]) * 0.3 / 50).ceil * 50
 						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
 
-						p4UP = [100,200,0]
-						p4UP = [100,250,50] if game[:PRICE] > 5000
-						p4UP = [0,50,50] if game[:PRICE] < 2700
+						p4UP = [100,150,50]
+						p4UP = [50,250,100] if game[:PRICE] > 5000
+						p4UP = [0,100,50] if game[:PRICE] < 2000
 
 						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN1 + p4UP[0]
 						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN2 + p4UP[1]
@@ -358,7 +358,7 @@ after_initialize do
 
 		end
 
-		def troikopoiskold
+		def troikopoisk
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
@@ -375,7 +375,7 @@ after_initialize do
 			end
 		end 
 
-		def prezaipsold
+		def prezaips
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
@@ -426,7 +426,7 @@ after_initialize do
 			end
 		end
 
-		def zaipsold
+		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
@@ -481,7 +481,7 @@ after_initialize do
 			end
 		end
 
-		def show
+		def showp3
 			#variables, duh
 			finalvar = {}
 			finalvar[:qzstuff] = false
@@ -800,7 +800,7 @@ after_initialize do
 
 		end
 
-		def troikopoisk
+		def troikopoiskp3
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
@@ -817,7 +817,7 @@ after_initialize do
 			end
 		end 
 
-		def prezaips
+		def prezaipsp3
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
@@ -868,7 +868,7 @@ after_initialize do
 			end
 		end
 
-		def zaips
+		def zaipsp3
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
