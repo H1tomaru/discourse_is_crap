@@ -113,12 +113,12 @@ after_initialize do
 						p4PDOWN2 = game[:P4PDOWN2] if game[:P4PDOWN2]
 						p4PDOWN3 = game[:P4PDOWN3] if game[:P4PDOWN3]
 
+						game[:P4PRICE1] = (game[:PRICE] * 0.1 / 50).ceil * 50
 						game[:P4PRICE3] = (game[:PRICE] * 0.75 / 100).floor * 100 / 2
-						game[:P4PRICE1] = ((game[:PRICE] - 2 * game[:P4PRICE3]) * 0.3 / 50).ceil * 50
 						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
 
-						p4UP = [100,150,50]
-						p4UP = [50,250,100] if game[:PRICE] > 5000
+						p4UP = [0,250,50]
+						p4UP = [0,350,100] if game[:PRICE] > 5000
 						p4UP = [0,100,50] if game[:PRICE] < 2000
 
 						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN1 + p4UP[0]
