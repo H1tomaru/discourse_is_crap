@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
 
 		P4Lista() {
 			Ember.$.ajax({
-				url: "/MrBugP4.json",
+				url: "/MrBug.json",
 				type: "GET"
 			}).then(result => {
 				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
@@ -49,7 +49,7 @@ export default Ember.Controller.extend({
 
 		P3Lista() {
 			Ember.$.ajax({
-				url: "/MrBug.json",
+				url: "/MrBugP3.json",
 				type: "GET"
 			}).then(result => {
 				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
