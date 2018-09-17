@@ -1,9 +1,5 @@
 export default Ember.Controller.extend({
 	//default states
-	bagoPravila: false,
-	bagoGuidaz: false,
-	bagoPlati: false,
-
 	troikopoisk: null,
 	prezaips: null,
 	zaips: null,
@@ -15,24 +11,6 @@ export default Ember.Controller.extend({
 
 
 	actions: {
-
-		bagoPravila() {
-			this.set('bagoGuidaz', false)
-			this.set('bagoPlati', false)
-			this.toggleProperty('bagoPravila')
-		},
-
-		bagoGuidaz() {
-			this.set('bagoPravila', false)
-			this.set('bagoPlati', false)
-			this.toggleProperty('bagoGuidaz')
-		},
-
-		bagoPlati() {
-			this.set('bagoPravila', false)
-			this.set('bagoGuidaz', false)
-			this.toggleProperty('bagoPlati')
-		},
 
 		netmudal() {
 			this.set('bagamdal', false)
