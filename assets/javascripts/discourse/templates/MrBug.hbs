@@ -96,7 +96,15 @@
 			{{#each model.maigamez1 as |game|}}
 				<tr>
 					<td><div class='malabela2 bgred3'><span class="hideoS">ждем оплату</span><span class="hideoB">$</span></div></td>
-					<td><a>{{game.gNAME}}</a></td>
+					<td>
+						<a>{{game.gNAME}}</a>
+						{{#if game.TYPE2}}
+							<br>Акция до: {{game.DATE}}
+						{{/if}}
+						{{#if game.TYPE3}}
+							<br>Дата выхода: {{game.DATE}}
+						{{/if}}
+					</td>
 
 					{{#if game.PRICE}}
 						<td>
