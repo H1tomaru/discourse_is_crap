@@ -485,18 +485,19 @@ after_initialize do
 						#create notification if sobrano
 						troino = gameuzers[0]["P"+code[0]].count + 1
 						troino = troino / 2.0 if code[0] == 4
+						trindx = troino - 1
 
-						unless ( code[0] == 4 && troino.to_i.odd? ) && !gameuzers[0]["P2"][troino]
+						unless ( code[0] == 4 && troino.to_i == troino ) && !gameuzers[0]["P2"][trindx]
 							thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
 							if thisgame[0]["PRICE"] && !(thisgame[0]["TYPE"] == 3 && thisgame[0]["DATE"].to_datetime - Time.now > 2600000)
 								usernames = ["MrBug" , current_user[:username]]
-								usernames.push(gameuzers[0]["P1"][troino]["NAME"]) if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
-								usernames.push(gameuzers[0]["P2"][troino]["NAME"]) if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
-								usernames.push(gameuzers[0]["P4"][troino*2-1]["NAME"]) if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
-								usernames.push(gameuzers[0]["P4"][troino*2]["NAME"]) if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
+								usernames.push(gameuzers[0]["P1"][trindx]["NAME"]) if gameuzers[0]["P1"][trindx] && gameuzers[0]["P1"][trindx]["STAT"] == 0 && code[0] != 1
+								usernames.push(gameuzers[0]["P2"][trindx]["NAME"]) if gameuzers[0]["P2"][trindx]["STAT"] == 0 && code[0] != 2
+								usernames.push(gameuzers[0]["P4"][trindx*2]["NAME"]) if gameuzers[0]["P4"][trindx*2]["STAT"] == 0
+								usernames.push(gameuzers[0]["P4"][trindx*2+1]["NAME"]) if gameuzers[0]["P4"][trindx*2+1]["STAT"] == 0 && code[0] != 4
 								usernames = usernames.uniq
 
-								if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["NAME"] != "-55"
+								if gameuzers[0]["P1"][trindx] && gameuzers[0]["P1"][trindx]["NAME"] != "-55"
 									troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
 									troitext = "Здравствуйте! :robot:\n 
 									Случилось невероятное! Четверка на " + code[3] + " собрана.\n
