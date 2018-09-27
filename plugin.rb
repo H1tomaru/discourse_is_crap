@@ -482,6 +482,35 @@ after_initialize do
 							raw: current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
 						)
 
+						#create notification if sobrano
+						troino = gameuzers[0]["P"+code[0]].count + 1
+						troino = troino / 2.0 if code[0] == 4
+
+						unless ( code[0] == 4 && troino.to_i.odd? ) && !gameuzers[0]["P2"][troino]
+							usernames = "MrBug," + current_user[:username]
+							usernames = usernames + "," + gameuzers[0]["P1"][troino]["NAME"] if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
+							usernames = usernames + "," + gameuzers[0]["P2"][troino]["NAME"] if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
+							usernames = usernames + "," + gameuzers[0]["P4"][troino*2-1]["NAME"] if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
+							usernames = usernames + "," + gameuzers[0]["P4"][troino*2]["NAME"] if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
+
+							if gameuzers[0]["P1"][troino]
+								troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
+								troiraw = 
+							else
+								troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
+								troiraw = 
+							end
+
+							PostCreator.create(
+								Discourse.system_user,
+								target_usernames: usernames,
+								archetype: Archetype.private_message,
+								subtype: TopicSubtype.system_message,
+								title: troititle,
+								raw: troiraw
+							)
+						end
+
 					end
 				end
 			else
