@@ -497,10 +497,10 @@ after_initialize do
 								thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
 								if thisgame[0][:PRICE] && !(thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000)
 									usernames = ["MrBug" , current_user[:username]]
-									usernames.push(gameuzers[0][:P1][trindx][:NAME]) if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && code[0] != "1"
-									usernames.push(gameuzers[0][:P2][trindx][:NAME]) if gameuzers[0][:P2][trindx] && gameuzers[0][:P2][trindx][:STAT] == 0 && code[0] != "2"
+									usernames.push(gameuzers[0][:P1][trindx][:NAME]) if code[0] != "1" && gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0
+									usernames.push(gameuzers[0][:P2][trindx][:NAME]) if code[0] != "2" && gameuzers[0][:P2][trindx] && gameuzers[0][:P2][trindx][:STAT] == 0
 									usernames.push(gameuzers[0][:P4][trindx*2][:NAME]) if gameuzers[0][:P4][trindx*2] && gameuzers[0][:P4][trindx*2][:STAT] == 0
-									usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME]) if gameuzers[0][:P4][trindx*2+1] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0 && code[0] != "4"
+									usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME]) if code[0] != "4" && gameuzers[0][:P4][trindx*2+1] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0
 									usernames = usernames.uniq
 
 									if ( gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:NAME] != "-55" ) || code[0] == "1"
