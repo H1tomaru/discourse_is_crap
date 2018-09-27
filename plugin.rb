@@ -487,45 +487,48 @@ after_initialize do
 						troino = troino / 2.0 if code[0] == 4
 
 						unless ( code[0] == 4 && troino.to_i.odd? ) && !gameuzers[0]["P2"][troino]
-							usernames = ["MrBug" , current_user[:username]]
-							usernames.push(gameuzers[0]["P1"][troino]["NAME"]) if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
-							usernames.push(gameuzers[0]["P2"][troino]["NAME"]) if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
-							usernames.push(gameuzers[0]["P4"][troino*2-1]["NAME"]) if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
-							usernames.push(gameuzers[0]["P4"][troino*2]["NAME"]) if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
-							usernames = usernames.uniq
+							thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
+							if thisgame[0]["PRICE"] && !(thisgame[0]["TYPE"] == 3 && thisgame[0]["DATE"].to_datetime - Time.now > 2600000)
+								usernames = ["MrBug" , current_user[:username]]
+								usernames.push(gameuzers[0]["P1"][troino]["NAME"]) if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
+								usernames.push(gameuzers[0]["P2"][troino]["NAME"]) if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
+								usernames.push(gameuzers[0]["P4"][troino*2-1]["NAME"]) if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
+								usernames.push(gameuzers[0]["P4"][troino*2]["NAME"]) if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
+								usernames = usernames.uniq
 
-							if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["NAME"] != "-55"
-								troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
-								troitext = "Здравствуйте! :robot:\n 
-								Случилось невероятное! Четверка на " + code[3] + " собрана.\n
-								Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
-								Вот план дальнейших действий:\n
-								1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
-								2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
-								3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
-								Ошибка одного будет дорого стоить всем!\n
-								Держитесь! И да поможет вам :bug:"
-							else
-								troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
-								troitext = "Здравствуйте! :robot:\n 
-								Случилось невероятное! Тройка на " + code[3] + " собрана.\n
-								Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
-								Вот план дальнейших действий:\n
-								1) Оплатить свою позицию с учетом отсутствующего П1, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
-								2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
-								3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
-								Ошибка одного будет дорого стоить всем!\n
-								Держитесь! И да поможет вам :bug:"
+								if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["NAME"] != "-55"
+									troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
+									troitext = "Здравствуйте! :robot:\n 
+									Случилось невероятное! Четверка на " + code[3] + " собрана.\n
+									Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
+									Вот план дальнейших действий:\n
+									1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
+									2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
+									3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
+									Ошибка одного будет дорого стоить всем!\n
+									Держитесь! И да поможет вам :bug:"
+								else
+									troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
+									troitext = "Здравствуйте! :robot:\n 
+									Случилось невероятное! Тройка на " + code[3] + " собрана.\n
+									Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
+									Вот план дальнейших действий:\n
+									1) Оплатить свою позицию с учетом отсутствующего П1, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
+									2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
+									3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
+									Ошибка одного будет дорого стоить всем!\n
+									Держитесь! И да поможет вам :bug:"
+								end
+
+								PostCreator.create(
+									Discourse.system_user,
+									target_usernames: "MrBug,H1tomaru",#usernames.join(","),
+									archetype: Archetype.private_message,
+									subtype: TopicSubtype.system_message,
+									title: troititle,
+									raw: troitext
+								)
 							end
-
-							PostCreator.create(
-								Discourse.system_user,
-								target_usernames: usernames.join(","),
-								archetype: Archetype.private_message,
-								subtype: TopicSubtype.system_message,
-								title: troititle,
-								raw: troitext
-							)
 						end
 
 					end
