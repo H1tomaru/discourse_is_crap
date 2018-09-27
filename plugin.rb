@@ -494,12 +494,28 @@ after_initialize do
 							usernames.push(gameuzers[0]["P4"][troino*2]["NAME"]) if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
 							usernames = usernames.uniq
 
-							if gameuzers[0]["P1"][troino]
+							if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["NAME"] != "-55"
 								troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
-								troiraw = 
+								troitext = "Здравствуйте! :robot:\n 
+								Случилось невероятное! Четверка на " + code[3] + " собрана.\n
+								Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
+								Вот план дальнейших действий:\n
+								1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
+								2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
+								3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
+								Ошибка одного будет дорого стоить всем!\n
+								Держитесь! И да поможет вам :bug:"
 							else
 								troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
-								troiraw = 
+								troitext = "Здравствуйте! :robot:\n 
+								Случилось невероятное! Тройка на " + code[3] + " собрана.\n
+								Этого не должно было произойти, но придется с этим как-то теперь жить :robot:\n\n
+								Вот план дальнейших действий:\n
+								1) Оплатить свою позицию с учетом отсутствующего П1, суммы и реквизиты указаны [на странице четверок, в верху страницы](/MrBug)\n
+								2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n
+								3) Ознакомиться с [правилами в разделе FAQ](/faq)\n\n
+								Ошибка одного будет дорого стоить всем!\n
+								Держитесь! И да поможет вам :bug:"
 							end
 
 							PostCreator.create(
@@ -508,7 +524,7 @@ after_initialize do
 								archetype: Archetype.private_message,
 								subtype: TopicSubtype.system_message,
 								title: troititle,
-								raw: troiraw
+								raw: troitext
 							)
 						end
 
