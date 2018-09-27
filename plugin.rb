@@ -495,7 +495,7 @@ after_initialize do
 
 							PostCreator.create(
 								Discourse.system_user,
-								target_usernames: "MrBug",#usernames.join(","),
+								target_usernames: "MrBug",
 								archetype: Archetype.private_message,
 								subtype: TopicSubtype.system_message,
 								title: "Debug",
