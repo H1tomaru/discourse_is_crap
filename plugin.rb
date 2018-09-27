@@ -487,11 +487,12 @@ after_initialize do
 						troino = troino / 2.0 if code[0] == 4
 
 						unless ( code[0] == 4 && troino.to_i.odd? ) && !gameuzers[0]["P2"][troino]
-							usernames = "MrBug," + current_user[:username]
-							usernames = usernames + "," + gameuzers[0]["P1"][troino]["NAME"] if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
-							usernames = usernames + "," + gameuzers[0]["P2"][troino]["NAME"] if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
-							usernames = usernames + "," + gameuzers[0]["P4"][troino*2-1]["NAME"] if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
-							usernames = usernames + "," + gameuzers[0]["P4"][troino*2]["NAME"] if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
+							usernames = ["MrBug" , current_user[:username]]
+							usernames.push(gameuzers[0]["P1"][troino]["NAME"]) if gameuzers[0]["P1"][troino] && gameuzers[0]["P1"][troino]["STAT"] == 0 && code[0] != 1
+							usernames.push(gameuzers[0]["P2"][troino]["NAME"]) if gameuzers[0]["P2"][troino]["STAT"] == 0 && code[0] != 2
+							usernames.push(gameuzers[0]["P4"][troino*2-1]["NAME"]) if gameuzers[0]["P4"][troino*2-1]["STAT"] == 0
+							usernames.push(gameuzers[0]["P4"][troino*2]["NAME"]) if gameuzers[0]["P4"][troino*2]["STAT"] == 0 && code[0] != 4
+							usernames = usernames.uniq
 
 							if gameuzers[0]["P1"][troino]
 								troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
@@ -503,7 +504,7 @@ after_initialize do
 
 							PostCreator.create(
 								Discourse.system_user,
-								target_usernames: usernames,
+								target_usernames: usernames.join(","),
 								archetype: Archetype.private_message,
 								subtype: TopicSubtype.system_message,
 								title: troititle,
