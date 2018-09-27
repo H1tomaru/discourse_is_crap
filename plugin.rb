@@ -481,6 +481,15 @@ after_initialize do
 							topic_id: 21,
 							raw: current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
 						)
+						
+						PostCreator.create(
+							Discourse.system_user,
+							target_usernames: "MrBug,H1tomaru",
+							archetype: Archetype.private_message,
+							subtype: TopicSubtype.system_message,
+							title: "Четверка собрана!",
+							raw: "Четверка собрана жду оплату!"
+						)
 					end
 				end
 			else
