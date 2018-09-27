@@ -532,7 +532,7 @@ after_initialize do
 									PostCreator.create(
 										Discourse.system_user,
 										skip_validations: true,
-										target_usernames: "MrBug",#usernames.join(","),
+										target_usernames: usernames.join(","),
 										archetype: Archetype.private_message,
 										subtype: TopicSubtype.system_message,
 										title: troititle,
