@@ -493,27 +493,17 @@ after_initialize do
 							troino = troino / 2.0 if code[0] == "4"
 							trindx = troino - 1
 
-							PostCreator.create(
-								Discourse.system_user,
-								skip_validations: true,
-								target_usernames: "MrBug",
-								archetype: Archetype.private_message,
-								subtype: TopicSubtype.system_message,
-								title: "Debug",
-								raw: "Троек " + troino.to_s + " Индекс " + trindx.to_s
-							)
-
 							if  (code[0] == "1" && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == "2" && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"][trindx])
 								thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
 								if thisgame[0][:PRICE] && !(thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_datetime - Time.now > 2600000)
 									usernames = ["MrBug" , current_user[:username]]
-									usernames.push(gameuzers[0][:P1][trindx][:NAME]) if gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && code[0] != "1"
-									usernames.push(gameuzers[0][:P2][trindx][:NAME]) if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0 && code[0] != "2"
-									usernames.push(gameuzers[0][:P4][trindx*2][:NAME]) if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2][:STAT] == 0
-									usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME]) if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0 && code[0] != "4"
+									usernames.push(gameuzers[0][:P1][trindx][:NAME]) if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && code[0] != "1"
+									usernames.push(gameuzers[0][:P2][trindx][:NAME]) if gameuzers[0][:P2][trindx] && gameuzers[0][:P2][trindx][:STAT] == 0 && code[0] != "2"
+									usernames.push(gameuzers[0][:P4][trindx*2][:NAME]) if gameuzers[0][:P4][trindx*2] && gameuzers[0][:P4][trindx*2][:STAT] == 0
+									usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME]) if gameuzers[0][:P4][trindx*2+1] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0 && code[0] != "4"
 									usernames = usernames.uniq
 
-									if gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:NAME] != "-55"
+									if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:NAME] != "-55"
 										troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
 										troitext = "Здравствуйте! :robot:\n" +
 										"Случилось невероятное! Четверка на " + code[3] + " собрана.\n" +
@@ -540,7 +530,7 @@ after_initialize do
 									PostCreator.create(
 										Discourse.system_user,
 										skip_validations: true,
-										target_usernames: "MrBug,H1tomaru",#usernames.join(","),
+										target_usernames: "MrBug",#usernames.join(","),
 										archetype: Archetype.private_message,
 										subtype: TopicSubtype.system_message,
 										title: troititle,
