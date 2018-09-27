@@ -483,7 +483,8 @@ after_initialize do
 						)
 
 						#create notification if sobrano
-						console.log("start")
+						console.log('new like code goes here');
+						#console.log("start")
 						if gameuzers[0] && (gameuzers[0][:P2] || code[0] == 2) && (gameuzers[0][:P4] || code[0] == 4)
 							console.log("fullusers")
 							if gameuzers[0]["P"+code[0]]
