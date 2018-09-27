@@ -483,10 +483,8 @@ after_initialize do
 						)
 
 						#create notification if sobrano
-						console.log('new like code goes here');
-						#console.log("start")
 						if gameuzers[0] && (gameuzers[0][:P2] || code[0] == 2) && (gameuzers[0][:P4] || code[0] == 4)
-							console.log("fullusers")
+
 							if gameuzers[0]["P"+code[0]]
 								troino = gameuzers[0]["P"+code[0]].count + 1
 							else
@@ -494,10 +492,17 @@ after_initialize do
 							end
 							troino = troino / 2.0 if code[0] == 4
 							trindx = troino - 1
-							console.log("troino"+troino)
+
+							PostCreator.create(
+								Discourse.system_user,
+								target_usernames: "MrBug",#usernames.join(","),
+								archetype: Archetype.private_message,
+								subtype: TopicSubtype.system_message,
+								title: "Debug",
+								raw: "Троек " + troino + " Индекс " + trindx
+							)
 
 							if  (code[0] == 1 && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == 2 && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == 4 && troino.to_i == troino && gameuzers[0]["P2"][trindx])
-								console.log("fulltroikaexists")
 								thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
 								if thisgame[0][:PRICE] && !(thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_datetime - Time.now > 2600000)
 									usernames = ["MrBug" , current_user[:username]]
