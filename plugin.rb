@@ -492,7 +492,7 @@ after_initialize do
 							troino = troino / 2.0 if code[0] == 4
 							trindx = troino - 1
 
-							unless ( code[0] == 4 && troino.to_i == troino ) && !gameuzers[0]["P2"][trindx]
+							if  (code[0] == 1 && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == 2 && gameuzers[0]["P4"][trindx*2+1]) || (code[0] == 4 && troino.to_i == troino && gameuzers[0]["P2"][trindx])
 								thisgame = @@gamedb[:gameDB].find( { _id: code[2] } ).to_a
 								if thisgame[0][:PRICE] && !(thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_datetime - Time.now > 2600000)
 									usernames = ["MrBug" , current_user[:username]]
