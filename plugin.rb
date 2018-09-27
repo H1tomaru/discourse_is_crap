@@ -483,7 +483,11 @@ after_initialize do
 						)
 
 						#create notification if sobrano
-						troino = gameuzers[0]["P"+code[0]].count + 1
+						if gameuzers[0]["P"+code[0]]
+							troino = gameuzers[0]["P"+code[0]].count + 1
+						else
+							troino = 1
+						end
 						troino = troino / 2.0 if code[0] == 4
 						trindx = troino - 1
 
