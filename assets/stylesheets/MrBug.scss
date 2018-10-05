@@ -509,7 +509,13 @@ div.shinbakaz {
 		}
 
 		.mainco {
+
 			width: 100%
+
+			span:nth-child(1) {
+				vertical-align: middle
+			}
+
 		}
 
 		.baga {
