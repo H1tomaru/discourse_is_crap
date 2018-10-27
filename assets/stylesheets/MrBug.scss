@@ -657,11 +657,17 @@ div.shinbakaz {
 	}
 
 	.ghed {
+
 		color: #337ab7;
 		padding: 30px;
 		font-size: 2.2em;
 		cursor: pointer;
 		white-space: nowrap;
+
+		.smaladndark {
+			font-size: .6em
+		}
+
 	}
 
 	.ghed:hover {
