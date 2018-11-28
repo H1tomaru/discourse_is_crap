@@ -12,6 +12,8 @@ require 'uri'
 register_asset 'stylesheets/MrBug.scss'
 
 register_svg_icon "star-half-alt" if respond_to?(:register_svg_icon)
+register_svg_icon "times" if respond_to?(:register_svg_icon)
+register_svg_icon "check" if respond_to?(:register_svg_icon)
 
 after_initialize do
 
