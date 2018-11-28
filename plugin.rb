@@ -11,6 +11,8 @@ require 'uri'
 
 register_asset 'stylesheets/MrBug.scss'
 
+register_svg_icon "star-half-alt" if respond_to?(:register_svg_icon)
+
 after_initialize do
 
 	Discourse::Application.routes.append do
