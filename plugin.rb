@@ -47,7 +47,7 @@ after_initialize do
 		@@userfb2 = @@userdb2.use('userfb')
 
 		def test
-			render json: { current_user }
+			render json: { test: current_user }
 		end
 
 		def show
