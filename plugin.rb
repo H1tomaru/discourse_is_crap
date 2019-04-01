@@ -16,6 +16,7 @@ register_svg_icon "star-half-alt" if respond_to?(:register_svg_icon)
 after_initialize do
 
 	Discourse::Application.routes.append do
+		get '/testtest' => 'mrbug#testtest'
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
@@ -39,11 +40,15 @@ after_initialize do
 		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
-		
+
 		@@rentadb = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'rentagadb', user: 'rentaga', password: 'A75Z3E9R66' )
-		
+
 		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
+
+		def testtest
+			render json: { HiMom: Time.now - current_user[:created_at] }
+		end
 
 		def show
 			#variables, duh
