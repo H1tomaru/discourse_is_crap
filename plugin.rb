@@ -16,7 +16,6 @@ register_svg_icon "star-half-alt" if respond_to?(:register_svg_icon)
 after_initialize do
 
 	Discourse::Application.routes.append do
-		get '/testtest' => 'mrbug#test'
 		get '/MrBug' => 'mrbug#show'
 		get '/MrBug/troikopoisk/:input' => 'mrbug#troikopoisk'
 		get '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
@@ -45,10 +44,6 @@ after_initialize do
 		
 		@@userdb2 = Mongo::Client.new([ '104.244.76.126:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
-
-		def test
-			render json: current_user
-		end
 
 		def show
 			#variables, duh
@@ -404,9 +399,17 @@ after_initialize do
 					end
 				end
 
+				#antibotbaby!!!
+				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+					fbcount == 777
+				end
+
+				#antispambaby!!!
+				#will do later ;)
+
 				if fbcount < 10 && code[0] == "1"
 					render json: { piadin: true }
-				elsif fbcount == 777 || fbcount == 0
+				elsif fbcount == 777
 					render json: { banned: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -455,7 +458,16 @@ after_initialize do
 						fbcount = feedback[0][:fbG]
 					end
 				end
-				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777 || fbcount == 0
+
+				#antibotbaby!!!
+				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+					fbcount == 777
+				end
+
+				#antispambaby!!!
+				#will do later ;)
+				
+				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
 					render json: { zaipsfail: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -907,9 +919,17 @@ after_initialize do
 					end
 				end
 
+				#antibotbaby!!!
+				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+					fbcount == 777
+				end
+
+				#antispambaby!!!
+				#will do later ;)
+
 				if fbcount < 10 && code[0] == "1"
 					render json: { piadin: true }
-				elsif fbcount == 777 || fbcount == 0
+				elsif fbcount == 777
 					render json: { banned: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -958,7 +978,16 @@ after_initialize do
 						fbcount = feedback[0][:fbG]
 					end
 				end
-				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777 || fbcount == 0
+
+				#antibotbaby!!!
+				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+					fbcount == 777
+				end
+
+				#antispambaby!!!
+				#will do later ;)
+				
+				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
 					render json: { zaipsfail: true }
 				else
 					#find and count how many times user zaipsalsq
