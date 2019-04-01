@@ -70,7 +70,7 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0] && feedback[0][:fbB]
+				if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
 					fbcount = feedback[0][:fbG]
 				end
 				finalvar[:qzstuff] = true if fbcount >= 10
@@ -401,7 +401,7 @@ after_initialize do
 
 				if fbcount < 10 && code[0] == "1"
 					render json: { piadin: true }
-				elsif fbcount == 777
+				elsif fbcount == 777 || fbcount == 0
 					render json: { banned: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -450,7 +450,7 @@ after_initialize do
 						fbcount = feedback[0][:fbG]
 					end
 				end
-				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
+				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777 || fbcount == 0
 					render json: { zaipsfail: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -576,7 +576,7 @@ after_initialize do
 			if current_user
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0] && feedback[0][:fbB]
+				if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
 					fbcount = feedback[0][:fbG]
 				end
 				finalvar[:qzstuff] = true if fbcount >= 10
@@ -904,7 +904,7 @@ after_initialize do
 
 				if fbcount < 10 && code[0] == "1"
 					render json: { piadin: true }
-				elsif fbcount == 777
+				elsif fbcount == 777 || fbcount == 0
 					render json: { banned: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -953,7 +953,7 @@ after_initialize do
 						fbcount = feedback[0][:fbG]
 					end
 				end
-				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
+				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777 || fbcount == 0
 					render json: { zaipsfail: true }
 				else
 					#find and count how many times user zaipsalsq
