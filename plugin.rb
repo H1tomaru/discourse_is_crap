@@ -123,6 +123,7 @@ after_initialize do
 						p4UP = [0,400,50] if game[:PRICE] > 5000
 						p4UP = [0,100,50] if game[:PRICE] < 2600
 						p4UP = [0,50,25] if game[:PRICE] < 1000
+						p4UP = [0,100,0] if game[:PRICE] < 500
 
 						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN1 + p4UP[0]
 						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN2 + p4UP[1]
