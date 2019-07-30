@@ -418,30 +418,6 @@ div.shinbakaz {
 			border-left: 4px solid #27ae60
 	}
 
-	table.kadu:before, table.udak:before {
-			position: absolute;
-			top: 50%;
-			margin-top: -15px;
-			left: -15px;
-			color: #fff;
-			width: 30px;
-			height: 30px;
-			border-radius: 50%;
-			line-height: 30px;
-			font-size: 1.8em;
-			text-align: center;
-	}
-
-	table.kadu:before {
-			background-color: #f08080;
-			content: "$";
-	}
-
-	table.udak:before {
-			background-color: #27ae60;
-			content: "i";
-	}
-
 	.MrBug {
 
 		table {
