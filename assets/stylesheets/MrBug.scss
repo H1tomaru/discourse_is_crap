@@ -1136,7 +1136,15 @@ div.rentobaka {
 			text-align: center;
 
 			input {
-				margin-left: 20px
+				margin-right: 0;
+				vertical-align: text-top;
+			}
+
+			div {
+				display: inline;
+				white-space: nowrap;
+				margin-left: 20px;
+				
 			}
 
 			span {
