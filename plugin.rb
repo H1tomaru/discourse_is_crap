@@ -90,7 +90,7 @@ after_initialize do
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
-				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, fbBuB: 0, fbBuG: 0, fbBuN: 0 } ).to_a
+				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, fbBuB: 0, fbBuG: 0 } ).to_a
 
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
@@ -1095,10 +1095,10 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0 }
-			#page owners and users with negative feedbacks cant do feedbacks! 
+			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, fbBuG: 0, fbBuB: 0 }
+			#page owners and users with negative feedbacks cant do feedbacks!
 			if current_user
-				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
+				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbG: 0, fbN: 0, fbBuG: 0, fbBuB: 0 } ).to_a
 				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
 			end
 
@@ -1109,15 +1109,19 @@ after_initialize do
 			if userfb[0]
 				#remove duplicates
 				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] ) if userfb[0][:FEEDBACKS].uniq!
+
+				#might wanna optimize this... a lot... but ehh...
+
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].each do |fb|
 					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE] > 0
 					( feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE]; fb[:COLOR] = 'bgred3' ) if fb[:SCORE] < 0
 					( feedbacks[:fbN] = feedbacks[:fbN] + 1; fb[:COLOR] = 'bggrey' ) if fb[:SCORE] == 0
-				end
-				#update db with correct values if needed
-				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN] } } )
+					#count bugofb
+					if fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 )
+						feedbacks[:fbBuG] = feedbacks[:fbBuG] + fb[:SCORE] if fb[:SCORE] > 0
+						feedbacks[:fbBuB] = feedbacks[:fbBuB] - fb[:SCORE] if fb[:SCORE] < 0	
+					end
 				end
 				#save final variable
 				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].reverse.each_slice(50)
@@ -1125,7 +1129,16 @@ after_initialize do
 				feedbacks[:PAGES] = [*1..(userfb[0][:FEEDBACKS].length / 50.0).ceil]
 			end
 
+			#render fb
 			render json: feedbacks
+
+			#do some stuff after rendering
+			if userfb[0]
+				#update db with correct values if needed
+				if not userfb[0][:fbG] && userfb[0][:fbB] && userfb[0][:fbN] && userfb[0][:fbBuG] && userfb[0][:fbBuB] && userfb[0][:fbG] == feedbacks[:fbG] && userfb[0][:fbB] == feedbacks[:fbB] && userfb[0][:fbN] == feedbacks[:fbN]
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN], fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB] } } )
+				end
+			end
 		end
 		
 		def zafeedback
