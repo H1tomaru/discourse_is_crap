@@ -69,7 +69,7 @@ after_initialize do
 
 			#if viever registered, count his fb
 			if current_user
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
 				if feedback[0] && feedback[0][:fbBuB] && feedback[0][:fbBuB] == 0
 					fbcount = feedback[0][:fbBuG]
 				end
@@ -90,7 +90,7 @@ after_initialize do
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
-				userFB = @@userfb[:userfb].find().to_a
+				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, fbBuB: 0, fbBuG: 0, fbBuN: 0 } ).to_a
 
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
@@ -399,12 +399,12 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0] && feedback[0][:fbB]
-					if feedback[0][:fbB] > 0
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				if feedback[0] && feedback[0][:fbBuB]
+					if feedback[0][:fbBuB] > 0
 						fbcount = 777
 					else
-						fbcount = feedback[0][:fbG]
+						fbcount = feedback[0][:fbBuG]
 					end
 				end
 
@@ -416,8 +416,8 @@ after_initialize do
 				#antispambaby!!!
 				#will do later ;)
 
-				if fbcount < 10 && code[0] == "1"
-					render json: { piadin: true }
+				if fbcount < 5 && code[0] == "1"
+					render json: { piadin: true, fbcound: fbcount }
 				elsif fbcount == 777
 					render json: { banned: true }
 				else
@@ -443,7 +443,6 @@ after_initialize do
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
 						render json: prezaips[0]
-						
 					end
 
 				end
@@ -459,12 +458,12 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0] && feedback[0][:fbB]
-					if feedback[0][:fbB] > 0
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				if feedback[0] && feedback[0][:fbBuB]
+					if feedback[0][:fbBuB] > 0
 						fbcount = 777
 					else
-						fbcount = feedback[0][:fbG]
+						fbcount = feedback[0][:fbBuG]
 					end
 				end
 
@@ -476,7 +475,7 @@ after_initialize do
 				#antispambaby!!!
 				#will do later ;)
 				
-				if ( fbcount < 10 && code[0] == "1" ) || fbcount == 777
+				if ( fbcount < 5 && code[0] == "1" ) || fbcount == 777
 					render json: { zaipsfail: true }
 				else
 					#find and count how many times user zaipsalsq
@@ -541,7 +540,7 @@ after_initialize do
 										"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
 										"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
 										"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-										"4) Написать в общем чате как вам не повезло с сотоварищами по составу\n\n" +
+										"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
 										"И помните! Прочность цепи определяется ее самым слабым звеном!\n" +
 										"Держитесь! И да поможет вам :bug:"
 									else
@@ -553,7 +552,7 @@ after_initialize do
 										"1) Оплатить свою позицию с учетом отсутствующего П1, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
 										"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
 										"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-										"4) Написать в общем чате как вам не повезло с сотоварищами по составу\n\n" +
+										"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
 										"И помните! Прочность цепи определяется ее самым слабым звеном!\n" +
 										"Держитесь! И да поможет вам :bug:"
 									end
@@ -963,7 +962,6 @@ after_initialize do
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
 						render json: prezaips[0]
-						
 					end
 
 				end
