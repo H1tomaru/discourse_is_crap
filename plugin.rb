@@ -50,6 +50,7 @@ after_initialize do
 			finalvar = {}
 			finalvar[:qzstuff] = false
 			priceSTEP = 0
+			fbcount = 0
 			#cached vars
 			qzlist = []
 			gamelist = []
@@ -68,27 +69,29 @@ after_initialize do
 
 			#if viever registered, count his fb
 			if current_user
-				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
-					fbcount = feedback[0][:fbG]
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				if feedback[0] && feedback[0][:fbBuB] && feedback[0][:fbBuB] == 0
+					fbcount = feedback[0][:fbBuG]
 				end
-				finalvar[:qzstuff] = true if fbcount >= 10
+				finalvar[:qzstuff] = true if fbcount >= 5
 			end
 
-			if gamelist.empty?
-				#create qzlist variable
+			if qzlist.empty?
+				#create qzlist variable, its same for everyone, we chache it, so no need extra user checks
 				glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
 				glist.each do |game|
 					qzlist.push( [ game[:_id] , game[:gameNAME] ] )
 				end
+			end
 
+			if gamelist.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find().to_a
+
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
 				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
@@ -100,6 +103,7 @@ after_initialize do
 						finalvar[:error] = game[:_id]
 					end
 				end
+
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#type 0 games have 0 price
@@ -217,7 +221,7 @@ after_initialize do
 								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
 								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
 							end
-							#calculate prices
+							#calculate prices #might want to remove priceUP variable since not using it, priceSTEP = 0
 							if game[:PRICE] > 0
 								priceUP = priceSTEP * (i / 10).floor
 								#get current pricedown
@@ -251,10 +255,11 @@ after_initialize do
 								P1FBred: p1FBred, P2FBred: p2FBred, P3FBred: p3FBred, P4FBred: p4FBred,
 								P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
 							} )
+							#not needed since price is constant
 							#if current troika has any free position, save its price to display on button, if not saved one already
-							price1DISPLAY = p1PRICE if p1.length == 0 && price1DISPLAY == 0
-							price2DISPLAY = p2PRICE if p2.length == 0 && price2DISPLAY == 0
-							price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
+							#price1DISPLAY = p1PRICE if p1.length == 0 && price1DISPLAY == 0
+							#price2DISPLAY = p2PRICE if p2.length == 0 && price2DISPLAY == 0
+							#price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
 						end
 						#remove this game users form userdb variable
 						#userDB.delete_if{ |h| h['_id'] == game[:_id] }
@@ -265,21 +270,22 @@ after_initialize do
 					game[:P3NO] = p3NO
 					#set the current display price, depending on amount of troek, if price is zero, don't touch it
 					if game[:PRICE] > 0
-						if price1DISPLAY > 0
-							game[:P4PRICE1] = price1DISPLAY
-						else
-							game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
-						end
-						if price2DISPLAY > 0
-							game[:P4PRICE2] = price2DISPLAY
-						else
-							game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
-						end
-						if price3DISPLAY > 0
-							game[:P4PRICE3] = price3DISPLAY
-						else
-							game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
-						end
+						#not needed since price is constant
+						#if price1DISPLAY > 0
+						#	game[:P4PRICE1] = price1DISPLAY
+						#else
+						#	game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
+						#end
+						#if price2DISPLAY > 0
+						#	game[:P4PRICE2] = price2DISPLAY
+						#else
+						#	game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
+						#end
+						#if price3DISPLAY > 0
+						#	game[:P4PRICE3] = price3DISPLAY
+						#else
+						#	game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
+						#end
 						#set price to -10 if its x100
 						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
 						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
@@ -357,7 +363,7 @@ after_initialize do
 						end
 					end
 				end
-				#shorten maigamez1 game names of they too long
+				#shorten maigamez1 game names if they too long
 				finalvar[:maigamez1].each {|game| game[:gNAME] = game[:gNAME].truncate(40)}
 				#fill 3 variables for each game type
 				finalvar[:gamedb1].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 1 || game[:TYPE] == 0
