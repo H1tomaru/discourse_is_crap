@@ -220,23 +220,26 @@ div.shinbakaz {
 		
 		.bagariban:before, .bagariban:after {
 			content: "";
-			width: 22px;
+			width: 50px;
 			position: absolute;
 			border-style: solid;
 			border-color: #004666;
-			border-left-color: transparent;
-			border-right-color: #99dfff;
 			top: 30px;
-			left: -47px;
 			z-index: -1;
 		}
 
 		.bagariban:before {
-			border-width: 28px 35px 28px 25px;
+			border-width: 28px 30px 28px 25px;
+			left: -75px;
+			border-left-color: transparent;
+			border-right-color: #99dfff;
 		}
 
 		.bagariban:after {
-			border-width: 28px 25px 28px 35px;
+			border-width: 28px 25px 28px 30px;
+			right: -75px;
+			border-left-color: #99dfff;
+			border-right-color: transparent;
 		}
 
 		.bagaspin {
