@@ -74,6 +74,13 @@
 						Вы уже оставляли отзыв, попробуйте позже
 					</div>
 				{{/if}}
+				
+				{{#if otziv.bakas}}
+					<div class="mudalcontent mudaladdon headin3">
+						Вы не можете оставлять отзывы имея отрицательный отзыв<br>
+						Обратитетсь к <a href='/u/MrBug'>Организатору</a> чтобы исправить отзыв
+					</div>
+				{{/if}}
 
 				{{#if otziv.fail}}
 					<div class="mudalcontent headin3 prezaips">
