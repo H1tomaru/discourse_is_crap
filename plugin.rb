@@ -416,7 +416,7 @@ after_initialize do
 				#antispambaby!!!
 				#will do later ;)
 
-				if fbcount < 5 && code[0] == "1"
+				if fbcount < 5 && code[0] == "1" && current_user[:username] != 'MrBug'
 					render json: { piadin: true, fbcount: fbcount }
 				elsif fbcount == 777
 					render json: { banned: true }
