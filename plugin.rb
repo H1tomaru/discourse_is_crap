@@ -1096,10 +1096,9 @@ after_initialize do
 
 		def feedbacks
 			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, fbBuG: 0, fbBuB: 0 }
-			#page owners and users with negative feedbacks cant do feedbacks!
+			#page owners cant do feedbacks!
 			if current_user
-				viewerfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbG: 0, fbN: 0, fbBuG: 0, fbBuB: 0 } ).to_a
-				feedbacks[:MENOSHO] = false if (viewerfb[0] && viewerfb[0][:fbB] && viewerfb[0][:fbB] > 0) || current_user[:username].downcase == params[:username].downcase
+				feedbacks[:MENOSHO] = false if current_user[:username].downcase == params[:username].downcase
 			end
 
 			#find feedbacks from my database
@@ -1144,30 +1143,36 @@ after_initialize do
 		def zafeedback
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
-			#page owners, guests and users with negative feedbacks cant do feedbacks! also cant do short or very long feedbacks
+			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 2 && current_user[:username].downcase != params[:username].downcase
-				#find if user gave feedback already today
+				#users with negative feedbacks cant do feedbacks!
 				ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-				if ufb[0]
-					fedbacks[2] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
-				end
-				if fedbacks[2] && current_user[:username] != 'MrBug'
-					render json: { gavas: true }
+				if (ufb[0] && ufb[0][:fbB] && ufb[0][:fbB] > 0)
+					render json: { bakas: true }
 				else
-				fedbacks[0] = fedbacks[0].to_i
-				fedbacks[0] = 1 if fedbacks[0] == 1
-				fedbacks[0] = 0 if fedbacks[0] == 2
-				fedbacks[0] = -1 if fedbacks[0] == 3
-				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
-					FEEDBACKS: {
-						FEEDBACK: fedbacks[1].strip,
-						pNAME: current_user[:username],
-						DATE: Time.now.strftime("%Y.%m.%d"),
-						SCORE: fedbacks[0],
-						DELETED: false
-					}
-				} }, { upsert: true } )
-				render json: { winrars: true }
+					#find if user gave feedback already today
+					if ufb[0]
+						fedbacks[2] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+					end
+					if fedbacks[2] && current_user[:username] != 'MrBug'
+						render json: { gavas: true }
+					else
+					fedbacks[0] = fedbacks[0].to_i
+					fedbacks[0] = 1 if fedbacks[0] == 1
+					fedbacks[0] = 0 if fedbacks[0] == 2
+					fedbacks[0] = -1 if fedbacks[0] == 3
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
+						FEEDBACKS: {
+							FEEDBACK: fedbacks[1].strip,
+							pNAME: current_user[:username],
+							DATE: Time.now.strftime("%Y.%m.%d"),
+							SCORE: fedbacks[0],
+							DELETED: false
+						}
+					} }, { upsert: true } )
+
+					render json: { winrars: true }
+					end
 				end
 			else
 				render json: { fail: true }
