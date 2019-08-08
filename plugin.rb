@@ -417,7 +417,7 @@ after_initialize do
 				#will do later ;)
 
 				if fbcount < 5 && code[0] == "1"
-					render json: { piadin: true, fbcound: fbcount }
+					render json: { piadin: true, fbcount: fbcount }
 				elsif fbcount == 777
 					render json: { banned: true }
 				else
