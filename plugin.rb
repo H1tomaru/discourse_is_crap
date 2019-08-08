@@ -1146,11 +1146,12 @@ after_initialize do
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 2 && current_user[:username].downcase != params[:username].downcase
 				#users with negative feedbacks cant do feedbacks!
-				ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-				if (ufb[0] && ufb[0][:fbB] && ufb[0][:fbB] > 0)
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbG: 0, fbN: 0, fbBuG: 0, fbBuB: 0} ).to_a
+				if (feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] > 0)
 					render json: { bakas: true }
 				else
 					#find if user gave feedback already today
+					ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
 					if ufb[0]
 						fedbacks[2] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 					end
