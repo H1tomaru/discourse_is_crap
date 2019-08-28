@@ -1052,7 +1052,7 @@ after_initialize do
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П3")
 					#p4 version
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
-						if sostav[0] && sostav[0].include? "gmail.com" && sostav[1] && sostav[2] && sostav[3]
+						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
 							sostav[1] = sostav[1].split(" ---> ").map { |item| item.strip }
 							sostav[2] = sostav[2].split(" ---> ").map { |item| item.strip }
@@ -1071,7 +1071,7 @@ after_initialize do
 				else
 					#p3 version
 					addstuff[:NEWSTRING].each_slice(3) do |sostav|
-						if sostav[0] && sostav[0].include? "gmail.com"  &&  sostav[1] && sostav[2]
+						if sostav[0] && (sostav[0].include? "gmail.com") &&  sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
 							sostav[1] = sostav[1].split(" ---> ").map { |item| item.strip }
 							sostav[2] = sostav[2].split(" ---> ").map { |item| item.strip }
