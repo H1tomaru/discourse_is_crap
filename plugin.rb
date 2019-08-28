@@ -1044,15 +1044,26 @@ after_initialize do
 			addstuff[:RESULT] = []
 			feedbacks = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
-				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
+				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove everyting left of " ---> ", #4: remove prices like "(800 рублей)", #5: make proper new lines
+				#addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
+				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
+				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p3 or p4
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П3")
 					#p4 version
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
 						if sostav[0] && sostav[0].include? "gmail.com" && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
-							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { _id: sostav[0].strip, GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							sostav[1] = sostav[1].split(" ---> ").map { |item| item.strip }
+							sostav[2] = sostav[2].split(" ---> ").map { |item| item.strip }
+							sostav[3] = sostav[3].split(" ---> ").map { |item| item.strip }
+							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].last, П41: sostav[2].last, П42: sostav[3].last})
+							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {
+								_id: sostav[0].strip, GAME: addstuff[:GAME].strip,
+								P2: sostav[1].last, P41: sostav[2].last, P42: sostav[3].last,
+								HISTORYP2: sostav[1], HISTORYP41: sostav[2], HISTORYP42: sostav[3],
+								DATE: Time.now.strftime("%Y.%m.%d")
+								}, { upsert: true } )
 							#add those users to a list of users to give them feedback after, if were giving it
 							feedbacks.push(sostav[1].strip, sostav[2].strip, sostav[3].strip) if addstuff[:ADDFB]
 						end
@@ -1062,8 +1073,15 @@ after_initialize do
 					addstuff[:NEWSTRING].each_slice(3) do |sostav|
 						if sostav[0] && sostav[0].include? "gmail.com"  &&  sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
-							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {  _id: sostav[0].strip, GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							sostav[1] = sostav[1].split(" ---> ").map { |item| item.strip }
+							sostav[2] = sostav[2].split(" ---> ").map { |item| item.strip }
+							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].last, П3: sostav[2].last })
+							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {
+								_id: sostav[0].strip, GAME: addstuff[:GAME].strip,
+								P2: sostav[1].last, P3: sostav[2].last,
+								HISTORYP2: sostav[1], HISTORYP3: sostav[2],
+								DATE: Time.now.strftime("%Y.%m.%d")
+								}, { upsert: true } )
 							#add those users to a list of users to give them feedback after, if were giving it
 							feedbacks.push(sostav[1].strip, sostav[2].strip) if addstuff[:ADDFB]
 						end
