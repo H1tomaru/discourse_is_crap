@@ -1049,30 +1049,35 @@ after_initialize do
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П3")
 					#p4 version
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
-						if sostav[0] && sostav[1] && sostav[2] && sostav[3]
+						if sostav[0] && sostav[0].include? "gmail.com" && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP4] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П41: sostav[2].strip, П42: sostav[3].strip})
 							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, { _id: sostav[0].strip, GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P41: sostav[2].strip, P42: sostav[3].strip, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							#add those users to a list of users to give them feedback after, if were giving it
 							feedbacks.push(sostav[1].strip, sostav[2].strip, sostav[3].strip) if addstuff[:ADDFB]
 						end
 					end
 				else
 					#p3 version
 					addstuff[:NEWSTRING].each_slice(3) do |sostav|
-						if sostav[0] && sostav[1] && sostav[2]
+						if sostav[0] && sostav[0].include? "gmail.com"  &&  sostav[1] && sostav[2]
 							addstuff[:winrarP3] = true
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: sostav[1].strip, П3: sostav[2].strip })
 							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {  _id: sostav[0].strip, GAME: addstuff[:GAME].strip, P2: sostav[1].strip, P3: sostav[2].strip, DATE: Time.now.strftime("%Y.%m.%d") }, { upsert: true } )
+							#add those users to a list of users to give them feedback after, if were giving it
 							feedbacks.push(sostav[1].strip, sostav[2].strip) if addstuff[:ADDFB]
 						end
 					end
 				end
-				#add feedback of we're doing it
+
+				render json: addstuff
+
+				#add feedback if we're doing it
 				if addstuff[:ADDFB] == 'true'
 					#delete duplicate users
 					feedbacks = feedbacks.uniq
 					feedbacks.each do |user|
-						#find if user gave feedback already today
+						#find if we gave user this feedback already
 						ufb = @@userfb[:userfb].find( { _id: user.downcase } ).to_a
 						if ufb[0]
 							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
@@ -1090,7 +1095,6 @@ after_initialize do
 						end
 					end
 				end
-				render json: addstuff
 			end
 		end
 
