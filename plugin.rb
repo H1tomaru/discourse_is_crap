@@ -380,7 +380,7 @@ after_initialize do
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATEP2: 0, DATEP3: 0, DATEP41: 0, DATEP42: 0, HISTORYP2: 0, HISTORYP3: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
+				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { DATE: 0, HISTORYP2: 0, HISTORYP3: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
 				if zapislist[0] && ( Time.now - zapislist[0][:DATE].to_time < 63000000 )
 					zapislist[0].except!(:DATE)
 					zapislist[0][:poiskwin] = true
