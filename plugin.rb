@@ -1065,7 +1065,7 @@ after_initialize do
 								DATE: Time.now.strftime("%Y.%m.%d")
 								}, { upsert: true } )
 							#add those users to a list of users to give them feedback after, if were giving it
-							feedbacks.push(sostav[1].strip, sostav[2].strip, sostav[3].strip) if addstuff[:ADDFB]
+							feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last) if addstuff[:ADDFB]
 						end
 					end
 				else
@@ -1083,7 +1083,7 @@ after_initialize do
 								DATE: Time.now.strftime("%Y.%m.%d")
 								}, { upsert: true } )
 							#add those users to a list of users to give them feedback after, if were giving it
-							feedbacks.push(sostav[1].strip, sostav[2].strip) if addstuff[:ADDFB]
+							feedbacks.push(sostav[1].last, sostav[2].last) if addstuff[:ADDFB]
 						end
 					end
 				end
