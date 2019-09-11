@@ -370,46 +370,7 @@ div.shinbakaz {
 
 	table.atats {
 
-		position: relative;
-		background: rgba(0, 0, 0, 0.02);
-
-		.smaladndark, .blakarand {
-			position: relative;
-			top: -2px;
-		}
-
-		tr {
-			border-bottom: 1px solid #e9e9e9
-		}
-
-		tr:last-child {
-			border-bottom: none
-		}
-
-		td:nth-child(1) {
-			padding-left: 15px;
-			padding-right: 5px;
-			width: 100px;
-		}
-
-		td:nth-child(2) {
-
-			line-height: 12px;
-
-			a {
-				font-size: .9em;
-			}
-
-			span {
-				font-size: .8em;
-			}
-
-		}
-
-		td:last-child {
-			white-space: nowrap;
-			overflow: hidden;
-		}
+		
 
 	}
 
@@ -870,28 +831,6 @@ div.shinbakaz {
 				bottom: -4px
 			}
 			
-		}
-
-		table.atats {
-
-			td:nth-child(1) {
-				width: 20px;
-				padding-left: 5px;
-				padding-right: 0;
-			}
-
-			td:nth-child(2) {
-
-				a {
-					font-size: .75em
-				}
-				
-				span {
-					font-size: .65em
-				}
-
-			}
-
 		}
 
 		.ghed {
