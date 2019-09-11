@@ -92,14 +92,15 @@
 		</tbody>
 	</table>
 
-	<hr>
+	<br>
 	
 	{{#if model.maigamez1}}
+		<div class="ghead red"><h2>ЖДЕМ ОПЛАТУ</h2></div>
 		<table class="atats kadu">
 			{{#each model.maigamez1 as |game|}}
 				<tr>
-					<td><div class='malabela2 bgred3'><span class="hideoS">ждем оплату</span><span class="hideoB">$</span></div></td>
 					<td>
+						<img src="{{game.gPIC}}" height="20" alt="{{game.gNAME}}">
 						<a>{{game.gNAME}}</a>
 						{{#if game.TYPE2}}
 							<br><span>Акция до: {{game.DATE}}</span>
@@ -109,26 +110,33 @@
 						{{/if}}
 					</td>
 
+					<td>
+						П{{game.POSITION}}
+					</td>
+
 					{{#if game.PRICE}}
 						<td>
-							<span class="blakarand">П{{game.POSITION}}</span> 
-							<span class="blakarand hideoS">Сбер / QIWI +7 9169493363</span> 
-							<span class="blakarand">{{game.PRICE}}р</span>
-						{{#if game.P1ADD}}<span class="smaladndark">+{{game.P1ADD}}р без П1</span>{{/if}}
+							{{game.PRICE}}р
 						</td>
 					{{else}}
 						<td>
-							<span class="blakarand">П{{game.POSITION}}</span> 
-							<span class="smaladndark">Цена <span class="hideoS">позиции ещё </span>неизвестна</span>
+							Цена неизвестна
 						</td>
 					{{/if}}
+
+					<td>
+						{{#if game.P1ADD}}без П1{{/if}}
+					</td>
 				</tr>
 			{{/each}}
 		</table>
-		<span class="hideoB blakarand big">Сбер / QIWI +7 9169493363</span>
-		<span class="smaladndark tablq">В комментарии к платежу обязательно укажите ваш ник! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!<br>
-		Реквизиты на оплату Webmoney, Яндекс, Paypal, BTC, ETH можно получить через <a href='/u/MrBug'>Личные Сообщения</a><br>
-		Выписаться из состава можно только через <a href='/u/MrBug'>Личные Сообщения</a>, за злоупотребление возможны последствия :)</span>
+		<span class="smaladndark tablq">
+			Сбер / QIWI +7 9169493363<br>
+			В комментарии к платежу обязательно укажите ваш ник! Напишите мне <a href='/u/MrBug'>Личное Сообщение</a> как оплатите!<br>
+			Реквизиты на оплату Webmoney, Яндекс, Paypal, BTC, ETH можно получить через <a href='/u/MrBug'>Личные Сообщения</a><br>
+			Составы с пометкой "без П1" оформляются на троих, стоимость свободной позиции П1 делится поровну между всеми участниками<br>
+			Выписаться из состава можно только через <a href='/u/MrBug'>Личные Сообщения</a>, за злоупотребление возможны последствия :)
+		</span>
 
 		<hr>
 
@@ -137,6 +145,7 @@
 	<br>
 
 	{{#if model.maigamez2}}
+		<div class="ghead green"><h2>ОПЛАЧЕНО</h2></div>
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
@@ -146,7 +155,10 @@
 				</tr>
 			{{/each}}
 		</table>
-		<span class="smaladndark tablq">Раздача осуществляется в порядке П1 -> П4 -> П2<br>Ход и статус раздачи отслеживайте по списку ниже :)</span>
+		<span class="smaladndark tablq">
+			Раздача осуществляется в порядке П1 -> П4 -> П2<br>
+			Ход и статус раздачи отслеживайте по списку ниже :)
+		</span>
 
 		<hr>
 
