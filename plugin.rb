@@ -372,7 +372,7 @@ after_initialize do
 					end
 				end
 				#shorten maigamez1 game names if they too long
-				finalvar[:maigamez1].each {|game| game[:gNAME] = game[:gNAME].truncate(40)}
+				#finalvar[:maigamez1].each {|game| game[:gNAME] = game[:gNAME].truncate(40)} not needed. can css same result.
 				#fill 3 variables for each game type
 				finalvar[:gamedb1].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 1 || game[:TYPE] == 0
 				finalvar[:gamedb2].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 2
