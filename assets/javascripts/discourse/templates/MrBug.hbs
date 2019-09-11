@@ -101,6 +101,13 @@
 				<tr>
 					<td>
 						<img src="{{game.gPIC}}" height="20" alt="{{game.gNAME}}">
+					</td>
+
+					<td>
+						П{{game.POSITION}}
+					</td>
+
+					<td>
 						<a>{{game.gNAME}}</a>
 						{{#if game.TYPE2}}
 							<br><span>Акция до: {{game.DATE}}</span>
@@ -110,13 +117,10 @@
 						{{/if}}
 					</td>
 
-					<td>
-						П{{game.POSITION}}
-					</td>
-
 					{{#if game.PRICE}}
 						<td>
 							{{game.PRICE}}р
+							{{#if game.P1ADD}} + {{game.P1ADD}}р{{/if}}
 						</td>
 					{{else}}
 						<td>
@@ -149,9 +153,17 @@
 		<table class="atats udak">
 			{{#each model.maigamez2 as |game|}}
 				<tr>
-					<td><div class='malabela2 bggr'><span class="hideoS">оплачено</span><span class="hideoB">i</span></div></td>
-					<td><a>{{game.gNAME}}</a></td>
-					<td><span class="blakarand">П{{game.POSITION}}</span></td>
+					<td>
+						<img src="{{game.gPIC}}" height="20" alt="{{game.gNAME}}">
+					</td>
+
+					<td>
+						П{{game.POSITION}}
+					</td>
+
+					<td>
+						<a>{{game.gNAME}}</a>
+					</td>
 				</tr>
 			{{/each}}
 		</table>
