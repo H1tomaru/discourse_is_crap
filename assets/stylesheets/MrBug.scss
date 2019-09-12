@@ -372,8 +372,20 @@ div.shinbakaz {
 
 		white-space: nowrap;
 
+		.smaladndark {
+			display: table;
+			margin: auto;
+			margin-top: -10px;
+		}
+
 		img {
 			margin-left: 9px
+		}
+
+		td:nth-child(3) {
+			text-overflow:ellipsis;
+			overflow: hidden;
+			max-width:200px;
 		}
 
 		tr:nth-child(2n+1) {
