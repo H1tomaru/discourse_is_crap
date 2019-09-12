@@ -373,6 +373,38 @@ div.shinbakaz {
 		
 
 	}
+	
+	div.ghead {
+
+		margin: 0 0 9px;
+
+		h2 {
+			margin: 0;
+			display: inline-block;
+			letter-spacing: -1px;
+			font-weight: normal;
+		}
+
+	}
+
+	div.ghead.red {
+		border-bottom: 1px solid #f08080;
+
+		h2 {
+			border-bottom: 1px solid #f08080
+		}
+
+	}
+
+	div.ghead.green {
+		border-bottom: 1px solid #27ae60;
+
+		h2 {
+			border-bottom: 1px solid #27ae60
+		}
+
+	}
+
 
 	table.kadu {
 			border-left: 4px solid #f08080
