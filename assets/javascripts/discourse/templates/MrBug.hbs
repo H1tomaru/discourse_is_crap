@@ -158,10 +158,15 @@
 	{{#if model.maigamez2}}
 		<div class="ghead green"><h2>ОПЛАЧЕНО</h2></div>
 		<table class="atats udak">
+		<colgroup>
+			<col width="70px" />
+			<col width="30px" />
+			<col width="100%" />
+		</colgroup>
 			{{#each model.maigamez2 as |game|}}
 				<tr>
 					<td>
-						<img src="{{game.gPIC}}" height="20" alt="{{game.gNAME}}">
+						<img src="{{game.gPIC}}" height="30" alt="{{game.gNAME}}">
 					</td>
 
 					<td>
