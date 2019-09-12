@@ -379,7 +379,18 @@ div.shinbakaz {
 		}
 
 		img {
-			margin-left: 9px
+			margin-left: 9px;
+			height: 30px;
+		}
+
+		td:nth-child(2), td:nth-child(4) {
+			font-weight: bold;
+			padding: .0em .4em;
+		}
+		
+		td:nth-child(5) {
+			padding: .0em .4em;
+			letter-spacing: -1px;
 		}
 
 		td:nth-child(3) {
@@ -388,8 +399,12 @@ div.shinbakaz {
 			max-width:200px;
 		}
 
-		tr:nth-child(2n+1) {
-			background-color: #e6e6e6
+		tr:nth-child(even) {
+
+			td:not(:first-child) {
+				background-color: #e6e6e6
+			}
+
 		}
 
 	}
