@@ -217,18 +217,18 @@ after_initialize do
 							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 							#create comment and account variable if they exist
-							if users[(i+1).to_s]
-								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
-								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
+							if users[(i+1).to_str]
+								account = users[(i+1).to_str][:ACCOUNT] if users[(i+1).to_str][:ACCOUNT]
+								comment = users[(i+1).to_str][:COMMENT] if users[(i+1).to_str][:COMMENT]
 							end
 							#calculate prices #might want to remove priceUP variable since not using it, priceSTEP = 0
 							if game[:PRICE] > 0
 								priceUP = priceSTEP * (i / 10).floor
 								#get current pricedown
-								if users[(i+1).to_s]
-									p1PDOWN = users[(i+1).to_s][:PDOWN1] if users[(i+1).to_s][:PDOWN1]
-									p2PDOWN = users[(i+1).to_s][:PDOWN2] if users[(i+1).to_s][:PDOWN2]
-									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
+								if users[(i+1).to_str]
+									p1PDOWN = users[(i+1).to_str][:PDOWN1] if users[(i+1).to_str][:PDOWN1]
+									p2PDOWN = users[(i+1).to_str][:PDOWN2] if users[(i+1).to_str][:PDOWN2]
+									p3PDOWN = users[(i+1).to_str][:PDOWN3] if users[(i+1).to_str][:PDOWN3]
 								end
 								#create current troika prices
 								p1PRICE = game[:P4PRICE1] - p1PDOWN
@@ -753,18 +753,18 @@ after_initialize do
 							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
 							#create comment and account variable if they exist
-							if users[(i+1).to_s]
-								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
-								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
+							if users[(i+1).to_str]
+								account = users[(i+1).to_str][:ACCOUNT] if users[(i+1).to_str][:ACCOUNT]
+								comment = users[(i+1).to_str][:COMMENT] if users[(i+1).to_str][:COMMENT]
 							end
 							#calculate prices
 							if game[:PRICE] > 0
 								priceUP = priceSTEP * (i / 10).floor
 								#get current pricedown
-								if users[(i+1).to_s]
-									p1PDOWN = users[(i+1).to_s][:PDOWN1] if users[(i+1).to_s][:PDOWN1]
-									p2PDOWN = users[(i+1).to_s][:PDOWN2] if users[(i+1).to_s][:PDOWN2]
-									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
+								if users[(i+1).to_str]
+									p1PDOWN = users[(i+1).to_str][:PDOWN1] if users[(i+1).to_str][:PDOWN1]
+									p2PDOWN = users[(i+1).to_str][:PDOWN2] if users[(i+1).to_str][:PDOWN2]
+									p3PDOWN = users[(i+1).to_str][:PDOWN3] if users[(i+1).to_str][:PDOWN3]
 								end
 								#create current troika prices
 								p1PRICE = game[:P3PRICE1] - p1PDOWN	##dif
@@ -1218,7 +1218,18 @@ after_initialize do
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 				#if found, clean up obsolete games from there once in while...
 				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE] > 7777777 )
-					
+					uzagamez = rentagamez.map { |x| x.values[0] }
+					hideogamez = rentahideo[0].except(:_id, :DATE).keys
+					#might need it, or not... dunno...
+					#uzagamez.map! { |x| x.to_str }
+					hideogamez.map! { |x| x.to_s }
+					brokengamez = hideogamez - uzagamez
+					unless brokengamez.empty?
+						#dunno if that works...
+						rentahideo[0].except!(*brokengamez)
+					end
+					rentahideo[0][:DATE] = Time.now.strftime("%Y.%m.%d")
+					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, { rentahideo[0] }, { upsert: true } )
 				end
 			end
 
