@@ -69,7 +69,7 @@ after_initialize do
 
 			#if viever registered, count his fb
 			if current_user
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
 				if feedback[0] && feedback[0][:fbBuB] && feedback[0][:fbBuB] == 0
 					fbcount = feedback[0][:fbBuG]
 				end
@@ -407,7 +407,7 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
 				if feedback[0] && feedback[0][:fbBuB]
 					if feedback[0][:fbBuB] > 0
 						fbcount = 777
@@ -466,7 +466,7 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbB: 0, fbG: 0, fbN: 0 } ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
 				if feedback[0] && feedback[0][:fbBuB]
 					if feedback[0][:fbBuB] > 0
 						fbcount = 777
@@ -1176,7 +1176,7 @@ after_initialize do
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 2 && current_user[:username].downcase != params[:username].downcase
 				#users with negative feedbacks cant do feedbacks!
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 0, fbG: 0, fbN: 0, fbBuG: 0, fbBuB: 0} ).to_a
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1} ).to_a
 				if (feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] > 0)
 					render json: { bakas: true }
 				else
@@ -1212,6 +1212,16 @@ after_initialize do
 
 		def rentagama
 			rentagamez = @@rentadb[:rentagadb].find().to_a
+
+			#if not guest, do showhideo for this user
+			if current_user
+				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
+				#if found, clean up obsolete games from there once in while...
+				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE] > 7777777 )
+					
+				end
+			end
+
 			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] }
 			count = [0,0,0,0,0]
 			rentagamez.each do |games|
