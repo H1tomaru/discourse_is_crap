@@ -1230,7 +1230,7 @@ after_initialize do
 						rentahideo[0].except!(*brokengamez)
 					end
 					rentahideo[0][:DATE] = Time.now.strftime("%Y.%m.%d")
-					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, { rentahideo[0] }, { upsert: true } )
+					#@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, { rentahideo[0] }, { upsert: true } )
 				end
 			end
 
