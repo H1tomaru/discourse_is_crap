@@ -71,7 +71,7 @@
 	<div class='rentbox'>
 
 		<div class='title'>
-			Всего игр в прокате: <span>{{model.count.[0]}}</span><br>
+			Всего игр в прокате: <span>{{model.count.[0]}}{{#if model.count.[5]}} ({{model.count.[5]}} скрыто){{/if}}</span><br>
 			<div><input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Реально Игр: <span>{{model.count.[1]}}</span></div>
 			<div><input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span></div>
 			<div><input type="checkbox" checked {{action "showTYPE3" on="change"}}/> Легких и Коротких Игр: <span>{{model.count.[3]}}</span></div>
@@ -80,6 +80,7 @@
 		<span class="textright2">Неделя / Месяц</span>
 		<div class='innerbox'>
 			{{#each model.rentaGAMEZ as |game|}}
+				{{#if game.HIDEOZ}}
 				{{#if showTYPE1}}{{#if game.TYPE1}}
 				<div>
 					{{#if game.STATUS}}
@@ -156,6 +157,7 @@
 					</span>
 				</div>
 				{{/if}}{{/if}}
+				{{/if}}
 			{{/each}}
 		</div>
 	</div>
@@ -166,11 +168,16 @@
 			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
 			<button class="{{if showSHITS "bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
+			{{#if model.count.[5]}}
+				<br><br>
+				<button style="width: 100%" class="{{if showHIDEOZ "bi4"}}" {{action 'showHIDEOZ'}}>Скрытые</button>
+			{{/if}}
 		</div>
 		<br>
 		<table class="list">
 			{{#if showGAMEZ}}
 			{{#each model.rentaGAMEZ1 as |game|}}
+			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
@@ -189,11 +196,13 @@
 					<td class="malabela2">{{game.PRICE}}</td>
 				</tr>
 			</tbody>
+			{{/if}}
 			{{/each}}
 			{{/if}}
 
 			{{#if showCRAP}}
 			{{#each model.rentaGAMEZ2 as |game|}}
+			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
@@ -212,11 +221,13 @@
 					<td class="malabela2">{{game.PRICE}}</td>
 				</tr>
 			</tbody>
+			{{/if}}
 			{{/each}}
 			{{/if}}
 			
 			{{#if showSHITS}}
 			{{#each model.rentaGAMEZ3 as |game|}}
+			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
@@ -235,6 +246,29 @@
 					<td class="malabela2">{{game.PRICE}}</td>
 				</tr>
 			</tbody>
+			{{/if}}
+			{{/each}}
+			{{/if}}
+			
+			{{#if showHIDEOZ}}
+			{{#each model.rentaHIDEO as |game|}}
+			<tbody>
+				<tr>
+					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
+					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
+				</tr>
+				<tr>
+					{{#if game.STATUS}}
+						<td class="malabela2 bgred3">
+							Занят до {{game.STATUS}}
+							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
+						</td>
+					{{else}}
+					<td class="malabela2 bggr">Cвободен</td>
+					{{/if}}
+					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+					<td class="malabela2">{{game.PRICE}}</td>
+				</tr>
 			{{/each}}
 			{{/if}}
 
