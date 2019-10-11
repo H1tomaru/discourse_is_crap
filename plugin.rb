@@ -1234,7 +1234,7 @@ after_initialize do
 				end
 			end
 
-			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] }
+			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: []}
 			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 			rentagamez.each do |games|
 				gTYPE = [false,false,false,false]
@@ -1270,6 +1270,12 @@ after_initialize do
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
 						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
 					} ) if games[:GTYPE] == 4
+					finalrenta[:rentaHIDEO].push( {
+						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
+						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
+						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
+					} ) if hideoz == true
 				end
 			end
 			#sort this shit
@@ -1277,6 +1283,7 @@ after_initialize do
 			finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 			finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 			finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+			finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
 			finalrenta[:count] = count
 
