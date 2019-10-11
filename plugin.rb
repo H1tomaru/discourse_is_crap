@@ -1244,7 +1244,7 @@ after_initialize do
 				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
 				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
 				( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
-				( hideoz = true; count[5] = count[5] + 1 ) if rentahideo[0][games[:_id]] && rentahideo[0][games[:_id]] == true
+				( hideoz = true; count[5] = count[5] + 1 ) if current_user && rentahideo[0] && rentahideo[0][games[:_id]] && rentahideo[0][games[:_id]] == true
 				games[:GITEMS].each do |game|
 					finalrenta[:rentaGAMEZ].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
