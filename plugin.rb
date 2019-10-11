@@ -25,6 +25,7 @@ after_initialize do
 		get '/MrBugP3/prezaips/:bagakruta' => 'mrbug#prezaipsp3'
 		get '/MrBugP3/zaips/:bagatrolit' => 'mrbug#zaipsp3'
 		get '/renta-haleguu' => 'mrbug#rentagama'
+		post '/renta-halehideo' => 'mrbug#rentahideo'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
