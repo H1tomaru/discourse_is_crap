@@ -1238,13 +1238,13 @@ after_initialize do
 			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 			rentagamez.each do |games|
 				gTYPE = [false,false,false,false]
-				hideoz = false
+				hideoz = true
 				count[0] = count[0] + 1
 				( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
 				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
 				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
 				( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
-				( hideoz = true; count[5] = count[5] + 1 ) if current_user && rentahideo[0] && rentahideo[0][games[:_id]] && rentahideo[0][games[:_id]] == true
+				( hideoz = false; count[5] = count[5] + 1 ) if current_user && rentahideo[0] && rentahideo[0][games[:_id]] && rentahideo[0][games[:_id]] == false
 				games[:GITEMS].each do |game|
 					finalrenta[:rentaGAMEZ].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
@@ -1275,7 +1275,7 @@ after_initialize do
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
 						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
-					} ) if hideoz == true
+					} ) if hideoz == false
 				end
 			end
 			#sort this shit
