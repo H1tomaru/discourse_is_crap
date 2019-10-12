@@ -1097,7 +1097,11 @@ div.rentobaka {
 	line-height: 1.2;
 
 	tbody, tr {
-		border: none	
+		border: none
+	}
+
+	tbody {
+		text-align: center
 	}
 
 	button:focus {
@@ -1255,44 +1259,46 @@ div.rentobaka {
 
 	.rentbox2 {
 
-		button {
-			font-weight: 700;
-			font-size: 1.85em;
-			position: relative;
-			color: gray;
-			transition-duration: 0.7s;
-			background: none;
-			border: none;
-			width: 33.3%;
-    			padding: 0;
-		}
-		
-		button:hover, button.bi4 {
-			color: #00b0ff;
-			transition-duration: 0.7s;
-		}
-
-		button::before {
-			content: "";
-			width: 80px;
-			height: 4px;
-			background: #00b0ff;
-			position: absolute;
-			left: 0;
-			bottom: -10px;
-			left: 50%;
-			transform: translateX(-50%);
-			transition-duration: 1s;
-		}
-
-		button:hover::before, button.bi4::before {
-			width: 20px;
-			background: gray;
-			transition-duration: 1s;
-		}
-
 		.mimu {
-			white-space: nowrap
+
+			white-space: nowrap;
+
+			button {
+				font-weight: 700;
+				font-size: 1.85em;
+				position: relative;
+				color: gray;
+				transition-duration: 0.7s;
+				background: none;
+				border: none;
+				width: 33.3%;
+				padding: 0;
+			}
+
+			button:hover, button.bi4 {
+				color: #00b0ff;
+				transition-duration: 0.7s;
+			}
+
+			button::before {
+				content: "";
+				width: 80px;
+				height: 4px;
+				background: #00b0ff;
+				position: absolute;
+				left: 0;
+				bottom: -10px;
+				left: 50%;
+				transform: translateX(-50%);
+				transition-duration: 1s;
+			}
+
+			button:hover::before, button.bi4::before {
+				width: 20px;
+				background: gray;
+				transition-duration: 1s;
+			}
+
 		}
 
 		.list {
@@ -1369,12 +1375,9 @@ div.rentobaka {
 				color: black;
 			}
 
-			td.malabela2:nth-child(-n+2) {
-				text-align: center
-			}
-
-			td.malabela2:last-of-type {
-				width: 100%
+			td.malabela2:nth-child(3) {
+				text-align: left;
+				width: 100%;
 			}
 
 			td.malabela2.bggr {
@@ -1436,8 +1439,12 @@ div.rentobaka {
 
 		.rentbox2 {
 
-			button {
-				font-size: 1.15em;
+			.mimu {
+
+				button {
+					font-size: 1.15em
+				}
+
 			}
 
 		}
