@@ -244,7 +244,17 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2"><button><i class="far fa-eye"></i></button></td>
+					<td class="malabela2">
+						{{#if hideobutts}}
+							<div class="tinybagaspin"></div>
+						{{else}}
+							{{#if game.HIDEOZ}}
+								<button><i class="far fa-eye-slash"></i></button>
+							{{else}}
+								<button><i class="far fa-eye"></i></button>
+							{{/if}}
+						{{/if}}
+					</td>
 				</tr>
 			</tbody>
 			{{/if}}
