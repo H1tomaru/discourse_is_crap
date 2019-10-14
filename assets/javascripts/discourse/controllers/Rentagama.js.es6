@@ -62,8 +62,16 @@ export default Ember.Controller.extend({
 		},
 
 		hideoGAMEZ(gNAME, knopk) {
-			this.set('testingthisshit1', knopk)
-			this.set('testingthisshit2', gNAME)
+			this.set('hideobutts'.objectAt(knopk), true)
+			Ember.$.ajax({
+				url: "/renta-halehideo/",
+				type: "POST",
+				data: { "HIDEOFU": btoa(gNAME) }
+			}).then(result => {
+				this.set('model.count'.objectAt(knopk), +1)
+				
+				this.set('hideobutts'.objectAt(knopk), false)
+			})
 		}
 
 	}
