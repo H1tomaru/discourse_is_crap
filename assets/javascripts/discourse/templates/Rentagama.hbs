@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
 <div class="rentobaka">
 	<div class="gname">
 		<h2>Аренда игр PS4 от <a href="/u/MrBug">MrBug</a></h2>
@@ -176,7 +175,7 @@
 		<br>
 		<table class="list">
 			{{#if showGAMEZ}}
-			{{#each model.rentaGAMEZ1 as |game|}}
+			{{#each model.rentaGAMEZ1 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -201,7 +200,7 @@
 			{{/if}}
 
 			{{#if showCRAP}}
-			{{#each model.rentaGAMEZ2 as |game|}}
+			{{#each model.rentaGAMEZ2 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -226,7 +225,7 @@
 			{{/if}}
 			
 			{{#if showSHITS}}
-			{{#each model.rentaGAMEZ3 as |game|}}
+			{{#each model.rentaGAMEZ3 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -245,13 +244,13 @@
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
 					<td class="malabela2">
-						{{#if hideobutts}}
+						{{#if (lookup ../hideobutts @index)}}
 							<div class="tinybagaspin"></div>
 						{{else}}
 							{{#if game.HIDEOZ}}
-								<button><i class="far fa-eye-slash"></i></button>
+								<button {{action 'zaips' game.GNAME index}}><i class="far fa-eye"></i></button>
 							{{else}}
-								<button><i class="far fa-eye"></i></button>
+								<button {{action 'zaips' game.GNAME index}}><i class="far fa-eye-slash"></i></button>
 							{{/if}}
 						{{/if}}
 					</td>
@@ -262,7 +261,7 @@
 			{{/if}}
 			
 			{{#if showHIDEOZ}}
-			{{#each model.rentaHIDEO as |game|}}
+			{{#each model.rentaHIDEO as |game index|}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
@@ -279,7 +278,17 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2"><button><i class="far fa-eye"></i></button></td>
+					<td class="malabela2">
+						{{#if (lookup ../hideobutts @index)}}
+							<div class="tinybagaspin"></div>
+						{{else}}
+							{{#if game.HIDEOZ}}
+								<button {{action 'zaips' game.GNAME index}}><i class="far fa-eye"></i></button>
+							{{else}}
+								<button {{action 'zaips' game.GNAME index}}><i class="far fa-eye-slash"></i></button>
+							{{/if}}
+						{{/if}}
+					</td>
 				</tr>
 			</tbody>
 			{{/each}}
@@ -289,3 +298,5 @@
 	</div>
 
 </div>
+{{testingthisshit1}}<br>
+{{testingthisshit2}}
