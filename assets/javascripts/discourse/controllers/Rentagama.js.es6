@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	showSHITS: false,
 	showHIDEOZ: false,
-	hideobutts: [false,false],
+	hideobutts: [],
 	
 	setupController: function(controller, model) {
 		//model.rentaGAMEZ1 = []
@@ -18,6 +18,8 @@ export default Ember.Controller.extend({
 		//model.rentaHIDEO = []
 		model.TESTING = "hailelua"
 		this._super(controller, model)
+		model.TESTING = "hailelua"
+		this.set('model.TESTING') = "haileluafailabit"
 	},
 
 	actions: {
