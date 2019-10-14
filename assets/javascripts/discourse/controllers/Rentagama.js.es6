@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
 		},
 
 		hideoGAMEZ(gNAME, knopk) {
-			Ember.set(hideobutts[knopk], true)
+			Ember.set(this.get('hideobutts')[knopk], true)
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				Ember.set(this.get('model.count')[5], +1)
 				
-				Ember.set(hideobutts[knopk], false)
+				Ember.set(this.get('hideobutts')[knopk], false)
 			})
 		}
 
