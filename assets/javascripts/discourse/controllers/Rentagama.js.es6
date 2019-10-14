@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	showSHITS: false,
 	showHIDEOZ: false,
-	hideobutts: [false,false],
+	hideobutts: [false,false]
 
 	actions: {
 
@@ -62,13 +62,17 @@ export default Ember.Controller.extend({
 		},
 
 		hideoGAMEZ(gNAME, knopk) {
+			
+			//hideobutts: new Array(this.get('model.count')[5]).fill(false)
+			
 			Ember.set(this.get('hideobutts')[knopk], true)
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
 				data: { "HIDEOFU": btoa(gNAME) }
 			}).then(result => {
-				Ember.set(this.get('model.count')[5], +1)
+				this.get('showhideo').toggleProperty(index)
+				Ember.set(this.get('model.count')[5], this.get('model.count')[5]+1)
 				
 				Ember.set(this.get('hideobutts')[knopk], false)
 			})
