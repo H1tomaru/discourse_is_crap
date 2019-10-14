@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	showSHITS: false,
 	showHIDEOZ: false,
-	hideobutts: [false,false]
+	hideobutts: [false,false],
 
 	actions: {
 
