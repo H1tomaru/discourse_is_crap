@@ -10,6 +10,15 @@ export default Ember.Controller.extend({
 	showSHITS: false,
 	showHIDEOZ: false,
 	hideobutts: [false,false],
+	
+	setupController: function(controller, model) {
+		//model.rentaGAMEZ1 = []
+		//model.rentaGAMEZ2 = []
+		//model.rentaGAMEZ3 = []
+		//model.rentaHIDEO = []
+		model.TESTING = []
+		this._super(controller, model);
+	}
 
 	actions: {
 
@@ -62,19 +71,19 @@ export default Ember.Controller.extend({
 		},
 
 		hideoGAMEZ(gNAME, knopk) {
-			
-			//hideobutts: new Array(this.get('model.count')[5]).fill(false)
-			
 			Ember.set(this.get('hideobutts'), knopk, true)
+			this.set('test1', knopk)
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
 				data: { "HIDEOFU": btoa(gNAME) }
 			}).then(result => {
-				this.get('showhideo').toggleProperty(index)
-				Ember.set(this.get('model.count')[5], this.get('model.count')[5]+1)
-				
-				Ember.set(this.get('hideobutts')[knopk], false)
+				this.set('test2', knopk)
+				this.get('somemega')[index].toggleProperty("HIDEOZ")
+				Ember.set(this.get('model.count'), 5, this.get('model.count')[5]+1)
+				this.set('test3', knopk)
+				Ember.set(this.get('hideobutts'), knopk, false)
+				this.set('test4', knopk)
 			})
 		}
 
