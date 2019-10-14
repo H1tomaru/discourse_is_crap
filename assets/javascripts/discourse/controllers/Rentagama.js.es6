@@ -16,9 +16,9 @@ export default Ember.Controller.extend({
 		//model.rentaGAMEZ2 = []
 		//model.rentaGAMEZ3 = []
 		//model.rentaHIDEO = []
-		model.TESTING = []
-		this._super(controller, model);
-	}
+		model.TESTING = "hailelua"
+		this._super(controller, model)
+	},
 
 	actions: {
 
