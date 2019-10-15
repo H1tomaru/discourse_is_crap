@@ -1256,19 +1256,22 @@ after_initialize do
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						PR4SORT: game[:PRICE][0..2].to_i
 					} ) if games[:GTYPE] == 1
 					finalrenta[:rentaGAMEZ2].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						PR4SORT: game[:PRICE][0..2].to_i
 					} ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
 					finalrenta[:rentaGAMEZ3].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						PR4SORT: game[:PRICE][0..2].to_i
 					} ) if games[:GTYPE] == 4
 					finalrenta[:rentaHIDEO].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
@@ -1280,9 +1283,9 @@ after_initialize do
 			end
 			#sort this shit
 			#finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-			finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-			finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-			finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+			#finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+			#finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+			#finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 			#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
 			finalrenta[:count] = count
