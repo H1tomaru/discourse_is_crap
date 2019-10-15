@@ -247,11 +247,7 @@
 						{{#if (get hideobutts index)}}
 							<div class="tinybagaspin"></div>
 						{{else}}
-							{{#if game.HIDEOZ}}
-								<button {{action 'hideoGAMEZ' game.GNAME index}}><i class="far fa-eye"></i></button>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game.GNAME index}}><i class="far fa-eye-slash"></i></button>
-							{{/if}}
+							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
 						{{/if}}
 					</td>
 				</tr>
@@ -282,11 +278,7 @@
 						{{#if (get hideobutts index)}}
 							<div class="tinybagaspin"></div>
 						{{else}}
-							{{#if game.HIDEOZ}}
-								<button {{action 'hideoGAMEZ' game.GNAME index}}><i class="far fa-eye"></i></button>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game.GNAME index}}><i class="far fa-eye-slash"></i></button>
-							{{/if}}
+							<button {{action 'hideoGAMEZ' game.GNAME index -1}}><i class="far fa-eye-slash"></i></button>
 						{{/if}}
 					</td>
 				</tr>
