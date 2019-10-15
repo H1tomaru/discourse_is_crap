@@ -14,12 +14,12 @@ export default Ember.Controller.extend({
 	count: Ember.computed('model', function() {
 		var gamez = this.get('model.rentaGAMEZ')
 		var count = [gamez.length,0,0,0,0,0]
-		for(var i = 0; i < gamez.length; ++i){
-			if(gamez[:TYPE1] == true) { count[1] = count[1] + 1 }
-			if(gamez[:TYPE2] == true) { count[2] = count[2] + 1 }
-			if(gamez[:TYPE3] == true) { count[3] = count[3] + 1 }
-			if(gamez[:TYPE4] == true) { count[4] = count[4] + 1 }
-			if(gamez[:HIDEOZ] == false) { count[5] = count[5] + 1 }
+		for (var i = 0; i < gamez.length; ++i) {
+			if (gamez[:TYPE1] == true) { count[1] = count[1] + 1 }
+			if (gamez[:TYPE2] == true) { count[2] = count[2] + 1 }
+			if (gamez[:TYPE3] == true) { count[3] = count[3] + 1 }
+			if (gamez[:TYPE4] == true) { count[4] = count[4] + 1 }
+			if (gamez[:HIDEOZ] == false) { count[5] = count[5] + 1 }
 		}
 		return count
 	}),
