@@ -86,20 +86,21 @@ export default Ember.Controller.extend({
 				data: { "HIDEOFU": btoa(unescape(encodeURIComponent(gNAME))) }
 			}).then(result => {
 				for (let i = 0; i < this.get('rentaGAMEZ').length; i++) {
-					if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('rentaGAMEZ'), i, !this.get('rentaGAMEZ')[i].HIDEOZ) }
+					if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('rentaGAMEZ')[i], 'HIDEOZ', !this.get('rentaGAMEZ')[i].HIDEOZ) }
 				}
 				for (let i = 0; i < this.get('model.rentaGAMEZ1').length; i++) {
-					if (this.get('model.rentaGAMEZ1')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ1'), i, !this.get('model.rentaGAMEZ1')[i].HIDEOZ) }
+					if (this.get('model.rentaGAMEZ1')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ1')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ1')[i].HIDEOZ) }
 				}
 				for (let i = 0; i < this.get('model.rentaGAMEZ2').length; i++) {
-					if (this.get('model.rentaGAMEZ2')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ2'), i, !this.get('model.rentaGAMEZ2')[i].HIDEOZ) }
+					if (this.get('model.rentaGAMEZ2')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ2')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ2')[i].HIDEOZ) }
 				}
 				for (let i = 0; i < this.get('model.rentaGAMEZ3').length; i++) {
-					if (this.get('model.rentaGAMEZ3')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ3'), i, !this.get('model.rentaGAMEZ3')[i].HIDEOZ) }
+					if (this.get('model.rentaGAMEZ3')[i]['GNAME'] == gNAME) { Ember.set(this.get('model.rentaGAMEZ3')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ3')[i].HIDEOZ) }
 				}
 				for (let i = 0; i < this.get('showHIDEOZ').length; i++) {
-					if (this.get('showHIDEOZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('showHIDEOZ'), i, !this.get('showHIDEOZ')[i].HIDEOZ) }
+					if (this.get('showHIDEOZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('showHIDEOZ')[i], 'HIDEOZ', !this.get('showHIDEOZ')[i].HIDEOZ) }
 				}
+				//Ember.set(this.get('model.rentaGAMEZ3')[0], 'HIDEOZ', !this.get('model.rentaGAMEZ3')[0].HIDEOZ)
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5]+value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
