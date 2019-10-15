@@ -9,20 +9,16 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	showSHITS: false,
 	showHIDEOZ: false,
-	hideobutts: [],
+	hideobutts: {},
 	
 	setupController: function(controller, model) {
 		//model.rentaGAMEZ1 = []
 		//model.rentaGAMEZ2 = []
 		//model.rentaGAMEZ3 = []
 		//model.rentaHIDEO = []
-		controller.TESTING = "hailelua"
-		model.TESTING = "haileluatesta2"
-		this.set('model.TESTING', "haileluafailabit")
-		this.set('controller.TESTING', "haileluafailabit777")
+		this.set('model.TESTING', "haileluafailabit6")
+		this.set('controller.TESTING', "haileluafailabit7776")
 			this._super(controller, model)
-		controller.TESTING = "hailelua"
-		model.TESTING = "haileluatesta2"
 		this.set('model.TESTING', "haileluafailabit")
 		this.set('controller.TESTING', "haileluafailabit777")
 	},
