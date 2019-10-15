@@ -117,6 +117,7 @@ export default Ember.Controller.extend({
 					for (let i = 0; i < this.get('model.rentaHIDEO').length; i++) {
 						if (this.get('model.rentaHIDEO')[i]['GNAME'] == gNAME) {
 							this.get('model.rentaHIDEO').removeAt(i)
+							i = 0
 						}
 					}
 				}
