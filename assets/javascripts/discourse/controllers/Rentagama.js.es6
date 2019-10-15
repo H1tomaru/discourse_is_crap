@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
 	sortProperties2: ['GNAME:asc'],
 	
 	rentaGAMEZ: Ember.computed.sort("model.rentaGAMEZ", "sortProperties1"),
-	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2"),
+	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2").property('model.rentaHIDEO.[]'),
 
 	/*
 	rentaGAMEZ1: Ember.computed('model', function() {
@@ -89,7 +89,7 @@ export default Ember.Controller.extend({
 					if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) {
 						Ember.set(this.get('rentaGAMEZ')[i], 'HIDEOZ', !this.get('rentaGAMEZ')[i].HIDEOZ)
 						if (value == 1) {
-							this.get('rentaHIDEO').pushObject(this.get('rentaGAMEZ')[i])
+							this.get('model.rentaHIDEO').pushObject(this.get('rentaGAMEZ')[i])
 						}
 					}
 				}
