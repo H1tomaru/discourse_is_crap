@@ -179,7 +179,7 @@
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
@@ -193,6 +193,13 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
+					<td class="malabela2">
+						{{#if (get hideobutts index)}}
+							<div class="tinybagaspin"></div>
+						{{else}}
+							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
+						{{/if}}
+					</td>
 				</tr>
 			</tbody>
 			{{/if}}
@@ -204,7 +211,7 @@
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
-					<td class="gname" colspan="3"><h3>{{game.GNAME}}</h3></td>
+					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
 				<tr>
@@ -218,6 +225,13 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
+					<td class="malabela2">
+						{{#if (get hideobutts index)}}
+							<div class="tinybagaspin"></div>
+						{{else}}
+							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
+						{{/if}}
+					</td>
 				</tr>
 			</tbody>
 			{{/if}}
