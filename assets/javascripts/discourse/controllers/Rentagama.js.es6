@@ -11,10 +11,9 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	hideobutts: {},
 
-	TESTING: function(){
-		var model = this.get('model.rentaGAMEZ.0.GNAME');
-		return model;
-	},
+	TESTING: Ember.computed('model', function() {
+		return this.get('model.rentaGAMEZ.0.GNAME');
+	}),
 
 	actions: {
 
