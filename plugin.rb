@@ -1289,6 +1289,10 @@ after_initialize do
 
 			render json: finalrenta 
 		end
+		
+		def rentahideo
+			render json: { HiMom: "!!!" }
+		end
 
 	end
 
