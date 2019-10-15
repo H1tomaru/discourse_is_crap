@@ -11,14 +11,9 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	hideobutts: {},
 
-	didInsertElement() {
-		console.log('did insert working')
-		//this.set('model.TESTING', "tralalaika")
-	},
-	
-	init: function() {
-		console.log('did init working')
-		//this.set('model.TESTING', "tralalaika777")
+	TESTING: function(){
+		var model = this.get('model.rentaGAMEZ.0.GNAME');
+		return model;
 	},
 
 	actions: {
