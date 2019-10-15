@@ -11,34 +11,28 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	hideobutts: {},
 	
-	count: Ember.computed('model', function() {
-		var gamez = this.get('model.rentaGAMEZ')
-		var count = [gamez.length,0,0,0,0,0]
-		for (var i = 0; i < gamez.length; ++i) {
-			if (gamez[i]['TYPE1'] == true) { count[1] = count[1] + 1 }
-			if (gamez[i]['TYPE2'] == true) { count[2] = count[2] + 1 }
-			if (gamez[i]['TYPE3'] == true) { count[3] = count[3] + 1 }
-			if (gamez[i]['TYPE4'] == true) { count[4] = count[4] + 1 }
-			if (gamez[i]['HIDEOZ'] == false) { count[5] = count[5] + 1 }
-		}
-		return count
-	}),
+	sortProperties1: ['GNEW:asc', 'GNAME:asc'],
+	sortProperties2: ['PRICE:desc', 'GNAME:asc'],
+	sortProperties3: ['PRICE:desc', 'GNAME:asc'],
+	sortProperties4: ['PRICE:desc', 'GNAME:asc'],
+	sortProperties5: ['GNAME:asc'],
 	
+	rentaGAMEZ: Ember.computed.sort("model.rentaGAMEZ", "sortProperties1"),
+	rentaGAMEZ1: Ember.computed.sort("model.rentaGAMEZ1", "sortProperties2"),
+	rentaGAMEZ2: Ember.computed.sort("model.rentaGAMEZ2", "sortProperties3"),
+	rentaGAMEZ3: Ember.computed.sort("model.rentaGAMEZ3", "sortProperties4"),
+	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties5"),
+
+	/*
 	rentaGAMEZ1: Ember.computed('model', function() {
 		var gamez = this.get('model.rentaGAMEZ')
+		var gamez1 = []
+		for (var i = 0; i < gamez.length; ++i) {
+			if (gamez[i]['TYPE1'] == true) { gamez1.push(gamez[i]) }
+		}
+		return gamez1
 	}),
-	
-	rentaGAMEZ2: Ember.computed('model', function() {
-		var gamez = this.get('model.rentaGAMEZ')
-	}),
-	
-	rentaGAMEZ3: Ember.computed('model', function() {
-		var gamez = this.get('model.rentaGAMEZ')
-	}),
-	
-	rentaHIDEO: Ember.computed('model', function() {
-		var gamez = this.get('model.rentaGAMEZ')
-	}),
+	*/
 
 	actions: {
 
