@@ -10,19 +10,9 @@ export default Ember.Controller.extend({
 	showSHITS: false,
 	showHIDEOZ: false,
 	hideobutts: {},
-	
-	setupController: function(controller, model) {
-		//model.rentaGAMEZ1 = []
-		//model.rentaGAMEZ2 = []
-		//model.rentaGAMEZ3 = []
-		//model.rentaHIDEO = []
-		this.set('model.TESTING', "haileluafailabit6")
-		this.set('controller.TESTING', "haileluafailabit7776")
-			this._super(controller, model)
-		this.set('model.TESTING', "haileluafailabit")
-		this.set('controller.TESTING', "haileluafailabit777")
-	},
 
+	this.set('model.TESTING', "tralalaika"),
+	
 	actions: {
 
 		showRULEZ() {
@@ -82,7 +72,7 @@ export default Ember.Controller.extend({
 				data: { "HIDEOFU": btoa(gNAME) }
 			}).then(result => {
 				this.set('test2', knopk)
-				this.get('somemega')[index].toggleProperty("HIDEOZ")
+				//this.get('somemega')[index].toggleProperty("HIDEOZ")
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5]+1)
 				this.set('test3', knopk)
 				Ember.set(this.get('hideobutts'), knopk, false)
