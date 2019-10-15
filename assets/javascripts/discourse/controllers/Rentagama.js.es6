@@ -12,9 +12,13 @@ export default Ember.Controller.extend({
 	hideobutts: {},
 	
 	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
-	sortProperties2: ['GNAME:asc'],
+	sortProperties2: ['PR4SORT:desc', 'GNAME:asc'],
+	sortProperties3: ['GNAME:asc'],
 	
 	rentaGAMEZ: Ember.computed.sort("model.rentaGAMEZ", "sortProperties1"),
+	rentaGAMEZ1: Ember.computed.sort("model.rentaGAMEZ1", "sortProperties2"),
+	rentaGAMEZ2: Ember.computed.sort("model.rentaGAMEZ2", "sortProperties2"),
+	rentaGAMEZ3: Ember.computed.sort("model.rentaGAMEZ3", "sortProperties2"),
 	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2").property('model.rentaHIDEO.[]'),
 
 	/*
@@ -109,14 +113,12 @@ export default Ember.Controller.extend({
 					}
 				}
 				if ( value == -1 ) {
-					for (let i = 0; i < this.get('rentaHIDEO').length; i++) {
-						if (this.get('rentaHIDEO')[i]['GNAME'] == gNAME) {
-							this.get('rentaHIDEO').removeAt(i)
+					for (let i = 0; i < this.get('model.rentaHIDEO').length; i++) {
+						if (this.get('model.rentaHIDEO')[i]['GNAME'] == gNAME) {
+							this.get('model.rentaHIDEO').removeAt(i)
 						}
 					}
 				}
-				//Ember.computed.sort(this.get('rentaHIDEO'), this.get('sortProperties2'))
-				//this.set('rentaHIDEO', this.get('rentaHIDEO').sortBy('GNAME'))
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
