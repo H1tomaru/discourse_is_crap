@@ -78,7 +78,7 @@
 		</div>
 		<span class="textright2">Неделя / Месяц</span>
 		<div class='innerbox'>
-			{{#each model.rentaGAMEZ as |game|}}
+			{{#each rentaGAMEZ as |game|}}
 				{{#if game.HIDEOZ}}
 				{{#if showTYPE1}}{{#if game.TYPE1}}
 				<div>
@@ -175,7 +175,7 @@
 		<br>
 		<table class="list">
 			{{#if showGAMEZ}}
-			{{#each model.rentaGAMEZ1 as |game index|}}
+			{{#each rentaGAMEZ1 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -200,7 +200,7 @@
 			{{/if}}
 
 			{{#if showCRAP}}
-			{{#each model.rentaGAMEZ2 as |game index|}}
+			{{#each rentaGAMEZ2 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -225,7 +225,7 @@
 			{{/if}}
 			
 			{{#if showSHITS}}
-			{{#each model.rentaGAMEZ3 as |game index|}}
+			{{#each rentaGAMEZ3 as |game index|}}
 			{{#if game.HIDEOZ}}
 			<tbody>
 				<tr>
@@ -261,7 +261,7 @@
 			{{/if}}
 			
 			{{#if showHIDEOZ}}
-			{{#each model.rentaHIDEO as |game index|}}
+			{{#each rentaHIDEO as |game index|}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
