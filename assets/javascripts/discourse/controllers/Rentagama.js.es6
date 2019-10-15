@@ -17,9 +17,14 @@ export default Ember.Controller.extend({
 		//model.rentaGAMEZ3 = []
 		//model.rentaHIDEO = []
 		controller.TESTING = "hailelua"
-		this._super(controller, model)
 		model.TESTING = "haileluatesta2"
 		this.set('model.TESTING', "haileluafailabit")
+		this.set('controller.TESTING', "haileluafailabit777")
+			this._super(controller, model)
+		controller.TESTING = "hailelua"
+		model.TESTING = "haileluatesta2"
+		this.set('model.TESTING', "haileluafailabit")
+		this.set('controller.TESTING', "haileluafailabit777")
 	},
 
 	actions: {
