@@ -13,6 +13,12 @@ export default Ember.Controller.extend({
 
 	didInsertElement() {
 		this.set('model.TESTING', "tralalaika")
+		console.log('did insert working')
+	},
+	
+	init: function() {
+		this.set('model.TESTING', "tralalaika777")
+		console.log('did init working')
 	},
 
 	actions: {
