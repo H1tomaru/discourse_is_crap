@@ -97,21 +97,22 @@ export default Ember.Controller.extend({
 						}
 					}
 				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ1').length; i++) {
+				for (let i = 0; i < this.get('rentaGAMEZ1').length; i++) {
 					if (this.get('model.rentaGAMEZ1')[i]['GNAME'] == gNAME) {
 						Ember.set(this.get('model.rentaGAMEZ1')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ1')[i].HIDEOZ)
 					}
 				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ2').length; i++) {
+				for (let i = 0; i < this.get('rentaGAMEZ2').length; i++) {
 					if (this.get('model.rentaGAMEZ2')[i]['GNAME'] == gNAME) {
 						Ember.set(this.get('model.rentaGAMEZ2')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ2')[i].HIDEOZ)
 					}
 				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ3').length; i++) {
+				for (let i = 0; i < this.get('rentaGAMEZ3').length; i++) {
 					if (this.get('model.rentaGAMEZ3')[i]['GNAME'] == gNAME) {
 						Ember.set(this.get('model.rentaGAMEZ3')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ3')[i].HIDEOZ)
 					}
 				}
+				//need to use model version for automated sorting
 				if ( value == -1 ) {
 					for (let i = 0; i < this.get('model.rentaHIDEO').length; i++) {
 						if (this.get('model.rentaHIDEO')[i]['GNAME'] == gNAME) {
