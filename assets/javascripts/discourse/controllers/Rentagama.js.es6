@@ -12,13 +12,13 @@ export default Ember.Controller.extend({
 	hideobutts: {},
 
 	didInsertElement() {
-		this.set('model.TESTING', "tralalaika")
 		console.log('did insert working')
+		//this.set('model.TESTING', "tralalaika")
 	},
 	
 	init: function() {
-		this.set('model.TESTING', "tralalaika777")
 		console.log('did init working')
+		//this.set('model.TESTING', "tralalaika777")
 	},
 
 	actions: {
