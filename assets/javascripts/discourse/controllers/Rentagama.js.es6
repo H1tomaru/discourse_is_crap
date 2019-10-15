@@ -118,10 +118,11 @@ export default Ember.Controller.extend({
 				for (let i = 0; i < this.get('rentaHIDEO').length; i++) {
 					if (this.get('rentaHIDEO')[i]['GNAME'] == gNAME) {
 						this.get('rentaHIDEO').removeAt(i)
+						this.get('model.rentaHIDEO').removeAt(i)
 					}
 				}
-				this.get('rentaHIDEO').sortBy('GNAME:asc')
-				this.get('model.rentaHIDEO').sortBy('GNAME:asc')
+				//this.get('rentaHIDEO').sortBy('GNAME:asc')
+				//this.get('model.rentaHIDEO').sortBy('GNAME:asc')
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
