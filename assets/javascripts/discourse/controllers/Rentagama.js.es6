@@ -115,7 +115,7 @@ export default Ember.Controller.extend({
 						}
 					}
 				}
-				this.get('rentaHIDEO').sortBy('GNAME')
+				this.set('rentaHIDEO', this.get('rentaHIDEO').sortBy('GNAME'))
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
