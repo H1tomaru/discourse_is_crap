@@ -85,44 +85,42 @@ export default Ember.Controller.extend({
 				type: "POST",
 				data: { "HIDEOFU": btoa(unescape(encodeURIComponent(gNAME))) }
 			}).then(result => {
-				for (let i = 0; i < this.get('rentaGAMEZ').length; i++) {
-					if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('rentaGAMEZ')[i], 'HIDEOZ', !this.get('rentaGAMEZ')[i].HIDEOZ) }
-				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ1').length; i++) {
-					if (this.get('model.rentaGAMEZ1')[i]['GNAME'] == gNAME) {
-						Ember.set(this.get('model.rentaGAMEZ1')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ1')[i].HIDEOZ)
-						if (value == 1) {
-							this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ1')[i])
-							this.get('model.rentaHIDEO').pushObject(this.get('model.rentaGAMEZ1')[i])
-						}						
+				if ( value == 1 ) {
+					for (let i = 0; i < this.get('rentaGAMEZ').length; i++) {
+						if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) { Ember.set(this.get('rentaGAMEZ')[i], 'HIDEOZ', !this.get('rentaGAMEZ')[i].HIDEOZ) }
 					}
-				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ2').length; i++) {
-					if (this.get('model.rentaGAMEZ2')[i]['GNAME'] == gNAME) {
-						Ember.set(this.get('model.rentaGAMEZ2')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ2')[i].HIDEOZ)
-						if (value == 1) {
-							this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ2')[i])
-							this.get('model.rentaHIDEO').pushObject(this.get('model.rentaGAMEZ2')[i])
-						}						
+					for (let i = 0; i < this.get('model.rentaGAMEZ1').length; i++) {
+						if (this.get('model.rentaGAMEZ1')[i]['GNAME'] == gNAME) {
+							Ember.set(this.get('model.rentaGAMEZ1')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ1')[i].HIDEOZ)
+							if (value == 1) {
+								this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ1')[i])
+							}						
+						}
 					}
-				}
-				for (let i = 0; i < this.get('model.rentaGAMEZ3').length; i++) {
-					if (this.get('model.rentaGAMEZ3')[i]['GNAME'] == gNAME) {
-						Ember.set(this.get('model.rentaGAMEZ3')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ3')[i].HIDEOZ)
-						if (value == 1) {
-							this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ3')[i])
-							this.get('model.rentaHIDEO').pushObject(this.get('model.rentaGAMEZ3')[i])
+					for (let i = 0; i < this.get('model.rentaGAMEZ2').length; i++) {
+						if (this.get('model.rentaGAMEZ2')[i]['GNAME'] == gNAME) {
+							Ember.set(this.get('model.rentaGAMEZ2')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ2')[i].HIDEOZ)
+							if (value == 1) {
+								this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ2')[i])
+							}						
+						}
+					}
+					for (let i = 0; i < this.get('model.rentaGAMEZ3').length; i++) {
+						if (this.get('model.rentaGAMEZ3')[i]['GNAME'] == gNAME) {
+							Ember.set(this.get('model.rentaGAMEZ3')[i], 'HIDEOZ', !this.get('model.rentaGAMEZ3')[i].HIDEOZ)
+							if (value == 1) {
+								this.get('rentaHIDEO').pushObject(this.get('model.rentaGAMEZ3')[i])
+							}
+						}
+					}
+				} else {
+					for (let i = 0; i < this.get('rentaHIDEO').length; i++) {
+						if (this.get('rentaHIDEO')[i]['GNAME'] == gNAME) {
+							this.get('rentaHIDEO').removeAt(i)
 						}
 					}
 				}
-				for (let i = 0; i < this.get('rentaHIDEO').length; i++) {
-					if (this.get('rentaHIDEO')[i]['GNAME'] == gNAME) {
-						this.get('rentaHIDEO').removeAt(i)
-						this.get('model.rentaHIDEO').removeAt(i)
-					}
-				}
 				this.get('rentaHIDEO').sortBy('GNAME:asc')
-				this.get('model.rentaHIDEO').sortBy('GNAME:asc')
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
