@@ -11,8 +11,10 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	hideobutts: {},
 
-	this.set('model.TESTING', "tralalaika"),
-	
+	didInsertElement() {
+		this.set('model.TESTING', "tralalaika")
+	},
+
 	actions: {
 
 		showRULEZ() {
