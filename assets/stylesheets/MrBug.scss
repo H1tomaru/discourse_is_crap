@@ -1259,25 +1259,32 @@ div.rentobaka {
 
 	.rentbox2 {
 
+		.mimu:after {
+			content:'';
+			display:inline-block;
+			width:99.5%;
+		}
+
 		.mimu {
 
 			white-space: nowrap;
+			text-align: justify;
 
 			button {
-				font-weight: 700;
-				font-size: 1.85em;
+				font-size: 1.3em;
 				position: relative;
 				color: gray;
 				transition-duration: 0.7s;
 				background: none;
 				border: none;
-				width: 33.3%;
 				padding: 0;
 			}
 
 			button:hover, button.bi4 {
 				color: #00b0ff;
 				transition-duration: 0.7s;
+				font-size: 1.8em;
+				font-weight: 700;
 			}
 
 			button::before {
@@ -1452,6 +1459,10 @@ div.rentobaka {
 					font-size: 0.9em
 				}
 
+			}
+
+			.mimu {
+				
 			}
 
 		}
