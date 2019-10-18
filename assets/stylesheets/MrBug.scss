@@ -85,12 +85,12 @@ div.shinbakaz {
 
 		.headin::before {
 			content: "";
-			width: 80px;
-			height: 4px;
+			width: 60px;
+			height: 2px;
 			background: #00b0ff;
 			position: absolute;
 			left: 0;
-			bottom: -10px;
+			bottom: -4px;
 			left: 50%;
 			transform: translateX(-50%);
 			transition-duration: 1s;
@@ -365,7 +365,7 @@ div.shinbakaz {
 
 	.smaladndark.tablq {
 		display: table;
-		margin: 0 auto -3px;		
+		margin: 0 auto -2px;		
 	}
 
 	table.atats {
@@ -912,10 +912,6 @@ div.shinbakaz {
 				padding: 0 0 10px 0;
 			}
 
-			.headin::before {
-				bottom: -4px
-			}
-			
 		}
 
 		.ghed {
@@ -1267,7 +1263,6 @@ div.rentobaka {
 
 		.mimu {
 
-			white-space: nowrap;
 			text-align: justify;
 
 			button {
@@ -1278,23 +1273,25 @@ div.rentobaka {
 				background: none;
 				border: none;
 				padding: 0;
+				min-width: 240px;
+				white-space: nowrap;
 			}
 
 			button:hover, button.bi4 {
 				color: #00b0ff;
 				transition-duration: 0.7s;
-				font-size: 1.8em;
+				font-size: 1.6em;
 				font-weight: 700;
 			}
 
 			button::before {
 				content: "";
-				width: 80px;
-				height: 4px;
+				width: 60px;
+				height: 2px;
 				background: #00b0ff;
 				position: absolute;
 				left: 0;
-				bottom: -10px;
+				bottom: -6px;
 				left: 50%;
 				transform: translateX(-50%);
 				transition-duration: 1s;
@@ -1461,10 +1458,6 @@ div.rentobaka {
 
 			}
 
-			.mimu {
-				
-			}
-
 		}
 
 	}
@@ -1476,7 +1469,7 @@ div.rentobaka {
 			.mimu {
 
 				button {
-					font-size: 1.15em
+					font-size: 1.1em
 				}
 
 			}
