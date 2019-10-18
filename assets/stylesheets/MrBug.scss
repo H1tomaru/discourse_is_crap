@@ -1275,6 +1275,7 @@ div.rentobaka {
 				padding: 0;
 				min-width: 240px;
 				white-space: nowrap;
+				margin-bottom: 20px;
 			}
 
 			button:hover, button.bi4 {
@@ -1433,6 +1434,20 @@ div.rentobaka {
 				}
 
 			}
+
+		}
+
+	}
+
+	@media (max-width: 500px) {
+
+		.rentbox2 {
+
+			.mimu {
+
+				button {
+					width: 100%
+				}
 
 		}
 
