@@ -1292,9 +1292,35 @@ after_initialize do
 
 			render json: finalrenta 
 		end
-		
+
 		def rentahideo
-			render json: { HiMom: "!!!" }
+			if current_user
+				#decode shit
+				hideos = URI.unescape(Base64.decode64(params[:HIDEOFU])).split("~") #0 - userNAME, 1 - gameNAME
+				if hideos.length == 2 && current_user[:username].downcase == hideos[0].downcase
+
+					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
+
+					if rentahideo[0]
+						if rentahideo[0].key?(hideos[1])
+							value = !rentahideo[0][hideos[1]]
+						else
+							value = false
+						end
+						@@rentadb[:rentahideo].find_one_and_update( { _id: params[:username].downcase }, { "$set": { hideos[1]: value } }, { upsert: true } )
+						render json: { HiMom: "!!!!" }
+					else
+						@@rentadb[:rentahideo].insert( { _id: current_user[:username].downcase }, DATE: Time.now.strftime("%Y.%m.%d"), hideos[1]: false )
+						render json: { HiMom: "!!!!" }
+					end
+
+				else
+					render json: { HiMom: "!!!" }
+				end
+
+			else
+				render json: { HiMom: "!!!" }
+			end
 		end
 
 	end
