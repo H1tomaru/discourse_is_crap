@@ -1218,7 +1218,7 @@ after_initialize do
 			if current_user
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 				#if found, clean up obsolete games from there once in while...
-				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE] > 7777777 )
+				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 7777777 )
 					uzagamez = rentagamez.map { |x| x.values[0] }
 					hideogamez = rentahideo[0].except(:_id, :DATE).keys
 					#might need it, or not... dunno...
