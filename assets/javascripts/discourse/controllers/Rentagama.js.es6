@@ -87,7 +87,7 @@ export default Ember.Controller.extend({
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
-				data: { "HIDEOFU": btoa(unescape(encodeURIComponent(gNAME))) }
+				data: { "HIDEOFU": btoa(unescape(encodeURIComponent(this.get('currentUser.username')+"~"+gNAME))) }
 			}).then(result => {
 				for (let i = 0; i < this.get('rentaGAMEZ').length; i++) {
 					if (this.get('rentaGAMEZ')[i]['GNAME'] == gNAME) {
