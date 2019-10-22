@@ -1229,7 +1229,7 @@ after_initialize do
 						#dunno if that works...
 						rentahideo[0].except!(*brokengamez)
 					end
-					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, DATE: Time.now.strftime("%Y.%m.%d"), rentahideo[0] )
+					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, { DATE: Time.now.strftime("%Y.%m.%d"), rentahideo[0] } )
 				end
 			end
 
