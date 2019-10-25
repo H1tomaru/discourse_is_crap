@@ -142,7 +142,7 @@ after_initialize do
 					game[:TROIKI] = []
 					if users
 						#somevariables
-						priceUP = 0; nop1ADD = 0
+						priceUP = 0
 						#find how many p1 p2 p3 we have, and how many troikas to display
 						p1NO = users[:P1].length if users[:P1]
 						p2NO = users[:P2].length if users[:P2]
@@ -152,7 +152,7 @@ after_initialize do
 							#tons of variables for everything
 							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
 							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]; p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
-							p1PRICE = 0; p2PRICE = 0; p3PRICE = 0; p1PDOWN = 0; p2PDOWN = 0; p3PDOWN = 0
+							p1PRICE = 0; p2PRICE = 0; p3PRICE = 0; p1PDOWN = 0; p2PDOWN = 0; p3PDOWN = 0; nop1ADD = 0
 							p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
