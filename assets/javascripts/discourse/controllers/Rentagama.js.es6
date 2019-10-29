@@ -83,6 +83,7 @@ export default Ember.Controller.extend({
 		},
 
 		hideoGAMEZ(gNAME, knopk, value) {
+			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
@@ -124,6 +125,7 @@ export default Ember.Controller.extend({
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
 			})
+			}
 		}
 
 	}
