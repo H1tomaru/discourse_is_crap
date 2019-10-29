@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
 	showSHITS: false,
 	showHIDEOZ: false,
 	hideobutts: {},
+	test01: this.get('currentUser.username'),
 	
 	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
 	sortProperties2: ['PR4SORT:desc', 'GNAME:asc'],
