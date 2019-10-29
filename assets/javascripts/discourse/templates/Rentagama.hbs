@@ -192,13 +192,15 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2">
-						{{#if (get hideobutts index)}}
-							<div class="tinybagaspin"></div>
-						{{else}}
-							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-						{{/if}}
-					</td>
+					{{#if currentUser.username}}
+						<td class="malabela2">
+							{{#if (get hideobutts index)}}
+								<div class="tinybagaspin"></div>
+							{{else}}
+								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
+							{{/if}}
+						</td>
+					{{/if}}
 				</tr>
 			</tbody>
 			{{/if}}
@@ -224,13 +226,15 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2">
-						{{#if (get hideobutts index)}}
-							<div class="tinybagaspin"></div>
-						{{else}}
-							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-						{{/if}}
-					</td>
+					{{#if currentUser.username}}
+						<td class="malabela2">
+							{{#if (get hideobutts index)}}
+								<div class="tinybagaspin"></div>
+							{{else}}
+								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
+							{{/if}}
+						</td>
+					{{/if}}
 				</tr>
 			</tbody>
 			{{/if}}
@@ -256,13 +260,15 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2">
-						{{#if (get hideobutts index)}}
-							<div class="tinybagaspin"></div>
-						{{else}}
-							<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-						{{/if}}
-					</td>
+					{{#if currentUser.username}}
+						<td class="malabela2">
+							{{#if (get hideobutts index)}}
+								<div class="tinybagaspin"></div>
+							{{else}}
+								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
+							{{/if}}
+						</td>
+					{{/if}}
 				</tr>
 			</tbody>
 			{{/if}}
@@ -287,13 +293,15 @@
 					{{/if}}
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
-					<td class="malabela2">
-						{{#if (get hideobutts index)}}
-							<div class="tinybagaspin"></div>
-						{{else}}
-							<button {{action 'hideoGAMEZ' game.GNAME index -1}}><i class="far fa-eye-slash"></i></button>
-						{{/if}}
-					</td>
+					{{#if currentUser.username}}
+						<td class="malabela2">
+							{{#if (get hideobutts index)}}
+								<div class="tinybagaspin"></div>
+							{{else}}
+								<button {{action 'hideoGAMEZ' game.GNAME index -1}}><i class="far fa-eye-slash"></i></button>
+							{{/if}}
+						</td>
+					{{/if}}
 				</tr>
 			</tbody>
 			{{/each}}
@@ -303,4 +311,3 @@
 	</div>
 
 </div>
-{{currentUser.username}}
