@@ -74,7 +74,7 @@
 
 
 
-	<div class='rentbox'>
+	<div class='rentbox{{#if showLIST " rentahideoz"}}'>
 
 		<div class='title'>
 			Всего игр в прокате: <span>{{model.count.[0]}}{{#if model.count.[5]}} ({{model.count.[5]}} скрыто){{/if}}</span><br>
@@ -118,7 +118,7 @@
 
 
 
-	<div class="rentbox2">
+	<div class="rentbox2{{#unless showLIST " rentahideoz"}}">
 		<div class='mimu'>
 			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
