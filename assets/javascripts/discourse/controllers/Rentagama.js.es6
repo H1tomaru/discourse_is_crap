@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
 	rentaGAMEZ2: Ember.computed.sort("model.rentaGAMEZ2", "sortProperties2"),
 	rentaGAMEZ3: Ember.computed.sort("model.rentaGAMEZ3", "sortProperties2"),
 	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2"),//.property('model.rentaHIDEO.[]'),
-	renta2LIST: this.get('rentaGAMEZ1'),
+	//renta2LIST: this.get('rentaGAMEZ1'),
 
 	/*
 	rentaGAMEZ1: Ember.computed('model', function() {
