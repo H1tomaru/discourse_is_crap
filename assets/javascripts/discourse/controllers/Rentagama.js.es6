@@ -1,5 +1,6 @@
 export default Ember.Controller.extend({
 
+	showLIST: true,
 	showTYPE1: true,
 	showTYPE2: true,
 	showTYPE3: true,
