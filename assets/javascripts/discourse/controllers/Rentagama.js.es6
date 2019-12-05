@@ -35,6 +35,14 @@ export default Ember.Controller.extend({
 			this.toggleProperty('rulez')
 		},
 
+		showLIST1() {
+			this.set('showLIST', true)
+		},
+
+		showLIST2() {
+			this.set('showLIST', false)
+		},
+
 		showTYPE1() {
 			this.toggleProperty('showTYPE1')
 		},
