@@ -750,9 +750,14 @@ after_initialize do
 		end
 
 		def rentagama
+
+			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: []}
+			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
+
+			#find all rentagamez
 			rentagamez = @@rentadb[:rentagadb].find().to_a
 
-			#if not guest, do showhideo for this user
+			#if not guest, find showhideo for this user
 			if current_user
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 				#if found, clean up obsolete games from there once in while...
@@ -772,8 +777,7 @@ after_initialize do
 				end
 			end
 
-			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: []}
-			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
+			#create template shit
 			rentagamez.each do |games|
 				gTYPE = [false,false,false,false]
 				hideoz = true
