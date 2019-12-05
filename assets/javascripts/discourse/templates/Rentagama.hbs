@@ -72,14 +72,14 @@
 	</div>
 	{{/if}}
 
-	<div class='mimu2'>
+	<div class="mimu2">
 		<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST1'}}>Легкий Список</button>
 		<button class="rentabutt{{unless showLIST " bi4"}}" {{action 'showLIST2'}}>Тяжелый список</button>
 	</div>
 
-	<div class='rentbox{{#if showLIST " rentahideoz"}}'>
+	<div class="rentbox{{#if showLIST " rentahideoz"}}">
 
-		<div class='title'>
+		<div class="title">
 			Всего игр в прокате: <span>{{model.count.[0]}}{{#if model.count.[5]}} ({{model.count.[5]}} скрыто){{/if}}</span><br>
 			<div><input type="checkbox" checked {{action "showTYPE1" on="change"}}/> Реально Игр: <span>{{model.count.[1]}}</span></div>
 			<div><input type="checkbox" checked {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span></div>
@@ -87,7 +87,7 @@
 			<div><input type="checkbox" checked {{action "showTYPE4" on="change"}}/> Хиты Для Избранных: <span>{{model.count.[4]}}</span></div>
 		</div>
 		<span class="textright2">Неделя / Месяц</span>
-		<div class='innerbox'>
+		<div class="innerbox">
 			{{#each rentaGAMEZ as |game|}}
 				<div class="
 				{{#unless showTYPE1}}{{#if game.TYPE1}}rentahideoz{{/if}}{{/unless}}
@@ -96,22 +96,22 @@
 				{{#unless showTYPE4}}{{#if game.TYPE4}}rentahideoz{{/if}}{{/unless}}
 				">
 					{{#if game.STATUS}}
-						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class="red"><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{else}}
-						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
+						<span class="green"><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{/if}}
 
 					{{game.GNAME}}
 
-					{{#if game.TYPE2}}<span class='t2text hideoS'>{{game.GCOMMENT}}</span>{{/if}}
-					{{#if game.TYPE3}}<span class='t2text hideoS'>{{game.GCOMMENT}}</span>{{/if}}
+					{{#if game.TYPE2}}<span class="t2text hideoS">{{game.GCOMMENT}}</span>{{/if}}
+					{{#if game.TYPE3}}<span class="t2text hideoS">{{game.GCOMMENT}}</span>{{/if}}
 
 
 					{{#if game.GNEW}}
 						<img src="https://i.imgur.com/84UQp3G.gif">
 					{{/if}}
 
-					<span class='textright'>
+					<span class="textright">
 						{{game.PRICE}}
 					</span>
 				</div>
@@ -122,7 +122,7 @@
 
 
 	<div class="rentbox2{{#unless showLIST " rentahideoz"}}">
-		<div class='mimu'>
+		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="rentabutt{{if showCRAP " bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
 			<button class="rentabutt{{if showSHITS " bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
