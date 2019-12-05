@@ -72,6 +72,8 @@
 	</div>
 	{{/if}}
 
+
+
 	<div class='rentbox'>
 
 		<div class='title'>
@@ -86,10 +88,10 @@
 			{{#each rentaGAMEZ as |game|}}
 				{{#if game.HIDEOZ}}
 				<div class="
-				{{#unless showTYPE1}}{{#if game.TYPE1}}rentahideoz{{/if}}{{/unless}}
-				{{#unless showTYPE2}}{{#if game.TYPE2}}rentahideoz{{/if}}{{/unless}}
-				{{#unless showTYPE3}}{{#if game.TYPE3}}rentahideoz{{/if}}{{/unless}}
-				{{#unless showTYPE4}}{{#if game.TYPE4}}rentahideoz{{/if}}{{/unless}}
+				{{#unless showTYPE1}}{{#if game.TYPE1 "rentahideoz"}}{{/unless}}
+				{{#unless showTYPE2}}{{#if game.TYPE2 "rentahideoz"}}{{/unless}}
+				{{#unless showTYPE3}}{{#if game.TYPE3 "rentahideoz"}}{{/unless}}
+				{{#unless showTYPE4}}{{#if game.TYPE4 "rentahideoz"}}{{/unless}}
 				">
 					{{#if game.STATUS}}
 						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
@@ -116,6 +118,8 @@
 		</div>
 	</div>
 
+
+
 	<div class="rentbox2">
 		<div class='mimu'>
 			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
@@ -127,48 +131,13 @@
 		</div>
 
 		<table class="list">
-			{{#if showGAMEZ}}
-			{{#each rentaGAMEZ1 as |game index|}}
-			{{#if game.HIDEOZ}}
+			{{#each renta2LIST as |game index|}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
 					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
 				</tr>
-				<tr>
-					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">
-							Занят до {{game.STATUS}}
-							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
-						</td>
-					{{else}}
-					<td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-							{{/if}}
-						</td>
-					{{/if}}
-				</tr>
-			</tbody>
-			{{/if}}
-			{{/each}}
-			{{/if}}
 
-			{{#if showCRAP}}
-			{{#each rentaGAMEZ2 as |game index|}}
-			{{#if game.HIDEOZ}}
-			<tbody>
-				<tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
-				</tr>
 				<tr>
 					{{#if game.STATUS}}
 						<td class="malabela2 bgred3">
@@ -176,91 +145,28 @@
 							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
 						</td>
 					{{else}}
-					<td class="malabela2 bggr">Cвободен</td>
+						<td class="malabela2 bggr">Cвободен</td>
 					{{/if}}
+
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
+
 					{{#if currentUser.username}}
 						<td class="malabela2">
 							{{#if (get hideobutts index)}}
 								<div class="tinybagaspin"></div>
 							{{else}}
+								{{#unless game.HIDEOZ}}
 								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-							{{/if}}
-						</td>
-					{{/if}}
-				</tr>
-			</tbody>
-			{{/if}}
-			{{/each}}
-			{{/if}}
-			
-			{{#if showSHITS}}
-			{{#each rentaGAMEZ3 as |game index|}}
-			{{#if game.HIDEOZ}}
-			<tbody>
-				<tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
-				</tr>
-				<tr>
-					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">
-							Занят до {{game.STATUS}}
-							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
-						</td>
-					{{else}}
-					<td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game.GNAME index 1}}><i class="far fa-eye"></i></button>
-							{{/if}}
-						</td>
-					{{/if}}
-				</tr>
-			</tbody>
-			{{/if}}
-			{{/each}}
-			{{/if}}
-			
-			{{#if showHIDEOZ}}
-			{{#each rentaHIDEO as |game index|}}
-			<tbody>
-				<tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2"><img src="{{game.GPIC}}"><span>{{game.GCOMMENT}}</span></td>
-				</tr>
-				<tr>
-					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">
-							Занят до {{game.STATUS}}
-							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
-						</td>
-					{{else}}
-					<td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
+								{{else}}
 								<button {{action 'hideoGAMEZ' game.GNAME index -1}}><i class="far fa-eye-slash"></i></button>
+								{{/unless}}
 							{{/if}}
 						</td>
 					{{/if}}
 				</tr>
 			</tbody>
 			{{/each}}
-			{{/if}}
-
 		</table>
 	</div>
 
