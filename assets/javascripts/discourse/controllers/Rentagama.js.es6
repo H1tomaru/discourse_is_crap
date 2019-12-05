@@ -6,10 +6,6 @@ export default Ember.Controller.extend({
 	showTYPE3: true,
 	showTYPE4: true,
 	rulez: false,
-	showGAMEZ: true,
-	showCRAP: false,
-	showSHITS: false,
-	showHIDEOZ: false,
 	hideobutts: {},
 	
 	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
@@ -20,6 +16,7 @@ export default Ember.Controller.extend({
 	rentaGAMEZ2: Ember.computed.sort("model.rentaGAMEZ2", "sortProperties2"),
 	rentaGAMEZ3: Ember.computed.sort("model.rentaGAMEZ3", "sortProperties2"),
 	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2"),//.property('model.rentaHIDEO.[]'),
+	renta2LIST: this.get('rentaGAMEZ1'),
 
 	/*
 	rentaGAMEZ1: Ember.computed('model', function() {
@@ -55,31 +52,19 @@ export default Ember.Controller.extend({
 		},
 
 		showGAMEZ() {
-			this.set('showCRAP', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', false)
-			this.set('showGAMEZ', true)
+			this.set('renta2LIST', this.get('rentaGAMEZ1'))
 		},
 
 		showCRAP() {
-			this.set('showGAMEZ', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', false)
-			this.set('showCRAP', true)
+			this.set('renta2LIST', this.get('rentaGAMEZ2'))
 		},
 
 		showSHITS() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showHIDEOZ', false)
-			this.set('showSHITS', true)
+			this.set('renta2LIST', this.get('rentaGAMEZ3'))
 		},
 
 		showHIDEOZ() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', true)
+			this.set('renta2LIST', this.get('rentaHIDEO'))
 		},
 
 		hideoGAMEZ(gNAME, knopk, value) {
