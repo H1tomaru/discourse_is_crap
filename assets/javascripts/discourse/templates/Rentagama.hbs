@@ -85,8 +85,12 @@
 		<div class='innerbox'>
 			{{#each rentaGAMEZ as |game|}}
 				{{#if game.HIDEOZ}}
-				{{#if showTYPE1}}{{#if game.TYPE1}}
-				<div>
+				<div class="
+				{{#unless showTYPE1}}{{#if game.TYPE1}}rentahideoz{{/if}}{{/unless}}
+				{{#unless showTYPE2}}{{#if game.TYPE2}}rentahideoz{{/if}}{{/unless}}
+				{{#unless showTYPE3}}{{#if game.TYPE3}}rentahideoz{{/if}}{{/unless}}
+				{{#unless showTYPE4}}{{#if game.TYPE4}}rentahideoz{{/if}}{{/unless}}
+				">
 					{{#if game.STATUS}}
 						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{else}}
@@ -95,24 +99,9 @@
 
 					{{game.GNAME}}
 
-					{{#if game.GNEW}}
-						<img src="https://i.imgur.com/84UQp3G.gif">
-					{{/if}}
+					{{#if game.TYPE2}}<span class='t2text hideoS'>{{game.GCOMMENT}}</span>{{/if}}
+					{{#if game.TYPE3}}<span class='t2text hideoS'>{{game.GCOMMENT}}</span>{{/if}}
 
-					<span class='textright'>
-						{{game.PRICE}}
-					</span>
-				</div>
-				{{/if}}{{/if}}
-				{{#if showTYPE2}}{{#if game.TYPE2}}
-				<div>
-					{{#if game.STATUS}}
-						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{else}}
-						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{/if}}
-
-					{{game.GNAME}} <span class='t2text hideoS'>{{game.GCOMMENT}}</span>
 
 					{{#if game.GNEW}}
 						<img src="https://i.imgur.com/84UQp3G.gif">
@@ -122,51 +111,11 @@
 						{{game.PRICE}}
 					</span>
 				</div>
-				{{/if}}{{/if}}
-				{{#if showTYPE3}}{{#if game.TYPE3}}
-				<div>
-					{{#if game.STATUS}}
-						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{else}}
-						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{/if}}
-
-					{{game.GNAME}} <span class='t2text hideoS'>{{game.GCOMMENT}}</span>
-
-					{{#if game.GNEW}}
-						<img src="https://i.imgur.com/84UQp3G.gif">
-					{{/if}}
-
-					<span class='textright'>
-						{{game.PRICE}}
-					</span>
-				</div>
-				{{/if}}{{/if}}
-				{{#if showTYPE4}}{{#if game.TYPE4}}
-				<div>
-					{{#if game.STATUS}}
-						<span class='red'><b>[</b> <span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}} <b>]</b> {{#if game.LINE}}<b>[</b> +{{game.LINE}} в очереди <b>]</b> {{/if}}<b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{else}}
-						<span class='green'><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
-					{{/if}}
-
-					{{game.GNAME}}
-
-					{{#if game.GNEW}}
-						<img src="https://i.imgur.com/84UQp3G.gif">
-					{{/if}}
-
-					<span class='textright'>
-						{{game.PRICE}}
-					</span>
-				</div>
-				{{/if}}{{/if}}
 				{{/if}}
 			{{/each}}
 		</div>
 	</div>
 
-	<br>
 	<div class="rentbox2">
 		<div class='mimu'>
 			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
