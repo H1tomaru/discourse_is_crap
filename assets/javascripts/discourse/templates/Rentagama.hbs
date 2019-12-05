@@ -86,7 +86,6 @@
 		<span class="textright2">Неделя / Месяц</span>
 		<div class='innerbox'>
 			{{#each rentaGAMEZ as |game|}}
-				{{#if game.HIDEOZ}}
 				<div class="
 				{{#unless showTYPE1}}{{#if game.TYPE1 "rentahideoz"}}{{/unless}}
 				{{#unless showTYPE2}}{{#if game.TYPE2 "rentahideoz"}}{{/unless}}
@@ -113,7 +112,6 @@
 						{{game.PRICE}}
 					</span>
 				</div>
-				{{/if}}
 			{{/each}}
 		</div>
 	</div>
