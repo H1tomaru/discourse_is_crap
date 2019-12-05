@@ -76,7 +76,7 @@
 		<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST1'}}>Легкий Список</button>
 		<button class="rentabutt{{unless showLIST " bi4"}}" {{action 'showLIST2'}}>Тяжелый список</button>
 	</div>
-{{!--
+
 	<div class="rentbox{{if showLIST " rentahideoz"}}">
 
 		<div class="title">
@@ -101,7 +101,7 @@
 						<span class="green"><b>[</b> <span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i> <b>]</b> <b>[</b> {{game.POSITION}} <b>]</b></span>
 					{{/if}}
 
-					{{game.GNAME}}
+					{{!-- {{game.GNAME}} --}}
 
 					{{#if game.TYPE2}}<span class="t2text hideoS">{{game.GCOMMENT}}</span>{{/if}}
 					{{#if game.TYPE3}}<span class="t2text hideoS">{{game.GCOMMENT}}</span>{{/if}}
@@ -112,8 +112,6 @@
 			{{/each}}
 		</div>
 	</div>
---}}
-
 
 	<div class="rentbox2{{unless showLIST " rentahideoz"}}">
 		<div class="mimu">
