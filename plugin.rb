@@ -782,13 +782,13 @@ after_initialize do
 				hideoz = true
 				count[0] = count[0] + 1
 				#price sorting variable, cos user side cant sort with a string
-				pr4sort = game[:PRICE][0..2].to_i
 				( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
 				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
 				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
 				( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
 				( hideoz = false; count[5] = count[5] + 1 ) if current_user && rentahideo[0] && rentahideo[0].key?(games[:_id]) && rentahideo[0][games[:_id]] == false
 				games[:GITEMS].each do |game|
+					pr4sort = game[:PRICE][0..2].to_i
 					gameojb = {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
