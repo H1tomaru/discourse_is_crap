@@ -72,7 +72,8 @@
 	</div>
 	{{/if}}
 
-
+	<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST1'}}>Игры Игры</button>
+	<button class="rentabutt{{unless showLIST " bi4"}}" {{action 'showLIST2'}}>Легкие и Короткие</button>
 
 	<div class='rentbox{{#if showLIST " rentahideoz"}}'>
 
@@ -120,11 +121,11 @@
 
 	<div class="rentbox2{{#unless showLIST " rentahideoz"}}">
 		<div class='mimu'>
-			<button class="{{if showGAMEZ "bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
-			<button class="{{if showCRAP "bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
-			<button class="{{if showSHITS "bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
+			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
+			<button class="rentabutt{{if showCRAP " bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
+			<button class="rentabutt{{if showSHITS " bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
 			{{#if model.count.[5]}}
-			<button class="{{if showHIDEOZ "bi4"}}" {{action 'showHIDEOZ'}}>Скрытые</button>
+			<button class="rentabutt{{if showHIDEOZ " bi4"}}" {{action 'showHIDEOZ'}}>Скрытые</button>
 			{{/if}}
 		</div>
 
