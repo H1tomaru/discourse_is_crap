@@ -1,10 +1,14 @@
 export default Ember.Controller.extend({
 
-	showLIST: true,
+	showLIST: false,
 	showTYPE1: true,
 	showTYPE2: true,
 	showTYPE3: true,
 	showTYPE4: true,
+	showGAMEZ: true,
+	showCRAP: false,
+	showSHITS: false,
+	showHIDEOZ: false,
 	rulez: false,
 	hideobutts: {},
 	
@@ -36,11 +40,11 @@ export default Ember.Controller.extend({
 		},
 
 		showLIST1() {
-			this.set('showLIST', true)
+			this.set('showLIST', false)
 		},
 
 		showLIST2() {
-			this.set('showLIST', false)
+			this.set('showLIST', true)
 		},
 
 		showTYPE1() {
@@ -60,18 +64,34 @@ export default Ember.Controller.extend({
 		},
 
 		showGAMEZ() {
+			this.set('showCRAP', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', false)
+			this.set('showGAMEZ', true)
 			this.set('renta2LIST', this.get('rentaGAMEZ1'))
 		},
 
 		showCRAP() {
+			this.set('showGAMEZ', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', false)
+			this.set('showCRAP', true)
 			this.set('renta2LIST', this.get('rentaGAMEZ2'))
 		},
 
 		showSHITS() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', false)
+			this.set('showHIDEOZ', false)
+			this.set('showSHITS', true)
 			this.set('renta2LIST', this.get('rentaGAMEZ3'))
 		},
 
 		showHIDEOZ() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', true)
 			this.set('renta2LIST', this.get('rentaHIDEO'))
 		},
 
