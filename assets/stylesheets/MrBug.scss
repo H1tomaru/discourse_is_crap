@@ -1256,6 +1256,51 @@ div.rentobaka {
 		}
 
 	}
+	
+	.mimu2 {
+
+		text-align: center
+
+	}
+	
+	button.rentabutt {
+		font-size: 1.3em;
+		position: relative;
+		color: gray;
+		transition-duration: 0.7s;
+		background: none;
+		border: none;
+		padding: 0;
+		min-width: 240px;
+		white-space: nowrap;
+		margin-bottom: 20px;
+	}
+
+	button.rentabutt:hover, button.rentabutt.bi4 {
+		color: #00b0ff;
+		transition-duration: 0.7s;
+		font-size: 1.6em;
+		font-weight: 700;
+	}
+
+	button.rentabutt::before {
+		content: "";
+		width: 60px;
+		height: 2px;
+		background: #00b0ff;
+		position: absolute;
+		left: 0;
+		bottom: -6px;
+		left: 50%;
+		transform: translateX(-50%);
+		transition-duration: 1s;
+	}
+
+	button.rentabutt:hover::before, button.rentabutt.bi4::before {
+		width: 20px;
+		background: gray;
+		transition-duration: 1s;
+	}
 
 	.rentbox2 {
 
@@ -1267,46 +1312,7 @@ div.rentobaka {
 
 		.mimu {
 
-			text-align: justify;
-
-			button {
-				font-size: 1.3em;
-				position: relative;
-				color: gray;
-				transition-duration: 0.7s;
-				background: none;
-				border: none;
-				padding: 0;
-				min-width: 240px;
-				white-space: nowrap;
-				margin-bottom: 20px;
-			}
-
-			button:hover, button.bi4 {
-				color: #00b0ff;
-				transition-duration: 0.7s;
-				font-size: 1.6em;
-				font-weight: 700;
-			}
-
-			button::before {
-				content: "";
-				width: 60px;
-				height: 2px;
-				background: #00b0ff;
-				position: absolute;
-				left: 0;
-				bottom: -6px;
-				left: 50%;
-				transform: translateX(-50%);
-				transition-duration: 1s;
-			}
-
-			button:hover::before, button.bi4::before {
-				width: 20px;
-				background: gray;
-				transition-duration: 1s;
-			}
+			text-align: justify
 
 		}
 
@@ -1485,16 +1491,8 @@ div.rentobaka {
 
 	@media (max-width: 750px) {
 
-		.rentbox2 {
-
-			.mimu {
-
-				button {
-					font-size: 1.1em
-				}
-
-			}
-
+		button.rentabutt {
+			font-size: 1.1em
 		}
 
 		.bagalert {
