@@ -791,34 +791,34 @@ after_initialize do
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
-					} )
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: true
+					} ) if hideoz == true
 					finalrenta[:rentaGAMEZ1].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: true,
 						PR4SORT: game[:PRICE][0..2].to_i
-					} ) if games[:GTYPE] == 1
+					} ) if games[:GTYPE] == 1 && hideoz == true
 					finalrenta[:rentaGAMEZ2].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: true,
 						PR4SORT: game[:PRICE][0..2].to_i
-					} ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
+					} ) if (games[:GTYPE] == 2 || games[:GTYPE] == 3) && hideoz == true
 					finalrenta[:rentaGAMEZ3].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz,
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: true,
 						PR4SORT: game[:PRICE][0..2].to_i
-					} ) if games[:GTYPE] == 4
+					} ) if games[:GTYPE] == 4 && hideoz == true
 					finalrenta[:rentaHIDEO].push( {
 						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
 						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
 						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: hideoz
+						STATUS: game[:STATUS], LINE: game[:LINE], HIDEOZ: false
 					} ) if hideoz == false
 				end
 			end
