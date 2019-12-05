@@ -1278,7 +1278,6 @@ div.rentobaka {
 
 	button.rentabutt:hover, button.rentabutt.bi4 {
 		color: #00b0ff;
-		transition-duration: 0.7s;
 		font-size: 1.6em;
 		font-weight: 700;
 	}
@@ -1299,7 +1298,6 @@ div.rentobaka {
 	button.rentabutt:hover::before, button.rentabutt.bi4::before {
 		width: 20px;
 		background: gray;
-		transition-duration: 1s;
 	}
 
 	.rentbox2 {
