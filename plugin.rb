@@ -752,6 +752,52 @@ after_initialize do
 		def rentagama
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: [] }
 
+			#get cache from db, drop it if its old
+			cachedRENT = @@cache[:cachedRENT].find().to_a
+			if cachedRENT[0]
+				if Time.now - cachedRENT[0][:TIME] > 3600
+					@@cache[:cachedRENT].drop()
+				else
+					finalrenta = cachedRENT[0][:rentaCHA]
+				end
+			end
+
+			if finalrenta.empty?
+				#find all rentagamez
+				rentagamez = @@rentadb[:rentagadb].find().to_a
+				#variable for counting gamez
+				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
+				#create template shit
+				rentagamez.each do |games|
+					gTYPE = [false,false,false,false]
+					count[0] = count[0] + 1
+					( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
+					( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
+					( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
+					( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
+					games[:GITEMS].each do |game|
+						gameojb = {
+							GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
+							TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
+							GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
+							STATUS: game[:STATUS], LINE: game[:LINE]
+						}
+						finalrenta[:rentaGAMEZ].push( gameojb )
+						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1
+						finalrenta[:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
+						finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4
+					end
+				end
+				#sort this shit
+				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
+
+				finalrenta[:count] = count
+			end
+
 			#if not guest, find showhideo for this user
 			if current_user
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
@@ -770,65 +816,9 @@ after_initialize do
 					rentahideo[0][:DATE] = Time.now.strftime("%Y.%m.%d")
 					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
 				end
+				finalrenta[:rentaHIDEO] = rentahideo
+				finalrenta[:count][5] = rentahideo.length
 			end
-
-			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:cachedRENT].find().to_a
-			if cachedRENT[0]
-				if Time.now - cachedRENT[0][:TIME] > 3600
-					@@cache[:cachedRENT].drop()
-				else
-					finalrenta = cachedRENT[0][:rentaCHA]
-				end
-			end
-			
-			if finalrenta.empty?
-				#do stuff bellow
-			end
-			
-			render json: finalrenta 
-			
-			
-			
-			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
-
-			#find all rentagamez
-			rentagamez = @@rentadb[:rentagadb].find().to_a
-
-			#create template shit
-			rentagamez.each do |games|
-				gTYPE = [false,false,false,false]
-				hideoz = true
-				count[0] = count[0] + 1
-				( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
-				( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
-				( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
-				( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
-				( hideoz = false; count[5] = count[5] + 1 ) if current_user && rentahideo[0] && rentahideo[0].key?(games[:_id]) && rentahideo[0][games[:_id]] == false
-				games[:GITEMS].each do |game|
-					#price sorting variable, cos user side cant sort with a string
-					pr4sort = game[:PRICE][0..2].to_i
-					gameojb = {
-						GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
-						TYPE1: gTYPE[0], TYPE2: gTYPE[1], TYPE3: gTYPE[2], TYPE4: gTYPE[3],
-						GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
-						STATUS: game[:STATUS], LINE: game[:LINE], PR4SORT: pr4sort
-					}
-					finalrenta[:rentaGAMEZ].push( gameojb ) if hideoz == true
-					finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 && hideoz == true
-					finalrenta[:rentaGAMEZ2].push( gameojb ) if (games[:GTYPE] == 2 || games[:GTYPE] == 3) && hideoz == true
-					finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4 && hideoz == true
-					finalrenta[:rentaHIDEO].push( gameojb ) if hideoz == false
-				end
-			end
-			#sort this shit
-			#finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-			#finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-			#finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-			#finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-			#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
-
-			finalrenta[:count] = count
 
 			render json: finalrenta 
 		end
