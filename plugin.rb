@@ -750,11 +750,7 @@ after_initialize do
 		end
 
 		def rentagama
-			finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: []}
-			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
-
-			#find all rentagamez
-			rentagamez = @@rentadb[:rentagadb].find().to_a
+			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: [] }
 
 			#if not guest, find showhideo for this user
 			if current_user
@@ -775,6 +771,29 @@ after_initialize do
 					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
 				end
 			end
+
+			#get cache from db, drop it if its old
+			cachedRENT = @@cache[:cachedRENT].find().to_a
+			if cachedRENT[0]
+				if Time.now - cachedRENT[0][:TIME] > 3600
+					@@cache[:cachedRENT].drop()
+				else
+					finalrenta = cachedRENT[0][:rentaCHA]
+				end
+			end
+			
+			if finalrenta.empty?
+				#do stuff bellow
+			end
+			
+			render json: finalrenta 
+			
+			
+			
+			count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
+
+			#find all rentagamez
+			rentagamez = @@rentadb[:rentagadb].find().to_a
 
 			#create template shit
 			rentagamez.each do |games|
