@@ -12,14 +12,15 @@ export default Ember.Controller.extend({
 	rulez: false,
 	hideobutts: {},
 
-	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
-	sortProperties2: ['PR4SORT:desc', 'GNAME:asc'],
-
-	rentaHIDEO: Ember.computed.sort("model.rentaHIDEO", "sortProperties2").property('model.rentaHIDEO.[]'),
+	rentaHIDEO: Ember.computed('model.rentaHIDEO', function() {
+		return this.get('model.rentaHIDEO').sortBy('GNAME');
+	})
 
 	/*
 	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
+	sortProperties2: ['PR4SORT:desc', 'GNAME:asc'],
 	rentaGAMEZ: Ember.computed.sort("model.rentaGAMEZ", "sortProperties1").property('model.rentaGAMEZ.[]'),
+
 	rentaGAMEZ1: Ember.computed('model', function() {
 		var gamez = this.get('model.rentaGAMEZ')
 		var gamez1 = []
