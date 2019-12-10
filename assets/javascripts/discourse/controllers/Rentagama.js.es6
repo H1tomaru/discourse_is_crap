@@ -89,13 +89,16 @@ export default Ember.Controller.extend({
 			this.set('showHIDEOZ', true)
 		},
 
-		hideoGAMEZ(gNAME, knopk, value) {
+		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
+			var gNAME = template.gNAME,
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
-				data: { "HIDEOFU": btoa(unescape(encodeURIComponent(this.get('currentUser.username')+"~"+gNAME))) }
+				data: { "TSHOW": template,
+				"HIDEOFU": btoa(unescape(encodeURIComponent(this.get('currentUser.username')+"~"+value)))
+				}
 			}).then(result => {
 				if ( value == 1 ) {
 					for (var i = this.get('model.rentaGAMEZ').length - 1; i >= 0; --i) {
