@@ -294,10 +294,9 @@ after_initialize do
 				newcache[:qzlist] = qzlist
 				newcache[:gamelist] = gameDB
 				newcache[:TIME] = Time.now
+				#save cache to db
+				@@cache[:cache].insert_one(newcache)
 			end
-
-			#save cache to db if it exists
-			@@cache[:cache].insert_one(newcache) if newcache.any?
 
 			#if displaying qzaips, add games list to finalvar
 			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
@@ -796,6 +795,9 @@ after_initialize do
 				#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
 				finalrenta[:count] = count
+
+				#create cache
+				
 			end
 
 			#if not guest, find showhideo for this user
