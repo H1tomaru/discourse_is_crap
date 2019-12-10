@@ -96,9 +96,7 @@ export default Ember.Controller.extend({
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
-				data: { "TSHOW": template,
-				"HIDEOFU": btoa(unescape(encodeURIComponent(this.get('currentUser.username')+"~"+value)))
-				}
+				data: { "VALUE": value, "UZA": this.get('currentUser.username'), "TSHOW": template }
 			}).then(result => {
 				if ( value == 1 ) {
 					for (var i = this.get('model.rentaGAMEZ').length - 1; i >= 0; --i) {
