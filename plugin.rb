@@ -51,7 +51,6 @@ after_initialize do
 			#cached vars
 			qzlist = []
 			gamelist = []
-			newcache = {}
 
 			#get cache from db, drop it if its old
 			cacheDB = @@cache[:cache].find().to_a
@@ -290,12 +289,11 @@ after_initialize do
 					end
 				end
 				gamelist = gameDB
-				#save both lists to cache
-				newcache[:qzlist] = qzlist
-				newcache[:gamelist] = gameDB
-				newcache[:TIME] = Time.now
+
 				#save cache to db
-				@@cache[:cache].insert_one(newcache)
+				@@cache[:cache].insert_one({ 
+					"qzlist" : qzlist, "gamelist" : gameDB, "TIME" : Time.now
+				})
 			end
 
 			#if displaying qzaips, add games list to finalvar
@@ -794,10 +792,12 @@ after_initialize do
 				finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 				#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
-				finalrenta[:count] = count
-
-				#create cache
-				
+				#save cache to db
+				@@cache[:rentaCHA].insert_one({ 
+					"rentaGAMEZ" : finalrenta[:rentaGAMEZ], "rentaGAMEZ1" : finalrenta[:rentaGAMEZ1],
+					"rentaGAMEZ2" : finalrenta[:rentaGAMEZ2], "rentaGAMEZ3" : finalrenta[:rentaGAMEZ3],
+					"count" : count, "TIME" : Time.now
+				})
 			end
 
 			#if not guest, find showhideo for this user
