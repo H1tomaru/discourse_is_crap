@@ -750,12 +750,12 @@ after_initialize do
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: [] }
 
 			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:cachedRENT].find().to_a
+			cachedRENT = @@cache[:rentaCHA].find().to_a
 			if cachedRENT[0]
 				if Time.now - cachedRENT[0][:TIME] > 3600
-					@@cache[:cachedRENT].drop()
+					@@cache[:rentaCHA].drop()
 				else
-					finalrenta = cachedRENT[0][:rentaCHA]
+					finalrenta = cachedRENT[0].except(:_id, :TIME)
 				end
 			end
 
@@ -785,6 +785,8 @@ after_initialize do
 						finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4
 					end
 				end
+				finalrenta[:count] = count
+
 				#sort this shit
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
@@ -803,23 +805,29 @@ after_initialize do
 			#if not guest, find showhideo for this user
 			if current_user
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
+
 				#if found, clean up obsolete games from there once in while...
-				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 7777777 )
-					uzagamez = rentagamez.map { |x| x.values[0] }
-					hideogamez = rentahideo[0].except(:_id, :DATE).keys
+				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 3600000 )
+					uzagamez = rentagamez.map { |x| x[:_id] }
+					hideogamez = rentahideo[0][:LIST].keys
 					#might need it, or not... dunno...
 					#uzagamez.map! { |x| x.to_str }
 					hideogamez.map! { |x| x.to_s }
 					brokengamez = hideogamez - uzagamez
 					unless brokengamez.empty?
 						#dunno if that works...
-						rentahideo[0].except!(*brokengamez)
+						rentahideo[0][:LIST].except!(*brokengamez)
+					end
+					#check for trashy entries in lists...
+					if rentahideo[0][:LIST].length < rentahideo[0][:TSHOW].length
+						rentahideo[0][:TSHOW].delete_if { |x| !(rentahideo[0][:LIST].key?(x[:GNAME])) }
 					end
 					rentahideo[0][:DATE] = Time.now.strftime("%Y.%m.%d")
 					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
 				end
-				finalrenta[:rentaHIDEO] = rentahideo
-				finalrenta[:count][5] = rentahideo.length
+
+				finalrenta[:rentaHIDEO] = rentahideo[0].except(:_id, :DATE)
+				finalrenta[:count][5] = rentahideo[0].length - 3
 			end
 
 			render json: finalrenta 
