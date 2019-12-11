@@ -839,7 +839,7 @@ after_initialize do
 		def rentahideo
 			if current_user
 				#"VALUE" - action, "UZA" - username, "TSHOW" - full template variable
-				if params.length == 3 && current_user[:username].downcase == params[:UZA].downcase
+				if params[:VALUE] && params[:UZA] && params[:TSHOW] && current_user[:username].downcase == params[:UZA].downcase
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 					gNAME = params[:TSHOW][:GNAME]
