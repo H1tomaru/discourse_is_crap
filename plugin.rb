@@ -824,10 +824,13 @@ after_initialize do
 					end
 					rentahideo[0][:DATE] = Time.now
 					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
-				end
 
-				finalrenta[:rentaHIDEO] = rentahideo[0].except(:_id, :DATE)
-				finalrenta[:count][5] = rentahideo[0].length - 3
+					#if showhide for this user exists, use it
+					if rentahideo[0]
+						finalrenta[:rentaHIDEO] = rentahideo[0].except(:_id, :DATE)
+						finalrenta[:count][5] = rentahideo[0].length - 4
+					end
+				end
 			end
 
 			render json: finalrenta 
