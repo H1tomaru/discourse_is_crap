@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
 	rentaHIDEO: Ember.computed('model.rentaHIDEO.TSHOW', function() {
 		return this.get('model.rentaHIDEO.TSHOW').sortBy('GNAME');
-	}),
+	}).property('model.rentaHIDEO.TSHOW.[]'),
 
 	/*
 	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
