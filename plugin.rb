@@ -762,7 +762,7 @@ after_initialize do
 			if finalrenta.empty?
 				#find all rentagamez
 				rentagamez = @@rentadb[:rentagadb].find().to_a
-				#variable for counting gamez
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] }
 				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 				#create template shit
 				rentagamez.each do |games|
