@@ -292,7 +292,7 @@ after_initialize do
 
 				#save cache to db
 				@@cache[:cache].insert_one({ 
-					"qzlist" : qzlist, "gamelist" : gameDB, "TIME" : Time.now
+					qzlist: qzlist, gamelist: gameDB, TIME: Time.now
 				})
 			end
 
@@ -796,9 +796,9 @@ after_initialize do
 
 				#save cache to db
 				@@cache[:rentaCHA].insert_one({ 
-					"rentaGAMEZ" : finalrenta[:rentaGAMEZ], "rentaGAMEZ1" : finalrenta[:rentaGAMEZ1],
-					"rentaGAMEZ2" : finalrenta[:rentaGAMEZ2], "rentaGAMEZ3" : finalrenta[:rentaGAMEZ3],
-					"count" : count, "TIME" : Time.now
+					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
+					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaGAMEZ3: finalrenta[:rentaGAMEZ3],
+					count: count, TIME: Time.now
 				})
 			end
 
@@ -855,7 +855,7 @@ after_initialize do
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
-					else if params[:VALUE] == 1
+					elsif params[:VALUE] == 1
 						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: { gNAME => true }, TSHOW: params[:TSHOW] )
 						render json: { HiMom: "!!!!" }
 					end
