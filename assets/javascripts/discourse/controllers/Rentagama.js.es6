@@ -96,7 +96,8 @@ export default Ember.Controller.extend({
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
-				data: { "VALUE": value, "UZA": this.get('currentUser.username'), "TSHOW": template }
+				data: { "VALUE": value, "UZA": this.get('currentUser.username'),
+				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(template)))) }
 			}).then(result => {
 				if ( value == 1 ) {
 					Ember.set(this.get('model.rentaHIDEO.LIST'), gNAME, true)
