@@ -77,7 +77,7 @@
 		<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST2'}}>Тяжелый Cписок</button>
 	</div>
 
-	{{#if showLIST}}
+	{{#unless showLIST}}
 	<div class="rentbox">
 
 		<div class="title">
@@ -115,9 +115,9 @@
 			{{/each}}
 		</div>
 	</div>
-	{{/if}}
+	{{/unless}}
 
-	{{#unless showLIST}}
+	{{#if showLIST}}
 	<div class="rentbox2">
 		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
@@ -266,6 +266,6 @@
 			{{/each}}
 		</table>
 	</div>
-	{{/unless}}
+	{{/if}}
 
 </div>
