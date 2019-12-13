@@ -77,7 +77,8 @@
 		<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST2'}}>Тяжелый Cписок</button>
 	</div>
 
-	<div class="rentbox{{if showLIST " rentahideoz"}}">
+	{{#if showLIST}}
+	<div class="rentbox">
 
 		<div class="title">
 			Всего игр в прокате: <span>{{model.count.[0]}}{{#if model.count.[5]}} ({{model.count.[5]}} скрыто){{/if}}</span><br>
@@ -114,8 +115,10 @@
 			{{/each}}
 		</div>
 	</div>
+	{{/if}}
 
-	<div class="rentbox2{{unless showLIST " rentahideoz"}}">
+	{{#unless showLIST}}
+	<div class="rentbox2">
 		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="rentabutt{{if showCRAP " bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
@@ -263,5 +266,6 @@
 			{{/each}}
 		</table>
 	</div>
+	{{/unless}}
 
 </div>
