@@ -839,7 +839,10 @@ after_initialize do
 		def rentahideo
 			if current_user
 				#"VALUE" - action, "UZA" - username, "TSHOW" - full template variable
-				if params[:VALUE] && params[:UZA] && params[:TSHOW] && current_user[:username].downcase == params[:UZA].downcase
+				if params[:VALUE] && params[:UZA] && params[:TSHOW] && params.length == 3 && current_user[:username].downcase == params[:UZA].downcase
+
+					#decode shit
+					params[:TSHOW] = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 					gNAME = params[:TSHOW][:GNAME]
