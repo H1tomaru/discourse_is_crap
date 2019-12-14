@@ -848,7 +848,7 @@ after_initialize do
 					gNAME = params[:TSHOW][:GNAME]
 
 					if rentahideo[0]
-						if params[:VALUE] == 1
+						if params[:VALUE] == "1"
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
 							"$push" => { TSHOW: params[:TSHOW] },
 							"$set" => { LIST: { gNAME => true } }
@@ -861,7 +861,7 @@ after_initialize do
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
-					elsif params[:VALUE] == 1
+					elsif params[:VALUE] == "1"
 						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: { gNAME => true }, TSHOW: params[:TSHOW] } )
 						render json: { HiMom: "!!!!" }
 					end
