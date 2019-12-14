@@ -850,14 +850,14 @@ after_initialize do
 					if rentahideo[0]
 						if params[:VALUE] == "1"
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$set" => { LIST: { gNAME => true } }
-							"$push" => { TSHOW: tSHOW },
+							"$set" => { LIST: { gNAME => true } },
+							"$push" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						else
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$unset" => { LIST: { gNAME => true } }
-							"$pull" => { TSHOW: tSHOW },
+							"$unset" => { LIST: { gNAME => true } },
+							"$pull" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
