@@ -842,27 +842,27 @@ after_initialize do
 				if params[:VALUE] && params[:UZA] && params[:TSHOW] && current_user[:username].downcase == params[:UZA].downcase
 
 					#decode shit
-					params[:TSHOW] = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
+					tSHOW = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
+					gNAME = tSHOW[:GNAME]
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
-					gNAME = params[:TSHOW][:GNAME]
 
 					if rentahideo[0]
 						if params[:VALUE] == "1"
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$push" => { TSHOW: params[:TSHOW] },
+							"$push" => { TSHOW: tSHOW },
 							"$set" => { LIST: { gNAME: true } }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						else
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$pull" => { TSHOW: params[:TSHOW] },
+							"$pull" => { TSHOW: tSHOW },
 							"$unset" => { LIST: { gNAME: true } }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
 					elsif params[:VALUE] == "1"
-						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: { gNAME: true }, TSHOW: params[:TSHOW] } )
+						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: { gNAME: true }, TSHOW: tSHOW } )
 						render json: { HiMom: "!!!!" }
 					end
 
