@@ -862,7 +862,7 @@ after_initialize do
 							render json: { HiMom: "!!!!" }
 						end
 					elsif params[:VALUE] == "1"
-						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: {gNAME => true} }, TSHOW: [tSHOW] } )
+						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: {gNAME => true}, TSHOW: [tSHOW] } )
 						render json: { HiMom: "!!!!" }
 					end
 
