@@ -843,27 +843,26 @@ after_initialize do
 
 					#decode shit
 					tSHOW = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
-					gNAME = tSHOW[:GNAME]
-					listtrue = {LIST: {gNAME => true}}
+					gNAME = tSHOW[:GNAME].to_s
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 
 					if rentahideo[0]
 						if params[:VALUE] == "1"
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$set" => { listtrue },
+							"$set" => { LIST: {gNAME => true} },
 							"$push" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						else
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$unset" => { listtrue },
+							"$unset" => { LIST: {gNAME => true} },
 							"$pull" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
 					elsif params[:VALUE] == "1"
-						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, listtrue, TSHOW: [tSHOW] } )
+						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, LIST: {gNAME => true}, TSHOW: [tSHOW] } )
 						render json: { HiMom: "!!!!" }
 					end
 
