@@ -104,10 +104,10 @@ export default Ember.Controller.extend({
 				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(template)))) }
 			}).then(result => {
 				if ( value == 1 ) {
-					Ember.set(this.get('rentaHLIST'), gNAME, true)
+					Ember.set(this.get('model.rentaHIDEO.LIST'), gNAME, true)
 					this.get('model.rentaHIDEO.TSHOW').pushObject(template)
 				} else {
-					delete this.get('rentaHLIST').gNAME
+					delete this.get('model.rentaHIDEO.LIST').gNAME
 					this.get('model.rentaHIDEO.TSHOW').removeObject(template)
 				}
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
