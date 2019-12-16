@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
 	rentaHLIST: Ember.computed('model.rentaHIDEO.LIST', function() {
 		return this.get('model.rentaHIDEO.LIST')
- 	}),
+ 	}).property('model.rentaHIDEO.LIST.{}'),
 
 	rentaHIDEO: Ember.computed('model.rentaHIDEO.TSHOW', function() {
 		return this.get('model.rentaHIDEO.TSHOW').sortBy('GNAME');
@@ -108,7 +108,6 @@ export default Ember.Controller.extend({
 					this.get('model.rentaHIDEO.TSHOW').pushObject(template)
 				} else {
 					delete this.get('rentaHLIST').gNAME
-					this.notifyPropertyChange('rentaHLIST') 
 					this.get('model.rentaHIDEO.TSHOW').removeObject(template)
 				}
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
