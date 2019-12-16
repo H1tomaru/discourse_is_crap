@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
 	rulez: false,
 	hideobutts: {},
 
-	//rentaHLIST: this.get('model.rentaHIDEO.LIST'),
+	rentaHLIST: this.get('model.rentaHIDEO.LIST'),
 
 	rentaHIDEO: Ember.computed('model.rentaHIDEO.TSHOW', function() {
 		return this.get('model.rentaHIDEO.TSHOW').sortBy('GNAME');
