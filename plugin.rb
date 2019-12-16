@@ -843,7 +843,7 @@ after_initialize do
 
 					#decode shit
 					tSHOW = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
-					gNAME = tSHOW[:GNAME].to_str
+					gNAME = tSHOW[:GNAME]
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 
