@@ -807,29 +807,19 @@ after_initialize do
 				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 
 				#if found, clean up obsolete games from there once in while...
-				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 3600000 )
+				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 2600000 )
 					uzagamez = rentagamez.map { |x| x[:_id] }
-					hideogamez = rentahideo[0][:LIST].keys
-					#might need it, or not... dunno...
-					#uzagamez.map! { |x| x.to_str }
-					hideogamez.map! { |x| x.to_s }
-					brokengamez = hideogamez - uzagamez
-					unless brokengamez.empty?
-						#dunno if that works...
-						rentahideo[0][:LIST].except!(*brokengamez)
-					end
-					#check for trashy entries in lists...
-					if rentahideo[0][:LIST].length < rentahideo[0][:TSHOW].length
-						rentahideo[0][:TSHOW].delete_if { |x| !(rentahideo[0][:LIST].key?(x[:GNAME])) }
-					end
+					#remove trashy entries in tshow...
+					rentahideo[0][:TSHOW].delete_if { |x| !(uzagamez.include?(x[:GNAME])) }
 					rentahideo[0][:DATE] = Time.now
 					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
 				end
 
 				#if showhide for this user exists, use it
-				if rentahideo[0]
-					finalrenta[:rentaHIDEO] = rentahideo[0].except(:_id, :DATE)
-					finalrenta[:count][5] = rentahideo[0].length - 4
+				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
+					finalrenta[:rentaHIDEO][:TSHOW] = rentahideo[0][:TSHOW]
+					finalrenta[:rentaHIDEO][:LIST] = rentahideo[0][:TSHOW].map { |x| x[:GNAME] => true }
+					finalrenta[:count][5] = rentahideo[0][:LIST].length
 				end
 			end
 
@@ -843,26 +833,23 @@ after_initialize do
 
 					#decode shit
 					tSHOW = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
-					gNAME = tSHOW['GNAME']
 
 					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
 
 					if rentahideo[0]
 						if params[:VALUE] == "1"
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$set" => { "LIST.${gNAME}" => true },
 							"$push" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						else
 							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$unset" => { "LIST.${gNAME}" => true },
 							"$pull" => { TSHOW: tSHOW }
 							}, { upsert: true } )
 							render json: { HiMom: "!!!!" }
 						end
 					elsif params[:VALUE] == "1"
-						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, "LIST.${gNAME}" => true, TSHOW: [tSHOW] } )
+						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, TSHOW: [tSHOW] } )
 						render json: { HiMom: "!!!!" }
 					end
 
