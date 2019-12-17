@@ -751,7 +751,7 @@ after_initialize do
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaLIST: {}, rentaTSHOW: [] }
 
 			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:rentaCHA].find()
+			cachedRENT = @@cache[:rentaCHA].find().to_a
 			if cachedRENT[0]
 				cachedRENT = JSON.parse(cachedRENT[0])
 				if Time.now - cachedRENT[:TIME] > 3600
