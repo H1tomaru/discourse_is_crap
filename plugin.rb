@@ -752,11 +752,10 @@ after_initialize do
 			#get cache from db, drop it if its old
 			cachedRENT = @@cache[:rentaCHA].find().to_a
 			if cachedRENT[0]
-				cachedRENT = JSON.parse(cachedRENT[0])
-				if Time.now - cachedRENT[:TIME] > 3600
+				if Time.now - cachedRENT[0][:TIME] > 3600
 					@@cache[:rentaCHA].drop()
 				else
-					finalrenta = cachedRENT.except(:_id, :TIME)
+					finalrenta = cachedRENT[0].except(:_id, :TIME)
 				end
 			end
 
