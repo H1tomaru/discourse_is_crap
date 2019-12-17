@@ -438,13 +438,12 @@ after_initialize do
 					else
 						#get stuff from db
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
-						prezaips = JSON.parse(prezaips[0])
-						if prezaips[:imgLINKHQ]
-							prezaips[:imgLINK] = prezaips[:imgLINKHQ]
-							prezaips = prezaips.except(:imgLINKHQ)
+						if prezaips[0][:imgLINKHQ]
+							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
+							prezaips[0] = prezaips[0].except(:imgLINKHQ)
 						end
-						prezaips[:position] = code[0]
-						prezaips[:winrars] = true
+						prezaips[0][:position] = code[0]
+						prezaips[0][:winrars] = true
 						render json: prezaips[0]
 					end
 
