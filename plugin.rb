@@ -819,7 +819,7 @@ after_initialize do
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
 					finalrenta[:rentaLIST] = rentahideo[0][:TSHOW].map { |x| { x[:GNAME] => true } }
-					finalrenta.count.5 = rentahideo[0][:TSHOW].length
+					finalrenta["count"][5] = rentahideo[0][:TSHOW].length
 				end
 			end
 
