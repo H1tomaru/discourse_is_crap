@@ -368,9 +368,9 @@ after_initialize do
 				#shorten maigamez1 game names if they too long
 				#finalvar[:maigamez1].each {|game| game[:gNAME] = game[:gNAME].truncate(40)} not needed. can css same result.
 				#fill 3 variables for each game type
-				finalvar[:gamedb1].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 1 || game[:TYPE] == 0
-				finalvar[:gamedb2].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 2
-				finalvar[:gamedb3].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 3
+				finalvar[:gamedb1].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 1 || game[:TYPE] == 0
+				finalvar[:gamedb2].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 2
+				finalvar[:gamedb3].push(game.except(:PRICE, :TYPE)) if game[:TYPE] == 3
 			end
 			
 			render json: finalvar
@@ -437,10 +437,10 @@ after_initialize do
 						render json: { banned: true }
 					else
 						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.with_indifferent_access
 						if prezaips[0][:imgLINKHQ]
 							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0] = prezaips[0].except("imgLINKHQ")
+							prezaips[0] = prezaips[0].except(:imgLINKHQ)
 						end
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
@@ -750,19 +750,19 @@ after_initialize do
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaLIST: {}, rentaTSHOW: [] }
 
 			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:rentaCHA].find().to_a
+			cachedRENT = @@cache[:rentaCHA].find().to_a.with_indifferent_access
 			if cachedRENT[0]
 				if Time.now - cachedRENT[0][:TIME] > 3600
 					@@cache[:rentaCHA].drop()
 				else
-					finalrenta = cachedRENT[0].except("_id", "TIME")
+					finalrenta = cachedRENT[0].except(:_id, :TIME)
 				end
 			end
 
 			if finalrenta.empty?
 				#find all rentagamez
 				rentagamez = @@rentadb[:rentagadb].find().to_a
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [], rentaLIST: {}, rentaTSHOW: [] }
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] }
 				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 				#create template shit
 				rentagamez.each do |games|
@@ -798,7 +798,7 @@ after_initialize do
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
 					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaGAMEZ3: finalrenta[:rentaGAMEZ3],
-					:rentaLIST => {}, :rentaTSHOW => [], :count => count, TIME: Time.now
+					rentaLIST: {}, rentaTSHOW: [], count: count, TIME: Time.now
 				})
 			end
 
