@@ -437,7 +437,7 @@ after_initialize do
 						render json: { banned: true }
 					else
 						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } )
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
 						prezaips = JSON.parse(prezaips[0])
 						if prezaips[:imgLINKHQ]
 							prezaips[:imgLINK] = prezaips[:imgLINKHQ]
