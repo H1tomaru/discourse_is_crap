@@ -747,7 +747,7 @@ after_initialize do
 		end
 
 		def rentagama
-			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaHIDEO: [] }
+			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaLIST: {}, rentaTSHOW:[] }
 
 			#get cache from db, drop it if its old
 			cachedRENT = @@cache[:rentaCHA].find().to_a
@@ -762,7 +762,7 @@ after_initialize do
 			if finalrenta.empty?
 				#find all rentagamez
 				rentagamez = @@rentadb[:rentagadb].find().to_a
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [], rentaHIDEO: {LIST:{}, TSHOW:[]} }
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [], rentaLIST: {}, rentaTSHOW:[] }
 				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 				#create template shit
 				rentagamez.each do |games|
@@ -798,7 +798,7 @@ after_initialize do
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
 					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaGAMEZ3: finalrenta[:rentaGAMEZ3],
-					rentaHIDEO: {LIST:{}, TSHOW:[]}, count: count, TIME: Time.now
+					rentaLIST: {}, rentaTSHOW:[], count: count, TIME: Time.now
 				})
 			end
 
@@ -817,9 +817,9 @@ after_initialize do
 
 				#if showhide for this user exists, use it
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
-					finalrenta[:rentaHIDEO][:TSHOW] = rentahideo[0][:TSHOW]
-					finalrenta[:rentaHIDEO][:LIST] = rentahideo[0][:TSHOW].map { |x| { x[:GNAME] => true } }
-					finalrenta[:count][5] = rentahideo[0][:LIST].length
+					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
+					finalrenta[:rentaLIST] = rentahideo[0][:TSHOW].map { |x| { x[:GNAME] => true } }
+					finalrenta[:count][5] = rentahideo[0][:TSHOW].length
 				end
 			end
 
