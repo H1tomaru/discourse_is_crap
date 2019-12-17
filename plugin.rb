@@ -785,7 +785,7 @@ after_initialize do
 						finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4
 					end
 				end
-				finalrenta["count"] = count
+				finalrenta[:count] = count
 
 				#sort this shit
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
