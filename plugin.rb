@@ -798,7 +798,7 @@ after_initialize do
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
 					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaGAMEZ3: finalrenta[:rentaGAMEZ3],
-					rentaLIST: {}, rentaTSHOW: [], count: count, TIME: Time.now
+					:rentaLIST => {}, :rentaTSHOW => [], :count => count, TIME: Time.now
 				})
 			end
 
@@ -818,8 +818,8 @@ after_initialize do
 				#if showhide for this user exists, use it
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
-					rentahideo[0][:TSHOW].each { |x| finalrenta["rentaLIST"][x[:GNAME]] = true }
-					finalrenta["count"][5] = rentahideo[0][:TSHOW].length
+					rentahideo[0][:TSHOW].each { |x| finalrenta[:rentaLIST][x[:GNAME]] = true }
+					finalrenta[:count][5] = rentahideo[0][:TSHOW].length
 				end
 			end
 
