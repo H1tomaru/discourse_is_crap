@@ -92,21 +92,18 @@ export default Ember.Controller.extend({
 		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
-			var smalltemp = {}
-			smalltemp.GNAME = template.GNAME
-			smalltemp.GPIC = template.GPIC
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
 				data: { "VALUE": value, "UZA": this.get('currentUser.username'),
-				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(smalltemp)))) }
+				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(template)))) }
 			}).then(result => {
 				if ( value == 1 ) {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, true)
-					this.get('model.rentaTSHOW').pushObject(smalltemp)
+					this.get('model.rentaTSHOW').pushObject(template)
 				} else {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, false)
-					this.get('model.rentaTSHOW').removeObject(smalltemp)
+					this.get('model.rentaTSHOW').removeObject(template)
 				}
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
