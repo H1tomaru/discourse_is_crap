@@ -77,7 +77,7 @@
 		<button class="rentabutt{{if showLIST " bi4"}}" {{action 'showLIST2'}}>Тяжелый Cписок</button>
 	</div>
 
-	{{unless showLIST}}
+	{{#unless showLIST}}
 	<div class="rentbox">
 
 		<div class="title">
@@ -117,7 +117,7 @@
 	</div>
 	{{/unless}}
 
-	{{if showLIST}}
+	{{#if showLIST}}
 	<div class="rentbox2">
 		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
@@ -128,7 +128,7 @@
 			{{/if}}
 		</div>
 
-		{{if showGAMEZ}}
+		{{#if showGAMEZ}}
 		<table class="list">
 			{{#each model.rentaGAMEZ1 as |game index|}}
 			{{#unless (get model.rentaLIST game.GNAME)}}
@@ -167,7 +167,7 @@
 		</table>
 		{{/if}}
 		
-		{{if showCRAP}}
+		{{#if showCRAP}}
 		<table class="list">
 			{{#each model.rentaGAMEZ2 as |game index|}}
 			{{#unless (get model.rentaLIST game.GNAME)}}
@@ -206,7 +206,7 @@
 		</table>
 		{{/if}}
 		
-		{{if showSHITS}}
+		{{#if showSHITS}}
 		<table class="list">
 			{{#each model.rentaGAMEZ3 as |game index|}}
 			{{#unless (get model.rentaLIST game.GNAME)}}
@@ -245,7 +245,7 @@
 		</table>
 		{{/if}}
 		
-		{{if showHIDEOZ}}
+		{{#if showHIDEOZ}}
 		<table class="list">
 			{{#each rentaHIDEO as |game index|}}
 			<tbody>
