@@ -101,7 +101,7 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				if ( value == 1 ) {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, true)
-					this.get('model.rentaTSHOW').pushObject(template)
+					this.get('model.rentaTSHOW').pushObject(template2)
 				} else {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, false)
 					this.get('model.rentaTSHOW').removeObject(template2)
