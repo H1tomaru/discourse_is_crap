@@ -90,7 +90,7 @@
 		<span class="textright2">Неделя / Месяц</span>
 		<div class="innerbox">
 			{{#each model.rentaGAMEZ as |game|}}
-				{{#unless (get rentaHLIST game.GNAME)}}
+				{{#unless (get model.rentaHIDEO.LIST game.GNAME)}}
 				<div class="
 					{{unless showTYPE1 (if game.TYPE1 "rentahideoz")}}
 					{{unless showTYPE2 (if game.TYPE2 "rentahideoz")}}
@@ -130,7 +130,7 @@
 
 		<table class="list{{unless showGAMEZ " rentahideoz"}}">
 			{{#each model.rentaGAMEZ1 as |game index|}}
-			{{#unless (get rentaHLIST game.GNAME)}}
+			{{#unless (get model.rentaHIDEO.LIST game.GNAME)}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
@@ -167,7 +167,7 @@
 		
 		<table class="list{{unless showCRAP " rentahideoz"}}">
 			{{#each model.rentaGAMEZ2 as |game index|}}
-			{{#unless (get rentaHLIST game.GNAME)}}
+			{{#unless (get model.rentaHIDEO.LIST game.GNAME)}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
@@ -204,7 +204,7 @@
 		
 		<table class="list{{unless showSHITS " rentahideoz"}}">
 			{{#each model.rentaGAMEZ3 as |game index|}}
-			{{#unless (get rentaHLIST game.GNAME)}}
+			{{#unless (get model.rentaHIDEO.LIST game.GNAME)}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
