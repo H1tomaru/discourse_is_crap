@@ -437,7 +437,8 @@ after_initialize do
 						render json: { banned: true }
 					else
 						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.with_indifferent_access
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } )
+						prezaips = JSON.parse(prezaips)
 						if prezaips[0][:imgLINKHQ]
 							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
 							prezaips[0] = prezaips[0].except(:imgLINKHQ)
@@ -750,7 +751,8 @@ after_initialize do
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaLIST: {}, rentaTSHOW: [] }
 
 			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:rentaCHA].find().to_a.with_indifferent_access
+			cachedRENT = @@cache[:rentaCHA].find()
+			cachedRENT = JSON.parse(cachedRENT)
 			if cachedRENT[0]
 				if Time.now - cachedRENT[0][:TIME] > 3600
 					@@cache[:rentaCHA].drop()
