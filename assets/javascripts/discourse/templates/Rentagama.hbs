@@ -245,16 +245,12 @@
 				</tr>
 
 				<tr>
-					<td class="malabela2"></td>
-					<td class="malabela2"></td>
-					<td class="malabela2"></td>
-
 					{{#if currentUser.username}}
 						<td class="malabela2">
 							{{#if (get hideobutts index)}}
 								<div class="tinybagaspin"></div>
 							{{else}}
-								<button {{action 'hideoGAMEZ' game index -1}}><i class="far fa-eye"></i></button>
+								<button style="width: 100%" {{action 'hideoGAMEZ' game index -1}}><i class="far fa-eye"></i></button>
 							{{/if}}
 						</td>
 					{{/if}}
