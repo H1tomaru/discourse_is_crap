@@ -818,7 +818,7 @@ after_initialize do
 				#if showhide for this user exists, use it
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaHIDEO][:TSHOW] = rentahideo[0][:TSHOW]
-					finalrenta[:rentaHIDEO][:LIST] = rentahideo[0][:TSHOW].map { |x| x[:GNAME] => true }
+					finalrenta[:rentaHIDEO][:LIST] = rentahideo[0][:TSHOW].map { |x| { x[:GNAME] => true } }
 					finalrenta[:count][5] = rentahideo[0][:LIST].length
 				end
 			end
