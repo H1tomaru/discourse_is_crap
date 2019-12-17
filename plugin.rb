@@ -438,13 +438,13 @@ after_initialize do
 					else
 						#get stuff from db
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } )
-						prezaips = JSON.parse(prezaips)
-						if prezaips[0][:imgLINKHQ]
-							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0] = prezaips[0].except(:imgLINKHQ)
+						prezaips = JSON.parse(prezaips[0])
+						if prezaips[:imgLINKHQ]
+							prezaips[:imgLINK] = prezaips[:imgLINKHQ]
+							prezaips = prezaips.except(:imgLINKHQ)
 						end
-						prezaips[0][:position] = code[0]
-						prezaips[0][:winrars] = true
+						prezaips[:position] = code[0]
+						prezaips[:winrars] = true
 						render json: prezaips[0]
 					end
 
@@ -752,12 +752,12 @@ after_initialize do
 
 			#get cache from db, drop it if its old
 			cachedRENT = @@cache[:rentaCHA].find()
-			cachedRENT = JSON.parse(cachedRENT)
 			if cachedRENT[0]
-				if Time.now - cachedRENT[0][:TIME] > 3600
+				cachedRENT = JSON.parse(cachedRENT[0])
+				if Time.now - cachedRENT[:TIME] > 3600
 					@@cache[:rentaCHA].drop()
 				else
-					finalrenta = cachedRENT[0].except(:_id, :TIME)
+					finalrenta = cachedRENT.except(:_id, :TIME)
 				end
 			end
 
