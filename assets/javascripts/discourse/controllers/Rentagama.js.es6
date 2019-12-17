@@ -92,7 +92,7 @@ export default Ember.Controller.extend({
 		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
-			smalltemp = {GNAME:template.GNAME, GPIC:template.GPIC}
+			var smalltemp = {GNAME:template.GNAME, GPIC:template.GPIC}
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
