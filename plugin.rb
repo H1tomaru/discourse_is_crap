@@ -440,7 +440,7 @@ after_initialize do
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
 						if prezaips[0][:imgLINKHQ]
 							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0] = prezaips[0].except(:imgLINKHQ)
+							prezaips[0] = prezaips[0].except("imgLINKHQ")
 						end
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
@@ -755,7 +755,7 @@ after_initialize do
 				if Time.now - cachedRENT[0][:TIME] > 3600
 					@@cache[:rentaCHA].drop()
 				else
-					finalrenta = cachedRENT[0].except(:_id, :TIME)
+					finalrenta = cachedRENT[0].except("_id", "TIME")
 				end
 			end
 
@@ -819,7 +819,7 @@ after_initialize do
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
 					finalrenta[:rentaLIST] = rentahideo[0][:TSHOW].map { |x| { x[:GNAME] => true } }
-					finalrenta[:count][5] = rentahideo[0][:TSHOW].length
+					finalrenta.count.5 = rentahideo[0][:TSHOW].length
 				end
 			end
 
