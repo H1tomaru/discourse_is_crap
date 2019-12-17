@@ -785,7 +785,7 @@ after_initialize do
 						finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4
 					end
 				end
-				finalrenta[:count] = count
+				finalrenta["count"] = count
 
 				#sort this shit
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
@@ -818,7 +818,7 @@ after_initialize do
 				#if showhide for this user exists, use it
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
-					rentahideo[0][:TSHOW].each { |x| finalrenta[:rentaLIST][x[:GNAME]] => true }
+					rentahideo[0][:TSHOW].each { |x| finalrenta[:rentaLIST][x[:GNAME]] = true }
 					finalrenta["count"][5] = rentahideo[0][:TSHOW].length
 				end
 			end
