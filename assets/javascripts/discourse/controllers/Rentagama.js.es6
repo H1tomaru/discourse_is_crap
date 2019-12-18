@@ -93,8 +93,8 @@ export default Ember.Controller.extend({
 		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
-			Ember.set(this.get('hideogame'), "GNAME", template.GNAME)
-			Ember.set(this.get('hideogame'), "GPIC", template.GPIC)
+			this.set('hideogame.GNAME', template.GNAME)
+			this.set('hideogame.GPIC', template.GPIC)
 			//cant do other way, .removeObject doesnt work if i make a different object here...
 			//var temp = template
 			//for (const key of ['GCOMMENT','TYPE1','TYPE2','TYPE3','TYPE4','GNEW','POSITION','PRICE','STATUS', 'LINE']) {
@@ -104,14 +104,14 @@ export default Ember.Controller.extend({
 				url: "/renta-halehideo/",
 				type: "POST",
 				data: { "VALUE": value, "UZA": this.get('currentUser.username'),
-				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(hideogame)))) }
+				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(this.get('hideogame'))))) }
 			}).then(result => {
 				if ( value == 1 ) {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, true)
-					this.get('model.rentaTSHOW').pushObject(hideogame)
+					this.get('model.rentaTSHOW').pushObject(this.get('hideogame'))
 				} else {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, false)
-					this.get('model.rentaTSHOW').removeObject(hideogame)
+					this.get('model.rentaTSHOW').removeObject(this.get('hideogame'))
 				}
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
