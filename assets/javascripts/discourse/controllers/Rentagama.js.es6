@@ -93,21 +93,22 @@ export default Ember.Controller.extend({
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
 			//cant do other way, .removeObject doesnt work if i make a different object here...
+			var temp = template
 			for (const key of ['GCOMMENT','TYPE1','TYPE2','TYPE3','TYPE4','GNEW','POSITION','PRICE','STATUS', 'LINE']) {
-				delete template[key]
+				delete temp[key]
 			}
 			Ember.$.ajax({
 				url: "/renta-halehideo/",
 				type: "POST",
 				data: { "VALUE": value, "UZA": this.get('currentUser.username'),
-				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(template)))) }
+				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(temp)))) }
 			}).then(result => {
 				if ( value == 1 ) {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, true)
-					this.get('model.rentaTSHOW').pushObject(template)
+					this.get('model.rentaTSHOW').pushObject(temp)
 				} else {
 					Ember.set(this.get('model.rentaLIST'), template.GNAME, false)
-					this.get('model.rentaTSHOW').removeObject(template)
+					this.get('model.rentaTSHOW').removeObject(temp)
 				}
 				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 				Ember.set(this.get('hideobutts'), knopk, false)
