@@ -93,8 +93,8 @@ export default Ember.Controller.extend({
 		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username')) {
 			Ember.set(this.get('hideobutts'), knopk, true)
-			this.set('hideogame.GNAME', template.GNAME)
-			this.set('hideogame.GPIC', template.GPIC)
+			Ember.set(this.get('hideogame'), "GNAME", template.GNAME)
+			Ember.set(this.get('hideogame'), "GPIC", template.GPIC)
 			//cant do other way, .removeObject doesnt work if i make a different object here...
 			//var temp = template
 			//for (const key of ['GCOMMENT','TYPE1','TYPE2','TYPE3','TYPE4','GNEW','POSITION','PRICE','STATUS', 'LINE']) {
