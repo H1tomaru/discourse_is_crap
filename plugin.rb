@@ -818,6 +818,7 @@ after_initialize do
 				#if showhide for this user exists, use it
 				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
 					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
+					#create rentaLIST
 					rentahideo[0][:TSHOW].each { |x| finalrenta[:rentaLIST][x[:GNAME]] = true }
 					finalrenta[:count][5] = rentahideo[0][:TSHOW].length
 				end
