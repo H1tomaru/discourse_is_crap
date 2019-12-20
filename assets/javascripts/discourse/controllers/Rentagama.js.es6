@@ -12,8 +12,11 @@ export default Ember.Controller.extend({
 	rulez: false,
 	hideobutts: {},
 
+	disLIST: Ember.computed('model.rentaGAMEZ1'),
+	hideoVAR: true,
+
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
-		return this.get('model.rentaTSHOW').sortBy('GNAME');
+		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
 
 	/*
@@ -62,31 +65,23 @@ export default Ember.Controller.extend({
 		},
 
 		showGAMEZ() {
-			this.set('showCRAP', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', false)
-			this.set('showGAMEZ', true)
+			this.set('disLIST', this.get('model.rentaGAMEZ1'))
+			this.set('hideoVAR', true)
 		},
 
 		showCRAP() {
-			this.set('showGAMEZ', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', false)
-			this.set('showCRAP', true)
+			this.set('disLIST', this.get('model.rentaGAMEZ2'))
+			this.set('hideoVAR', true)
 		},
 
 		showSHITS() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showHIDEOZ', false)
-			this.set('showSHITS', true)
+			this.set('disLIST', this.get('model.rentaGAMEZ3'))
+			this.set('hideoVAR', true)
 		},
 
 		showHIDEOZ() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showSHITS', false)
-			this.set('showHIDEOZ', true)
+			this.set('disLIST', this.get('model.rentaTSHOW'))
+			this.set('hideoVAR', false)
 		},
 
 		hideoGAMEZ(template, knopk, value) {
