@@ -1,5 +1,6 @@
 export default Ember.Controller.extend({
 
+	inprogress: false,
 	showLIST: false,
 	showTYPE1: true,
 	showTYPE2: true,
@@ -12,27 +13,9 @@ export default Ember.Controller.extend({
 	rulez: false,
 	hideobutts: {},
 
-	disLIST: Ember.computed('model.rentaGAMEZ1'),
-	hideoVAR: true,
-
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
-
-	/*
-	sortProperties1: ['GNEW:desc', 'GNAME:asc'],
-	sortProperties2: ['PR4SORT:desc', 'GNAME:asc'],
-	rentaGAMEZ: Ember.computed.sort("model.rentaGAMEZ", "sortProperties1").property('model.rentaGAMEZ.[]'),
-
-	rentaGAMEZ1: Ember.computed('model', function() {
-		var gamez = this.get('model.rentaGAMEZ')
-		var gamez1 = []
-		for (var i = 0; i < gamez.length; ++i) {
-			if (gamez[i]['TYPE1'] == true) { gamez1.push(gamez[i]) }
-		}
-		return gamez1
-	}),
-	*/
 
 	actions: {
 
@@ -65,45 +48,61 @@ export default Ember.Controller.extend({
 		},
 
 		showGAMEZ() {
+			this.set('showCRAP', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', false)
+			this.set('showGAMEZ', true)
 			this.set('disLIST', this.get('model.rentaGAMEZ1'))
 			this.set('hideoVAR', true)
 		},
 
 		showCRAP() {
+			this.set('showGAMEZ', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', false)
+			this.set('showCRAP', true)
 			this.set('disLIST', this.get('model.rentaGAMEZ2'))
 			this.set('hideoVAR', true)
 		},
 
 		showSHITS() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', false)
+			this.set('showHIDEOZ', false)
+			this.set('showSHITS', true)
 			this.set('disLIST', this.get('model.rentaGAMEZ3'))
 			this.set('hideoVAR', true)
 		},
 
 		showHIDEOZ() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', false)
+			this.set('showSHITS', false)
+			this.set('showHIDEOZ', true)
 			this.set('disLIST', this.get('model.rentaTSHOW'))
 			this.set('hideoVAR', false)
 		},
 
 		hideoGAMEZ(template, knopk, value) {
-			if (this.get('currentUser.username')) {
-			Ember.set(this.get('hideobutts'), knopk, true)
-			let ttemp = {GNAME: template.GNAME, GPIC: template.GPIC}
-			Ember.$.ajax({
-				url: "/renta-halehideo/",
-				type: "POST",
-				data: { "VALUE": value, "UZA": this.get('currentUser.username'),
-				"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(ttemp)))) }
-			}).then(result => {
-				if ( value == 1 ) {
-					Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, true)
-					this.get('model.rentaTSHOW').pushObject(ttemp)
-				} else {
-					Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, false)
-					this.get('model.rentaTSHOW').removeObject(ttemp)
-				}
-				Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
-				Ember.set(this.get('hideobutts'), knopk, false)
-			})
+			if (this.get('currentUser.username') && !this.get('inprogress')) {
+				Ember.set(this.get('hideobutts'), knopk, true)
+				let ttemp = {GNAME: template.GNAME, GPIC: template.GPIC}
+				Ember.$.ajax({
+					url: "/renta-halehideo/",
+					type: "POST",
+					data: { "VALUE": value, "UZA": this.get('currentUser.username'),
+					"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(ttemp)))) }
+				}).then(result => {
+					if ( value == 1 ) {
+						Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, true)
+						this.get('model.rentaTSHOW').pushObject(ttemp)
+					} else {
+						Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, false)
+						this.get('model.rentaTSHOW').removeObject(ttemp)
+					}
+					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
+					Ember.set(this.get('hideobutts'), knopk, false)
+				})
 			}
 		}
 
