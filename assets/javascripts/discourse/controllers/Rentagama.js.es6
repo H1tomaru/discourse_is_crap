@@ -52,8 +52,6 @@ export default Ember.Controller.extend({
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showGAMEZ', true)
-			this.set('disLIST', this.get('model.rentaGAMEZ1'))
-			this.set('hideoVAR', true)
 		},
 
 		showCRAP() {
@@ -61,8 +59,6 @@ export default Ember.Controller.extend({
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showCRAP', true)
-			this.set('disLIST', this.get('model.rentaGAMEZ2'))
-			this.set('hideoVAR', true)
 		},
 
 		showSHITS() {
@@ -70,8 +66,6 @@ export default Ember.Controller.extend({
 			this.set('showCRAP', false)
 			this.set('showHIDEOZ', false)
 			this.set('showSHITS', true)
-			this.set('disLIST', this.get('model.rentaGAMEZ3'))
-			this.set('hideoVAR', true)
 		},
 
 		showHIDEOZ() {
@@ -79,12 +73,11 @@ export default Ember.Controller.extend({
 			this.set('showCRAP', false)
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', true)
-			this.set('disLIST', this.get('model.rentaTSHOW'))
-			this.set('hideoVAR', false)
 		},
 
 		hideoGAMEZ(template, knopk, value) {
 			if (this.get('currentUser.username') && !this.get('inprogress')) {
+				this.set('inprogress', true)
 				Ember.set(this.get('hideobutts'), knopk, true)
 				let ttemp = {GNAME: template.GNAME, GPIC: template.GPIC}
 				Ember.$.ajax({
@@ -102,6 +95,7 @@ export default Ember.Controller.extend({
 					}
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
+					this.set('inprogress', false)
 				})
 			}
 		}
