@@ -16,12 +16,16 @@ export default Ember.Controller.extend({
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
+
+	didRender() {
+		Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js')
+		const observer = lozad()
+		observer.observe()
+	},
 	
-	loadPlugin: function() {
-		Ember.run.scheduleOnce('afterRender', this, function() {
-			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js');
-		});
-	}.on('init'),
+	didInsertElement: function() {
+		observer.observe()
+	},
 
 	actions: {
 
@@ -102,7 +106,7 @@ export default Ember.Controller.extend({
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
 					this.set('inprogress', false)
-					observer.observe();
+					observer.observe()
 				})
 			}
 		}
