@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
 		Ember.run.scheduleOnce('didUpdate', function(){
 			observer.observe()
 		})
-	}.observes('isEditing'),
+	}.observes('inprogress'),
 
 	actions: {
 
