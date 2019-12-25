@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 		observer.observe()
 	},
 	
-	didInsertElement () {
+	didInsertElement() {
 		Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js')
 		const observer = lozad()
 		observer.observe()
