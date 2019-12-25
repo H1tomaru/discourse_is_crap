@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
 				observer.observe() 
 			})
 		})
-	}.on('init')
+	}.on('init'),
 
 	actions: {
 
