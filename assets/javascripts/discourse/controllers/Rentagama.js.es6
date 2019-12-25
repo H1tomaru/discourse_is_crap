@@ -106,7 +106,6 @@ export default Ember.Controller.extend({
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
 					this.set('inprogress', false)
-					observer.observe()
 				})
 			}
 		}
