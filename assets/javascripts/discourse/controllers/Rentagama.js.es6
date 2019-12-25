@@ -16,6 +16,12 @@ export default Ember.Controller.extend({
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
+	
+	loadPlugin: function() {
+		Ember.run.scheduleOnce('afterRender', this, function() {
+			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js');
+		});
+	}.on('init')
 
 	actions: {
 
