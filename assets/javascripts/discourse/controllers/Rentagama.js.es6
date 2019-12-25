@@ -25,10 +25,12 @@ export default Ember.Controller.extend({
 
 		showLIST1() {
 			this.set('showLIST', false)
+			observer.observe()
 		},
 
 		showLIST2() {
 			this.set('showLIST', true)
+			observer.observe()
 		},
 
 		showTYPE1() {
@@ -52,6 +54,7 @@ export default Ember.Controller.extend({
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showGAMEZ', true)
+			observer.observe()
 		},
 
 		showCRAP() {
@@ -59,6 +62,7 @@ export default Ember.Controller.extend({
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showCRAP', true)
+			observer.observe()
 		},
 
 		showSHITS() {
@@ -66,6 +70,7 @@ export default Ember.Controller.extend({
 			this.set('showCRAP', false)
 			this.set('showHIDEOZ', false)
 			this.set('showSHITS', true)
+			observer.observe()
 		},
 
 		showHIDEOZ() {
@@ -73,6 +78,7 @@ export default Ember.Controller.extend({
 			this.set('showCRAP', false)
 			this.set('showSHITS', false)
 			this.set('showHIDEOZ', true)
+			observer.observe()
 		},
 
 		hideoGAMEZ(template, knopk, value) {
