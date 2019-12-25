@@ -17,15 +17,21 @@ export default Ember.Controller.extend({
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
 
-	LazyLoadLoad() {
+	LazyLoadLoad: function() {
 		Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js')
 		const observer = lozad()
-		observer.observe()
+		observer.observe() 
 	}.on('init'),
 
 	didUpdate() {
 		observer.observe()
 	},
+
+	LazyLoadUpdate: function() {
+		Ember.run.scheduleOnce('didUpdate', function(){
+			observer.observe()
+		})
+	}.observes('isEditing'),
 
 	actions: {
 
