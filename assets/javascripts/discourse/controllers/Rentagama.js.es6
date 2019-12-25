@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
 		Ember.run.scheduleOnce('afterRender', this, function() {
 			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js');
 		});
-	}.on('init')
+	}.on('init'),
 
 	actions: {
 
