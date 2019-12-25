@@ -18,10 +18,13 @@ export default Ember.Controller.extend({
 	}).property('model.rentaTSHOW.[]'),
 
 	LazyLoadLoad: function() {
-		Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js')
-		const observer = lozad()
-		observer.observe() 
-	}.on('init'),
+		Ember.run.scheduleOnce('afterRender', this, function() {
+			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js').done(function(){
+				const observer = lozad()
+				observer.observe() 
+			})
+		})
+	}.on('init')
 
 	actions: {
 
