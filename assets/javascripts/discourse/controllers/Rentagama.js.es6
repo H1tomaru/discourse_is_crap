@@ -17,13 +17,13 @@ export default Ember.Controller.extend({
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
 
-	didRender() {
-		observer.observe()
-	},
-	
-	didInsertElement() {
+	LazyLoadLoad() {
 		Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js')
 		const observer = lozad()
+		observer.observe()
+	}.on('init'),
+
+	didUpdate() {
 		observer.observe()
 	},
 
