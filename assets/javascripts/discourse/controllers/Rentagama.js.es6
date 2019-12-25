@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 
 	LazyLoadLoad: function() {
 		Ember.run.scheduleOnce('afterRender', this, function() {
-			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js', function(){
+			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js', function() {
 				const observer = lozad()
 				observer.observe() 
 			})
