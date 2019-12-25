@@ -23,16 +23,6 @@ export default Ember.Controller.extend({
 		observer.observe() 
 	}.on('init'),
 
-	didUpdate() {
-		observer.observe()
-	},
-
-	LazyLoadUpdate: function() {
-		Ember.run.scheduleOnce('didUpdate', function(){
-			observer.observe()
-		})
-	}.observes('inprogress'),
-
 	actions: {
 
 		showRULEZ() {
@@ -112,6 +102,9 @@ export default Ember.Controller.extend({
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
 					this.set('inprogress', false)
+					Ember.run.scheduleOnce('didUpdate', function(){
+						observer.observe()
+					})
 				})
 			}
 		}
