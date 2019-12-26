@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 
 	LazyLoadLoad: function() {
 		Ember.run.scheduleOnce('afterRender', this, function() {
-			Ember.$.getScript('http://afarkas.github.io/lazysizes/lazysizes.min.js')
+			Ember.$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
 		})
 	}.on('init'),
 
