@@ -19,10 +19,7 @@ export default Ember.Controller.extend({
 
 	LazyLoadLoad: function() {
 		Ember.run.scheduleOnce('afterRender', this, function() {
-			Ember.$.getScript('https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js', function() {
-				const observer = lozad()
-				observer.observe() 
-			})
+			Ember.$.getScript('http://afarkas.github.io/lazysizes/lazysizes.min.js')
 		})
 	}.on('init'),
 
@@ -105,9 +102,6 @@ export default Ember.Controller.extend({
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
 					this.set('inprogress', false)
-					Ember.run.scheduleOnce('didUpdate', function(){
-						observer.observe()
-					})
 				})
 			}
 		}
