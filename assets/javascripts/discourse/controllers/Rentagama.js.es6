@@ -97,7 +97,8 @@ export default Ember.Controller.extend({
 						this.get('model.rentaTSHOW').pushObject(ttemp)
 					} else {
 						Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, false)
-						this.get('model.rentaTSHOW').removeObject(ttemp)
+						var rIndex = this.get('model.rentaTSHOW').map(function(item) { return item.GNAME }).indexOf(ttemp.GNAME)
+						this.get('model.rentaTSHOW').splice(rIndex, 1)
 					}
 					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
 					Ember.set(this.get('hideobutts'), knopk, false)
