@@ -12,7 +12,9 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	rulez: false,
 	hideobutts: {},
-
+	
+	testz: JSON.parse(localStorage.getItem('showLIST')),
+	
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
 	}).property('model.rentaTSHOW.[]'),
@@ -31,10 +33,12 @@ export default Ember.Controller.extend({
 
 		showLIST1() {
 			this.set('showLIST', false)
+			localStorage.setItem('showLIST', JSON.stringify(false)),
 		},
 
 		showLIST2() {
 			this.set('showLIST', true)
+			localStorage.setItem('showLIST', JSON.stringify(true)),
 		},
 
 		showTYPE1() {
