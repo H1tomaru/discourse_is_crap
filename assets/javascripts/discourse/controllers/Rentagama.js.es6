@@ -1,7 +1,7 @@
 export default Ember.Controller.extend({
 
 	inprogress: false,
-	showLIST: JSON.parse(localStorage.getItem('showLIST')) == "true",
+	showLIST: localStorage.getItem('showLIST') == "true",
 	showTYPE1: true,
 	showTYPE2: true,
 	showTYPE3: true,
