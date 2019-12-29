@@ -33,12 +33,12 @@ export default Ember.Controller.extend({
 
 		showLIST1() {
 			this.set('showLIST', false)
-			localStorage.setItem('showLIST', JSON.stringify(false)),
+			localStorage.setItem('showLIST', JSON.stringify(false))
 		},
 
 		showLIST2() {
 			this.set('showLIST', true)
-			localStorage.setItem('showLIST', JSON.stringify(true)),
+			localStorage.setItem('showLIST', JSON.stringify(true))
 		},
 
 		showTYPE1() {
