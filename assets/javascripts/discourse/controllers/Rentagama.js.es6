@@ -1,7 +1,7 @@
 export default Ember.Controller.extend({
 
 	inprogress: false,
-	showLIST: false,
+	showLIST: (JSON.parse(localStorage.getItem('showLIST')) === "true"),
 	showTYPE1: true,
 	showTYPE2: true,
 	showTYPE3: true,
@@ -12,8 +12,6 @@ export default Ember.Controller.extend({
 	showHIDEOZ: false,
 	rulez: false,
 	hideobutts: {},
-	
-	testz: JSON.parse(localStorage.getItem('showLIST')),
 	
 	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
 		return this.get('model.rentaTSHOW').sortBy('GNAME')
