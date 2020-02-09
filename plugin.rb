@@ -808,7 +808,7 @@ after_initialize do
 
 				#if found, clean up obsolete games from there once in while...
 				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 2600000 )
-					uzagamez = rentagamez.map { |x| x[:_id] }
+					uzagamez = rentagamez[0].map { |x| x[:_id] }
 					#remove trashy entries in tshow...
 					rentahideo[0][:TSHOW].delete_if { |x| !(uzagamez.include?(x[:GNAME])) }
 					rentahideo[0][:DATE] = Time.now
