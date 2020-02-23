@@ -700,7 +700,7 @@ after_initialize do
 			#do some stuff after rendering
 			if userfb[0]
 				#update db with correct values if needed
-				if not userfb[0][:fbG] == feedbacks[:fbG] || userfb[0][:fbB] == feedbacks[:fbB] || userfb[0][:fbBuG] == feedbacks[:fbBuG] || userfb[0][:fbBuB] == feedbacks[:fbBuB]
+				if userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
 					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN], fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB] } } )
 				end
 			end
