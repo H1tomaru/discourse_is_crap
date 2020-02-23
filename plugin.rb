@@ -696,8 +696,6 @@ after_initialize do
 
 			#render fb
 			render json: feedbacks
-			
-			@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN], fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB] } } )
 
 			#do some stuff after rendering
 			if userfb[0]
