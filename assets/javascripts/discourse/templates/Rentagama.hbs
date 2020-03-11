@@ -129,7 +129,6 @@
 		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="rentabutt{{if showCRAP " bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
-			<button class="rentabutt{{if showSHITS " bi4"}}" {{action 'showSHITS'}}>Хиты Для Избранных</button>
 			{{#if model.count.[5]}}
 			<button class="rentabutt{{if showHIDEOZ " bi4"}}" {{action 'showHIDEOZ'}}>Скрытые</button>
 			{{/if}}
@@ -222,51 +221,7 @@
 			{{/each}}
 		</table>
 		{{/if}}
-		
-		{{#if showSHITS}}
-		<table class="list">
-			{{#each model.rentaGAMEZ3 as |game index|}}
-			{{#unless (get model.rentaLIST game.GNAME)}}
-			<tbody>
-				<tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2">
-						<img class="lazyload" data-src="{{game.GPIC}}">
-						<span>{{game.GCOMMENT}}</span>
-					</td>
-				</tr>
 
-				<tr>
-					{{#if game.STATUS}}
-						<td class="malabela2 bgred3">
-							Занят до {{game.STATUS}}
-							{{#if game.LINE}} +{{game.LINE}} в очереди{{/if}}
-						</td>
-					{{else}}
-						<td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game index 1}}>
-									<i class="far fa-eye-slash"></i>
-								</button>
-							{{/if}}
-						</td>
-					{{/if}}
-				</tr>
-			</tbody>
-			{{/unless}}
-			{{/each}}
-		</table>
-		{{/if}}
-		
 		{{#if showHIDEOZ}}
 		<table class="list">
 			{{#each rentaHIDEO as |game index|}}
