@@ -8,7 +8,6 @@ export default Ember.Controller.extend({
 	showTYPE4: true,
 	showGAMEZ: true,
 	showCRAP: false,
-	showSHITS: false,
 	showHIDEOZ: false,
 	rulez: false,
 	hideobutts: {},
@@ -57,29 +56,19 @@ export default Ember.Controller.extend({
 
 		showGAMEZ() {
 			this.set('showCRAP', false)
-			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showGAMEZ', true)
 		},
 
 		showCRAP() {
 			this.set('showGAMEZ', false)
-			this.set('showSHITS', false)
 			this.set('showHIDEOZ', false)
 			this.set('showCRAP', true)
-		},
-
-		showSHITS() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showHIDEOZ', false)
-			this.set('showSHITS', true)
 		},
 
 		showHIDEOZ() {
 			this.set('showGAMEZ', false)
 			this.set('showCRAP', false)
-			this.set('showSHITS', false)
 			this.set('showHIDEOZ', true)
 		},
 
