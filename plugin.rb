@@ -747,7 +747,7 @@ after_initialize do
 		end
 
 		def rentagama
-			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [] , rentaLIST: {}, rentaTSHOW: [] }
+			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaLIST: {}, rentaTSHOW: [] }
 
 			#get cache from db, drop it if its old
 			cachedRENT = @@cache[:rentaCHA].find().to_a
@@ -762,7 +762,7 @@ after_initialize do
 			if finalrenta.empty?
 				#find all rentagamez
 				rentagamez = @@rentadb[:rentagadb].find().to_a
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaGAMEZ3: [], rentaLIST: {}, rentaTSHOW: [] }
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaLIST: {}, rentaTSHOW: [] }
 				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
 				#create template shit
 				rentagamez.each do |games|
@@ -780,9 +780,8 @@ after_initialize do
 							STATUS: game[:STATUS], LINE: game[:LINE]
 						}
 						finalrenta[:rentaGAMEZ].push( gameojb )
-						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1
+						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
 						finalrenta[:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
-						finalrenta[:rentaGAMEZ3].push( gameojb ) if games[:GTYPE] == 4
 					end
 				end
 				finalrenta[:count] = count
@@ -791,14 +790,13 @@ after_initialize do
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ3].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 				#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
 				#save cache to db
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaGAMEZ3: finalrenta[:rentaGAMEZ3],
-					rentaLIST: {}, rentaTSHOW: [], count: count, TIME: Time.now
+					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaLIST: {}, rentaTSHOW: [],
+					count: count, TIME: Time.now
 				})
 			end
 
