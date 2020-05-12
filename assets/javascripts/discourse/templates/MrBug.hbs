@@ -287,7 +287,7 @@
 	{{/if}}
 
 	{{#if model.gamedb1}}
-		<div class='ghed' {{action 'showhideo' 0}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждём ещё желающих</span></div>
+		<div class='ghed {{unless showhideo.[0] "slut"}}' {{action 'showhideo' 0}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждём ещё желающих</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[0]}}
@@ -462,7 +462,7 @@
 	{{/if}}
 
 	{{#if model.gamedb2}}
-		<div class='ghed' {{action 'showhideo' 1}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые #$@&%*! скидки в PSN</span></div>
+		<div class='ghed {{unless showhideo.[1] "slut"}}' {{action 'showhideo' 1}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые #$@&%*! скидки в PSN</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[1]}}
@@ -639,7 +639,7 @@
 	{{/if}}
 
 	{{#if model.gamedb3}}
-		<div class='ghed' {{action 'showhideo' 2}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
+		<div class='ghed {{unless showhideo.[2] "slut"}}' {{action 'showhideo' 2}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[2]}}
