@@ -404,12 +404,12 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user && code[1]
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
-				if feedback[0] && feedback[0][:fbBuB]
-					if feedback[0][:fbBuB] > 0
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 1, troikaBAN: 1 } ).to_a
+				if feedback[0]
+					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
 						fbcount = 777
-					else
-						fbcount = feedback[0][:fbBuG]
+					elsif feedback[0][:FEEDBACKS]
+						fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
 					end
 				end
 
@@ -745,6 +745,50 @@ after_initialize do
 			else
 				render json: { fail: true }
 			end
+		end
+
+		def feedbacks2
+			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0 }
+
+			#page owners cant do feedbacks!
+			if current_user
+				feedbacks[:MENOSHO] = false if current_user[:username].downcase == params[:username].downcase
+			end
+
+			#find feedbacks from my database
+			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
+
+			#if found, go
+			if userfb[0]
+				#remove duplicates
+				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] ) if userfb[0][:FEEDBACKS].uniq!
+
+				#count it and check if numbers match
+				userfb[0][:FEEDBACKS].each do |fb|
+					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE] > 0
+					( feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE]; fb[:COLOR] = 'bgred3' ) if fb[:SCORE] < 0
+					( feedbacks[:fbN] = feedbacks[:fbN] + 1; fb[:COLOR] = 'bggrey' ) if fb[:SCORE] == 0
+				end
+				#save final variable
+				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].reverse.each_slice(50)
+				#do paginations
+				feedbacks[:PAGES] = [*1..(userfb[0][:FEEDBACKS].length / 50.0).ceil]
+			end
+
+			#render fb
+			render json: feedbacks
+
+			#do some stuff after rendering
+			if userfb[0]
+				#update db with correct values if needed
+				if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN], fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB] } } )
+				end
+			end
+		end
+
+		def zafeedback2
+			
 		end
 
 		def rentagama
