@@ -26,6 +26,8 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
+		get '/u/:username/kek2' => 'mrbug#feedbacks2', constraints: { username: RouteFormat.username }
+		post '/u/:username/kek2' => 'mrbug#zafeedback2', constraints: { username: RouteFormat.username }
 	end
 
 	class ::MrbugController < ::ApplicationController
