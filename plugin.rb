@@ -653,8 +653,7 @@ after_initialize do
 									FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
 									pNAME: "MrBug",
 									DATE: Time.now.strftime("%Y.%m.%d"),
-									SCORE: 1,
-									DELETED: false
+									SCORE: 1
 								}
 							} }, { upsert: true } )
 						end
