@@ -405,12 +405,10 @@ after_initialize do
 			if current_user && code[1]
 				fbcount = 0
 				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 1, troikaBAN: 1 } ).to_a
-				if feedback[0]
-					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
-						fbcount = 777
-					elsif feedback[0][:FEEDBACKS]
-						fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
-					end
+				if feedback[0] && feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
+					fbcount = 777
+				elsif feedback[0] && feedback[0][:FEEDBACKS]
+					fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
 				end
 
 				#antibotbaby!!!
@@ -463,13 +461,11 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks and how many zaips, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
-				if feedback[0] && feedback[0][:fbBuB]
-					if feedback[0][:fbBuB] > 0
-						fbcount = 777
-					else
-						fbcount = feedback[0][:fbBuG]
-					end
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 1, troikaBAN: 1 } ).to_a
+				if feedback[0] && feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
+					fbcount = 777
+				elsif feedback[0] && feedback[0][:FEEDBACKS]
+					fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
 				end
 
 				#antibotbaby!!!
