@@ -734,8 +734,7 @@ after_initialize do
 							FEEDBACK: fedbacks[1].strip,
 							pNAME: current_user[:username],
 							DATE: Time.now.strftime("%Y.%m.%d"),
-							SCORE: fedbacks[0],
-							DELETED: false
+							SCORE: fedbacks[0]
 						}
 					} }, { upsert: true } )
 
