@@ -6,4 +6,7 @@ export default function() {
 	this.route('user', function() {
  		this.route('kek');
  	});
+	this.route('user', function() {
+ 		this.route('kek2');
+ 	});
 };
