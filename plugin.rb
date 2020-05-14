@@ -761,14 +761,15 @@ after_initialize do
 
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].each do |fb|
-					( feedbacks[:fbG] = feedbacks[:fbG] + fb[:SCORE]; fb[:COLOR] = 'bggr' ) if fb[:SCORE] > 0
-					( feedbacks[:fbB] = feedbacks[:fbB] - fb[:SCORE]; fb[:COLOR] = 'bgred3' ) if fb[:SCORE] < 0
-					( feedbacks[:fbN] = feedbacks[:fbN] + 1; fb[:COLOR] = 'bggrey' ) if fb[:SCORE] == 0
+					( feedbacks[:fbG] += 1; fb[:COLOR] = 'ze1' ) if fb[:SCORE] > 0
+					( feedbacks[:fbB] += 1; fb[:COLOR] = 'ze2' ) if fb[:SCORE] < 0
+					( feedbacks[:fbN] += 1; fb[:COLOR] = 'ze3' ) if fb[:SCORE] == 0
 				end
 				#save final variable
-				feedbacks[:FEEDBACKS] = userfb[0][:FEEDBACKS].reverse.each_slice(50)
-				#do paginations
-				feedbacks[:PAGES] = [*1..(userfb[0][:FEEDBACKS].length / 50.0).ceil]
+				userfb[0][:FEEDBACKS].reverse!
+				part1 = userfb[0][:FEEDBACKS].take(11)
+				part2 = userfb[0][:FEEDBACKS].drop(11).each_slice(12)
+				feedbacks[:FEEDBACKS] = part1.push(part2)
 			end
 
 			#render fb
@@ -777,8 +778,8 @@ after_initialize do
 			#do some stuff after rendering
 			if userfb[0]
 				#update db with correct values if needed
-				if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbB: feedbacks[:fbB], fbN: feedbacks[:fbN], fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB] } } )
+				if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
+					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB] } } )
 				end
 			end
 		end
