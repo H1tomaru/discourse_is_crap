@@ -67,9 +67,9 @@ after_initialize do
 
 			#if viever registered, count his fb
 			if current_user
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbBuB: 1, fbBuG: 1 } ).to_a
-				if feedback[0] && feedback[0][:fbBuB] && feedback[0][:fbBuB] == 0
-					fbcount = feedback[0][:fbBuG]
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1, fbG: 1 } ).to_a
+				if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
+					fbcount = feedback[0][:fbG]
 				end
 				finalvar[:qzstuff] = true if fbcount >= 5 || current_user[:username] == "MrBug"
 			end
@@ -88,7 +88,7 @@ after_initialize do
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
-				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, fbBuB: 0, fbBuG: 0 } ).to_a
+				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, troikaBAN: 0 } ).to_a
 
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
