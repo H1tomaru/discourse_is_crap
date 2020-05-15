@@ -744,26 +744,37 @@ after_initialize do
 		end
 
 		def feedbacks2
-			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0 }
+			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
+			update = false
+			timeNOW = Time.now
 
 			#page owners cant do feedbacks!
 			if current_user
 				feedbacks[:MENOSHO] = false if current_user[:username].downcase == params[:username].downcase
 			end
 
-			#find feedbacks from my database
+			#get feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
 
 			#if found, go
 			if userfb[0]
 				#remove duplicates
-				@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, userfb[0] ) if userfb[0][:FEEDBACKS].uniq!
+				update = true if userfb[0][:FEEDBACKS].uniq!
+				
+				#get deleted feedback number if it exists
+				feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
 
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].each do |fb|
-					( feedbacks[:fbG] += 1; fb[:COLOR] = 'ze1' ) if fb[:SCORE] > 0
-					( feedbacks[:fbB] += 1; fb[:COLOR] = 'ze2' ) if fb[:SCORE] < 0
-					( feedbacks[:fbN] += 1; fb[:COLOR] = 'ze3' ) if fb[:SCORE] == 0
+					#look for old ones and delete them
+					if Time.now - fb[:DATE].to_time > 63000000
+						update = true; feedbacks[:fbARC] += 1
+						
+					else #else just count them
+						( feedbacks[:fbG] += 1; fb[:COLOR] = 'zeG' ) if fb[:SCORE] > 0
+						( feedbacks[:fbB] += 1; fb[:COLOR] = 'zeB' ) if fb[:SCORE] < 0
+						( feedbacks[:fbN] += 1; fb[:COLOR] = 'zeN' ) if fb[:SCORE] == 0
+					end
 				end
 				#save final variable
 				userfb[0][:FEEDBACKS].reverse!
@@ -771,6 +782,9 @@ after_initialize do
 				part2 = userfb[0][:FEEDBACKS].drop(11).each_slice(12)
 				feedbacks[:FEEDBACKS] = part1.push(part2)
 			end
+
+			#do the game ownership display
+			
 
 			#render fb
 			render json: feedbacks
