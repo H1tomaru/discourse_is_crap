@@ -761,14 +761,14 @@ after_initialize do
 			if userfb[0]
 				#remove duplicates
 				update = true if userfb[0][:FEEDBACKS].uniq!
-				
+
 				#get deleted feedback number if it exists
 				feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
 
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].reverse_each do |fb|
 					#look for old ones and delete them
-					if Time.now - fb[:DATE].to_time > 63000000
+					if timeNOW - fb[:DATE].to_time > 63000000
 						update = true; feedbacks[:fbARC] += 1
 					else #else just count them
 						( feedbacks[:fbG] += 1; fb[:COLOR] = 'zeG' ) if fb[:SCORE] > 0
@@ -786,18 +786,44 @@ after_initialize do
 				feedbacks[:FEEDBACKS] = part1.push(part2)
 			end
 
-			#do the game ownership display
+			#do the game owned display
+			#get user games from my database
+			ugamez = @@userdb[:PS4db].find( { $or: [ 
+				{ P2: { $in: [ params[:username], params[:username].downcase ] } },
+				{ P41: { $in: [ params[:username], params[:username].downcase ] } },
+				{ P42: { $in: [ params[:username], params[:username].downcase ] } }
+				] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
 			
+			#do stuff if he has some
+			if ugamez[0] && params[:username] != 'MrBug'
+				ugamezfinal = []
+				ugamez.each do |ugaz|
+					poZ
+					if timeNOW - ugaz[:DATE].to_time < 63000000
+						thisone = {}
+						thisone[:gNAME] = ugaz[:GAME]
+						if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
+							thisone[:poZ] = 2
+						else
+							thisone[:poZ] = 4
+						end
+						thisone[:aCC] = ugaz[:_id].reverse.slice[10, 4].reverse if current_user[:username].downcase == params[:username].downcase
+						ugamezfinal.push(thisone)
+					end
+				end
+				feedbacks[:ugameZ] = ugamezfinal
+			end
 
 			#render fb
 			render json: feedbacks
 
-			#do some stuff after rendering
-			if userfb[0]
-				#update db with correct values if needed
-				if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
-					@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$set": { fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB] } } )
-				end
+			#update db with correct values if needed
+			if update
+				@@userfb2[:userfb].replace_one( { _id: params[:username].downcase }, {
+					FEEDBACK: newfbarray, troikaBAN: userfb[0][:troikaBAN],
+					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN],
+					fbB: feedbacks[:fbB], fbARC: feedbacks[:fbARC]
+				}, { upsert: true } )
 			end
 		end
 
