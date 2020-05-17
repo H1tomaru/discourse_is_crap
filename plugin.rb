@@ -879,6 +879,7 @@ after_initialize do
 
 				end
 
+				#if bad feedback present, show stuff
 				if userfb[0] && feedbacks[:fbB] > 0
 					render json: { bakas: true }
 				else
@@ -887,11 +888,14 @@ after_initialize do
 					if ufb[0]
 						fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 					end
+
+					#if gave feedback already, show stuff
 					if fedbacks[3] && current_user[:username] != 'MrBug'
 						render json: { gavas: true }
 					else
 						fedbacks[0] = fedbacks[0].to_i; fedbacks[1] = fedbacks[1].to_i
 
+						#do normal feedback add
 						if fedbacks[0] == 666
 							@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
 								FEEDBACKS: {
@@ -902,15 +906,23 @@ after_initialize do
 								}
 							} }, { upsert: true } )
 							render json: { winrars: true }
+						#or edit last feedback given
 						elsif fedbacks[0] == 1337
-							
+							ufb[0][:FEEDBACKS].reverse_each do |fb|
+								if fb[:pNAME] == current_user[:username]
+									fb[:FEEDBACK] = fedbacks[2].strip
+									break
+								end
+							end
+							@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase },
+								{ ufb[0] }, { upsert: true } )
 							render json: { winrars: true }
-						else
+						else #if none of these happen, thats really wrong...
 							render json: { fail: true }
 						end
 					end
 				end
-			else
+			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
 			end
 		end
