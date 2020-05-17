@@ -658,11 +658,8 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
-			newfbarray = []
-			update = false
-			fbedit = false
-			timeNOW = Time.now
+			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+			newfbarray = []; update = false; fbedit = false; timeNOW = Time.now
 
 			#page owners cant do feedbacks!
 			if current_user
@@ -692,13 +689,20 @@ after_initialize do
 						( feedbacks[:fbG] += 1; fb[:COLOR] = 'zeG' ) if fb[:SCORE] > 0
 						( feedbacks[:fbB] += 1; fb[:COLOR] = 'zeB' ) if fb[:SCORE] < 0
 						( feedbacks[:fbN] += 1; fb[:COLOR] = 'zeN' ) if fb[:SCORE] == 0
+						#count bugofb
+						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
+							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
+							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+						end
 						#onetime check for users last feedback to make it editable
 						( fb[:eDit] = true; fbedit = true ) if fbedit == false && fb[:pNAME] == current_user[:username]
 						newfbarray.push(fb)
 					end
 				end
 
-				update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbARC] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
+				update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] !userfb[0][:fbARC]
+				update = true if userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
+				update = true if userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
 
 				#save final variable
 				part1 = newfbarray.take(11)
@@ -706,7 +710,7 @@ after_initialize do
 				feedbacks[:FEEDBACKS] = part1.push(part2)
 			end
 
-			#do the game owned display
+			#do the games owned display
 			#get user games from my database
 			ugamez = @@userdb[:PS4db].find( { $or: [ 
 				{ P2: { $in: [ params[:username], params[:username].downcase ] } },
@@ -738,63 +742,24 @@ after_initialize do
 
 			#update db with new correct values if needed
 			if update
-				@@userfb2[:userfb].replace_one( { _id: params[:username].downcase }, {
+				@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase }, {
 					FEEDBACK: newfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
-					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN],
-					fbB: feedbacks[:fbB], fbARC: feedbacks[:fbARC]
+					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC]
 				}, { upsert: true } )
 			end
 		end
 
 		def zafeedback
-			feedbacks = { fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
-			newfbarray = []
-			update = false
-			timeNOW = Time.now
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 3 && current_user[:username].downcase != params[:username].downcase
-				#get current user feedback, update it, check for negative feedbacks
-				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if userfb[0]
-					#remove duplicates
-					update = true if userfb[0][:FEEDBACKS].uniq!
-
-					#create key if it doesnt exist yet
-					userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
-
-					#get deleted feedback number if it exists
-					feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
-
-					#count it and check if numbers match
-					userfb[0][:FEEDBACKS].each do |fb|
-						#look for old ones and delete them
-						if timeNOW - fb[:DATE].to_time > 63000000
-							update = true; feedbacks[:fbARC] += 1
-						else #else just count them
-							feedbacks[:fbG] += 1 if fb[:SCORE] > 0
-							feedbacks[:fbB] += 1 if fb[:SCORE] < 0
-							feedbacks[:fbN] += 1 if fb[:SCORE] == 0
-							newfbarray.push(fb)
-						end
-					end
-
-					update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbARC] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
-
-					#update db with new correct values if needed
-					if update
-						@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase }, {
-							FEEDBACK: newfbarray, troikaBAN: userfb[0][:troikaBAN],
-							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN],
-							fbB: feedbacks[:fbB], fbARC: feedbacks[:fbARC]
-						}, { upsert: true } )
-					end
-
-				end
+				#users with negative feedbacks cant do feedbacks!
+				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1} ).to_a
 
 				#if bad feedback present, show stuff
-				if userfb[0] && feedbacks[:fbB] > 0
+				if userfb[0] && userfb[:fbB] > 0
 					render json: { bakas: true }
 				else
 					#find if user gave feedback already today
@@ -847,9 +812,7 @@ after_initialize do
 				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
 				if userfb[0]
 					feedbacks = { fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
-					newfbarray = []
-					update = false
-					timeNOW = Time.now
+					newfbarray = []; update = false; timeNOW = Time.now
 
 					#remove duplicates
 					update = true if userfb[0][:FEEDBACKS].uniq!
@@ -1017,7 +980,7 @@ after_initialize do
 end
 
 =begin
-			def feedbacks_old
+		def feedbacks_old
 			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, fbBuG: 0, fbBuB: 0 }
 			#page owners cant do feedbacks!
 			if current_user
