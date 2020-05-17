@@ -45,18 +45,14 @@ after_initialize do
 
 		def show
 			#variables, duh
-			finalvar = {}
-			finalvar[:qzstuff] = false
-			priceSTEP = 0
-			fbcount = 0
+			finalvar = {}; finalvar[:qzstuff] = false; fbcount = 0; timeNOW = Time.now
 			#cached vars
-			qzlist = []
-			gamelist = []
+			qzlist = []; gamelist = []
 
 			#get cache from db, drop it if its old
 			cacheDB = @@cache[:cache].find().to_a
 			if cacheDB[0]
-				if Time.now - cacheDB[0][:TIME] > 900
+				if timeNOW - cacheDB[0][:TIME] > 900
 					@@cache[:cache].drop()
 				else
 					qzlist = cacheDB[0][:qzlist]
@@ -64,21 +60,18 @@ after_initialize do
 				end
 			end
 
-			#if viever registered, count his fb
-			if current_user
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1, fbG: 1 } ).to_a
-				if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
-					fbcount = feedback[0][:fbG]
-				end
-				finalvar[:qzstuff] = true if fbcount >= 5 || current_user[:username] == "MrBug"
+			if qzlist.empty?
+				#create qzlist variable, its same for everyone, we cache it, so no need extra user checks
+				qzlist = @@gamedb[:gameDB].find( {}, projection: { _id: 1, gameNAME: 1 } ).sort( { gameNAME: 1 } ).to_a
 			end
 
-			if qzlist.empty?
-				#create qzlist variable, its same for everyone, we chache it, so no need extra user checks
-				glist = @@gamedb[:gameDB].find().sort( { gameNAME: 1 } ).to_a
-				glist.each do |game|
-					qzlist.push( [ game[:_id] , game[:gameNAME] ] )
-				end
+			#if viever registered, get his fb for quckzaips
+			if current_user
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1, fbG: 1 } ).to_a
+				#get fbcount if no bad feedback present
+				fbcount = feedback[0][:fbG] if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
+				#if displaying qzaips, add games list to finalvar
+				( finalvar[:qzlist] = qzlist; finalvar[:qzstuff] = true ) if fbcount >= 5 || current_user[:username] == "MrBug"
 			end
 
 			if gamelist.empty?
@@ -87,7 +80,7 @@ after_initialize do
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
 				#get all user feedbacks
-				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, troikaBAN: 0 } ).to_a
+				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, troikaBAN: 0, fbBuG: 0, fbBuB: 0 } ).to_a
 
 				#find user for type 0 games and add those type 0 games
 				gameIDs = gameDB.map { |e| e[:_id] }
@@ -111,10 +104,10 @@ after_initialize do
 					game[:MODE1] = false; game[:MODE2] = false; game[:SHOWHIDEO] = false
 					#create display prices
 					if game[:PRICE] > 0
-						p4PDOWN1 = 0; p4PDOWN2 = 0; p4PDOWN3 = 0
-						p4PDOWN1 = game[:P4PDOWN1] if game[:P4PDOWN1]
-						p4PDOWN2 = game[:P4PDOWN2] if game[:P4PDOWN2]
-						p4PDOWN3 = game[:P4PDOWN3] if game[:P4PDOWN3]
+						p4PDOWN = [0,0,0,0]
+						p4PDOWN[1] = game[:P4PDOWN1] if game[:P4PDOWN1]
+						p4PDOWN[2] = game[:P4PDOWN2] if game[:P4PDOWN2]
+						p4PDOWN[3] = game[:P4PDOWN3] if game[:P4PDOWN3]
 
 						game[:P4PRICE1] = (game[:PRICE] * 0.1 / 50).ceil * 50
 						game[:P4PRICE3] = (game[:PRICE] * 0.7 / 100).floor * 100 / 2
@@ -127,19 +120,23 @@ after_initialize do
 						p4UP = [50,0,50] if game[:PRICE] < 1001
 						p4UP = [0,50,50] if game[:PRICE] < 601
 
-						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN1 + p4UP[0]
-						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN2 + p4UP[1]
-						game[:P4PRICE3] = game[:P4PRICE3] - p4PDOWN3 + p4UP[2]
+						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN[1] + p4UP[0]
+						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN[2] + p4UP[1]
+						game[:P4PRICE3] = game[:P4PRICE3] - p4PDOWN[3] + p4UP[2]
+						
+						#set price to -10 if its x100
+						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
+						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
+						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 					else
 						game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
 					end
 					#see if we have users to display
 					users = userDB.find{ |h| h['_id'] == game[:_id] }
-					#do stuff if we do
+
 					game[:TROIKI] = []
+					#do stuff if we do
 					if users
-						#somevariables
-						priceUP = 0
 						#find how many p1 p2 p3 we have, and how many troikas to display
 						p1NO = users[:P1].length if users[:P1]
 						p2NO = users[:P2].length if users[:P2]
@@ -147,9 +144,9 @@ after_initialize do
 
 						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 							#tons of variables for everything
-							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''
-							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]; p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
-							p1PRICE = 0; p2PRICE = 0; p3PRICE = 0; p1PDOWN = 0; p2PDOWN = 0; p3PDOWN = 0; nop1ADD = 0
+							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''; nop1ADD = 0
+							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]
+							p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
 							p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
@@ -219,87 +216,36 @@ after_initialize do
 								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
 								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
 							end
-							#calculate prices #might want to remove priceUP variable since not using it, priceSTEP = 0
-							if game[:PRICE] > 0
-								priceUP = priceSTEP * (i / 10).floor
-								#get current pricedown
-								if users[(i+1).to_s]
-									p1PDOWN = users[(i+1).to_s][:PDOWN1] if users[(i+1).to_s][:PDOWN1]
-									p2PDOWN = users[(i+1).to_s][:PDOWN2] if users[(i+1).to_s][:PDOWN2]
-									p3PDOWN = users[(i+1).to_s][:PDOWN3] if users[(i+1).to_s][:PDOWN3]
-								end
-								#create current troika prices
-								p1PRICE = game[:P4PRICE1] - p1PDOWN
-								p2PRICE = game[:P4PRICE2] - p2PDOWN + priceUP
-								p3PRICE = game[:P4PRICE3] - p3PDOWN + priceUP
-								#set price to -10 if its x100
-								p1PRICE = p1PRICE - 10 if p1PRICE/100.0 == (p1PRICE/100.0).ceil
-								p2PRICE = p2PRICE - 10 if p2PRICE/100.0 == (p2PRICE/100.0).ceil
-								p3PRICE = p3PRICE - 10 if p3PRICE/100.0 == (p3PRICE/100.0).ceil
-							end
 							#template again, is feedback green or red?
 							p1FBred = true if p1FEEDBACK[:PERCENT] < 100
 							p2FBred = true if p2FEEDBACK[:PERCENT] < 100
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
 							#vizmem bez p1?!
-							nop1ADD = (p1PRICE / 30.0).ceil * 10 if p1 == ''
+							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if p1 == ''
 							#create final variable
 							game[:TROIKI].push( {
 								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
 								P3: p3, P3FEEDBACK: p3FEEDBACK, P4: p4, P4FEEDBACK: p4FEEDBACK,
-								P1PRICE: p1PRICE, P2PRICE: p2PRICE, P3PRICE: p3PRICE, NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
+								NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
 								P1TAKEN: p1TAKEN, P2TAKEN: p2TAKEN, P3TAKEN: p3TAKEN, P4TAKEN: p4TAKEN,
 								P1FBred: p1FBred, P2FBred: p2FBred, P3FBred: p3FBred, P4FBred: p4FBred,
 								P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
 							} )
-							#not needed since price is constant
-							#if current troika has any free position, save its price to display on button, if not saved one already
-							#price1DISPLAY = p1PRICE if p1.length == 0 && price1DISPLAY == 0
-							#price2DISPLAY = p2PRICE if p2.length == 0 && price2DISPLAY == 0
-							#price3DISPLAY = p3PRICE if (p3.length == 0 || p4.length == 0) && price3DISPLAY == 0
 						end
-						#remove this game users form userdb variable
-						#userDB.delete_if{ |h| h['_id'] == game[:_id] }
 					end
-					#set display users number
-					game[:P1NO] = p1NO
-					game[:P2NO] = p2NO
-					game[:P3NO] = p3NO
-					#set the current display price, depending on amount of troek, if price is zero, don't touch it
-					if game[:PRICE] > 0
-						#not needed since price is constant
-						#if price1DISPLAY > 0
-						#	game[:P4PRICE1] = price1DISPLAY
-						#else
-						#	game[:P4PRICE1] = game[:P4PRICE1] + priceSTEP * (p1NO / 10).floor
-						#end
-						#if price2DISPLAY > 0
-						#	game[:P4PRICE2] = price2DISPLAY
-						#else
-						#	game[:P4PRICE2] = game[:P4PRICE2] + priceSTEP * (p2NO / 10).floor
-						#end
-						#if price3DISPLAY > 0
-						#	game[:P4PRICE3] = price3DISPLAY
-						#else
-						#	game[:P4PRICE3] = game[:P4PRICE3] + priceSTEP * (p3NO / 10).floor
-						#end
-						#set price to -10 if its x100
-						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
-						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
-						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
-					end
+
+					#set display user numbers since we looped through all games
+					game[:P1NO] = p1NO; game[:P2NO] = p2NO; game[:P3NO] = p3NO
+
 				end
-				gamelist = gameDB
 
 				#save cache to db
+				gamelist = gameDB
 				@@cache[:cache].insert_one({ 
 					qzlist: qzlist, gamelist: gameDB, TIME: Time.now
 				})
 			end
-
-			#if displaying qzaips, add games list to finalvar
-			finalvar[:qzlist] = qzlist if finalvar[:qzstuff]
 
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
@@ -308,16 +254,18 @@ after_initialize do
 			gamelist.each do |game|
 				#if not guest, check if user is in this troika
 				if current_user
-					gTYPE2 = 0; gTYPE3 = 0
-					gTYPE2 = 1 if game[:TYPE] == 2
-					gTYPE3 = 1 if game[:TYPE] == 3
+					#template shit for type 2 and 3 games displaying type 2 and 3 stuff
+					gTYPE2 = false; gTYPE3 = false
+					gTYPE2 = true if game[:TYPE] == 2
+					gTYPE3 = true if game[:TYPE] == 3
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
+						#calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( {
-									POSITION: 1, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: troika[:P1PRICE],
+									POSITION: 1, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE1],
 									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3 
 								} )
 							else
@@ -330,7 +278,7 @@ after_initialize do
 							if troika[:P2STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( {
-									POSITION: 2, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: troika[:P2PRICE],
+									POSITION: 2, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE2],
 									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							else
@@ -343,7 +291,7 @@ after_initialize do
 							if troika[:P3STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( {
-									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: troika[:P3PRICE],
+									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE3],
 									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							else
@@ -356,7 +304,7 @@ after_initialize do
 							if troika[:P4STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( {
-									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: troika[:P3PRICE],
+									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE3],
 									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							else
@@ -367,8 +315,6 @@ after_initialize do
 						end
 					end
 				end
-				#shorten maigamez1 game names if they too long
-				#finalvar[:maigamez1].each {|game| game[:gNAME] = game[:gNAME].truncate(40)} not needed. can css same result.
 				#fill 3 variables for each game type
 				finalvar[:gamedb1].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 1 || game[:TYPE] == 0
 				finalvar[:gamedb2].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 2
@@ -581,10 +527,7 @@ after_initialize do
 		end
 
 		def megaadd
-			addstuff = {}
-			addstuff = params
-			addstuff[:RESULT] = []
-			feedbacks = []
+			addstuff = {}; addstuff = params; addstuff[:RESULT] = []; feedbacks = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove everyting left of " ---> ", #4: remove prices like "(800 рублей)", #5: make proper new lines
 				#addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
@@ -638,7 +581,7 @@ after_initialize do
 					feedbacks = feedbacks.uniq
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
-						ufb = @@userfb[:userfb].find( { _id: user.downcase } ).to_a
+						ufb = @@userfb[:userfb].find( { _id: user.downcase }, projection: { FEEDBACKS: 1 } ).to_a
 						if ufb[0]
 							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 						end
