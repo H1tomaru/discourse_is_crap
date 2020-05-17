@@ -747,6 +747,7 @@ after_initialize do
 			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
 			newfbarray = []
 			update = false
+			fbedit = false
 			timeNOW = Time.now
 
 			#page owners cant do feedbacks!
@@ -762,6 +763,9 @@ after_initialize do
 				#remove duplicates
 				update = true if userfb[0][:FEEDBACKS].uniq!
 
+				#create key if it doesnt exist yet
+				userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
+
 				#get deleted feedback number if it exists
 				feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
 
@@ -774,6 +778,8 @@ after_initialize do
 						( feedbacks[:fbG] += 1; fb[:COLOR] = 'zeG' ) if fb[:SCORE] > 0
 						( feedbacks[:fbB] += 1; fb[:COLOR] = 'zeB' ) if fb[:SCORE] < 0
 						( feedbacks[:fbN] += 1; fb[:COLOR] = 'zeN' ) if fb[:SCORE] == 0
+						#onetime check for users last feedback to make it editable
+						( fb[:eDit] = true; fbedit = true ) if fbedit == false && fb[:pNAME] == current_user[:username]
 						newfbarray.push(fb)
 					end
 				end
@@ -798,7 +804,6 @@ after_initialize do
 			if ugamez[0] && params[:username] != 'MrBug'
 				ugamezfinal = []
 				ugamez.each do |ugaz|
-					poZ
 					if timeNOW - ugaz[:DATE].to_time < 63000000
 						thisone = {}
 						thisone[:gNAME] = ugaz[:GAME]
@@ -817,10 +822,10 @@ after_initialize do
 			#render fb
 			render json: feedbacks
 
-			#update db with correct values if needed
+			#update db with new correct values if needed
 			if update
 				@@userfb2[:userfb].replace_one( { _id: params[:username].downcase }, {
-					FEEDBACK: newfbarray, troikaBAN: userfb[0][:troikaBAN],
+					FEEDBACK: newfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
 					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN],
 					fbB: feedbacks[:fbB], fbARC: feedbacks[:fbARC]
 				}, { upsert: true } )
@@ -828,7 +833,86 @@ after_initialize do
 		end
 
 		def zafeedback2
-			
+			feedbacks = { fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
+			newfbarray = []
+			update = false
+			timeNOW = Time.now
+			#decode shit
+			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
+			#page owners and guests cant do feedbacks!
+			if current_user && fedbacks.length == 3 && current_user[:username].downcase != params[:username].downcase
+				#get current user feedback, update it, check for negative feedbacks
+				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
+				if userfb[0]
+					#remove duplicates
+					update = true if userfb[0][:FEEDBACKS].uniq!
+
+					#create key if it doesnt exist yet
+					userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
+
+					#get deleted feedback number if it exists
+					feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
+
+					#count it and check if numbers match
+					userfb[0][:FEEDBACKS].each do |fb|
+						#look for old ones and delete them
+						if timeNOW - fb[:DATE].to_time > 63000000
+							update = true; feedbacks[:fbARC] += 1
+						else #else just count them
+							feedbacks[:fbG] += 1 if fb[:SCORE] > 0
+							feedbacks[:fbB] += 1 if fb[:SCORE] < 0
+							feedbacks[:fbN] += 1 if fb[:SCORE] == 0
+							newfbarray.push(fb)
+						end
+					end
+
+					update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbARC] || userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
+
+					#update db with new correct values if needed
+					if update
+						@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase }, {
+							FEEDBACK: newfbarray, troikaBAN: userfb[0][:troikaBAN],
+							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN],
+							fbB: feedbacks[:fbB], fbARC: feedbacks[:fbARC]
+						}, { upsert: true } )
+					end
+
+				end
+
+				if userfb[0] && feedbacks[:fbB] > 0
+					render json: { bakas: true }
+				else
+					#find if user gave feedback already today
+					ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
+					if ufb[0]
+						fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+					end
+					if fedbacks[3] && current_user[:username] != 'MrBug'
+						render json: { gavas: true }
+					else
+						fedbacks[0] = fedbacks[0].to_i; fedbacks[1] = fedbacks[1].to_i
+
+						if fedbacks[0] == 666
+							@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
+								FEEDBACKS: {
+									FEEDBACK: fedbacks[2].strip,
+									pNAME: current_user[:username],
+									DATE: Time.now.strftime("%Y.%m.%d"),
+									SCORE: fedbacks[1]
+								}
+							} }, { upsert: true } )
+							render json: { winrars: true }
+						elsif fedbacks[0] == 1337
+							
+							render json: { winrars: true }
+						else
+							render json: { fail: true }
+						end
+					end
+				end
+			else
+				render json: { fail: true }
+			end
 		end
 
 		def rentagama
