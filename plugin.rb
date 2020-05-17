@@ -26,8 +26,6 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
-		get '/u/:username/kek2' => 'mrbug#feedbacks2', constraints: { username: RouteFormat.username }
-		post '/u/:username/kek2' => 'mrbug#zafeedback2', constraints: { username: RouteFormat.username }
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -658,7 +656,7 @@ after_initialize do
 			end
 		end
 
-		def feedbacks
+		def feedbacks_old
 			feedbacks = { MENOSHO: true, fbG: 0, fbB: 0, fbN: 0, fbBuG: 0, fbBuB: 0 }
 			#page owners cant do feedbacks!
 			if current_user
@@ -704,7 +702,7 @@ after_initialize do
 			end
 		end
 		
-		def zafeedback
+		def zafeedback_old
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - score, 1 - otziv
 			#page owners and guests cant do feedbacks!
@@ -743,7 +741,7 @@ after_initialize do
 			end
 		end
 
-		def feedbacks2
+		def feedbacks
 			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
 			newfbarray = []
 			update = false
@@ -832,7 +830,7 @@ after_initialize do
 			end
 		end
 
-		def zafeedback2
+		def zafeedback
 			feedbacks = { fbG: 0, fbN: 0, fbB: 0, fbARC: 0 }
 			newfbarray = []
 			update = false
