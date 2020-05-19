@@ -1,11 +1,10 @@
 export default Ember.Controller.extend({
 	//default states
+	bagamdal: false,
+	mdalready: false,
 	troikopoisk: null,
 	prezaips: null,
 	zaips: null,
-
-	bagamdal: false,
-	mdalready: false,
 
 	showhideo: [true, true, true],
 
@@ -39,11 +38,16 @@ export default Ember.Controller.extend({
 			if (this.get('qzselect')) {
 				this.set('bagamdal', true)
 				Ember.$.ajax({
-					url: "/MrBug/prezaips/"+btoa(knopk+"~"+this.get('qzselect'))+".json",
-					type: "GET"
+					url: "/posos/",	type: "POST",
+					data: { "pNAME": this.get('currentUser.username') }
 				}).then(result => {
-					this.set('prezaips', result)
-					this.set('mdalready', true)
+					Ember.$.ajax({
+						url: "/MrBug/prezaips/"+btoa(knopk+"~"+this.get('qzselect'))+".json",
+						type: "GET"
+					}).then(result => {
+						this.set('prezaips', result)
+						this.set('mdalready', true)
+					})
 				})
 			}
 		},
@@ -51,11 +55,16 @@ export default Ember.Controller.extend({
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
 			Ember.$.ajax({
-				url: "/MrBug/prezaips/"+btoa(knopk+"~"+gcode)+".json",
-				type: "GET"
+				url: "/posos/",	type: "POST",
+				data: { "pNAME": this.get('currentUser.username') }
 			}).then(result => {
-				this.set('prezaips', result)
-				this.set('mdalready', true)
+				Ember.$.ajax({
+					url: "/MrBug/prezaips/"+btoa(knopk+"~"+gcode)+".json",
+					type: "GET"
+				}).then(result => {
+					this.set('prezaips', result)
+					this.set('mdalready', true)
+				})
 			})
 		},
 
