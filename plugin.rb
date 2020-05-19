@@ -243,7 +243,7 @@ after_initialize do
 				#save cache to db
 				gamelist = gameDB
 				@@cache[:cache].insert_one({ 
-					qzlist: qzlist, gamelist: gameDB, TIME: Time.now
+					qzlist: qzlist, gamelist: gameDB, TIME: timeNOW
 				})
 			end
 
@@ -347,17 +347,19 @@ after_initialize do
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
-			if current_user && code[1]
+			if current_user && code.length == 2
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 1, troikaBAN: 1 } ).to_a
-				if feedback[0] && feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
-					fbcount = 777
-				elsif feedback[0] && feedback[0][:FEEDBACKS]
-					fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1 } ).to_a
+				if feedback[0]
+					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
+						fbcount = 777
+					else
+						fbcount = feedback[0][:fbBuG] }
+					end
 				end
 
 				#antibotbaby!!!
-				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+				if Time.now - current_user[:created_at] < 260000 && fbcount == 0
 					fbcount = 777
 				end
 
@@ -386,7 +388,7 @@ after_initialize do
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
 						if prezaips[0][:imgLINKHQ]
 							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0] = prezaips[0].except("imgLINKHQ")
+							prezaips[0].except!("imgLINKHQ")
 						end
 						prezaips[0][:position] = code[0]
 						prezaips[0][:winrars] = true
@@ -404,23 +406,25 @@ after_initialize do
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
 			if current_user && code[3] && current_user[:username] == code[1]
-				#count feedbacks and how many zaips, again!
+				#count feedbacks, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { FEEDBACKS: 1, troikaBAN: 1 } ).to_a
-				if feedback[0] && feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
-					fbcount = 777
-				elsif feedback[0] && feedback[0][:FEEDBACKS]
-					fbcount = feedback[0][:FEEDBACKS].count { |fb| fb[:pNAME] == "MrBug" && ( Time.now - fb[:DATE].to_time < 31500000 ) }
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1 } ).to_a
+				if feedback[0]
+					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
+						fbcount = 777
+					else
+						fbcount = feedback[0][:fbBuG] }
+					end
 				end
 
 				#antibotbaby!!!
-				if Time.now - current_user[:created_at] < 90000 && fbcount == 0
+				if Time.now - current_user[:created_at] < 260000 && fbcount == 0
 					fbcount = 777
 				end
 
 				#antispambaby!!!
 				#will do later ;)
-				
+
 				if ( fbcount < 5 && code[0] == "1" && current_user[:username] != 'MrBug' ) || fbcount == 777
 					render json: { zaipsfail: true }
 				else
@@ -529,8 +533,6 @@ after_initialize do
 		def megaadd
 			addstuff = {}; addstuff = params; addstuff[:RESULT] = []; feedbacks = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
-				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove everyting left of " ---> ", #4: remove prices like "(800 рублей)", #5: make proper new lines
-				#addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/^.* ---> /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
 				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p3 or p4
