@@ -614,17 +614,17 @@ after_initialize do
 
 			#get feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
+			
+			#get deleted feedback number if it exists
+			feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0] && userfb[0][:fbARC]
 
 			#if found, go
-			if userfb[0]
+			if userfb[0] && userfb[0][:FEEDBACKS] && userfb[0][:FEEDBACKS].any?
 				#remove duplicates
 				update = true if userfb[0][:FEEDBACKS].uniq!
 
 				#create key if it doesnt exist yet
 				userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
-
-				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
 
 				#count it and check if numbers match
 				userfb[0][:FEEDBACKS].reverse_each do |fb|
