@@ -736,6 +736,7 @@ after_initialize do
 							ufb[0][:FEEDBACKS].reverse_each do |fb|
 								if fb[:pNAME] == current_user[:username]
 									fb[:FEEDBACK] = fedbacks[2].strip
+									fb[:SCORE] = fedbacks[1]
 									break
 								end
 							end
