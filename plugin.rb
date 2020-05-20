@@ -785,6 +785,7 @@ after_initialize do
 								feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
 								feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
 							end
+							newfbarray.push(fb)
 						end
 					end
 
