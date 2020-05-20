@@ -695,7 +695,7 @@ after_initialize do
 				}, { upsert: true } )
 			end
 		end
-
+=end
 		def zafeedback
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
@@ -752,7 +752,6 @@ after_initialize do
 				render json: { fail: true }
 			end
 		end
-=end
 
 		def ufbupdate
 			if current_user && params[:pNAME] && params[:pNAME] == current_user[:username]
