@@ -4,32 +4,54 @@ export default Ember.Controller.extend({
 	checked2: false,
 	checked3: false,
 	score: 1,
-	otziv: null,
-	pageFB: Ember.computed('model', function() {
+	ozmode: 666,
+	responz: null,
+
+	thisPA: 1,
+	pagesNO: Ember.computed('model.FEEDBACKS', function() {
+		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS').length
+	}),
+	pageFB: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS')[0]
  	}),
 
-	bagamdal: false,
-	mdalready: false,
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
 	
+	cum2m: Ember.computed('model.FEEDBACKS', function() {
+		if (this.get('pagesNO') > 1) return true
+	}),
+	
+	showfbARC: Ember.computed('model.FEEDBACKS', function() {
+		if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
+	}) ,
+	
 	actions: {
 		
-		netmudal() {
-			this.set('bagamdal', false)
-			this.set('mdalready', false)
-			this.set('otzivmdal', false)
-			this.set('otzivsmall', false)
-			this.set('otzivbig', false)
-			this.set('otziv', null)
+		addOtziv() {
+			this.set('otzivmdal', true)
+			this.set('ozmode', 666)
+			this.set('pisanina', null)
 		},
 
-		addOtziv() {
-			this.set('bagamdal', true)
-			this.set('mdalready', true)
+		editOtziv(fb) {
 			this.set('otzivmdal', true)
+			this.set('ozmode', 1337)
+			this.set('pisanina', fb)
+		},
+		
+		respCLOZ() {
+			this.set('responz', null)
+		},
+
+		smtexCLOZ() {
+			this.set('otzivsmall', false)
+			this.set('otzivbig', false)
+		},
+		
+		showMORZ() {
+			
 		},
 
 		OtzivZaips() {
@@ -38,26 +60,27 @@ export default Ember.Controller.extend({
 			} else if (this.get('pisanina').length > 200) {
 				this.set('otzivbig', true)
 			} else {
-				this.set('mdalready', false)
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				this.set('pageFB', null)
-				var str = window.location.href.split("/")
 				Ember.$.ajax({
-					url: "/u/" + encodeURIComponent(str[4]) + "/kek",
-					type: "POST",
-					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('score')+"~"+this.get('pisanina')))) }
+					url: "/posos/",	type: "POST",
+					data: { "pNAME": this.get('currentUser.username') }
 				}).then(result => {
-					this.set('otziv', result)
 					Ember.$.ajax({
-						url: "/u/" + encodeURIComponent(str[4]) + "/kek.json",
-						type: "GET"
+						url: "/u/" + this.get('model.uZar') + "/kek",
+						type: "POST",
+						data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina')))) }
 					}).then(result => {
-						this.set('model', result)
-						//fail here becaouse model.FEEDBACKS might not even exist 
-						this.set('pageFB', this.get('model.FEEDBACKS')[0]) 
-						this.set('mdalready', true)
+						this.set('responz', result)
+						if ( result.winrars == true ) {
+							this.get('pageFB').unshiftObject({
+								pNAME: this.get('currentUser.username'),
+								FEEDBACK: this.get('pisanina'),
+								DATE: new SimpleDateFormat("yyyy.MM.dd"),
+								eDit: true
+							})
+						}
 					})
 				})
 			}
@@ -73,17 +96,13 @@ export default Ember.Controller.extend({
 				this.set('checked1', false)
 				this.set('checked2', true)
 				this.set('checked3', false)
-				this.set('score', 2)
+				this.set('score', 0)
 			} else if ( input == 3 ) {
 				this.set('checked1', false)
 				this.set('checked2', false)
 				this.set('checked3', true)
-				this.set('score', 3)
+				this.set('score', -1)
 			} 
-		},
-
-		PageChange(value) {
-			this.set('pageFB', this.get('model.FEEDBACKS')[value-1])
 		}
 
 	}
