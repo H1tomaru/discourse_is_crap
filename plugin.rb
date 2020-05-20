@@ -661,7 +661,7 @@ after_initialize do
 				#save final variable
 				part1 = newfbarray.take(11)
 				part2 = newfbarray.drop(11).each_slice(12)
-				feedbacks[:FEEDBACKS] = part1.push(part2)
+				feedbacks[:FEEDBACKS] = part2.unshift(part1)
 			end
 
 			#do the games owned display
