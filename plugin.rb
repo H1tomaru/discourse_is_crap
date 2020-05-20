@@ -697,7 +697,7 @@ after_initialize do
 
 			#update db with new correct values if needed
 			if update
-				@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase }, {
+				@@userfb2[:userfb].replace_one( { _id: params[:username].downcase }, {
 					FEEDBACKS: updfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
 					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC]
