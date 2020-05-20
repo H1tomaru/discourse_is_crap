@@ -607,7 +607,7 @@ after_initialize do
 
 		def feedbacks
 			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			newfbarray = []; update = false; fbedit = false; timeNOW = Time.now
+			newfbarray = []; updfbarray = []; update = false; fbedit = false; timeNOW = Time.now
 
 			#page owners cant do feedbacks!
 			if current_user
@@ -644,7 +644,14 @@ after_initialize do
 						end
 						#onetime check for users last feedback to make it editable
 						( fb[:eDit] = true; fbedit = true ) if fbedit == false && fb[:pNAME] == current_user[:username]
-						newfbarray.push(fb)
+						newfbarray.push({
+							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME], DATE: fb[:DATE],
+							SCORE: fb[:SCORE], COLOR: fb[:COLOR]
+						})
+						updfbarray.push({
+							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
+							DATE: fb[:DATE], SCORE: fb[:SCORE]
+						})
 					end
 				end
 				
@@ -691,7 +698,7 @@ after_initialize do
 			#update db with new correct values if needed
 			if update
 				@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase }, {
-					FEEDBACKS: newfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
+					FEEDBACKS: updfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
 					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC]
 				}, { upsert: true } )
@@ -786,7 +793,12 @@ after_initialize do
 								feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
 								feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
 							end
-							newfbarray.push(fb)
+							newfbarray.push({
+								FEEDBACK: fb[:FEEDBACK],
+								pNAME: fb[:pNAME],
+								DATE: fb[:DATE],
+								SCORE: fb[:SCORE]
+							})
 						end
 					end
 
