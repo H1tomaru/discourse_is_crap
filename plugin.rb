@@ -324,7 +324,7 @@ after_initialize do
 			render json: finalvar
 
 		end
-=begin
+
 		def troikopoisk
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
@@ -400,7 +400,7 @@ after_initialize do
 				render json: { guest: true }
 			end
 		end
-
+=begin
 		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
