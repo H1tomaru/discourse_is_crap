@@ -354,7 +354,7 @@ after_initialize do
 					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
 						fbcount = 777
 					else
-						fbcount = feedback[0][:fbBuG] }
+						fbcount = feedback[0][:fbBuG]
 					end
 				end
 
