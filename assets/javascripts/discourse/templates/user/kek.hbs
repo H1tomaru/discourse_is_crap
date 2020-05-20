@@ -3,12 +3,14 @@
 	{{#if otzivmdal}}
 		<form {{action "OtzivZaips" on="submit"}}>
 			<div>
-				<button {{action 'selectOtz' 1}}>:)</button>
-				<button {{action 'selectOtz' 2}}>):|</button>
-				<button {{action 'selectOtz' 3}}>:(</button>
+				<button class='{{if checked1 "bi4"}}' {{action 'selectOtz' 1}}>:)</button>
+				<button class='{{if checked2 "bi4"}}' {{action 'selectOtz' 2}}>):|</button>
+				<button class='{{if checked3 "bi4"}}' {{action 'selectOtz' 3}}>:(</button>
 			</div>
 			<div><button type="submit">Добавить отзыв</button></div>
-			{{input minlength="20" maxlength="200" type="text" value=pisanina}}
+			<div class='{{if checked1 "bi4G"}}{{if checked2 "bi4N"}}{{if checked3 "bi4B"}}'>
+				{{input minlength="20" maxlength="200" type="text" value=pisanina}}
+			</div>
 		</form>
 		{{#if otzivsmall}}
 			<div>
