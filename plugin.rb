@@ -645,6 +645,11 @@ after_initialize do
 						newfbarray.push(fb)
 					end
 				end
+				
+				#push archived feedback number to fb array
+				if feedbacks[:fbARC] > 0
+					newfbarray.push({fbARC: feedbacks[:fbARC]})
+				end
 
 				update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] !userfb[0][:fbARC]
 				update = true if userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
