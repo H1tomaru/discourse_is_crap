@@ -73,12 +73,10 @@
 						<button {{action 'editOtziv' feedback.FEEDBACK}}>Изменить отзыв</button>
 					{{/if}}
 				</div>
-				{{#if @last}}
-					{{#if cum2m}}
-						<button {{action 'showMORZ'}}>ещё</button>
-					{{/if}}
-				{{/if}}
 			{{/each}}
+			{{#if cum2m}}
+				<button {{action 'showMORZ'}}>ещё</button>
+			{{/if}}
 			{{#if showfbARC}}
 				<div class='zeN'>
 					<div>Отзывов в Архиве</div>
