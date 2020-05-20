@@ -757,18 +757,18 @@ after_initialize do
 			if current_user && params[:pNAME] && params[:pNAME] == current_user[:username]
 				#get current user feedback, update it, check for negative feedbacks
 				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase } ).to_a
-				if userfb[0]
+				if userfb[0] && userfb[0][:FEEDBACKS] && userfb[0][:FEEDBACKS].any?
 					feedbacks = { fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 					newfbarray = []; update = false; timeNOW = Time.now
-
-					#remove duplicates
-					update = true if userfb[0][:FEEDBACKS] && userfb[0][:FEEDBACKS].uniq!
 
 					#create key if it doesnt exist yet
 					userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
 
 					#get deleted feedback number if it exists
 					feedbacks[:fbARC] = userfb[0][:fbARC] if userfb[0][:fbARC]
+
+					#remove duplicates
+					update = true if userfb[0][:FEEDBACKS].uniq!
 
 					#count it and check if numbers match
 					userfb[0][:FEEDBACKS].each do |fb|
