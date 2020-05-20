@@ -13,36 +13,41 @@
 		{{#if otzivsmall}}
 			<div>
 				Отзыв Слишком Короткий!
+				<button {{action 'smtexCLOZ'}}>X</button>
 			</div>
 		{{/if}}
 		{{#if otzivsbig}}
 			<div>
 				Отзыв Слишком Длинный!
+				<button {{action 'smtexCLOZ'}}>X</button>
 			</div>
 		{{/if}}
 	{{/if}}
 	
-	{{#if otziv.winrars}}
+	{{#if responz.winrars}}
 		<div>
 			Отзыв Успешно Записан!
+			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
 	
-	{{#if otziv.gavas}}
+	{{#if responz.gavas}}
 		<div>
 			Вы Уже Оставляли Отзыв, Попробуйте Позже
+			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
 	
-	{{#if otziv.bakas}}
+	{{#if responz.bakas}}
 		<div>
 			Вы не можете оставлять отзывы имея отрицательный отзыв<br>
 			Обратитетсь к <a href='/u/MrBug'>Организатору</a> чтобы исправить отзыв
+			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
 	
 	
-	{{#if otziv.fail}}
+	{{#if responz.fail}}
 		<div style="background-image:url('https://i.imgur.com/33FJekg.png')">
 			Epic Fail Is Epic
 		</div>
@@ -63,7 +68,7 @@
 					<div>{{feedback.DATE}}</div>
 					<div>{{feedback.FEEDBACK}}</div>
 					{{#if feedback.eDit}}
-						<button {{action 'editOtziv'}}>Изменить отзыв</button>
+						<button {{action 'editOtziv' feedback.FEEDBACK}}>Изменить отзыв</button>
 					{{/if}}
 				</div>
 				{{#if @last}}
