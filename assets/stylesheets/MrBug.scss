@@ -729,13 +729,6 @@ div.shinbakaz {
 		border-radius: .25em;
 	}
 
-	.malabela2 {
-		font-size: 85%;
-		color: #fff;
-		white-space: nowrap;
-		text-align: center;
-	}
-
 	.bggrey {
 		background-color: gray
 	}
@@ -770,133 +763,6 @@ div.shinbakaz {
 
 	.hideoB {
 		display: none
-	}
-
-	div.atzav {
-
-		text-align: center
-
-	}
-
-	.atziv {
-
-		input {
-			width: 70%
-		}
-
-		button:nth-of-type(-n+3) {
-			background: none;
-			border: none;
-		}
-
-		button:nth-of-type(1) {
-			color: #27ae60
-		}
-
-		button:nth-of-type(2) {
-			color: gray
-		}
-
-		button:nth-of-type(3) {
-			color: lightcoral
-		}
-
-		button:nth-of-type(4) {
-			margin: 16px 0;
-			text-transform: uppercase;
-		}
-
-	}
-
-	.atziv.zelenoeb {
-
-		border: #27ae60 10px solid;
-
-		button:nth-of-type(1) {
-			border-bottom: 1px #27ae60 solid
-		}
-
-		input {
-			color: #27ae60;
-			border-color: #27ae60;
-			font-size: 60%;
-		}
-
-	}
-
-	.atziv.seroeb {
-
-		border: gray 10px solid;
-
-		button:nth-of-type(2) {
-			border-bottom: 1px gray solid
-		}
-
-		input {
-			color: gray;
-			border-color: gray;
-			font-size: 60%;
-		}
-
-	}
-
-	.atziv.krasnoeb {
-
-		border: lightcoral 10px solid;
-
-		button:nth-of-type(3) {
-			border-bottom: 1px lightcoral solid
-		}
-
-		input {
-			color: lightcoral;
-			border-color: lightcoral;
-			font-size: 60%;
-		}
-
-	}
-
-	.nuahuenno {
-
-		td {
-			padding-bottom: 2em
-		}
-
-		td:first-of-type {
-			width: 50px
-		}
-
-		td:last-of-type {
-			width: 80px
-		}
-
-		td:nth-child(n+2) {
-			padding-left: 16px
-		}
-
-	}
-
-	.pagination {
-
-		margin: 20px 0;
-		text-align: center;
-
-		li {
-			display: inline	
-		}
-
-		button {
-			background: none;
-			border: none;
-			padding: 10px 16px;
-			color: #337ab7;
-		}
-
-		button:hover {
-			color: #23527c;
-			background-color: #eee;
-		}
-
 	}
 
 	@media (max-width: 600px) {
@@ -956,14 +822,6 @@ div.shinbakaz {
 
 			td:nth-child(even) {
 				width: 20px!important
-			}
-
-		}
-
-		.nuahuenno {
-
-			td:last-of-type {
-				display: none
 			}
 
 		}
@@ -1540,6 +1398,12 @@ div.rentobaka {
 		}
 
 	}
+
+}
+
+div.kekbaka {
+
+	
 
 }
 
