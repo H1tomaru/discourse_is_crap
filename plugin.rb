@@ -324,7 +324,7 @@ after_initialize do
 			render json: finalvar
 
 		end
-
+=begin
 		def troikopoisk
 			#decode shit
 			troikopoisk = URI.unescape(Base64.decode64(params[:input])).strip.downcase
@@ -342,7 +342,7 @@ after_initialize do
 				render json: { poiskfail: true }
 			end
 		end 
-=begin
+
 		def prezaips
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
