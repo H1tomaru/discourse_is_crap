@@ -342,7 +342,7 @@ after_initialize do
 				render json: { poiskfail: true }
 			end
 		end 
-
+=begin
 		def prezaips
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
@@ -400,7 +400,7 @@ after_initialize do
 				render json: { guest: true }
 			end
 		end
-=begin
+
 		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
@@ -763,7 +763,7 @@ after_initialize do
 					newfbarray = []; update = false; timeNOW = Time.now
 
 					#remove duplicates
-					update = true if userfb[0][:FEEDBACKS].uniq!
+					update = true if userfb[0][:FEEDBACKS] && userfb[0][:FEEDBACKS].uniq!
 
 					#create key if it doesnt exist yet
 					userfb[0][:troikaBAN] = 0 unless userfb[0].key?("troikaBAN")
