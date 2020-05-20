@@ -342,7 +342,7 @@ after_initialize do
 				render json: { poiskfail: true }
 			end
 		end 
-
+=end
 		def prezaips
 			#decode shit
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
@@ -400,7 +400,7 @@ after_initialize do
 				render json: { guest: true }
 			end
 		end
-=end
+
 		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
