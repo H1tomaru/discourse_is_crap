@@ -400,7 +400,7 @@ after_initialize do
 				render json: { guest: true }
 			end
 		end
-
+=end
 		def zaips
 			#decode shit
 			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
@@ -602,7 +602,7 @@ after_initialize do
 				end
 			end
 		end
-=end
+
 		def feedbacks
 			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			newfbarray = []; update = false; fbedit = false; timeNOW = Time.now
