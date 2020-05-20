@@ -604,7 +604,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			newfbarray = []; update = false; fbedit = false; timeNOW = Time.now
 
 			#page owners cant do feedbacks!
