@@ -660,7 +660,7 @@ after_initialize do
 
 				#save final variable
 				part1 = newfbarray.take(11)
-				part2 = newfbarray.drop(11).each_slice(12)
+				part2 = newfbarray.drop(11).each_slice(12).to_a
 				feedbacks[:FEEDBACKS] = part2.unshift(part1)
 			end
 
