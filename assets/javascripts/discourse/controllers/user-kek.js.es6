@@ -51,7 +51,7 @@ export default Ember.Controller.extend({
 		},
 		
 		showMORZ() {
-			this.get('pageFB').pushObject(this.get('model.FEEDBACKS')[this.get('thisPA')])
+			this.get('pageFB').pushObjects(this.get('model.FEEDBACKS')[this.get('thisPA')])
 			this.set('thisPA', this.get('thisPA') + 1)
 			if (this.get('thisPA') == this.get('pagesNO')) this.set('cum2m', false)
 			if (this.get('cum2m') == false && this.get('model.fbARC') > 0) this.set('showfbARC', true)			
