@@ -753,6 +753,7 @@ after_initialize do
 			end
 		end
 
+=begin
 		def ufbupdate
 			if current_user && params[:pNAME] && params[:pNAME] == current_user[:username]
 				#get current user feedback, update it, check for negative feedbacks
@@ -803,6 +804,7 @@ after_initialize do
 
 			end
 		end
+=end
 
 		def rentagama
 			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaLIST: {}, rentaTSHOW: [] }
