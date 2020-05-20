@@ -1,5 +1,53 @@
 <div class='kekbakaz'>
 
+	{{#if otzivmdal}}
+		<form {{action "OtzivZaips" on="submit"}}>
+			<div>
+				<button {{action 'selectOtz' 1}}>:)</button>
+				<button {{action 'selectOtz' 2}}>):|</button>
+				<button {{action 'selectOtz' 3}}>:(</button>
+			</div>
+			<div><button type="submit">Добавить отзыв</button></div>
+			{{input minlength="20" maxlength="200" type="text" value=pisanina}}
+		</form>
+		{{#if otzivsmall}}
+			<div>
+				Отзыв Слишком Короткий!
+			</div>
+		{{/if}}
+		{{#if otzivsbig}}
+			<div>
+				Отзыв Слишком Длинный!
+			</div>
+		{{/if}}
+	{{/if}}
+	
+	{{#if otziv.winrars}}
+		<div>
+			Отзыв Успешно Записан!
+		</div>
+	{{/if}}
+	
+	{{#if otziv.gavas}}
+		<div>
+			Вы Уже Оставляли Отзыв, Попробуйте Позже
+		</div>
+	{{/if}}
+	
+	{{#if otziv.bakas}}
+		<div>
+			Вы не можете оставлять отзывы имея отрицательный отзыв<br>
+			Обратитетсь к <a href='/u/MrBug'>Организатору</a> чтобы исправить отзыв
+		</div>
+	{{/if}}
+	
+	
+	{{#if otziv.fail}}
+		<div style="background-image:url('https://i.imgur.com/33FJekg.png')">
+			Epic Fail Is Epic
+		</div>
+	{{/if}}
+
 	<div>
 		<h2>Отзывы</h2>
 		<div>
