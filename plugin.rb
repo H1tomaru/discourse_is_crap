@@ -413,7 +413,7 @@ after_initialize do
 					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
 						fbcount = 777
 					else
-						fbcount = feedback[0][:fbBuG] }
+						fbcount = feedback[0][:fbBuG]
 					end
 				end
 
@@ -646,7 +646,7 @@ after_initialize do
 					end
 				end
 				
-				update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] !userfb[0][:fbARC]
+				update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] || !userfb[0][:fbARC]
 				update = true if userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
 				update = true if userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
 
@@ -658,10 +658,10 @@ after_initialize do
 
 			#do the games owned display
 			#get user games from my database
-			ugamez = @@userdb[:PS4db].find( { $or: [ 
-				{ P2: { $in: [ params[:username], params[:username].downcase ] } },
-				{ P41: { $in: [ params[:username], params[:username].downcase ] } },
-				{ P42: { $in: [ params[:username], params[:username].downcase ] } }
+			ugamez = @@userdb[:PS4db].find( { "$or": [ 
+				{ P2: { "$in": [ params[:username], params[:username].downcase ] } },
+				{ P41: { "$in": [ params[:username], params[:username].downcase ] } },
+				{ P42: { "$in": [ params[:username], params[:username].downcase ] } }
 				] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
 			
 			#do stuff if he has some
@@ -787,7 +787,7 @@ after_initialize do
 						end
 					end
 
-					update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] !userfb[0][:fbARC]
+					update = true if !userfb[0][:fbG] || !userfb[0][:fbB] || !userfb[0][:fbN] || !userfb[0][:fbBuG] || !userfb[0][:fbBuB] || !userfb[0][:fbARC]
 					update = true if userfb[0][:fbG] != feedbacks[:fbG] || userfb[0][:fbB] != feedbacks[:fbB] || userfb[0][:fbN] != feedbacks[:fbN]
 					update = true if userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
 
