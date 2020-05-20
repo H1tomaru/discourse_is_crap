@@ -602,7 +602,7 @@ after_initialize do
 				end
 			end
 		end
-
+=end
 		def feedbacks
 			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			newfbarray = []; update = false; fbedit = false; timeNOW = Time.now
@@ -695,7 +695,7 @@ after_initialize do
 				}, { upsert: true } )
 			end
 		end
-=end
+
 		def zafeedback
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
