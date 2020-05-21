@@ -680,15 +680,17 @@ after_initialize do
 					ugamezfinal = []
 					ugamez.each do |ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000
-							thisone = {}
-							thisone[:gNAME] = ugaz[:GAME]
+							aCC = false
+							aCC = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
 							if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
-								thisone[:poZ] = 2
-							else
-								thisone[:poZ] = 4
+								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
 							end
-							thisone[:aCC] = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
-							ugamezfinal.push(thisone)
+							if ugaz[:P41] == params[:username] || ugaz[:P41] == params[:username].downcase
+								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
+							end
+							if ugaz[:P42] == params[:username] || ugaz[:P42] == params[:username].downcase
+								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
+							end
 						end
 					end
 					feedbacks[:ugameZ] = ugamezfinal
