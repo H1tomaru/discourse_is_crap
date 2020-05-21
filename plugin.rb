@@ -642,7 +642,7 @@ after_initialize do
 							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
 						end
 						#onetime check for users last feedback to make it editable
-						( fb[:eDit] = true; fbedit = true ) if fbedit == false && fb[:pNAME] == current_user[:username]
+						( fb[:eDit] = true; fbedit = true ) if current_user && fbedit == false && fb[:pNAME] == current_user[:username]
 						newfbarray.push({
 							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
 							DATE: fb[:DATE], COLOR: fb[:COLOR]
