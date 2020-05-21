@@ -605,7 +605,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
+			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			newfbarray = []; updfbarray = []; update = false; fbedit = false; timeNOW = Time.now
 
 			#page owners cant do feedbacks!
@@ -644,8 +644,8 @@ after_initialize do
 						#onetime check for users last feedback to make it editable
 						( fb[:eDit] = true; fbedit = true ) if fbedit == false && fb[:pNAME] == current_user[:username]
 						newfbarray.push({
-							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME], DATE: fb[:DATE],
-							SCORE: fb[:SCORE], COLOR: fb[:COLOR]
+							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
+							DATE: fb[:DATE], COLOR: fb[:COLOR]
 						})
 						updfbarray.push({
 							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
