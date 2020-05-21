@@ -651,7 +651,7 @@ after_initialize do
 						})
 
 						#onetime check for users last feedback to make it editable
-						{ newfbarray[-1][:eDit] = true; fbedit = true } if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
+						( newfbarray[-1][:eDit] = true; fbedit = true ) if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
 
 					end
 				end
