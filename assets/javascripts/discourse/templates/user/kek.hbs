@@ -61,9 +61,11 @@
 			<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
 		</div>
 		<div>
-			<div>
-				<button {{action 'addOtziv'}}>Оставить отзыв</button>
-			</div>
+			{{#if model.MENOSHO}}
+				<div>
+					<button {{action 'addOtziv'}}>Оставить отзыв</button>
+				</div>
+			{{/if}}
 			{{#each pageFB as |feedback|}}
 				<div class='{{feedback.COLOR}}'>
 					<div><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></div>
