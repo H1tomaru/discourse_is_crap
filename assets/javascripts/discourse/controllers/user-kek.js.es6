@@ -90,13 +90,14 @@ export default Ember.Controller.extend({
 								})
 							} else {
 								indexxx = 0
-								this.get('pageFB').forEach(function(element) {
-									if (element.pNAME == this.get('currentUser.username')) {
+								for (var i = 0; i < this.get('pageFB').length; i++) {
+									this.get('pageFB')[i]
+									if (this.get('pageFB')[i].pNAME == this.get('currentUser.username')) {
 										break
 									} else {
 										indexxx++
 									}
-								})
+								}
 								Ember.set(this.get('pageFB').objectAt(indexxx),'FEEDBACK',this.get('pisanina'))
 							}
 							this.set('checked1', true)
