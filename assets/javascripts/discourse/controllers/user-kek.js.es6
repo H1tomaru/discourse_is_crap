@@ -77,16 +77,25 @@ export default Ember.Controller.extend({
 					}).then(result => {
 						this.set('responz', result)
 						if ( result.winrars == true ) {
-							if ( this.get('score') > 0 ) this.set('score', 'zeG')
-							if ( this.get('score') == 0 ) this.set('score', 'zeN')
-							if ( this.get('score') < 0 ) this.set('score', 'zeB')
-							this.get('pageFB').unshiftObject({
-								pNAME: this.get('currentUser.username'),
-								FEEDBACK: this.get('pisanina'),
-								DATE: new SimpleDateFormat("yyyy.MM.dd"),
-								COLOR: this.get('score'),
-								eDit: true
-							})
+							if (this.get('ozmode') == 666) {
+								if ( this.get('score') > 0 ) this.set('score', 'zeG')
+								if ( this.get('score') == 0 ) this.set('score', 'zeN')
+								if ( this.get('score') < 0 ) this.set('score', 'zeB')
+								this.get('pageFB').unshiftObject({
+									pNAME: this.get('currentUser.username'),
+									FEEDBACK: this.get('pisanina'),
+									DATE: new SimpleDateFormat("yyyy.MM.dd"),
+									COLOR: this.get('score'),
+									eDit: true
+								})
+							} else {
+								indexxx = 0
+								this.get('pageFB').forEach(function(element) {
+									if (element.pNAME == this.get('currentUser.username')) break
+									indexxx++
+								})
+								Ember.set(this.get('pageFB').objectAt(indexxx),'FEEDBACK',this.get('pisanina'))
+							}
 							this.set('checked1', true)
 							this.set('checked2', false)
 							this.set('checked3', false)
