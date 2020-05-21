@@ -25,21 +25,21 @@
 			</div>
 		{{/if}}
 	{{/if}}
-	
+
 	{{#if responz.winrars}}
 		<div>
 			Отзыв Успешно Записан!
 			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
-	
+
 	{{#if responz.gavas}}
 		<div>
 			Вы Уже Оставляли Отзыв, Попробуйте Позже
 			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
-	
+
 	{{#if responz.bakas}}
 		<div>
 			Вы не можете оставлять отзывы имея отрицательный отзыв<br>
@@ -47,8 +47,7 @@
 			<button {{action 'respCLOZ'}}>X</button>
 		</div>
 	{{/if}}
-	
-	
+
 	{{#if responz.fail}}
 		<div style="background-image:url('https://i.imgur.com/33FJekg.png')">
 			Epic Fail Is Epic
@@ -88,7 +87,8 @@
 			{{/if}}
 		</div>
 	</div>
-	
+
+	{{#if currentUser}}
 	<div>
 		<h2>Аккаунты</h2>
 		<div></div>
@@ -102,5 +102,6 @@
 			{{/each}}
 		</div>
 	</div>
+	{{/if}}
 
 </div>
