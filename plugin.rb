@@ -641,17 +641,18 @@ after_initialize do
 							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
 							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
 						end
-						#onetime check for users last feedback to make it editable
-						fbedit = true if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
-
 						newfbarray.push({
 							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
-							DATE: fb[:DATE], COLOR: fb[:COLOR], eDit: fbedit
+							DATE: fb[:DATE], COLOR: fb[:COLOR]
 						})
 						updfbarray.push({
 							FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
 							DATE: fb[:DATE], SCORE: fb[:SCORE]
 						})
+
+						#onetime check for users last feedback to make it editable
+						{ newfbarray[-1][:eDit] = true; fbedit = true } if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
+
 					end
 				end
 				
