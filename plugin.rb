@@ -664,31 +664,33 @@ after_initialize do
 				feedbacks[:FEEDBACKS] = part2.unshift(part1)
 			end
 
-			#do the games owned display
-			#get user games from my database
-			ugamez = @@userdb[:PS4db].find( { "$or": [ 
-				{ P2: { "$in": [ params[:username], params[:username].downcase ] } },
-				{ P41: { "$in": [ params[:username], params[:username].downcase ] } },
-				{ P42: { "$in": [ params[:username], params[:username].downcase ] } }
-				] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
-			
-			#do stuff if he has some
-			if ugamez[0] && params[:username] != 'MrBug'
-				ugamezfinal = []
-				ugamez.each do |ugaz|
-					if timeNOW - ugaz[:DATE].to_time < 63000000
-						thisone = {}
-						thisone[:gNAME] = ugaz[:GAME]
-						if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
-							thisone[:poZ] = 2
-						else
-							thisone[:poZ] = 4
+			#do the games owned display, for logged in users only
+			if current_user
+				#get user games from my database
+				ugamez = @@userdb[:PS4db].find( { "$or": [ 
+					{ P2: { "$in": [ params[:username], params[:username].downcase ] } },
+					{ P41: { "$in": [ params[:username], params[:username].downcase ] } },
+					{ P42: { "$in": [ params[:username], params[:username].downcase ] } }
+					] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
+
+				#do stuff if he has some
+				if ugamez[0] && params[:username] != 'MrBug'
+					ugamezfinal = []
+					ugamez.each do |ugaz|
+						if timeNOW - ugaz[:DATE].to_time < 63000000
+							thisone = {}
+							thisone[:gNAME] = ugaz[:GAME]
+							if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
+								thisone[:poZ] = 2
+							else
+								thisone[:poZ] = 4
+							end
+							thisone[:aCC] = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
+							ugamezfinal.push(thisone)
 						end
-						thisone[:aCC] = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
-						ugamezfinal.push(thisone)
 					end
+					feedbacks[:ugameZ] = ugamezfinal
 				end
-				feedbacks[:ugameZ] = ugamezfinal
 			end
 
 			#render fb
