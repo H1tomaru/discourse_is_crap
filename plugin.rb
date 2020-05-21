@@ -753,7 +753,7 @@ after_initialize do
 								end
 							end
 							@@userfb2[:userfb].replace_one( { _id: current_user[:username].downcase },
-								ufb[0], { upsert: true } )
+								ufb[0].except(:_id), { upsert: true } )
 							render json: { winrars: true }
 						else #if none of these happen, thats really wrong...
 							render json: { fail: true }
