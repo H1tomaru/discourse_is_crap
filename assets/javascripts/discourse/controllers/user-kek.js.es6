@@ -91,8 +91,11 @@ export default Ember.Controller.extend({
 							} else {
 								indexxx = 0
 								this.get('pageFB').forEach(function(element) {
-									if (element.pNAME == this.get('currentUser.username')) break
-									indexxx++
+									if (element.pNAME == this.get('currentUser.username')) {
+										break
+									} else {
+										indexxx++
+									}
 								})
 								Ember.set(this.get('pageFB').objectAt(indexxx),'FEEDBACK',this.get('pisanina'))
 							}
