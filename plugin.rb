@@ -684,7 +684,7 @@ after_initialize do
 						else
 							thisone[:poZ] = 4
 						end
-						thisone[:aCC] = ugaz[:_id].to_s.slice[-14, 4] if current_user[:username].downcase == params[:username].downcase
+						thisone[:aCC] = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
 						ugamezfinal.push(thisone)
 					end
 				end
