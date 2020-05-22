@@ -1405,9 +1405,40 @@ div.rentobaka {
 
 }
 
-div.kekbaka {
+div.kekbakaz {
 
-	
+	font-size: 14px;
+	line-height: 1.2;
+
+	.kekkok {
+
+		h2 {
+			border-bottom: 2px solid;
+			border-image: linear-gradient(to right, #ff8a00, #da1b60) 0 0 100% 0/0 0 2px 0 stretch;
+			letter-spacing: -1px;
+			font-weight: normal;
+		}
+
+		div:first-of-type {
+			float: right;
+			margin-top: -2em;
+			margin-right: 1em;
+			font-weight: bold;
+		}
+
+		.keklist {
+
+			.kekus {
+				
+			}
+			
+			.kekuz {
+				
+			}
+			
+		}
+
+	}
 
 }
 
@@ -1415,7 +1446,7 @@ div.kekbaka {
 	margin: 0 10%;
 }
 
-.user-content-wrapper div.shinbakaz {
+.user-content-wrapper div.kekbakaz {
 
 	grid-column-start: 1;
 	grid-column-end: 3;
