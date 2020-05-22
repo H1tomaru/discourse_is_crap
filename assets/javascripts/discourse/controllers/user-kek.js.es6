@@ -99,6 +99,13 @@ export default Ember.Controller.extend({
 									COLOR: this.get('score'),
 									eDit: true
 								})
+								this.get('model.FEEDBACKS').pushObject({
+									pNAME: this.get('currentUser.username'),
+									FEEDBACK: this.get('pisanina'),
+									DATE: new SimpleDateFormat("yyyy.MM.dd"),
+									COLOR: this.get('score'),
+									eDit: true
+								})
 							} else {
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'FEEDBACK',this.get('pisanina'))
