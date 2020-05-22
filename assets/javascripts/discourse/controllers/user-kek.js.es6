@@ -14,8 +14,8 @@ export default Ember.Controller.extend({
 	}),
 	pageFB: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS')[0]
- 	}),
-
+ 	}).property('model.FEEDBACKS.[]'),
+	
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
@@ -26,7 +26,7 @@ export default Ember.Controller.extend({
 	
 	showfbARC: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('pagesNO') <= 1 && this.get('model.fbARC') > 0) return true
-	}) ,
+	}),
 	
 	actions: {
 		
@@ -56,7 +56,8 @@ export default Ember.Controller.extend({
 		},
 		
 		showMORZ() {
-			this.get('pageFB').pushObjects(this.get('model.FEEDBACKS')[this.get('thisPA')])
+			this.get('model.FEEDBACKS')[0].pushObjects(this.get('model.FEEDBACKS')[1])
+			this.get('model.FEEDBACKS').removeAt(1)
 			this.set('thisPA', this.get('thisPA') + 1)
 			if (this.get('thisPA') == this.get('pagesNO')) this.set('cum2m', false)
 			if (this.get('cum2m') == false && this.get('model.fbARC') > 0) this.set('showfbARC', true)			
@@ -91,15 +92,13 @@ export default Ember.Controller.extend({
 									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('pageFB').objectAt(ni),'eDit',false)
-								this.set('pageFB', this.get('pageFB').unshiftObject({
+								this.get('model.FEEDBACKS')[0].unshiftObject({
 									pNAME: this.get('currentUser.username'),
 									FEEDBACK: this.get('pisanina'),
 									DATE: new SimpleDateFormat("yyyy.MM.dd"),
 									COLOR: this.get('score'),
 									eDit: true
-								}))
-								Ember.set(this.get('pageFB').objectAt(0),'eDit',false)
-								Ember.set(this.get('pageFB').objectAt(0),'eDit',true)
+								})
 							} else {
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('pageFB').objectAt(ni),'FEEDBACK',this.get('pisanina'))
