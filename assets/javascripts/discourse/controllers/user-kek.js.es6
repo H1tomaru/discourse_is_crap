@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
 	actions: {
 		
 		addOtziv() {
-			this.set('null', null)
+			this.set('responz', null)
 			this.set('tempadd', true)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 666)
@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
 		},
 
 		editOtziv(fb) {
-			this.set('null', null)
+			this.set('responz', null)
 			this.set('tempadd', false)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 1337)
