@@ -93,18 +93,18 @@ export default Ember.Controller.extend({
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'eDit',false)
 								this.get('model.FEEDBACKS').unshiftObject({
-									pNAME: this.get('currentUser.username'),
-									FEEDBACK: this.get('pisanina'),
-									DATE: new SimpleDateFormat("yyyy.MM.dd"),
-									COLOR: this.get('score'),
-									eDit: true
+									'pNAME': this.get('currentUser.username'),
+									'FEEDBACK': this.get('pisanina'),
+									'DATE': new SimpleDateFormat("yyyy.MM.dd"),
+									'COLOR': this.get('score'),
+									'eDit': true
 								})
 								this.get('model.FEEDBACKS').pushObject({
-									pNAME: this.get('currentUser.username'),
-									FEEDBACK: this.get('pisanina'),
-									DATE: new SimpleDateFormat("yyyy.MM.dd"),
-									COLOR: this.get('score'),
-									eDit: true
+									'pNAME': this.get('currentUser.username'),
+									'FEEDBACK': this.get('pisanina'),
+									'DATE': new SimpleDateFormat("yyyy.MM.dd"),
+									'COLOR': this.get('score'),
+									'eDit': true
 								})
 							} else {
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
