@@ -79,11 +79,11 @@ export default Ember.Controller.extend({
 						if ( result.winrars == true ) {
 							if (this.get('ozmode') == 666) {
 								if ( this.get('score') > 0 ) { this.set('score', 'zeG')
-									Ember.set(this.get('model'), fbG, this.get('model.fbG')+1) }
+									Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1) }
 								if ( this.get('score') == 0 ) { this.set('score', 'zeN')
-									Ember.set(this.get('model'), fbN, this.get('model.fbN')+1) }
+									Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1) }
 								if ( this.get('score') < 0 ) { this.set('score', 'zeB')
-									Ember.set(this.get('model'), fbB, this.get('model.fbB')+1) }
+									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
 								this.get('pageFB').unshiftObject({
 									pNAME: this.get('currentUser.username'),
 									FEEDBACK: this.get('pisanina'),
@@ -92,16 +92,8 @@ export default Ember.Controller.extend({
 									eDit: true
 								})
 							} else {
-								indexxx = 0
-								for (var i = 0; i < this.get('pageFB').length; i++) {
-									this.get('pageFB')[i]
-									if (this.get('pageFB')[i].pNAME == this.get('currentUser.username')) {
-										break
-									} else {
-										indexxx++
-									}
-								}
-								Ember.set(this.get('pageFB').objectAt(indexxx),'FEEDBACK',this.get('pisanina'))
+								var rIndex = this.get('pageFB').map(function(item) { return item.pNAME }).indexOf(this.get('currentUser.username'))
+								Ember.set(this.get('pageFB').objectAt(rIndex),'FEEDBACK',this.get('pisanina'))
 							}
 							this.set('checked1', true)
 							this.set('checked2', false)
