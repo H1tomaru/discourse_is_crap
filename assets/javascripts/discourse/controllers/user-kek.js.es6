@@ -91,13 +91,14 @@ export default Ember.Controller.extend({
 									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('pageFB').objectAt(ni),'eDit',false)
-								this.set('pageFB', this.get('pageFB').unshiftObject({
+								var newpageFB = this.get('pageFB').unshiftObject({
 									pNAME: this.get('currentUser.username'),
 									FEEDBACK: this.get('pisanina'),
 									DATE: new SimpleDateFormat("yyyy.MM.dd"),
 									COLOR: this.get('score'),
 									eDit: true
-								}))
+								})
+								this.set('pageFB', newpageFB)
 							} else {
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('pageFB').objectAt(ni),'FEEDBACK',this.get('pisanina'))
