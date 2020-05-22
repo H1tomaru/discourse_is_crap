@@ -9,12 +9,12 @@ export default Ember.Controller.extend({
 	tempadd: true,
 
 	thisPA: 1,
-	pagesNO: Ember.computed('model.FEEDBACKS', function() {
-		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS').length
+	pagesNO: Ember.computed('model.FEEDBACKS2', function() {
+		if (this.get('model.FEEDBACKS2')) return this.get('model.FEEDBACKS2').length + 1
 	}),
 	pageFB: Ember.computed('model.FEEDBACKS', function() {
-		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS')[0]
- 	}).property('model.FEEDBACKS.0.[]'),
+		return this.get('model.FEEDBACKS')
+ 	}).property('model.FEEDBACKS.[]'),
 	
 	otzivmdal: false,
 	otzivsmall: false,
