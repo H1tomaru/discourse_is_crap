@@ -54,19 +54,19 @@
 		</div>
 	{{/if}}
 
-	<div>
+	<div class='kekkok'>
 		<h2>Отзывы</h2>
 		<div>
 			<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
 		</div>
-		<div>
+		<div class='keklist'>
 			{{#if model.MENOSHO}}
 				<div>
 					<button {{action 'addOtziv'}}>Оставить отзыв</button>
 				</div>
 			{{/if}}
 			{{#each pageFB as |feedback|}}
-				<div class='{{feedback.COLOR}}'>
+				<div class='kekus {{feedback.COLOR}}'>
 					<div><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></div>
 					<div>{{feedback.DATE}}</div>
 					<div>{{feedback.FEEDBACK}}</div>
@@ -89,16 +89,18 @@
 	</div>
 
 	{{#if currentUser}}
-	<div>
+	<div class='kekkok'>
 		<h2>Аккаунты</h2>
 		<div></div>
-		<div>
+		<div class='keklist'>
 			{{#each model.ugameZ as |gamez|}}
-				<div>П{{gamez.poZ}}</div>
-				<div>{{gamez.gNAME}}</div>
-				{{#if gamez.aCC}}
-					<div>{{gamez.aCC}}</div>
-				{{/if}}
+				<div class='kekus'>
+					<div>П{{gamez.poZ}}</div>
+					<div>{{gamez.gNAME}}</div>
+					{{#if gamez.aCC}}
+						<div>{{gamez.aCC}}</div>
+					{{/if}}
+				</div>
 			{{/each}}
 		</div>
 	</div>
