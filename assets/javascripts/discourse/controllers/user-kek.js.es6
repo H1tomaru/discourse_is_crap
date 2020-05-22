@@ -78,9 +78,12 @@ export default Ember.Controller.extend({
 						this.set('responz', result)
 						if ( result.winrars == true ) {
 							if (this.get('ozmode') == 666) {
-								if ( this.get('score') > 0 ) this.set('score', 'zeG')
-								if ( this.get('score') == 0 ) this.set('score', 'zeN')
-								if ( this.get('score') < 0 ) this.set('score', 'zeB')
+								if ( this.get('score') > 0 ) { this.set('score', 'zeG')
+									Ember.set(this.get('model'), fbG, this.get('model.fbG')+1) }
+								if ( this.get('score') == 0 ) { this.set('score', 'zeN')
+									Ember.set(this.get('model'), fbN, this.get('model.fbN')+1) }
+								if ( this.get('score') < 0 ) { this.set('score', 'zeB')
+									Ember.set(this.get('model'), fbB, this.get('model.fbB')+1) }
 								this.get('pageFB').unshiftObject({
 									pNAME: this.get('currentUser.username'),
 									FEEDBACK: this.get('pisanina'),
