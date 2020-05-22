@@ -95,14 +95,14 @@ export default Ember.Controller.extend({
 								this.get('model.FEEDBACKS').unshiftObject({
 									'pNAME': this.get('currentUser.username'),
 									'FEEDBACK': this.get('pisanina'),
-									'DATE': new SimpleDateFormat("yyyy.MM.dd"),
+									//'DATE': new SimpleDateFormat("yyyy.MM.dd"),
 									'COLOR': this.get('score'),
 									'eDit': true
 								})
 								this.get('model.FEEDBACKS').pushObject({
 									'pNAME': this.get('currentUser.username'),
 									'FEEDBACK': this.get('pisanina'),
-									'DATE': new SimpleDateFormat("yyyy.MM.dd"),
+									//'DATE': new SimpleDateFormat("yyyy.MM.dd"),
 									'COLOR': this.get('score'),
 									'eDit': true
 								})
