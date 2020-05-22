@@ -89,16 +89,21 @@ export default Ember.Controller.extend({
 									Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1) }
 								if ( this.get('score') < 0 ) { this.set('score', 'zeB')
 									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
-								this.get('pageFB').unshiftObject({
+								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+								Ember.set(this.get('pageFB').objectAt(ni),'eDit',false)
+								this.set('pageFB', this.get('pageFB').unshiftObject({
 									pNAME: this.get('currentUser.username'),
 									FEEDBACK: this.get('pisanina'),
 									DATE: new SimpleDateFormat("yyyy.MM.dd"),
 									COLOR: this.get('score'),
 									eDit: true
-								})
+								}))
 							} else {
 								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								Ember.set(this.get('pageFB').objectAt(ni),'FEEDBACK',this.get('pisanina'))
+								if ( this.get('score') > 0 ) Ember.set(this.get('pageFB').objectAt(ni),'COLOR','zeG')
+								if ( this.get('score') == 0 ) Ember.set(this.get('pageFB').objectAt(ni),'COLOR','zeN')
+								if ( this.get('score') < 0 ) Ember.set(this.get('pageFB').objectAt(ni),'COLOR','zeB')
 							}
 							this.set('checked1', true)
 							this.set('checked2', false)
