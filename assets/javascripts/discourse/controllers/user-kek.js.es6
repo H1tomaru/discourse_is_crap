@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
 	}),
 	
 	showfbARC: Ember.computed('model.FEEDBACKS', function() {
-		if (this.get('pagesNO') = 1 && this.get('model.fbARC') > 0) return true
+		if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
 	}),
 	
 	actions: {
