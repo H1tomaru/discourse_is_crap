@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 	}),
 	pageFB: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('model.FEEDBACKS')) return this.get('model.FEEDBACKS')[0]
- 	}).property('model.FEEDBACKS.[0]'),
+ 	}).property('model.FEEDBACKS.0.[]'),
 	
 	otzivmdal: false,
 	otzivsmall: false,
