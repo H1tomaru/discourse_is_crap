@@ -92,8 +92,8 @@ export default Ember.Controller.extend({
 									eDit: true
 								})
 							} else {
-								var rIndex = this.get('pageFB').map(function(item) { return item.pNAME }).indexOf(this.get('currentUser.username'))
-								Ember.set(this.get('pageFB').objectAt(rIndex),'FEEDBACK',this.get('pisanina'))
+								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+								Ember.set(this.get('pageFB').objectAt(ni),'FEEDBACK',this.get('pisanina'))
 							}
 							this.set('checked1', true)
 							this.set('checked2', false)
