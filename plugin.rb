@@ -661,9 +661,8 @@ after_initialize do
 				update = true if userfb[0][:fbBuG] != feedbacks[:fbBuG] || userfb[0][:fbBuB] != feedbacks[:fbBuB]
 
 				#save final variable
-				part1 = newfbarray.take(11)
-				part2 = newfbarray.drop(11).each_slice(12).to_a
-				feedbacks[:FEEDBACKS] = part2.unshift(part1)
+				feedbacks[:FEEDBACKS] = newfbarray.take(11)
+				feedbacks[:FEEDBACKS2] = newfbarray.drop(11).each_slice(12)
 			end
 
 			#do the games owned display, for logged in users only
