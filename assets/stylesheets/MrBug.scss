@@ -1434,18 +1434,31 @@ div.kekbakaz {
 			.zeG {
 				background: #cef7d2 center no-repeat url('https://i.imgur.com/sXgt6Ie.png')
 			}
-
+			
 			.zeN {
-				background: #f0f0f0 center no-repeat url(https://i.imgur.com/PjUMjwU.png);
+				background: #f0f0f0 center no-repeat url(https://i.imgur.com/PjUMjwU.png)
 			}
 
 			.zeB {
-				background: #f7cece center no-repeat url(https://i.imgur.com/Lq6qtgg.png);
+				background: #f7cece center no-repeat url(https://i.imgur.com/Lq6qtgg.png)
 			}
 
 			.zeZ {
 				background: #f0f0f0
 			}
+			
+			.zeG:hover {
+				background-color: #a6f2ad
+			}
+			
+			.zeN:hover {
+				background-color: #d9d9d9
+			}
+
+			.zeB:hover {
+				background-color: #f2a6a6
+			}
+
 
 			h3 {
 				font-size: 35px;
@@ -1495,6 +1508,7 @@ div.kekbakaz {
 				min-height: 6em;
 				flex-grow: 1;
 				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+				transition: 0.4s;
 
 				div:nth-child(1) {
 
