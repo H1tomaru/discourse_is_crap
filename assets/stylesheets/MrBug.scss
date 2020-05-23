@@ -1431,15 +1431,50 @@ div.kekbakaz {
 			display: flex;
 			flex-wrap: wrap;
 
+			.zeG {
+				background-color: #cef7d2
+			}
+
+			.zeN {
+				background-color: #d3d3d3
+			}
+			
+			.zeB {
+				background-color: #f7cece
+			}
+
 			.kekus {
+
 				display: inline-block;
 				width: 350px;
 				position: relative;
 				margin: 0.5em;
 				min-height: 6em;
 				flex-grow: 1;
-				background-color: #d3d3d3;
 				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+
+				div:nth-child(1) {
+
+					margin: 0.5em 0.5em 0.4em;
+					border-bottom: 1px solid;
+					border-color: #9A9A9A;
+
+					a {
+						margin-left: 0.4em
+					}
+
+				}
+
+				div:nth-child(2) {
+					float: right;
+					margin-top: -1.6em;
+					margin-right: 1em;
+				}
+
+				div:nth-child(3) {
+					margin: 0.5em 0.5em 0.4em
+				}
+
 			}
 
 		}
