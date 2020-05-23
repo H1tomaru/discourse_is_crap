@@ -3,9 +3,15 @@
 	{{#if otzivmdal}}
 		<form {{action "OtzivZaips" on="submit"}}>
 			<div>
-				<button class='{{if checked1 "bi4"}}' {{action 'selectOtz' 1}}>:)</button>
-				<button class='{{if checked2 "bi4"}}' {{action 'selectOtz' 2}}>:|</button>
-				<button class='{{if checked3 "bi4"}}' {{action 'selectOtz' 3}}>:(</button>
+				<button class='{{if checked1 "bi4"}}' {{action 'selectOtz' 1}}>
+					<img src='https://i.imgur.com/rmydNkF.png'>
+				</button>
+				<button class='{{if checked2 "bi4"}}' {{action 'selectOtz' 2}}>
+					<img src='https://i.imgur.com/OMygNKW.png'>
+				</button>
+				<button class='{{if checked3 "bi4"}}' {{action 'selectOtz' 3}}>
+					<img src='https://i.imgur.com/ZcxqN8c.png'>
+				</button>
 			</div>
 			<div><button type="submit">{{if tempadd "Добавить" "Изменить"}} Отзыв</button></div>
 			<div class='{{if checked1 "bi4G"}}{{if checked2 "bi4N"}}{{if checked3 "bi4B"}}'>
