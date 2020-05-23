@@ -62,7 +62,7 @@
 		<div class='keklist'>
 			{{#if model.MENOSHO}}
 				<div class="kekus">
-					<button {{action 'addOtziv'}}>Оставить отзыв</button>
+					<button class="addZ" {{action 'addOtziv'}}>Оставить отзыв</button>
 				</div>
 			{{/if}}
 			{{#each pageFB as |feedback|}}
@@ -71,7 +71,7 @@
 					<div>{{feedback.DATE}}</div>
 					<div>{{feedback.FEEDBACK}}</div>
 					{{#if feedback.eDit}}
-						<button {{action 'editOtziv' feedback.FEEDBACK}}>Изменить отзыв</button>
+						<button class="ediZ" {{action 'editOtziv' feedback.FEEDBACK}}>Изменить отзыв</button>
 					{{/if}}
 				</div>
 			{{/each}}
@@ -93,8 +93,8 @@
 		<h2>Аккаунты</h2>
 		<div class='keklist'>
 			{{#each model.ugameZ as |gamez|}}
-				<div class='kekus'>
-					<div>П{{gamez.poZ}}</div>
+				<div class='kekus zeN'>
+					<div><a>П{{gamez.poZ}}</a></div>
 					<div>{{gamez.gNAME}}</div>
 					{{#if gamez.aCC}}
 						<div>{{gamez.aCC}}</div>
