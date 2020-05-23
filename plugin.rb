@@ -728,7 +728,7 @@ after_initialize do
 				else
 					#find if user gave feedback already today
 					ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-					if ufb[0]
+					if ufb[0] && ufb[0][:FEEDBACKS]
 						fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 					end
 
