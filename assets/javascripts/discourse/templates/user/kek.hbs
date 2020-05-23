@@ -21,13 +21,13 @@
 		{{#if otzivsmall}}
 			<div class='netmudal'>
 				Отзыв Слишком Короткий!
-				<button {{action 'smtexCLOZ'}}>X</button>
+				<button {{action 'smtexCLOZ'}}></button>
 			</div>
 		{{/if}}
 		{{#if otzivsbig}}
 			<div class='netmudal'>
 				Отзыв Слишком Длинный!
-				<button {{action 'smtexCLOZ'}}>X</button>
+				<button {{action 'smtexCLOZ'}}></button>
 			</div>
 		{{/if}}
 	{{/if}}
@@ -35,14 +35,14 @@
 	{{#if responz.winrars}}
 		<div class='netmudal'>
 			Отзыв Успешно {{if tempadd "Записан" "Изменен"}}!
-			<button {{action 'respCLOZ'}}>X</button>
+			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
 
 	{{#if responz.gavas}}
 		<div class='netmudal'>
 			Вы Уже Оставляли Отзыв, Попробуйте Позже
-			<button {{action 'respCLOZ'}}>X</button>
+			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
 
@@ -50,7 +50,7 @@
 		<div class='netmudal'>
 			Вы не можете оставлять отзывы имея отрицательный отзыв<br>
 			Обратитетсь к <a href='/u/MrBug'>Организатору</a> чтобы исправить отзыв
-			<button {{action 'respCLOZ'}}>X</button>
+			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
 
