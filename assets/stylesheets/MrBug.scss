@@ -1414,6 +1414,63 @@ div.kekbakaz {
 		outline: none;
 		text-decoration: none;
 	}
+	
+	form {
+
+		div:nth-child(1) {
+
+			margin: 0.5em 0.5em 0.4em;
+
+				button {
+
+					border: none;
+					background: none;
+					opacity: 0.6;
+					transition: 0.4s;
+
+					img {
+						height: 20px
+					}
+
+				}
+
+				button.bi4 {
+
+					opacity: 1;
+
+					img {
+						height: 25px
+					}
+
+				}
+		}
+
+		div:nth-child(2) {
+			float: right;
+			margin-top: -2em;
+			margin-right: 1em;
+		}
+
+		input {
+			width: 100%
+		}
+
+		.bi4G input {
+			border-color: #a6f2ad;
+			box-shadow: 0 0 6px 0 green;
+		}
+
+		.bi4N input {
+			border-color: #f0f0f0;
+			box-shadow: 0 0 6px 0 slategrey;
+		}
+
+		.bi4B input {
+			border-color: #f7cece;
+			box-shadow: 0 0 6px 0 red;
+		}
+
+	}
 
 	.kekkok {
 
@@ -1429,63 +1486,6 @@ div.kekbakaz {
 			margin-top: -2em;
 			margin-right: 1em;
 			font-weight: bold;
-		}
-
-		form {
-
-			div:nth-child(1) {
-
-				margin: 0.5em 0.5em 0.4em;
-
-					button {
-
-						border: none;
-						background: none;
-						opacity: 0.6;
-						transition: 0.4s;
-
-						img {
-							height: 20px
-						}
-
-					}
-
-					button.bi4 {
-
-						opacity: 1;
-
-						img {
-							height: 25px
-						}
-
-					}
-			}
-
-			div:nth-child(2) {
-				float: right;
-				margin-top: -2em;
-				margin-right: 1em;
-			}
-
-			input {
-				width: 100%
-			}
-
-			.bi4G input {
-				border-color: #a6f2ad;
-				box-shadow: 0 0 6px 0 green;
-			}
-
-			.bi4N input {
-				border-color: #f0f0f0;
-				box-shadow: 0 0 6px 0 slategrey;
-			}
-
-			.bi4B input {
-				border-color: #f7cece;
-				box-shadow: 0 0 6px 0 red;
-			}
-
 		}
 
 		.keklist {
