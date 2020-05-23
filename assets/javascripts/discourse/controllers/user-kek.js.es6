@@ -90,8 +90,10 @@ export default Ember.Controller.extend({
 									Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1) }
 								else if ( this.get('score') < 0 ) { this.set('score', 'zeB')
 									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
-								var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-								Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'eDit',false)
+								if (this.get('model.FEEDBACKS').length > 0) {
+									var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+									Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'eDit',false)
+								}
 								this.get('model.FEEDBACKS').unshiftObject({
 									'pNAME': this.get('currentUser.username'),
 									'FEEDBACK': this.get('pisanina'),
