@@ -697,7 +697,7 @@ after_initialize do
 							end
 						end
 					end
-					feedbacks[:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase], k[:poZ] }
+					feedbacks[:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }
 				end
 			end
 
