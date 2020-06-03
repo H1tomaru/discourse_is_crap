@@ -81,7 +81,7 @@
 						<select required onchange={{action "qzselect" value="target.value"}}>
 							<option disabled selected style="display: none"> -- Выбрать Игру -- </option>
 							{{#each model.qzlist as |qzgame|}}
-							<option value={{qzgame.[0]}}>{{qzgame.[1]}}</option>
+							<option value={{qzgame._id}}>{{qzgame.gameNAME}}</option>
 							{{/each}} 
 						</select>
 					</div>
