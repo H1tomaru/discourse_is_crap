@@ -403,7 +403,7 @@ after_initialize do
 
 		def zaips
 			#decode shit
-			code = URI.unescape(Base64.decode64(params[:bagatrolit])).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
+			code = URI.unescape(Base64.decode64(params[:bagatrolit]).force_encoding('UTF-8')).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks, again!
