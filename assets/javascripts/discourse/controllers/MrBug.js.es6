@@ -22,8 +22,9 @@ export default Ember.Controller.extend({
 		troikopoisk() {
 			this.set('bagamdal', true)
 			Ember.$.ajax({
-				url: "/MrBug/troikopoisk/"+btoa(encodeURIComponent(this.get('troikopoisk2')))+".json",
-				type: "GET"
+				url: "/MrBug/troikopoisk/",
+				type: "POST",
+				data: { "input": btoa(unescape(encodeURIComponent(this.get('troikopoisk2')))) }
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('mdalready', true)
