@@ -72,7 +72,7 @@ export default Ember.Controller.extend({
 			this.set('mdalready', false)
 			this.set('prezaips.winrars', false)
 			Ember.$.ajax({
-				url: "/MrBug/zaips/"+btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))+".json",
+				url: "/MrBug/zaips/"+btoa(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME')))+".json",
 				type: "GET"
 			}).then(result => {
 				this.set('zaips', result)
