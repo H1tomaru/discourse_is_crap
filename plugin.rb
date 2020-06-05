@@ -18,8 +18,8 @@ after_initialize do
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
-		post '/MrBug/prezaips/:bagakruta' => 'mrbug#prezaips'
-		post '/MrBug/zaips/:bagatrolit' => 'mrbug#zaips'
+		post '/MrBug/prezaips' => 'mrbug#prezaips'
+		post '/MrBug/zaips' => 'mrbug#zaips'
 		get '/renta-haleguu' => 'mrbug#rentagama'
 		post '/renta-halehideo' => 'mrbug#rentahideo'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
@@ -403,7 +403,7 @@ after_initialize do
 
 		def zaips
 			#decode shit
-			code = URI.unescape(Base64.decode64(params[:bagatrolit]).force_encoding('UTF-8')).split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
+			code = Base64.decode64(params[:bagatrolit]).force_encoding('UTF-8').split("~") #0 - position, 1 - userNAME, 2 - gameCODE, 3 - gameNAME
 			#do stuff if user is actual user and code is correct
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks, again!
