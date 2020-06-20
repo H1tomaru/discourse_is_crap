@@ -92,12 +92,12 @@ export default Ember.Controller.extend({
 									Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1) }
 								if (this.get('model.FEEDBACKS').length > 0) {
 									var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-									Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'eDit',false)
+									if ( ni >= 0 ) { Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'eDit',false) }
 								}
 								this.get('model.FEEDBACKS').unshiftObject({
 									'pNAME': this.get('currentUser.username'),
 									'FEEDBACK': this.get('pisanina'),
-									'DATE': new Date().getFullYear()+"."+String(new Date().getMonth()).padStart(2,'0')+"."+String(new Date().getDate()).padStart(2,'0'),
+									'DATE': new Date().getFullYear()+"."+String(new Date().getMonth()+1).padStart(2,'0')+"."+String(new Date().getDate()).padStart(2,'0'),
 									'COLOR': this.get('score'),
 									'eDit': true
 								})
