@@ -690,7 +690,8 @@ after_initialize do
 					ugamez.each do |ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000
 							aCC = false
-							aCC = ugaz[:_id][-14, 4] if current_user[:username].downcase == params[:username].downcase
+							#select between + and @, \+ and \@
+							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
 							if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
 							end
