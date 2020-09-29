@@ -471,7 +471,7 @@ after_initialize do
 
 						#add message to telegram bot, if enabled
 						if SiteSetting.metatron_id && SiteSetting.telegram_id
-							Net::HTTP.get URI("https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3])
+							Net::HTTP.get URI.encode("https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3])
 						end
 
 						#create notification if sobrano
