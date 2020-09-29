@@ -10,8 +10,8 @@ require 'base64'
 require 'net/http'
 require 'uri'
 
-enabled_site_setting SiteSetting.metatron_id
-enabled_site_setting SiteSetting.telegram_id
+enabled_site_setting :metatron_id
+enabled_site_setting :telegram_id
 
 register_asset 'stylesheets/MrBug.scss'
 
