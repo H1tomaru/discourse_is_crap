@@ -470,7 +470,7 @@ after_initialize do
 						)
 
 						#add message to telegram bot, if enabled
-						if SiteSetting.metatron_id && SiteSetting.telegram_id
+						unless SiteSetting.metatron_id.empty? || SiteSetting.telegram_id.empty?
 							tgurl = "https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
 							Net::HTTP.get URI.encode(tgurl.force_encoding('ASCII-8BIT'))
 						end
