@@ -7,7 +7,11 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 require 'base64'
+require 'net/http'
 require 'uri'
+
+enabled_site_setting SiteSetting.metatron_id
+enabled_site_setting SiteSetting.telegram_id
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -464,6 +468,11 @@ after_initialize do
 							topic_id: 21,
 							raw: current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3]
 						)
+
+						#add message to telegram bot, if enabled
+						if SiteSetting.metatron_id && SiteSetting.telegram_id
+							Net::HTTP.get URI("https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0]+" совместной покупки "+code[3])
+						end
 
 						#create notification if sobrano
 						if gameuzers[0] && (gameuzers[0][:P2] || code[0] == "2") && (gameuzers[0][:P4] || code[0] == "4")
