@@ -1,0 +1,7 @@
+plugins:
+  metatron_id:
+    default: ""
+    client: false
+  telegram_id:
+    default: ""
+    client: false
