@@ -688,12 +688,14 @@ after_initialize do
 			#do the games owned display, for logged in users only
 			if current_user
 				#get user games from my database
-				ugamez = @@userdb[:PS4db].find( { "$or": [ 
+				ugamez = @@userdb[:PS4db].find( 
+					{ "$or": [ 
 					{ P2: params[:username] },
 					{ P41: params[:username] },
 					{ P42: params[:username] }
-					] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).collation( { locale: 'en', strength: 2 } ).to_a
-
+					] },
+					projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 },
+                           		collation: { locale: 'en', strength: 2 } ).to_a
 				#do stuff if he has some
 				if ugamez[0] && params[:username] != 'MrBug'
 					ugamezfinal = []
