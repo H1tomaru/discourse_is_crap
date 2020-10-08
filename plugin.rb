@@ -700,7 +700,7 @@ after_initialize do
 				if ugamez[0] && params[:username] != 'MrBug'
 					ugamezfinal = []
 					ugamez.each do |ugaz|
-						if timeNOW - ugaz[:DATE].to_time < 63000000
+						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P41]
 							aCC = false
 							#select between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
