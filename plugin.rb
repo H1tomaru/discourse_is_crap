@@ -689,10 +689,10 @@ after_initialize do
 			if current_user
 				#get user games from my database
 				ugamez = @@userdb[:PS4db].find( { "$or": [ 
-					{ P2: { "$in": [ params[:username], params[:username].downcase ] } },
-					{ P41: { "$in": [ params[:username], params[:username].downcase ] } },
-					{ P42: { "$in": [ params[:username], params[:username].downcase ] } }
-					] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
+					{ P2: params[:username] },
+					{ P41: params[:username] },
+					{ P42: params[:username] }
+					] }, projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 } ).collation( { locale: 'en', strength: 2 } ).to_a
 
 				#do stuff if he has some
 				if ugamez[0] && params[:username] != 'MrBug'
@@ -702,13 +702,13 @@ after_initialize do
 							aCC = false
 							#select between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
-							if ugaz[:P2] == params[:username] || ugaz[:P2] == params[:username].downcase
+							if ugaz[:P2].downcase == params[:username].downcase
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
 							end
-							if ugaz[:P41] == params[:username] || ugaz[:P41] == params[:username].downcase
+							if ugaz[:P41].downcase == params[:username].downcase
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
 							end
-							if ugaz[:P42] == params[:username] || ugaz[:P42] == params[:username].downcase
+							if ugaz[:P42].downcase == params[:username].downcase
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
 							end
 						end
