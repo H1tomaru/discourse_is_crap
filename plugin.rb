@@ -369,7 +369,7 @@ after_initialize do
 				end
 
 				#antibotbaby!!!
-				if Time.now - current_user[:created_at] < 260000 && fbcount == 0
+				if fbcount == 0 || Time.now - current_user[:created_at] < 260000
 					fbcount = 777
 				end
 
@@ -428,7 +428,7 @@ after_initialize do
 				end
 
 				#antibotbaby!!!
-				if Time.now - current_user[:created_at] < 260000 && fbcount == 0
+				if fbcount == 0 || Time.now - current_user[:created_at] < 260000
 					fbcount = 777
 				end
 
