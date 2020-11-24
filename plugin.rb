@@ -359,17 +359,19 @@ after_initialize do
 			#if viever registered, count his fb
 			if current_user && code.length == 2
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1 } ).to_a
+				fbcount2 = 0
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1, fbG: 1 } ).to_a
 				if feedback[0]
 					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
 						fbcount = 777
 					else
 						fbcount = feedback[0][:fbBuG]
 					end
+					fbcount2 = feedback[0][:fbG]
 				end
 
 				#antibotbaby!!!
-				if fbcount == 0 || Time.now - current_user[:created_at] < 260000
+				if fbcount2 == 0 || Time.now - current_user[:created_at] < 260000
 					fbcount = 777
 				end
 
@@ -418,17 +420,19 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				#count feedbacks, again!
 				fbcount = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1 } ).to_a
+				fbcount2 = 0
+				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1, fbG: 1 } ).to_a
 				if feedback[0]
 					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
 						fbcount = 777
 					else
 						fbcount = feedback[0][:fbBuG]
 					end
+					fbcount2 = feedback[0][:fbG]
 				end
 
 				#antibotbaby!!!
-				if fbcount == 0 || Time.now - current_user[:created_at] < 260000
+				if fbcount2 == 0 || Time.now - current_user[:created_at] < 260000
 					fbcount = 777
 				end
 
