@@ -681,6 +681,10 @@ after_initialize do
 					feedbacks[:FEEDBACKS] = newfbarray.take(12)
 					feedbacks[:FEEDBACKS2] = newfbarray.drop(12).each_slice(12)
 				end
+			#if feedback are empty, make sure numbers do exist and are zero
+			elsif userfb[0]
+				update = true if userfb[0][:fbG] != 0 || userfb[0][:fbB] != 0 || userfb[0][:fbN] != 0
+				update = true if userfb[0][:fbBuG] != 0 || userfb[0][:fbBuB] != 0
 			end
 
 			#do the games owned display, for logged in users only
