@@ -12,6 +12,7 @@ require 'uri'
 
 enabled_site_setting :metatron_id
 enabled_site_setting :telegram_id
+enabled_site_setting :site_ip
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -35,16 +36,16 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 
-		db = Mongo::Client.new([ 'union3.ru:33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		db = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
 		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 
-		@@rentadb = Mongo::Client.new([ 'union3.ru:33775' ], database: 'rentagadb', user: 'rentaga', password: 'A75Z3E9R66' )
+		@@rentadb = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'rentagadb', user: 'rentaga', password: 'A75Z3E9R66' )
 
-		@@userdb2 = Mongo::Client.new([ 'union3.ru:33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
+		@@userdb2 = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 
 		def show
