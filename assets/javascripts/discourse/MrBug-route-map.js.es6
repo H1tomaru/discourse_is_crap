@@ -1,7 +1,7 @@
 export default function() {
- 	this.route('MrBug', { path: '/MrBug' });
- 	this.route('MegaAdd', { path: '/admin/megaadd' });
-	this.route('Rentagama', { path: '/renta-haleguu' });
+ 	this.route('mrbug', { path: '/MrBug' });
+ 	this.route('megaadd', { path: '/admin/MegaAdd' });
+	this.route('rentagama', { path: '/renta-haleguu' });
 	this.route('user', function() {
  		this.route('kek');
  	});
