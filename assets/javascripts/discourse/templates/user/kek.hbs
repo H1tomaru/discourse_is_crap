@@ -41,7 +41,14 @@
 
 	{{#if responz.gavas}}
 		<div class='netmudal'>
-			Вы Уже Оставляли Отзыв, Попробуйте Позже
+			Вы Уже Оставляли Отзыв, Попробуйте Завтра
+			<button {{action 'respCLOZ'}}></button>
+		</div>
+	{{/if}}
+	
+	{{#if responz.gavas2}}
+		<div class='netmudal'>
+			Вы Уже Изменяли Отзыв, Попробуйте Завтра
 			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
