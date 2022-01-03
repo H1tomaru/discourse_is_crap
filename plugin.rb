@@ -753,20 +753,22 @@ after_initialize do
 				if userfb[0] && userfb[0][:fbB] > 0
 					render json: { bakas: true }
 				else
-					#find if user gave feedback already today
+					#get user feedback
 					ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-					if ufb[0] && ufb[0][:FEEDBACKS]
-						fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
-					end
 
-					#if gave feedback already, show stuff
-					if fedbacks[3] && current_user[:username] != 'MrBug'
-						render json: { gavas: true }
-					else
-						fedbacks[0] = fedbacks[0].to_i; fedbacks[1] = fedbacks[1].to_i
+					fedbacks[0] = fedbacks[0].to_i; fedbacks[1] = fedbacks[1].to_i
 
-						#do normal feedback add
-						if fedbacks[0] == 666
+					#do normal feedback add
+					if fedbacks[0] == 666
+						#find if user gave feedback already today
+						if ufb[0] && ufb[0][:FEEDBACKS]
+							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+						end
+
+						#if gave feedback already, show stuff
+						if fedbacks[3] && current_user[:username] != 'MrBug'
+							render json: { gavas: true }
+						else
 							@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
 								FEEDBACKS: {
 									FEEDBACK: fedbacks[2].strip,
@@ -776,22 +778,34 @@ after_initialize do
 								}
 							} }, { upsert: true } )
 							render json: { winrars: true }
-						#or edit last feedback given
-						elsif fedbacks[0] == 1337
+						end
+					#or edit last feedback given
+					elsif fedbacks[0] == 1337
+						#find if user edited feedback already today
+						if ufb[0] && ufb[0][:FEEDBACKS]
+							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d") && h[:EDITED] = Time.now.strftime("%Y.%m.%d")}
+						end
+
+						#if edited feedback already, show stuff
+						if fedbacks[3] && current_user[:username] != 'MrBug'
+							render json: { gavas2: true }
+						else
 							ufb[0][:FEEDBACKS].reverse_each do |fb|
 								if fb[:pNAME] == current_user[:username]
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
+									fb[:EDITED] = Time.now.strftime("%Y.%m.%d")
 									break
 								end
 							end
 							@@userfb2[:userfb].replace_one( { _id: params[:username].downcase },
 								ufb[0], { upsert: true } )
 							render json: { winrars: true }
-						else #if none of these happen, thats really wrong...
-							render json: { fail: true }
 						end
+					else #if none of these happen, thats really wrong...
+						render json: { fail: true }
 					end
+
 				end
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
