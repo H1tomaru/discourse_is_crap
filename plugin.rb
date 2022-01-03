@@ -783,7 +783,7 @@ after_initialize do
 					elsif fedbacks[0] == 1337
 						#find if user edited feedback already today
 						if ufb[0] && ufb[0][:FEEDBACKS]
-							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d") && h[:EDITED] = Time.now.strftime("%Y.%m.%d")}
+							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d") && h[:EDITED] == Time.now.strftime("%Y.%m.%d")}
 						end
 
 						#if edited feedback already, show stuff
