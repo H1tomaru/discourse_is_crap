@@ -134,12 +134,12 @@ after_initialize do
 							p4UP = [50,50,50] 
 						elsif game[:PRICE] > 2501
 							p4UP = [50,100,150]
-						elsif game[:PRICE] > 5001
+						elsif game[:PRICE] > 4001
 							p4UP = [100,150,200]
-						elsif game[:PRICE] > 8001	
+						elsif game[:PRICE] > 7001	
 							p4UP = [150,200,250] 
-						elsif game[:PRICE] > 12001
-							p4UP = [200,300,350] 
+						elsif game[:PRICE] > 10001
+							p4UP = [200,300,350]
 						end
 
 						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN[1] + p4UP[0]
