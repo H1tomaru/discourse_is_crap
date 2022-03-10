@@ -137,7 +137,7 @@ after_initialize do
 						elsif game[:PRICE] > 4001
 							p4UP = [100,150,200]
 						elsif game[:PRICE] > 7001	
-							p4UP = [150,200,250] 
+							p4UP = [200,200,250] 
 						elsif game[:PRICE] > 10001
 							p4UP = [200,300,350]
 						end
