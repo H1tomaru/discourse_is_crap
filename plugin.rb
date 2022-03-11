@@ -125,13 +125,15 @@ after_initialize do
 						
 						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
 						
-						p4UP = [50,0,150]
+						p4UP = [50,50,100]
 						if game[:PRICE] < 501
 							p4UP = [50,0,50]
 						elsif game[:PRICE] < 601
 							p4UP = [0,50,50]
 						elsif game[:PRICE] < 1001
 							p4UP = [50,50,50]
+						elsif game[:PRICE] < 1501
+							p4UP = [50,0,150]
 						elsif game[:PRICE] > 10001
 							p4UP = [200,300,350]
 						elsif game[:PRICE] > 7001	
