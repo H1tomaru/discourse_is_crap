@@ -192,23 +192,73 @@ after_initialize do
 							p5FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p6FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false; p5TAKEN = false; p6TAKEN = false
 							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false; p5FBred = false; p6FBred = false
+
 							#fill user info and template variables for statuses
-							if users[:P1] && users[:P1][i]
-								p1 = users[:P1][i][:NAME].strip
-								p1STATUS[users[:P1][i][:STAT]] = true
+							if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+								if users[:P2] && users[:P2][i]
+									p1 = users[:P2][i][:NAME].strip
+									p1STATUS[users[:P2][i][:STAT]] = true
+								end
+								if users[:P4_4] && users[:P4_4][i]
+									p2 = users[:P4_4][i][:NAME].strip
+									p2STATUS[users[:P4_4][i][:STAT]] = true
+								end
+								if users[:P4_4] && users[:P4_4][2*i+1]
+									p3 = users[:P4_4][2*i+1][:NAME].strip
+									p3STATUS[users[:P4_4][2*i+1][:STAT]] = true
+								end
+								if users[:P4_5] && users[:P4_5][2*i]
+									p4 = users[:P4_5][2*i][:NAME].strip
+									p4STATUS[users[:P4_5][2*i][:STAT]] = true
+								end
+								if users[:P4_5] && users[:P4_5][2*i+1]
+									p5 = users[:P4_5][2*i+1][:NAME].strip
+									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
+								end
+							elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+								if users[:P1] && users[:P1][i]
+									p1 = users[:P1][i][:NAME].strip
+									p1STATUS[users[:P1][i][:STAT]] = true
+								end
+								if users[:P2] && users[:P2][i]
+									p2 = users[:P2][i][:NAME].strip
+									p2STATUS[users[:P2][i][:STAT]] = true
+								end
+								if users[:P4] && users[:P4][2*i]
+									p3 = users[:P4][2*i][:NAME].strip
+									p3STATUS[users[:P4][2*i][:STAT]] = true
+								end
+								if users[:P4] && users[:P4][2*i+1]
+									p4 = users[:P4][2*i+1][:NAME].strip
+									p4STATUS[users[:P4][2*i+1][:STAT]] = true
+								end
+							else
+								if users[:P2_4] && users[:P2_4][i]
+									p1 = users[:P2_4][i][:NAME].strip
+									p1STATUS[users[:P2_4][i][:STAT]] = true
+								end
+								if users[:P2_5] && users[:P2][i]
+									p1 = users[:P2_4][i][:NAME].strip
+									p1STATUS[users[:P2_4][i][:STAT]] = true
+								end
+								if users[:P4_4] && users[:P4_4][i]
+									p2 = users[:P4_4][i][:NAME].strip
+									p2STATUS[users[:P4_4][i][:STAT]] = true
+								end
+								if users[:P4_4] && users[:P4_4][2*i+1]
+									p3 = users[:P4_4][2*i+1][:NAME].strip
+									p3STATUS[users[:P4_4][2*i+1][:STAT]] = true
+								end
+								if users[:P4_5] && users[:P4_5][2*i]
+									p4 = users[:P4_5][2*i][:NAME].strip
+									p4STATUS[users[:P4_5][2*i][:STAT]] = true
+								end
+								if users[:P4_5] && users[:P4_5][2*i+1]
+									p5 = users[:P4_5][2*i+1][:NAME].strip
+									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
+								end
 							end
-							if users[:P2] && users[:P2][i]
-								p2 = users[:P2][i][:NAME].strip
-								p2STATUS[users[:P2][i][:STAT]] = true
-							end
-							if users[:P4] && users[:P4][2*i]
-								p3 = users[:P4][2*i][:NAME].strip
-								p3STATUS[users[:P4][2*i][:STAT]] = true
-							end
-							if users[:P4] && users[:P4][2*i+1]
-								p4 = users[:P4][2*i+1][:NAME].strip
-								p4STATUS[users[:P4][2*i+1][:STAT]] = true
-							end
+							
 							#template variables for when p1 p2 p3 p4 are taken
 							(p1TAKEN = true; p1 = '') if p1 == '-55'
 							(p2TAKEN = true; p2 = '') if p2 == '-55'
