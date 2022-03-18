@@ -886,31 +886,24 @@ after_initialize do
 			end
 
 			#do the games owned display, for logged in users only
-			if current_user
+			if current_user && params[:username] != 'MrBug'
 				#get user games from my database
 				ugamez = @@userdb[:PS4db].find( 
-					{ "$or": [ 
-					{ P2: params[:username] },
-					{ P41: params[:username] },
-					{ P42: params[:username] }
-					] },
-					projection: { HISTORYP2: 0, HISTORYP41: 0, HISTORYP42: 0 },
+					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
                            		collation: { locale: 'en', strength: 2 } ).to_a
-				#do stuff if he has some
-				if ugamez[0] && params[:username] != 'MrBug'
+				#do stuff if we have some
+				if ugamez[0]
 					ugamezfinal = []
 					ugamez.each do |ugaz|
-						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P41]
+						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P4]
+							#show acc mail if user if owner of this page
 							aCC = false
 							#select between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
-							if ugaz[:P2].downcase == params[:username].downcase
+							#create final variable
+							if ugaz[:P2][0].downcase == params[:username].downcase || ugaz[:P2][1].downcase == params[:username].downcase
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
-							end
-							if ugaz[:P41].downcase == params[:username].downcase
-								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
-							end
-							if ugaz[:P42].downcase == params[:username].downcase
+							else
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
 							end
 						end
