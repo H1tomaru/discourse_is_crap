@@ -78,6 +78,16 @@ after_initialize do
 				gameDB.each do |game|
 					#somevariables
 					p1NO = 0; p2NO = 0; p3NO = 0; troikaNO = 0
+
+					#do each game postitions for futher template and other stuff usage
+					if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+						game[:PPOSITIONS] = [2,4,4,4,4,0]
+					elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+						game[:PPOSITIONS] = [1,2,4,4,0,0]
+					else
+						game[:PPOSITIONS] = [2,2,4,4,4,4]
+					end
+
 					#create display prices
 					if game[:PRICE] > 0
 						game[:P4PDOWN1] = 0 if !game[:P4PDOWN1]
@@ -149,10 +159,22 @@ after_initialize do
 						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
 						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
 						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
+
+						#do each game prices for futher template and other stuff usage
+						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3],0]
+						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+							game[:PPRICES] = [game[:P4PRICE1],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],0,0]
+						else
+							game[:PPRICES] = [game[:P4PRICE2],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3]]
+						end
+
 					else
 						game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
-					end
 
+						game[:PPRICES] = [0,0,0,0,0,0]
+					end
+					
 					#see if we have users to display
 					users = userDB.find{ |h| h['_id'] == game[:_id] }
 
@@ -237,9 +259,9 @@ after_initialize do
 									p1 = users[:P2_4][i][:NAME].strip
 									p1STATUS[users[:P2_4][i][:STAT]] = true
 								end
-								if users[:P2_5] && users[:P2][i]
-									p1 = users[:P2_4][i][:NAME].strip
-									p1STATUS[users[:P2_4][i][:STAT]] = true
+								if users[:P2_5] && users[:P2_5][i]
+									p1 = users[:P2_5][i][:NAME].strip
+									p1STATUS[users[:P2_5][i][:STAT]] = true
 								end
 								if users[:P4_4] && users[:P4_4][i]
 									p2 = users[:P4_4][i][:NAME].strip
@@ -349,9 +371,7 @@ after_initialize do
 								NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
 								PTAKEN: [p1TAKEN,p2TAKEN,p3TAKEN,p4TAKEN,p5TAKEN,p6TAKEN],
 								PFBred: [p1FBred,p2FBred,p3FBred,p4FBred,p5FBred,p6FBred],
-								PSTATUS: [p1STATUS,p2STATUS,p3STATUS,p4STATUS,p5STATUS,p6STATUS],
-								PPRICE: pprices,
-								POSITION: ppositions
+								PSTATUS: [p1STATUS,p2STATUS,p3STATUS,p4STATUS,p5STATUS,p6STATUS]
 							} )
 						end
 					end
