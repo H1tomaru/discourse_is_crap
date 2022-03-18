@@ -26,7 +26,6 @@ after_initialize do
 		post '/MrBug/prezaips' => 'mrbug#prezaips'
 		post '/MrBug/zaips' => 'mrbug#zaips'
 		get '/renta-haleguu' => 'mrbug#rentagama'
-		post '/renta-halehideo' => 'mrbug#rentahideo'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
@@ -437,7 +436,7 @@ after_initialize do
 			troikopoisk = Base64.decode64(params[:input]).strip.downcase
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk }, projection: { HISTORYP2: 0, HISTORYP3: 0, HISTORYP41: 0, HISTORYP42: 0 } ).to_a
+				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a
 				if zapislist[0] && ( Time.now - zapislist[0][:DATE].to_time < 63000000 )
 					zapislist[0].except!(:DATE)
 					zapislist[0][:poiskwin] = true
@@ -965,7 +964,7 @@ after_initialize do
 		end
 
 		def rentagama
-			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaLIST: {}, rentaTSHOW: [] }
+			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 
 			#get cache from db, drop it if its old
 			cachedRENT = @@cache[:rentaCHA].find().to_a
@@ -980,8 +979,8 @@ after_initialize do
 			if finalrenta.empty?
 				#find all rentagamez
 				rentagamez = @@rentadb[:rentagadb].find().to_a
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [], rentaLIST: {}, rentaTSHOW: [] }
-				count = [0,0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4, #5 - hidden gamez 
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
+				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 				#create template shit
 				rentagamez.each do |games|
 					gTYPE = [false,false,false,false]
@@ -1008,78 +1007,16 @@ after_initialize do
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				#finalrenta[:rentaHIDEO].sort_by! { |k| k[:GNAME].downcase }
 
 				#save cache to db
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaLIST: {}, rentaTSHOW: [],
+					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaLIST: {},
 					count: count, TIME: Time.now
 				})
 			end
 
-			#if not guest, find showhideo for this user
-			if current_user
-				rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
-
-				#if found, clean up obsolete games from there once in while...
-				if rentahideo[0] && rentahideo[0][:DATE] && ( Time.now - rentahideo[0][:DATE].to_time > 2600000 )
-					#find all rentagamez
-					rentagamez = @@rentadb[:rentagadb].find().to_a
-					#get a list of gamez
-					uzagamez = rentagamez.map { |x| x[:_id] }
-					#remove trashy entries in tshow...
-					rentahideo[0][:TSHOW].delete_if { |x| !(uzagamez.include?(x[:GNAME])) }
-					rentahideo[0][:DATE] = Time.now
-					@@rentadb[:rentahideo].replace_one( { _id: current_user[:username].downcase }, rentahideo[0] )
-				end
-
-				#if showhide for this user exists, use it
-				if rentahideo[0] && !rentahideo[0][:TSHOW].empty?
-					finalrenta[:rentaTSHOW] = rentahideo[0][:TSHOW]
-					#create rentaLIST
-					rentahideo[0][:TSHOW].each { |x| finalrenta[:rentaLIST][x[:GNAME]] = true }
-					finalrenta[:count][5] = rentahideo[0][:TSHOW].length
-				end
-			end
-
 			render json: finalrenta
-		end
-
-		def rentahideo
-			if current_user
-				#"VALUE" - action, "UZA" - username, "TSHOW" - full template variable
-				if params[:VALUE] && params[:UZA] && params[:TSHOW] && current_user[:username].downcase == params[:UZA].downcase
-
-					#decode shit
-					tSHOW = JSON.parse(URI.unescape(Base64.decode64(params[:TSHOW])))
-
-					rentahideo = @@rentadb[:rentahideo].find( { _id: current_user[:username].downcase } ).to_a
-
-					if rentahideo[0]
-						if params[:VALUE] == "1"
-							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$push" => { TSHOW: tSHOW }
-							}, { upsert: true } )
-							render json: { HiMom: "!!!!" }
-						else
-							@@rentadb[:rentahideo].find_one_and_update( { _id: current_user[:username].downcase }, {
-							"$pull" => { TSHOW: tSHOW }
-							}, { upsert: true } )
-							render json: { HiMom: "!!!!" }
-						end
-					elsif params[:VALUE] == "1"
-						@@rentadb[:rentahideo].insert_one( { _id: current_user[:username].downcase, DATE: Time.now, TSHOW: [tSHOW] } )
-						render json: { HiMom: "!!!!" }
-					end
-
-				else
-					render json: { HiMom: "!!!" }
-				end
-
-			else
-				render json: { HiMom: "!!!" }
-			end
 		end
 
 	end
