@@ -152,6 +152,7 @@ after_initialize do
 					else
 						game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
 					end
+
 					#see if we have users to display
 					users = userDB.find{ |h| h['_id'] == game[:_id] }
 
@@ -159,9 +160,19 @@ after_initialize do
 					#do stuff if we do
 					if users
 						#find how many p1 p2 p3 we have, and how many troikas to display
-						p1NO = users[:P1].length if users[:P1]
-						p2NO = users[:P2].length if users[:P2]
-						p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+							p1NO = users[:P1].length if users[:P1]
+							p2NO = users[:P2].length / 2.0 if users[:P2] #fix because 2 P4 per troika
+							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+							p1NO = users[:P1].length if users[:P1]
+							p2NO = users[:P2].length if users[:P2]
+							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						else
+							p1NO = users[:P1].length / 2.0 if users[:P1] #fix because 2 P2 per troika
+							p2NO = users[:P2].length / 2.0 if users[:P2] #fix because 2 P4 per troika
+							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						end
 
 						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
 							#tons of variables for everything
@@ -256,7 +267,7 @@ after_initialize do
 						end
 					end
 
-					#set display user numbers since we looped through all games
+					#set display user numbers since we are looping through all games
 					game[:P1NO] = p1NO; game[:P2NO] = p2NO; game[:P3NO] = p3NO
 
 				end
