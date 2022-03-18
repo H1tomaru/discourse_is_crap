@@ -77,7 +77,7 @@ after_initialize do
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
-					p1NO = 0; p2NO = 0; p3NO = 0
+					p1NO = 0; p2NO = 0; p3NO = 0; troikaNO = 0
 					#create display prices
 					if game[:PRICE] > 0
 						game[:P4PDOWN1] = 0 if !game[:P4PDOWN1]
@@ -164,25 +164,34 @@ after_initialize do
 							p1NO = users[:P1].length if users[:P1]
 							p2NO = users[:P2].length / 2.0 if users[:P2] #fix because 2 P4 per troika
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+							#get how many troikas, roundup p4 numbers cos theres 2 per troika
+							troikaNO = [p1NO, p2NO.ceil, p3NO.ceil].max-1
 						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
 							p1NO = users[:P1].length if users[:P1]
 							p2NO = users[:P2].length if users[:P2]
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+							#get how many troikas, roundup p4 number cos theres 2 per troika
+							troikaNO = [p1NO, p2NO, p3NO.ceil].max-1
 						else
 							p1NO = users[:P1].length / 2.0 if users[:P1] #fix because 2 P2 per troika
 							p2NO = users[:P2].length / 2.0 if users[:P2] #fix because 2 P4 per troika
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+							#get how many troikas, roundup p2 & p4 numbers cos theres 2 per troika
+							troikaNO = [p1NO.ceil, p2NO.ceil, p3NO.ceil].max-1
 						end
 
-						for i in 0..[p1NO, p2NO, p3NO.ceil].max-1 #get how many troikas, roundup p4 number cos theres 2 per troika
+						#create variables for every troika
+						for i in 0..troikaNO
 							#tons of variables for everything
-							p1 = ''; p2 = ''; p3 = ''; p4 = ''; account = ''; comment = ''; nop1ADD = 0
+							p1 = ''; p2 = ''; p3 = ''; p4 = ''; p5 = ''; p6 = ''; account = ''; comment = ''; nop1ADD = 0
 							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]
 							p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
+							p5STATUS = [false,false,false,false]; p6STATUS = [false,false,false,false]
 							p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
-							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
-							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false
+							p5FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p6FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false; p5TAKEN = false; p6TAKEN = false
+							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false; p5FBred = false; p6FBred = false
 							#fill user info and template variables for statuses
 							if users[:P1] && users[:P1][i]
 								p1 = users[:P1][i][:NAME].strip
