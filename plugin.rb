@@ -340,15 +340,18 @@ after_initialize do
 							p6FBred = true if p6FEEDBACK[:PERCENT] < 100
 
 							#vizmem bez p1?!
-							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if p1 == ''
+							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if game[:CONSOLE] == "PS5" && !game[:CONSOLE2] && p1 == ''
+
 							#create final variable
 							game[:TROIKI].push( {
-								P1: p1, P1FEEDBACK: p1FEEDBACK, P2: p2, P2FEEDBACK: p2FEEDBACK,
-								P3: p3, P3FEEDBACK: p3FEEDBACK, P4: p4, P4FEEDBACK: p4FEEDBACK,
+								USERS: [p1,p2,p3,p4,p5,p6],
+								FEEDBACK: [p1FEEDBACK,p2FEEDBACK,p3FEEDBACK,p4FEEDBACK,p5FEEDBACK,p6FEEDBACK],
 								NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
-								P1TAKEN: p1TAKEN, P2TAKEN: p2TAKEN, P3TAKEN: p3TAKEN, P4TAKEN: p4TAKEN,
-								P1FBred: p1FBred, P2FBred: p2FBred, P3FBred: p3FBred, P4FBred: p4FBred,
-								P1STATUS: p1STATUS, P2STATUS: p2STATUS, P3STATUS: p3STATUS, P4STATUS: p4STATUS
+								PTAKEN: [p1TAKEN,p2TAKEN,p3TAKEN,p4TAKEN,p5TAKEN,p6TAKEN],
+								PFBred: [p1FBred,p2FBred,p3FBred,p4FBred,p5FBred,p6FBred],
+								PSTATUS: [p1STATUS,p2STATUS,p3STATUS,p4STATUS,p5STATUS,p6STATUS],
+								PPRICE: pprices,
+								POSITION: ppositions
 							} )
 						end
 					end
@@ -376,15 +379,18 @@ after_initialize do
 					gTYPE2 = false; gTYPE3 = false
 					gTYPE2 = true if game[:TYPE] == 2
 					gTYPE3 = true if game[:TYPE] == 3
+
+					#loop thorought troikas and see if current user is in it
 					game[:TROIKI].each do |troika|
 						troika[:MODE1] = false; troika[:MODE2] = false
+
 						#calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
 						if current_user[:username] == troika[:P1]
 							if troika[:P1STATUS][0]
 								game[:MODE1] = true; troika[:MODE1] = true
 								finalvar[:maigamez1].push( {
 									POSITION: 1, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE1],
-									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3 
+									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							else
 								game[:MODE2] = true if !game[:MODE1]
@@ -431,10 +437,36 @@ after_initialize do
 								finalvar[:maigamez2].push( { POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK] } )
 							end
 						end
+						if current_user[:username] == troika[:P5]
+							if troika[:P5STATUS][0]
+								game[:MODE1] = true; troika[:MODE1] = true
+								finalvar[:maigamez1].push( {
+									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE3],
+									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
+								} )
+							else
+								game[:MODE2] = true if !game[:MODE1]
+								troika[:MODE2] = true if !troika[:MODE1]
+								finalvar[:maigamez2].push( { POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK] } )
+							end
+						end
+						if current_user[:username] == troika[:P6]
+							if troika[:P6STATUS][0]
+								game[:MODE1] = true; troika[:MODE1] = true
+								finalvar[:maigamez1].push( {
+									POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:P4PRICE3],
+									P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
+								} )
+							else
+								game[:MODE2] = true if !game[:MODE1]
+								troika[:MODE2] = true if !troika[:MODE1]
+								finalvar[:maigamez2].push( { POSITION: 4, gNAME: game[:gameNAME], gPIC: game[:imgLINK] } )
+							end
+						end
 					end
 				end
 				#fill 3 variables for each game type
-				finalvar[:gamedb1].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 1 || game[:TYPE] == 0
+				finalvar[:gamedb1].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 1
 				finalvar[:gamedb2].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 2
 				finalvar[:gamedb3].push(game.except("PRICE", "TYPE")) if game[:TYPE] == 3
 			end
