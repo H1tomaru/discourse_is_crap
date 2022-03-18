@@ -53,8 +53,8 @@ after_initialize do
 		def show
 			#variables, duh
 			finalvar = {}; finalvar[:qzstuff] = false; fbcount = 0; timeNOW = Time.now
-			#cached vars
-			qzlist = []; gamelist = []
+			#cache vars
+			gamelist = []
 
 			#get cache from db, drop it if its old
 			cacheDB = @@cache[:cache].find().to_a
@@ -62,23 +62,8 @@ after_initialize do
 				if timeNOW - cacheDB[0][:TIME] > 900
 					@@cache[:cache].drop()
 				else
-					qzlist = cacheDB[0][:qzlist]
 					gamelist = cacheDB[0][:gamelist]
 				end
-			end
-
-			if qzlist.empty?
-				#create qzlist variable, its same for everyone, we cache it, so no need extra user checks
-				qzlist = @@gamedb[:gameDB].find( {}, projection: { _id: 1, gameNAME: 1 } ).sort( { gameNAME: 1 } ).to_a
-			end
-
-			#if viever registered, get his fb for quckzaips
-			if current_user
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1, fbG: 1 } ).to_a
-				#get fbcount if no bad feedback present
-				fbcount = feedback[0][:fbG] if feedback[0] && feedback[0][:fbB] && feedback[0][:fbB] == 0
-				#if displaying qzaips, add games list to finalvar
-				( finalvar[:qzlist] = qzlist; finalvar[:qzstuff] = true ) if fbcount >= 5 || current_user[:username] == "MrBug"
 			end
 
 			if gamelist.empty?
@@ -89,61 +74,73 @@ after_initialize do
 				#get all user feedbacks
 				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, troikaBAN: 0, fbBuG: 0, fbBuB: 0 } ).to_a
 
-				#find user for type 0 games and add those type 0 games
-				gameIDs = gameDB.map { |e| e[:_id] }
-				typ0 = userDB.reject { |zero| gameIDs.include? zero[:_id] }
-				typ0.each do |game|
-					thisgame = @@gamedb[:gameDB].find( { _id: game[:_id] }, projection: { imgLINKHQ: 0 } ).to_a
-					if thisgame[0]
-						gameDB.push(thisgame[0])
-					else
-						finalvar[:error] = game[:_id]
-					end
-				end
-
 				#start a loop for every game to display
 				gameDB.each do |game|
-					#type 0 games have 0 price
-					game[:PRICE] = 0 if game[:TYPE] == 0
 					#somevariables
-					p1NO = 0; p2NO = 0; p3NO = 0; price1DISPLAY = 0; price2DISPLAY = 0; price3DISPLAY = 0
-					#add template variables
-					game[:MODE1] = false; game[:MODE2] = false; game[:SHOWHIDEO] = false
+					p1NO = 0; p2NO = 0; p3NO = 0
 					#create display prices
 					if game[:PRICE] > 0
-						p4PDOWN = [0,0,0,0]
-						p4PDOWN[1] = game[:P4PDOWN1] if game[:P4PDOWN1]
-						p4PDOWN[2] = game[:P4PDOWN2] if game[:P4PDOWN2]
-						p4PDOWN[3] = game[:P4PDOWN3] if game[:P4PDOWN3]
+						game[:P4PDOWN1] = 0 if !game[:P4PDOWN1]
+						game[:P4PDOWN2] = 0 if !game[:P4PDOWN2]
+						game[:P4PDOWN3] = 0 if !game[:P4PDOWN3]
 
-						game[:P4PRICE1] = (game[:PRICE] * 0.1 / 50).ceil * 50
-						if game[:PRICE] < 1001
-							game[:P4PRICE3] = (game[:PRICE] * 0.7 / 50).floor * 50 / 2
+						#calculate prices, for ps4 only game, for ps5 only game, and ps4\ps5 game type
+						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+							game[:P4PRICE1] = 0
+							if game[:PRICE] < 1001
+								game[:P4PRICE3] = ((game[:PRICE] * 0.88 / 50).floor * 50 / 2 / 50).ceil * 50 / 2
+							else
+								game[:P4PRICE3] = ((game[:PRICE] * 0.88 / 100).floor * 100 / 2 / 100).ceil * 100 / 2
+							end
+
+							game[:P4PRICE2] = game[:PRICE] - 4 * game[:P4PRICE3]
+							
+							p4UP = [0,200,200]
+							if game[:PRICE] < 1001
+								p4UP = [0,100,100]
+							elsif game[:PRICE] > 11001
+								p4UP = [0,400,400]
+							elsif game[:PRICE] > 7001	
+								p4UP = [0,300,300] 
+							end
+						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
+							if game[:PRICE] < 1001
+								game[:P4PRICE3] = (game[:PRICE] * 0.66 / 50).floor * 50 / 2
+							else
+								game[:P4PRICE3] = (game[:PRICE] * 0.66 / 100).floor * 100 / 2
+							end
+
+							game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
+							
+							p4UP = [50,150,200]
+							if game[:PRICE] < 1001
+								p4UP = [0,50,100]
+							elsif game[:PRICE] > 11001
+								p4UP = [150,250,400]
+							elsif game[:PRICE] > 7001	
+								p4UP = [150,250,300] 
+							end
 						else
-							game[:P4PRICE3] = (game[:PRICE] * 0.7 / 100).floor * 100 / 2
-						end
-						
-						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
-						
-						p4UP = [50,50,150]
-						if game[:PRICE] < 501
-							p4UP = [50,0,50]
-						elsif game[:PRICE] < 601
-							p4UP = [0,50,50]
-						elsif game[:PRICE] < 1001
-							p4UP = [50,50,50]
-						elsif game[:PRICE] < 1501
-							p4UP = [50,0,150]
-						elsif game[:PRICE] > 10001
-							p4UP = [200,300,350]
-						elsif game[:PRICE] > 7001	
-							p4UP = [200,200,250] 
-						elsif game[:PRICE] > 4001
-							p4UP = [100,150,200]
-						elsif game[:PRICE] > 2501
-							p4UP = [50,100,150]
-						end
+							game[:P4PRICE1] = 0
+							if game[:PRICE] < 1001
+								game[:P4PRICE3] = ((game[:PRICE] * 0.8 / 50).floor * 50 / 2 / 50).ceil * 50 / 2
+							else
+								game[:P4PRICE3] = ((game[:PRICE] * 0.8 / 100).floor * 100 / 2 / 100).ceil * 100 / 2
+							end
 
+							game[:P4PRICE2] = (game[:PRICE] - 4 * game[:P4PRICE3]) / 2
+							
+							p4UP = [0,200,200]
+							if game[:PRICE] < 1001
+								p4UP = [0,100,100]
+							elsif game[:PRICE] > 11001
+								p4UP = [0,400,400]
+							elsif game[:PRICE] > 7001	
+								p4UP = [0,300,300] 
+							end
+						end
+						
 						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN[1] + p4UP[0]
 						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN[2] + p4UP[1]
 						game[:P4PRICE3] = game[:P4PRICE3] - p4PDOWN[3] + p4UP[2]
@@ -267,7 +264,7 @@ after_initialize do
 				#save cache to db
 				gamelist = gameDB
 				@@cache[:cache].insert_one({ 
-					qzlist: qzlist, gamelist: gameDB, TIME: timeNOW
+					gamelist: gameDB, TIME: timeNOW
 				})
 			end
 
