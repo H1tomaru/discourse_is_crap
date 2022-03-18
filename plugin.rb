@@ -258,12 +258,15 @@ after_initialize do
 									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
 								end
 							end
-							
+
 							#template variables for when p1 p2 p3 p4 are taken
 							(p1TAKEN = true; p1 = '') if p1 == '-55'
 							(p2TAKEN = true; p2 = '') if p2 == '-55'
 							(p3TAKEN = true; p3 = '') if p3 == '-55'
 							(p4TAKEN = true; p4 = '') if p4 == '-55'
+							(p5TAKEN = true; p5 = '') if p5 == '-55'
+							(p6TAKEN = true; p6 = '') if p6 == '-55'
+
 							#find feedback for users
 							if p1.length > 0
 								feedbackp1 = userFB.find{ |h| h['_id'] == p1.downcase }
@@ -297,21 +300,45 @@ after_initialize do
 									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
 								end
 							end
+							if p5.length > 0
+								feedbackp5 = userFB.find{ |h| h['_id'] == p5.downcase }
+								if feedbackp5
+									p5FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
+									p5FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
+									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
+								end
+							end
+							if p6.length > 0
+								feedbackp6 = userFB.find{ |h| h['_id'] == p6.downcase }
+								if feedbackp6
+									p6FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
+									p6FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
+									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
+								end
+							end
+
 							#find feedback percentage
 							p1FEEDBACK[:PERCENT] = (p1FEEDBACK[:GOOD].to_f/(p1FEEDBACK[:GOOD] + p1FEEDBACK[:BAD]) * 100.0).floor if p1FEEDBACK[:GOOD] > 0
 							p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD].to_f/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100.0).floor if p2FEEDBACK[:GOOD] > 0
 							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
+							p5FEEDBACK[:PERCENT] = (p5FEEDBACK[:GOOD].to_f/(p5FEEDBACK[:GOOD] + p5FEEDBACK[:BAD]) * 100.0).floor if p5FEEDBACK[:GOOD] > 0
+							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
+
 							#create comment and account variable if they exist
 							if users[(i+1).to_s]
 								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
 								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
 							end
+
 							#template again, is feedback green or red?
 							p1FBred = true if p1FEEDBACK[:PERCENT] < 100
 							p2FBred = true if p2FEEDBACK[:PERCENT] < 100
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
+							p5FBred = true if p5FEEDBACK[:PERCENT] < 100
+							p6FBred = true if p6FEEDBACK[:PERCENT] < 100
+
 							#vizmem bez p1?!
 							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if p1 == ''
 							#create final variable
