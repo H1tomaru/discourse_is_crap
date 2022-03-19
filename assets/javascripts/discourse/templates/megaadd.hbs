@@ -11,18 +11,25 @@ MegaAdd some Pokemans<br><br>
 
 <br>
 
-{{#if addstuff.winrarP4}}
-	Winrars! P4:<br>
+{{#if addstuff.winrarP24444}}
+	Winrars! P24444:<br>
 	{{#each addstuff.RESULT as |game|}}
-		{{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П41}} {{game.П42}}<br>
+		{{game.GAME}} {{game.Mail}} {{game.П2.[0]}} {{game.П4.[0]}} {{game.П4.[1]}} {{game.П4.[2]}} {{game.П4.[3]}}<br>
 	{{/each}}
 {{/if}}
 
 
-{{#if addstuff.winrarP3}}
-	Winrars! P3:<br>
+{{#if addstuff.winrarP244}}
+	Winrars! P24444:<br>
 	{{#each addstuff.RESULT as |game|}}
-		{{game.GAME}} {{game.Mail}} {{game.П2}} {{game.П3}}<br>
+		{{game.GAME}} {{game.Mail}} {{game.П2.[0]}} {{game.П4.[0]}} {{game.П4.[1]}}<br>
+	{{/each}}
+{{/if}}
+
+{{#if addstuff.winrarP224444}}
+	Winrars! P24444:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game.Mail}} {{game.П2.[0]}} {{game.П2.[1]}} {{game.П4.[0]}} {{game.П4.[1]}} {{game.П4.[2]}} {{game.П4.[3]}}<br>
 	{{/each}}
 {{/if}}
 
@@ -31,32 +38,20 @@ MegaAdd some Pokemans<br><br>
 MegaAdd List some Pokemans<br>
 
 <button {{action 'P4Lista'}}>P4 lista:</button><br>
-<button {{action 'P3Lista'}}>P3 lista:</button><br>
 
 {{#if p4lista}}
 	{{#each p4lista as |game|}}
 		{{#each game.TROIKI as |troika index|}}
 			{{#if troika.ACCOUNT}}
-				{{#if index}}
-					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
-				{{else}}
-					<br><br><br>{{game.gameNAME}}<br>
+				{{unless index "<br><br><br>{{game.gameNAME}}<br>"}}
+				{{#if game.TTYPE.[0]}}
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P1}}<br>П4_4 - {{troika.P2}}<br>П4_4 - {{troika.P3}}<br>П4_5 - {{troika.P4}}<br>П4_5 - {{troika.P5}}<br>
+				{{/if}}
+				{{#if game.TTYPE.[1]}}
 					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
 				{{/if}}
-			{{/if}}
-		{{/each}}
-	{{/each}}
-{{/if}}
-
-{{#if p3lista}}
-	{{#each p3lista as |game|}}
-		{{#each game.TROIKI as |troika index|}}
-			{{#if troika.ACCOUNT}}
-				{{#if index}}
-					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P3}}<br>П3 - {{troika.P4}}<br>
-				{{else}}
-					<br><br><br>{{game.gameNAME}}<br>
-					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P3}}<br>П3 - {{troika.P4}}<br>
+				{{#if game.TTYPE.[2]}}
+					<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.P1}}<br>П2_5 - {{troika.P2}}<br>П4_4 - {{troika.P3}}<br>П4_4 - {{troika.P4}}<br>П4_5 - {{troika.P5}}<br>П4_5 - {{troika.P6}}<br>
 				{{/if}}
 			{{/if}}
 		{{/each}}
