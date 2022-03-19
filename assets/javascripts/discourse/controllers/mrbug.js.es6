@@ -31,29 +31,6 @@ export default Ember.Controller.extend({
 			})
 		},
 
-		qzselect(selected) {
-			this.set('qzselect', selected)
-		},
-
-		qzaips(knopk) {
-			if (this.get('qzselect')) {
-				this.set('bagamdal', true)
-				Ember.$.ajax({
-					url: "/posos/",	type: "POST",
-					data: { "pNAME": this.get('currentUser.username') }
-				}).then(result => {
-					Ember.$.ajax({
-						url: "/MrBug/prezaips/",
-						type: "POST",
-						data: { "bagakruta": btoa(knopk+"~"+this.get('qzselect')) }
-					}).then(result => {
-						this.set('prezaips', result)
-						this.set('mdalready', true)
-					})
-				})
-			}
-		},
-
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
 			Ember.$.ajax({
