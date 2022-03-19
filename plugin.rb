@@ -898,7 +898,7 @@ after_initialize do
 				if ugamez[0]
 					ugamezfinal = []
 					ugamez.each do |ugaz|
-						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P4]
+						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 							#show acc mail if user if owner of this page
 							aCC = false
 							#select between + and @, \+ and \@
