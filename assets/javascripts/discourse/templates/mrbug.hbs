@@ -43,28 +43,6 @@
 				</td>
 			</tr>
 
-			{{#if model.qzstuff}}
-			<tr class="Bagoqz">
-				<td>
-					<div class="headin">Быстрозапись</div>
-				</td>
-				<td>
-					<button {{action 'qzaips' 1}}>П1</button>
-					<button {{action 'qzaips' 2}}>П2</button>
-					<button {{action 'qzaips' 4}}>П4</button>
-
-					<div class="select">
-						<select required onchange={{action "qzselect" value="target.value"}}>
-							<option disabled selected style="display: none"> -- Выбрать Игру -- </option>
-							{{#each model.qzlist as |qzgame|}}
-							<option value={{qzgame._id}}>{{qzgame.gameNAME}}</option>
-							{{/each}} 
-						</select>
-					</div>
-				</td>
-			</tr>
-			{{/if}}
-
 		</tbody>
 	</table>
 
@@ -122,7 +100,7 @@
 			Реквизиты на оплату Webmoney, Яндекс, Paypal можно получить через <a href='/u/MrBug'>Личные Сообщения</a><br>
 			В комментарии к платежу, по возможности, укажите ваш ник!<br>
 			Составы с пометкой "без П1" оформляются на троих, стоимость свободной позиции П1 делится поровну между всеми участниками<br>
-			Сообщите об оплате в соответсвующей личке "Тройка\Четверка собрана! Ждем оплату!"!<br>
+			Сообщите об оплате в соответсвующей личке "Тройка\Четверка\Пятерка\Шестерка собрана! Ждем оплату!"!<br>
 			Если состав не собран и соотвествующей лички нету, сообщить об оплате можно мне через <a href='/u/MrBug'>Личное Сообщение</a><br>
 			Выписаться из несобранного состава можно через неделю через <a href='/u/MrBug'>Личные Сообщения</a><br>
 			В случае не оплаты собранного состава ваш профиль получает бан
