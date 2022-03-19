@@ -71,7 +71,7 @@
 	<div class="rentbox">
 
 		<div class="title">
-			Всего игр в прокате: <span>{{model.count.[0]}}{{#if model.count.[5]}} ({{model.count.[5]}} скрыто){{/if}}</span><br>
+			Всего игр в прокате: <span>{{model.count.[0]}}</span><br>
 			<div><input type="checkbox" checked=true {{action "showTYPE1" on="change"}}/> Реально Игр: <span>{{model.count.[1]}}</span></div>
 			<div><input type="checkbox" checked=true {{action "showTYPE2" on="change"}}/> Легких и Коротких Платин: <span>{{model.count.[2]}}</span></div>
 			<div><input type="checkbox" checked=true {{action "showTYPE3" on="change"}}/> Легких и Коротких Игр: <span>{{model.count.[3]}}</span></div>
@@ -80,13 +80,7 @@
 		<span class="textright2">Неделя / Месяц</span>
 		<div class="innerbox">
 			{{#each model.rentaGAMEZ as |game|}}
-				{{#unless (get rentaLIST game.GNAME)}}
-				<div class="
-					{{unless showTYPE1 (if game.TYPE1 "rentahideoz")}}
-					{{unless showTYPE2 (if game.TYPE2 "rentahideoz")}}
-					{{unless showTYPE3 (if game.TYPE3 "rentahideoz")}}
-					{{unless showTYPE4 (if game.TYPE4 "rentahideoz")}}
-				">
+				<div>
 					{{#if game.STATUS}}
 						<span class="red">
 							<b>[</b> <span class="hideoS">Занят</span>
@@ -108,7 +102,6 @@
 
 					<span class="textright">{{game.PRICE}}</span>
 				</div>
-				{{/unless}}
 			{{/each}}
 		</div>
 	</div>
@@ -119,15 +112,11 @@
 		<div class="mimu">
 			<button class="rentabutt{{if showGAMEZ " bi4"}}" {{action 'showGAMEZ'}}>Игры Игры</button>
 			<button class="rentabutt{{if showCRAP " bi4"}}" {{action 'showCRAP'}}>Легкие и Короткие</button>
-			{{#if model.count.[5]}}
-			<button class="rentabutt{{if showHIDEOZ " bi4"}}" {{action 'showHIDEOZ'}}>Скрытые</button>
-			{{/if}}
 		</div>
 
 		{{#if showGAMEZ}}
 		<table class="list">
 			{{#each model.rentaGAMEZ1 as |game index|}}
-			{{#unless (get model.rentaLIST game.GNAME)}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
@@ -150,20 +139,8 @@
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
 
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game index 1}}>
-									<i class="far fa-eye-slash"></i>
-								</button>
-							{{/if}}
-						</td>
-					{{/if}}
 				</tr>
 			</tbody>
-			{{/unless}}
 			{{/each}}
 		</table>
 		{{/if}}
@@ -171,7 +148,6 @@
 		{{#if showCRAP}}
 		<table class="list">
 			{{#each model.rentaGAMEZ2 as |game index|}}
-			{{#unless (get model.rentaLIST game.GNAME)}}
 			<tbody>
 				<tr>
 					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
@@ -194,52 +170,12 @@
 					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
 					<td class="malabela2">{{game.PRICE}}</td>
 
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game index 1}}>
-									<i class="far fa-eye-slash"></i>
-								</button>
-							{{/if}}
-						</td>
-					{{/if}}
-				</tr>
-			</tbody>
-			{{/unless}}
-			{{/each}}
-		</table>
-		{{/if}}
-
-		{{#if showHIDEOZ}}
-		<table class="list">
-			{{#each rentaHIDEO as |game index|}}
-			<tbody>
-				<tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2">
-						<img class="lazyload" data-src="{{game.GPIC}}">
-					</td>
-				</tr>
-
-				<tr>
-					{{#if currentUser.username}}
-						<td class="malabela2">
-							{{#if (get hideobutts index)}}
-								<div class="tinybagaspin"></div>
-							{{else}}
-								<button {{action 'hideoGAMEZ' game index -1}}>
-									<i class="far fa-eye"></i>
-								</button>
-							{{/if}}
-						</td>
-					{{/if}}
 				</tr>
 			</tbody>
 			{{/each}}
 		</table>
 		{{/if}}
+
 	</div>
 	{{/if}}
 
