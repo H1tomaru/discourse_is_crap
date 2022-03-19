@@ -158,15 +158,36 @@
 						<div class="bagariban">{{troikopoisk.GAME}}</div>
 						<span>{{troikopoisk._id}}</span>
 						<table class="vladista"><tbody>
-							<tr>
-								<td>П2<br><a href="/u/{{troikopoisk.P2}}">{{troikopoisk.P2}}</a></td>
-								{{#if troikopoisk.P41}}
-								<td>П4<br><a href="/u/{{troikopoisk.P41}}">{{troikopoisk.P41}}</a></td>
-								<td>П4<br><a href="/u/{{troikopoisk.P42}}">{{troikopoisk.P42}}</a></td>
+							{{#if troikopoisk.P2.[1]}}
+								<tr>
+									<td>П2 PS4<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
+									<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
+									<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
+								</tr>
+								<tr>
+									<td>П2 PS5<br><a href="/u/{{troikopoisk.P2.[1]}}">{{troikopoisk.P2.[1]}}</a></td>
+									<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></td>
+									<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></td>
+								</tr>
+							{{else}}
+								{{#if troikopoisk.P4.[3]}}
+									<tr>
+										<td rowspan="2">П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
+										<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
+										<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
+									</tr>
+									<tr>
+										<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></td>
+										<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></td>
+									</tr>
 								{{else}}
-								<td>П3<br><a href="/u/{{troikopoisk.P3}}">{{troikopoisk.P3}}</a></td>
+									<tr>
+										<td>П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
+										<td>П4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
+										<td>П4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
+									</tr>
 								{{/if}}
-							</tr>
+							{{/if}}
 						</tbody></table>
 					</div>
 				{{/if}}
