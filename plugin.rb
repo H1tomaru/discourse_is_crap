@@ -76,14 +76,17 @@ after_initialize do
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
-					p1NO = 0; p2NO = 0; p3NO = 0; troikaNO = 0
+					p1NO = 0; p2NO = 0; p3NO = 0; troikaNO = 0, game[:TTYPE] = [false, false, false] #0 - 24444, 1 - 1244, 2 - 224444
 
 					#do each game postitions for futher template and other stuff usage
 					if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+						game[:TTYPE][0] = true
 						game[:PPOSITIONS] = [2,4,4,4,4,0]
 					elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+						game[:TTYPE][1] = true
 						game[:PPOSITIONS] = [1,2,4,4,0,0]
 					else
+						game[:TTYPE][2] = true
 						game[:PPOSITIONS] = [2,2,4,4,4,4]
 					end
 
@@ -94,7 +97,7 @@ after_initialize do
 						game[:P4PDOWN3] = 0 if !game[:P4PDOWN3]
 
 						#calculate prices, for ps4 only game, for ps5 only game, and ps4\ps5 game type
-						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+						if game[:TTYPE][0]
 							game[:P4PRICE1] = 0
 							if game[:PRICE] < 1001
 								game[:P4PRICE3] = ((game[:PRICE] * 0.88 / 50).floor * 50 / 2 / 50).ceil * 50 / 2
@@ -112,7 +115,7 @@ after_initialize do
 							elsif game[:PRICE] > 7001	
 								p4UP = [0,300,300] 
 							end
-						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+						elsif game[:TTYPE][1]
 							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
 							if game[:PRICE] < 1001
 								game[:P4PRICE3] = (game[:PRICE] * 0.66 / 50).floor * 50 / 2
@@ -160,9 +163,9 @@ after_initialize do
 						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 
 						#do each game prices for futher template and other stuff usage
-						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+						if game[:TTYPE][0]
 							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3],0]
-						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+						elsif game[:TTYPE][1]
 							game[:PPRICES] = [game[:P4PRICE1],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],0,0]
 						else
 							game[:PPRICES] = [game[:P4PRICE2],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3]]
@@ -181,13 +184,13 @@ after_initialize do
 					#do stuff if we do
 					if users
 						#find how many p1 p2 p3 we have, and how many troikas to display
-						if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+						if game[:TTYPE][0]
 							p1NO = users[:P1].length if users[:P1]
 							p2NO = users[:P2].length / 2.0 if users[:P2] #fix because 2 P4 per troika
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
 							#get how many troikas, roundup p4 numbers cos theres 2 per troika
 							troikaNO = [p1NO, p2NO.ceil, p3NO.ceil].max-1
-						elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+						elsif game[:TTYPE][1]
 							p1NO = users[:P1].length if users[:P1]
 							p2NO = users[:P2].length if users[:P2]
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
@@ -215,7 +218,7 @@ after_initialize do
 							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false; p5FBred = false; p6FBred = false
 
 							#fill user info and template variables for statuses
-							if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+							if game[:TTYPE][0]
 								if users[:P2] && users[:P2][i]
 									p1 = users[:P2][i][:NAME].strip
 									p1STATUS[users[:P2][i][:STAT]] = true
@@ -236,7 +239,7 @@ after_initialize do
 									p5 = users[:P4_5][2*i+1][:NAME].strip
 									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
 								end
-							elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+							elsif game[:TTYPE][1]
 								if users[:P1] && users[:P1][i]
 									p1 = users[:P1][i][:NAME].strip
 									p1STATUS[users[:P1][i][:STAT]] = true
@@ -591,7 +594,7 @@ after_initialize do
 							trindx = troino - 1
 
 							#awful unoptimized mess
-							if ggame[:CONSOLE] == "PS4" && !zgame[:CONSOLE2]
+							if ggame[:TTYPE][0]
 								if (code[0] == "2" && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
 								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
 								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
@@ -627,7 +630,7 @@ after_initialize do
 										)
 									end
 								end
-							elsif ggame[:CONSOLE] == "PS5" && !zgame[:CONSOLE2]
+							elsif ggame[:TTYPE][1]
 								if (code[0] == "1" && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "2" && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"][trindx])
