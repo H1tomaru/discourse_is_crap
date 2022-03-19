@@ -1,6 +1,5 @@
 export default Ember.Controller.extend({
 
-	inprogress: false,
 	showLIST: localStorage.getItem('showLIST') == "true",
 	showTYPE1: true,
 	showTYPE2: true,
@@ -8,14 +7,8 @@ export default Ember.Controller.extend({
 	showTYPE4: true,
 	showGAMEZ: true,
 	showCRAP: false,
-	showHIDEOZ: false,
 	rulez: false,
-	hideobutts: {},
 	
-	rentaHIDEO: Ember.computed('model.rentaTSHOW', function() {
-		return this.get('model.rentaTSHOW').sortBy('GNAME')
-	}).property('model.rentaTSHOW.[]'),
-
 	LazyLoadLoad: function() {
 		Ember.run.scheduleOnce('afterRender', this, function() {
 			Ember.$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
@@ -64,38 +57,6 @@ export default Ember.Controller.extend({
 			this.set('showGAMEZ', false)
 			this.set('showHIDEOZ', false)
 			this.set('showCRAP', true)
-		},
-
-		showHIDEOZ() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', false)
-			this.set('showHIDEOZ', true)
-		},
-
-		hideoGAMEZ(template, knopk, value) {
-			if (this.get('currentUser.username') && !this.get('inprogress')) {
-				this.set('inprogress', true)
-				Ember.set(this.get('hideobutts'), knopk, true)
-				let ttemp = {GNAME: template.GNAME, GPIC: template.GPIC}
-				Ember.$.ajax({
-					url: "/renta-halehideo/",
-					type: "POST",
-					data: { "VALUE": value, "UZA": this.get('currentUser.username'),
-					"TSHOW": btoa(unescape(encodeURIComponent(JSON.stringify(ttemp)))) }
-				}).then(result => {
-					if ( value == 1 ) {
-						Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, true)
-						this.get('model.rentaTSHOW').pushObject(ttemp)
-					} else {
-						Ember.set(this.get('model.rentaLIST'), ttemp.GNAME, false)
-						var rIndex = this.get('model.rentaTSHOW').map(function(item) { return item.GNAME }).indexOf(ttemp.GNAME)
-						this.get('model.rentaTSHOW').removeAt(rIndex)
-					}
-					Ember.set(this.get('model.count'), 5, this.get('model.count')[5] + value)
-					Ember.set(this.get('hideobutts'), knopk, false)
-					this.set('inprogress', false)
-				})
-			}
 		}
 
 	}
