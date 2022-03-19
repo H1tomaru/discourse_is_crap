@@ -1104,8 +1104,7 @@ after_initialize do
 				#save cache to db
 				@@cache[:rentaCHA].insert_one({ 
 					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], rentaLIST: {},
-					count: count, TIME: Time.now
+					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], count: count, TIME: Time.now
 				})
 			end
 
