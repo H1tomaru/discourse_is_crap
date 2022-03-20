@@ -459,6 +459,88 @@
 	</td>
 {{/inline}}
 
+{{#*inline "Buttons24444"}}
+	<td>
+		<button {{action 'zaips' 2 game._id bubbles=false}} class='BagButon'>П2<br>
+			{{#if game.P4PRICE2}}
+				<h3>{{game.P4PRICE2}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			{{#if game.P1NO}}<div class='statustr status-2'>{{game.P1NO}}</div>{{/if}}
+		</button>
+	</td>
+	<td>
+		<button {{action 'zaips' 4_4 game._id bubbles=false}} class='BagButon'>П4<br>
+			{{#if game.P4PRICE3}}
+				<h3>{{game.P4PRICE3}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS4'>PS4</div>
+			{{#if game.P2NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
+		</button>
+	</td>
+	<td>
+		<button {{action 'zaips' 4_5 game._id bubbles=false}} class='BagButon'>П4<br>
+			{{#if game.P4PRICE3}}
+				<h3>{{game.P4PRICE3}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS5'>PS5</div>
+			{{#if game.P3NO}}<div class='statustr status-2'>{{game.P3NO}}</div>{{/if}}
+		</button>
+	</td>
+{{/inline}}
+
+{{#*inline "Buttons224444"}}
+	<td>
+		<button {{action 'zaips' 2_4 game._id bubbles=false}} class='BagButon'>П2<br>
+			{{#if game.P4PRICE2}}
+				<h3>{{game.P4PRICE2}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS4'>PS4</div>
+			{{#if game.P1NO}}<div class='statustr status-2'>{{game.P1NO}}</div>{{/if}}
+		</button>
+	</td>
+	<td>
+		<button {{action 'zaips' 2_5 game._id bubbles=false}} class='BagButon'>П2<br>
+			{{#if game.P4PRICE2}}
+				<h3>{{game.P4PRICE2}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS5'>PS5</div>
+			{{#if game.P1NO}}<div class='statustr status-2'>{{game.P1NO}}</div>{{/if}}
+		</button>
+	</td>
+	<td>
+		<button {{action 'zaips' 4_4 game._id bubbles=false}} class='BagButon'>П4<br>
+			{{#if game.P4PRICE3}}
+				<h3>{{game.P4PRICE3}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS4'>PS4</div>
+			{{#if game.P2NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
+		</button>
+	</td>
+	<td>
+		<button {{action 'zaips' 4_5 game._id bubbles=false}} class='BagButon'>П4<br>
+			{{#if game.P4PRICE3}}
+				<h3>{{game.P4PRICE3}}</h3><br>рублей
+			{{else}}
+				<h3>НЕТ</h3><br>цены
+			{{/if}}
+			<div class='statustr baga baga-PS5'>PS5</div>
+			{{#if game.P3NO}}<div class='statustr status-2'>{{game.P3NO}}</div>{{/if}}
+		</button>
+	</td>
+{{/inline}}
+
 {{#*inline "Users1244"}}
 	{{#if users.ACCOUNT}}<tr class='uddah {{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.ACCOUNT}}</td></tr>{{/if}}
 	{{#if users.COMMENT}}<tr class='uddah {{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'><td colspan='6'>{{users.COMMENT}}</td></tr>{{/if}}
