@@ -583,7 +583,7 @@ after_initialize do
 						#create notification if sobrano
 						if gameuzers[0]
 							#get game info from db to determine if were on ps4, ps5, ps4\ps5 type of game
-							thisgame = @@gamedb[:gameDB].find( { _id: code[2] }, projection: { TYPE:1, DATE:1, CONSOLE:1, CONSOLE2:1 } ).to_a
+							thisgame = @@gamedb[:gameDB].find( { _id: code[2] }, projection: { TYPE:1, DATE:1, CONSOLE:1, CONSOLE2:1, TTYPE:1 } ).to_a
 
 							#count index of this troika
 							if gameuzers[0]["P"+code[0]]
