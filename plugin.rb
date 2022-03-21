@@ -166,9 +166,9 @@ after_initialize do
 						if game[:TTYPE][0]
 							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3],0]
 						elsif game[:TTYPE][1]
-							game[:PPRICES] = [game[:P4PRICE1],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],0,0]
+							game[:PPRICES] = [game[:P4PRICE1], game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3],0,0]
 						else
-							game[:PPRICES] = [game[:P4PRICE2],game[:P4PRICE2],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3],game[:P4PRICE3]]
+							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3]]
 						end
 
 					else
