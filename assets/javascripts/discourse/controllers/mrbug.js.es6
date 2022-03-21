@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
 	mdalready: false,
 	troikopoisk: null,
 	prezaips: null,
+	pzposition: null,
 	zaips: null,
 
 	showhideo: [true, true, true],
@@ -43,6 +44,7 @@ export default Ember.Controller.extend({
 					data: { "bagakruta": btoa(knopk+"~"+gcode) }
 				}).then(result => {
 					this.set('prezaips', result)
+					this.set('pzposition', result.position.[0])
 					this.set('mdalready', true)
 				})
 			})
