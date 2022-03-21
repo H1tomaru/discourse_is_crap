@@ -153,9 +153,9 @@ after_initialize do
 							end
 						end
 						
-						game[:P4PRICE1] = game[:P4PRICE1] - p4PDOWN[1] + p4UP[0]
-						game[:P4PRICE2] = game[:P4PRICE2] - p4PDOWN[2] + p4UP[1]
-						game[:P4PRICE3] = game[:P4PRICE3] - p4PDOWN[3] + p4UP[2]
+						game[:P4PRICE1] = game[:P4PRICE1] - game[:P4PDOWN1] + p4UP[0]
+						game[:P4PRICE2] = game[:P4PRICE2] - game[:P4PDOWN2] + p4UP[1]
+						game[:P4PRICE3] = game[:P4PRICE3] - game[:P4PDOWN3] + p4UP[2]
 						
 						#set price to -10 if its x100
 						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
