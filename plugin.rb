@@ -584,7 +584,7 @@ after_initialize do
 						#create notification if sobrano
 						if gameuzers[0]
 							#get game info from db to determine if were on ps4, ps5, ps4\ps5 type of game
-							thisgame = @@gamedb[:gameDB].find( { _id: code[2] }, projection: { TYPE:1, DATE:1, CONSOLE:1, CONSOLE2:1, TTYPE:1 } ).to_a
+							thisgame = @@gamedb[:gameDB].find( { _id: code[2] }, projection: { TYPE:1, DATE:1, TTYPE:1 } ).to_a
 
 							#count index of this troika
 							if gameuzers[0]["P"+code[0]]
@@ -596,7 +596,7 @@ after_initialize do
 							trindx = troino - 1
 
 							#awful unoptimized mess
-							if thisgame[:TTYPE][0]
+							if thisgame[0][:TTYPE][0]
 								if (code[0] == "2" && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
 								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
 								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
@@ -632,7 +632,7 @@ after_initialize do
 										)
 									end
 								end
-							elsif thisgame[:TTYPE][1]
+							elsif thisgame[0][:TTYPE][1]
 								if (code[0] == "1" && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "2" && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"][trindx])
