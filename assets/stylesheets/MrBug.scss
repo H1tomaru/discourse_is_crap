@@ -555,16 +555,19 @@ div.shinbakaz {
 		.status-1 {
 			color: white;
 			background: dimgray;
+			opacity: 0.4;
 		}
 
 		.status-2 {
 			color: white;
 			background: green;
+			opacity: 0.4;
 		}
 
 		.status-3 {
 			color: black;
 			background: Gold;
+			opacity: 0.4;
 		}
 
 		.statustr {
@@ -1263,11 +1266,6 @@ div.rentobaka {
 			td.malabela2:nth-child(3) {
 				text-align: left;
 				width: 100%;
-			}
-
-			td.malabela2:nth-child(4) {
-				width: 15px;
-				padding: 0;
 			}
 
 			td.malabela2.bggr {
