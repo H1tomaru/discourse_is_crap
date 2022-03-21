@@ -43,15 +43,17 @@ MegaAdd List some Pokemans<br>
 	{{#each p4lista as |game|}}
 		{{#each game.TROIKI as |troika index|}}
 			{{#if troika.ACCOUNT}}
-				{{unless index "<br><br><br>{{game.gameNAME}}<br>"}}
+				{{#unless index}}
+					<br><br><br>{{game.gameNAME}}<br>
+				{{/unless}}
 				{{#if game.TTYPE.[0]}}
-					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P1}}<br>П4_4 - {{troika.P2}}<br>П4_4 - {{troika.P3}}<br>П4_5 - {{troika.P4}}<br>П4_5 - {{troika.P5}}<br>
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[0]}}<br>П4_4 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_5 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>
 				{{/if}}
 				{{#if game.TTYPE.[1]}}
-					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.P2}}<br>П4 - {{troika.P3}}<br>П4 - {{troika.P4}}<br>
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[1]}}<br>П4 - {{troika.USERS.[2]}}<br>П4 - {{troika.USERS.[3]}}<br>
 				{{/if}}
 				{{#if game.TTYPE.[2]}}
-					<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.P1}}<br>П2_5 - {{troika.P2}}<br>П4_4 - {{troika.P3}}<br>П4_4 - {{troika.P4}}<br>П4_5 - {{troika.P5}}<br>П4_5 - {{troika.P6}}<br>
+					<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.USERS.[0]}}<br>П2_5 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_4 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>П4_5 - {{troika.USERS.[5]}}<br>
 				{{/if}}
 			{{/if}}
 		{{/each}}
