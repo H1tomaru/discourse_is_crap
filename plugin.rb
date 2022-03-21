@@ -586,7 +586,7 @@ after_initialize do
 							trindx = troino - 1
 
 							#awful unoptimized mess
-							if thisgame[:CONSOLE] == "PS4" && !thisgame[:CONSOLE2]
+							if thisgame[0][:CONSOLE] == "PS4" && !thisgame[0][:CONSOLE2]
 								if (code[0] == "2" && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
 								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
 								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
@@ -622,7 +622,7 @@ after_initialize do
 										)
 									end
 								end
-							elsif thisgame[:CONSOLE] == "PS5" && !thisgame[:CONSOLE2]
+							elsif thisgame[0][:CONSOLE] == "PS5" && !thisgame[0][:CONSOLE2]
 								if (code[0] == "1" && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "2" && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"][trindx])
