@@ -263,24 +263,24 @@ after_initialize do
 									p1STATUS[users[:P2_4][i][:STAT]] = true
 								end
 								if users[:P2_5] && users[:P2_5][i]
-									p1 = users[:P2_5][i][:NAME].strip
-									p1STATUS[users[:P2_5][i][:STAT]] = true
+									p2 = users[:P2_5][i][:NAME].strip
+									p2STATUS[users[:P2_5][i][:STAT]] = true
 								end
 								if users[:P4_4] && users[:P4_4][i]
-									p2 = users[:P4_4][i][:NAME].strip
-									p2STATUS[users[:P4_4][i][:STAT]] = true
+									p3 = users[:P4_4][i][:NAME].strip
+									p3STATUS[users[:P4_4][i][:STAT]] = true
 								end
 								if users[:P4_4] && users[:P4_4][2*i+1]
-									p3 = users[:P4_4][2*i+1][:NAME].strip
-									p3STATUS[users[:P4_4][2*i+1][:STAT]] = true
+									p4 = users[:P4_4][2*i+1][:NAME].strip
+									p4STATUS[users[:P4_4][2*i+1][:STAT]] = true
 								end
 								if users[:P4_5] && users[:P4_5][2*i]
-									p4 = users[:P4_5][2*i][:NAME].strip
-									p4STATUS[users[:P4_5][2*i][:STAT]] = true
+									p5 = users[:P4_5][2*i][:NAME].strip
+									p5STATUS[users[:P4_5][2*i][:STAT]] = true
 								end
 								if users[:P4_5] && users[:P4_5][2*i+1]
-									p5 = users[:P4_5][2*i+1][:NAME].strip
-									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
+									p6 = users[:P4_5][2*i+1][:NAME].strip
+									p6STATUS[users[:P4_5][2*i+1][:STAT]] = true
 								end
 							end
 
