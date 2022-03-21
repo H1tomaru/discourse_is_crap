@@ -231,14 +231,14 @@
 							<div class="bagapi" style="background-image:url('{{prezaips.imgLINK}}')"></div>
 							<h1><a>{{prezaips.gameNAME}}</a> Запись</h1>
 						</div>
-						<button {{action 'imgoingin'}}>Записаться на П{{prezaips.position.[0]}}</button><button {{action 'netmudal'}}>Закрыть</button>
+						<button {{action 'imgoingin'}}>Записаться на П{{pzposition}}</button><button {{action 'netmudal'}}>Закрыть</button>
 					</div>
 				{{/if}}
 
 				{{#if zaips.winrars}}
 					<div class="mudalcontent mudaladdon headin3">
 						<span>Запись</span>
-						<span>на позицию П{{zaips.pzposition}}</span>
+						<span>на позицию П{{pzposition}}</span>
 						<div class="bagariban">{{zaips.gameNAME}}</div>
 						<span>Успешно произведена!</span>
 					</div>
