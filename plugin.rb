@@ -115,6 +115,7 @@ after_initialize do
 							elsif game[:PRICE] > 7001	
 								p4UP = [0,300,300] 
 							end
+							game[:DEBUG] = [game[:P4PRICE1],game[:P4PRICE2],game[:P4PRICE3]]
 						elsif game[:TTYPE][1]
 							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
 							if game[:PRICE] < 1001
@@ -153,12 +154,12 @@ after_initialize do
 							end
 						end
 						
-						game[:P4PRICE1] = game[:P4PRICE1] - game[:P4PDOWN1] + p4UP[0]
+						game[:P4PRICE1] = game[:P4PRICE1] - game[:P4PDOWN1] + p4UP[0] if game[:TTYPE][1]
 						game[:P4PRICE2] = game[:P4PRICE2] - game[:P4PDOWN2] + p4UP[1]
 						game[:P4PRICE3] = game[:P4PRICE3] - game[:P4PDOWN3] + p4UP[2]
 						
 						#set price to -10 if its x100
-						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
+						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:TTYPE][1] && game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
 						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
 						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 
