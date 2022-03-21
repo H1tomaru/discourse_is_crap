@@ -269,7 +269,18 @@
 		{{#each model.gamedb1 as |game index|}}
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo1' index}}>
 				<tr>
-					{{PreButtonsGame game=game}}
+					{{! PreButtonsGame }}
+					<td class='flagco'>{{#if game.MODE1}}<div><i class='fas fa-exclamation fa-2x fa-pulse'></i></div>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></td>
+					<td class='mainco'>
+						<a>{{game.gameNAME}}</a><br>
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						{{#if game.CONSOLE2}}
+							<span class='baga baga-{{game.CONSOLE2}}'>{{game.CONSOLE2}}</span>
+						{{/if}}
+						<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
+					</td>
+					{{! PreButtonsGame }}
 					{{#if game.TTYPE.[0]}}
 						{{! Buttons24444 }}
 						<td>
@@ -839,7 +850,19 @@
 
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo2' index}}>
 				<tr>
-					{{PreButtonsGame game=game TYPE2=true}}
+					{{! PreButtonsGame }}
+					<td class='flagco'>{{#if game.MODE1}}<div><i class='fas fa-exclamation fa-2x fa-pulse'></i></div>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></td>
+					<td class='mainco'>
+						<a>{{game.gameNAME}}</a><br>
+						<span class='text'>Акция до {{game.DATE}}</span>
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						{{#if game.CONSOLE2}}
+							<span class='baga baga-{{game.CONSOLE2}}'>{{game.CONSOLE2}}</span>
+						{{/if}}
+						<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
+					</td>
+					{{! PreButtonsGame }}
 					{{#if game.TTYPE.[0]}}
 						{{! Buttons24444 }}
 						<td>
@@ -1409,7 +1432,19 @@
 
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo3' index}}>
 				<tr>
-					{{PreButtonsGame game=game TYPE3=true}}
+					{{! PreButtonsGame }}
+					<td class='flagco'>{{#if game.MODE1}}<div><i class='fas fa-exclamation fa-2x fa-pulse'></i></div>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+					<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}'></td>
+					<td class='mainco'>
+						<a>{{game.gameNAME}}</a><br>
+						<span class='text'>Дата выхода {{game.DATE}}</span>
+						<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
+						{{#if game.CONSOLE2}}
+							<span class='baga baga-{{game.CONSOLE2}}'>{{game.CONSOLE2}}</span>
+						{{/if}}
+						<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
+					</td>
+					{{! PreButtonsGame }}
 					{{#if game.TTYPE.[0]}}
 						{{! Buttons24444 }}
 						<td>
