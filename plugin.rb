@@ -905,7 +905,7 @@ after_initialize do
 							#select between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
 							#create final variable
-							if ugaz[:P2] && ( ugaz[:P2][0].downcase == params[:username].downcase || ugaz[:P2][1].downcase == params[:username].downcase )
+							if (ugaz[:P2][0] && ugaz[:P2][0].downcase == params[:username].downcase) || (ugaz[:P2][1] && ugaz[:P2][1].downcase == params[:username].downcase)
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
 							else
 								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
