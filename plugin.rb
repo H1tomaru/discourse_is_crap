@@ -113,7 +113,7 @@ after_initialize do
 								p4UP = [0,300,300] 
 							end
 						elsif game[:TTYPE][1]
-							game[:P4PRICE1] = (game[:PRICE] * 0.17 / 50).ceil * 50
+							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
 
 							game[:P4PRICE3] = (game[:PRICE] * 0.33 / 50).floor * 5 # '* 0.33' is '*.66 / 2'
 
@@ -134,7 +134,7 @@ after_initialize do
 
 							game[:P4PRICE2] = (game[:PRICE] - 4 * game[:P4PRICE3]) / 2
 							
-							p4UP = [0,200,200]
+							p4UP = [50,150,200]
 							if game[:PRICE] < 1001
 								p4UP = [0,100,100]
 							elsif game[:PRICE] > 11001
