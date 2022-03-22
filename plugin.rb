@@ -587,9 +587,12 @@ after_initialize do
 
 							#awful unoptimized mess
 							if thisgame[0][:CONSOLE] == "PS4" && !thisgame[0][:CONSOLE2]
-								if (code[0] == "2" && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
-								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
+								if (code[0] == "2" && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+									gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
+								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"] && gameuzers[0]["P4_5"] &&
+									gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
+								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"] && gameuzers[0]["P4_4"] &&
+									gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
 									#dont do shit if its a preorder thats more then a month away
 									unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
 										usernames = ["MrBug" , current_user[:username]]
@@ -623,9 +626,12 @@ after_initialize do
 									end
 								end
 							elsif thisgame[0][:CONSOLE] == "PS5" && !thisgame[0][:CONSOLE2]
-								if (code[0] == "1" && gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
-								(code[0] == "2" && gameuzers[0]["P4"][trindx*2+1]) ||
-								(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"][trindx])
+								if (code[0] == "1" && gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
+									gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
+								(code[0] == "2" && gameuzers[0]["P4"] &&
+									gameuzers[0]["P4"][trindx*2+1]) ||
+								(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"] &&
+									gameuzers[0]["P2"][trindx])
 									#dont do shit if its a preorder thats more then a month away
 									unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
 										usernames = ["MrBug" , current_user[:username]]
@@ -671,10 +677,14 @@ after_initialize do
 									end
 								end
 							else
-								if (code[0] == "2_4" && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-								(code[0] == "2_5" && gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
-								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
+								if (code[0] == "2_4" && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+									gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
+								(code[0] == "2_5" && gameuzers[0]["P2_4"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+									gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
+								(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_5"] &&
+									gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
+								(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] &&
+									gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
 									#dont do shit if its a preorder thats more then a month away
 									unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
 										usernames = ["MrBug" , current_user[:username]]
