@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
 					data: { "bagakruta": btoa(knopk+"~"+gcode) }
 				}).then(result => {
 					this.set('prezaips', result)
-					this.set('pzposition', result.position.[0])
+					if (result.hasOwnProperty('position')) this.set('pzposition', result.position.[0])
 					this.set('mdalready', true)
 				})
 			})
