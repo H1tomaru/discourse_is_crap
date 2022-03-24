@@ -732,8 +732,11 @@ after_initialize do
 		end
 
 		def megaadd
-			addstuff = {}, addstuff = params, addstuff[:RESULT] = [], feedbacks = [], chetverk = ''
-			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
+			addstuff = {}, addstuff = params, feedbacks = [], chetverk = '', addstuff[:RESULT] = []
+			if current_user && 
+				current_user[:username] == 'H1tomaru' && 
+				addstuff[:GAME] && 
+				addstuff[:STRING]
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
 				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p2p4p4, p2p4p4p4p4 or p2p2p4p4p4p4
