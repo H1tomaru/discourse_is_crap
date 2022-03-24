@@ -732,12 +732,13 @@ after_initialize do
 		end
 
 		def megaadd
-			addstuff = {}; addstuff = params; addstuff[:RESULT] = []; feedbacks = []
+			addstuff = {}, addstuff = params, addstuff[:RESULT] = [], feedbacks = [], chetverk = ''
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
 				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p2p4p4, p2p4p4p4p4 or p2p2p4p4p4p4
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П4_5")
+					chetverk = 'четверке'
 					#p2p4p4 version
 					addstuff[:NEWSTRING].each_slice(4) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3]
@@ -756,6 +757,7 @@ after_initialize do
 						end
 					end
 				elsif (addstuff[:STRING].include? "П4_5") && (addstuff[:STRING].include? "П2_5")
+					chetverk = 'шестерке'
 					#p2p2p4p4p4p4 version
 					addstuff[:NEWSTRING].each_slice(7) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5] && sostav[6]
@@ -774,6 +776,7 @@ after_initialize do
 						end
 					end
 				else
+					chetverk = 'пятерке'
 					#p2p4p4p4p4 version
 					addstuff[:NEWSTRING].each_slice(6) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5]
@@ -803,12 +806,12 @@ after_initialize do
 						#find if we gave user this feedback already
 						ufb = @@userfb[:userfb].find( { _id: user.downcase }, projection: { FEEDBACKS: 1 } ).to_a
 						if ufb[0]
-							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в "+chetverk+" на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 						end
 						unless hasfb
 							@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
 								FEEDBACKS: {
-									FEEDBACK: "Участвовал в четверке на "+addstuff[:GAME].strip+". Всё отлично!",
+									FEEDBACK: "Участвовал в "+chetverk+" на "+addstuff[:GAME].strip+". Всё отлично!",
 									pNAME: "MrBug",
 									DATE: Time.now.strftime("%Y.%m.%d"),
 									SCORE: 1
