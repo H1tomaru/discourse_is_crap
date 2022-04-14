@@ -82,7 +82,7 @@ after_initialize do
 					if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
 						game[:TTYPE][0] = true
 						game[:PPOSITIONS] = [2,4,4,4,4,0]
-					elsif game[:CONSOLE] == "PS5" && !game[:CONSOLE2]
+					elsif ( game[:CONSOLE] == "PS5" && !game[:CONSOLE2] ) || ( game[:CONSOLE] == "PS4" && game[:CONSOLE2] == "XXX" )
 						game[:TTYPE][1] = true
 						game[:PPOSITIONS] = [1,2,4,4,0,0]
 					else
@@ -625,7 +625,7 @@ after_initialize do
 										)
 									end
 								end
-							elsif thisgame[0][:CONSOLE] == "PS5" && !thisgame[0][:CONSOLE2]
+							elsif ( thisgame[:CONSOLE] == "PS5" && !thisgame[:CONSOLE2] ) || ( thisgame[:CONSOLE] == "PS4" && thisgame[:CONSOLE2] == "XXX" )
 								if (code[0] == "1" && gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
 									gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 								(code[0] == "2" && gameuzers[0]["P4"] &&
