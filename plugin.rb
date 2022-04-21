@@ -199,7 +199,7 @@ after_initialize do
 						#create variables for every troika
 						for i in 0..troikaNO
 							#tons of variables for everything
-							p1 = ''; p2 = ''; p3 = ''; p4 = ''; p5 = ''; p6 = ''; account = ''; comment = ''; nop1ADD = 0
+							p1 = ''; p2 = ''; p3 = ''; p4 = ''; p5 = ''; p6 = ''; account = ''; nop1ADD = 0
 							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]
 							p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
 							p5STATUS = [false,false,false,false]; p6STATUS = [false,false,false,false]
@@ -341,10 +341,9 @@ after_initialize do
 							p5FEEDBACK[:PERCENT] = (p5FEEDBACK[:GOOD].to_f/(p5FEEDBACK[:GOOD] + p5FEEDBACK[:BAD]) * 100.0).floor if p5FEEDBACK[:GOOD] > 0
 							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
-							#create comment and account variable if they exist
+							#create account variable if it exists
 							if users[(i+1).to_s]
 								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
-								comment = users[(i+1).to_s][:COMMENT] if users[(i+1).to_s][:COMMENT]
 							end
 
 							#template again, is feedback green or red?
@@ -362,7 +361,7 @@ after_initialize do
 							game[:TROIKI].push( {
 								USERS: [p1,p2,p3,p4,p5,p6],
 								FEEDBACK: [p1FEEDBACK,p2FEEDBACK,p3FEEDBACK,p4FEEDBACK,p5FEEDBACK,p6FEEDBACK],
-								NOP1ADD: nop1ADD, ACCOUNT: account, COMMENT: comment,
+								NOP1ADD: nop1ADD, ACCOUNT: account,
 								PTAKEN: [p1TAKEN,p2TAKEN,p3TAKEN,p4TAKEN,p5TAKEN,p6TAKEN],
 								PFBred: [p1FBred,p2FBred,p3FBred,p4FBred,p5FBred,p6FBred],
 								PSTATUS: [p1STATUS,p2STATUS,p3STATUS,p4STATUS,p5STATUS,p6STATUS]
