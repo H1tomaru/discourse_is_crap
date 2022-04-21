@@ -651,7 +651,7 @@ div.shinbakaz {
 			}
 
 			td:nth-child(even) {
-				width: 100px
+				width: 90px
 			}
 
 			td:nth-child(odd) {
@@ -710,11 +710,12 @@ div.shinbakaz {
 
 	.malabela {
 		text-align: center;
-		padding: .2em .4em .2em;
-		font-size: 85%;
+		font-size: 82%;
 		color: #fff;
 		white-space: nowrap;
 		border-radius: .25em;
+		letter-spacing: -0.5px;
+		margin: 6px 0;
 	}
 
 	.bggrey {
