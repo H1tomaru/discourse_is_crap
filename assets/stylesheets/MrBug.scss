@@ -666,6 +666,22 @@ div.shinbakaz {
 			.uddah {
 				text-align: center
 			}
+			
+			tr:nth-child(odd)  {
+
+				td:nth-child(4n+1), td:nth-child(4n+2) {
+					background-color: #f2f2f2
+				}
+
+			}
+			
+			tr:nth-child(even)  {
+
+				td:nth-child(4n+3), td:nth-child(4n+4) {
+					background-color: #f2f2f2
+				}
+
+			}
 
 		}
 
