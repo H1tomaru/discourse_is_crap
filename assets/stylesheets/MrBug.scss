@@ -665,7 +665,10 @@ div.shinbakaz {
 			
 			.uddah {
 				text-align: center;
-				background-color: transparent;
+				
+				td {
+					background-color: transparent;
+				}
 			}
 			
 			tr:nth-child(odd)  {
