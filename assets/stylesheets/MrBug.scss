@@ -659,8 +659,12 @@ div.shinbakaz {
 				overflow: hidden;
 			}
 			
-			td:nth-child(2n+3) {
-				padding-left: 2%
+			td:nth-child(2n+1):not(:first-child):not(:last-child) {
+				padding-left: 1%
+			}
+			
+			td:nth-child(2n):not(:first-child):not(:last-child) {
+				padding-right: 1%
 			}
 			
 			.uddah {
