@@ -8,7 +8,6 @@ gem 'mongo', "2.5.0"
 require 'mongo'
 require 'base64'
 require 'net/http'
-require 'uri'
 
 enabled_site_setting :metatron_id
 enabled_site_setting :telegram_id
@@ -567,7 +566,7 @@ after_initialize do
 						#add message to telegram bot, if enabled
 						unless SiteSetting.metatron_id.empty? || SiteSetting.telegram_id.empty?
 							tgurl = "https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0][0]+" совместной покупки "+code[3]
-							Net::HTTP.get URI.parse(URI.encode(tgurl.force_encoding('ASCII-8BIT')))
+							Net::HTTP.get tgurl.force_encoding('ASCII-8BIT')
 						end
 
 						#create notification if sobrano
@@ -936,11 +935,7 @@ after_initialize do
 
 		def zafeedback
 			#decode shit
-			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
-			trash[:winrars] = fedbacks
-			console.log(fedbacks)
-			render json: trash
-=begin
+			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 3 && current_user[:username].downcase != params[:username].downcase
 				#users with negative feedbacks cant do feedbacks!
@@ -1007,7 +1002,6 @@ after_initialize do
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
 			end
-=end
 		end
 
 		def ufbupdate
