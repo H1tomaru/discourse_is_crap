@@ -936,7 +936,7 @@ after_initialize do
 
 		def zafeedback
 			render json: { halpme: mnogo }
-			=begin
+=begin
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
 			#page owners and guests cant do feedbacks!
@@ -1005,7 +1005,7 @@ after_initialize do
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
 			end
-			=end
+=end
 		end
 
 		def ufbupdate
