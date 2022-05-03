@@ -24,13 +24,13 @@ export default Ember.Controller.extend({
 			this.set('bagamdal', true)
 			Ember.$.post("/MrBug/troikopoisk/", { 
 				input: btoa(unescape(encodeURIComponent(this.get('troikopoisk2'))))
-			}.then((response) => {
+			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('mdalready', true)
 			})
 			/*
 			Ember.$.ajax({
-			/	url: "/MrBug/troikopoisk/",
+				url: "/MrBug/troikopoisk/",
 				type: "POST",
 				data: { "input": btoa(unescape(encodeURIComponent(this.get('troikopoisk2')))) }
 			}).then(result => {
