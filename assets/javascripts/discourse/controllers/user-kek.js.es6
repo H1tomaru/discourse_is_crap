@@ -72,14 +72,11 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				Ember.$.ajax({
-					url: "/posos/",	type: "POST",
-					data: { "pNAME": this.get('currentUser.username') }
+				Ember.$.post("/posos/", { 
+					pNAME: this.get('currentUser.username')
 				}).then(result => {
-					Ember.$.ajax({
-						url: "/u/" + this.get('model.uZar') + "/kek",
-						type: "POST",
-						data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina')))) }
+					Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
+						fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
 					}).then(result => {
 						this.set('responz', result)
 						if ( result.winrars == true ) {
