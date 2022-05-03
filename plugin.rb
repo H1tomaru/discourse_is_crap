@@ -935,7 +935,7 @@ after_initialize do
 		end
 
 		def zafeedback
-			render json: { halpme: mnogo }
+			render json: { halpme: "mnogo" }
 =begin
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
