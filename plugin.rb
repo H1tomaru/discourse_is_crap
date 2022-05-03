@@ -935,10 +935,10 @@ after_initialize do
 		end
 
 		def zafeedback
-			render json: { halpme: "mnogo" }
-=begin
 			#decode shit
 			fedbacks = URI.unescape(Base64.decode64(params[:fedbakibaki])).split("~") #0 - mode, 1 - score, 2 - otziv
+			render json: fedbacks
+=begin
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 3 && current_user[:username].downcase != params[:username].downcase
 				#users with negative feedbacks cant do feedbacks!
