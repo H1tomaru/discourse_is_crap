@@ -28,28 +28,15 @@ export default Ember.Controller.extend({
 				this.set('troikopoisk', result)
 				this.set('mdalready', true)
 			})
-			/*
-			Ember.$.ajax({
-				url: "/MrBug/troikopoisk/",
-				type: "POST",
-				data: { "input": btoa(unescape(encodeURIComponent(this.get('troikopoisk2')))) }
-			}).then(result => {
-				this.set('troikopoisk', result)
-				this.set('mdalready', true)
-			})
-			*/
 		},
 
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
-			Ember.$.ajax({
-				url: "/posos/",	type: "POST",
-				data: { "pNAME": this.get('currentUser.username') }
+			Ember.$.post("/posos/", { 
+				pNAME: this.get('currentUser.username')
 			}).then(result => {
-				Ember.$.ajax({
-					url: "/MrBug/prezaips/",
-					type: "POST",
-					data: { "bagakruta": btoa(knopk+"~"+gcode) }
+				Ember.$.post("/MrBug/prezaips/", { 
+					bagakruta: btoa(knopk+"~"+gcode)
 				}).then(result => {
 					this.set('prezaips', result)
 					if (result.hasOwnProperty('position')) this.set('pzposition', result.position.[0])
@@ -61,10 +48,8 @@ export default Ember.Controller.extend({
 		imgoingin() {
 			this.set('mdalready', false)
 			this.set('prezaips.winrars', false)
-			Ember.$.ajax({
-				url: "/MrBug/zaips/",
-				type: "POST",
-				data: { "bagatrolit": btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME')))) }
+			Ember.$.post("/MrBug/zaips/", { 
+				bagatrolit: btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))
 			}).then(result => {
 				this.set('zaips', result)
 				Ember.$.ajax({
