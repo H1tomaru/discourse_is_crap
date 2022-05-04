@@ -2,7 +2,7 @@
 # version: 9.9.9
 # authors: MrBug
 
-gem 'bson', "4.3.0"
+#gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
 require 'mongo'
@@ -29,7 +29,6 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
-		post '/posos' => 'mrbug#ufbupdate'
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -47,6 +46,63 @@ after_initialize do
 
 		@@userdb2 = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
+		
+		autozCache = {}
+		rentaCache = {}
+
+		accountsDB = ???
+
+		#get usefb from db and index it for easier global usage
+		userFB = {}
+		@@userfb[:userfb].find({}).to_a.each do |fb|
+			#check if fb valid
+			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
+				userFB[fb[:id]] = fb
+			#count shit if its not valid
+			elsif fb.key?("FEEDBACKS")
+				fbnumbers = { fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+				newfbarray = []; timeNOW = Time.now
+
+				#remove duplicates
+				fb[:FEEDBACKS].uniq!
+
+				#count and create numbers
+				fb[:FEEDBACKS].each do |feedback|
+					#look for old ones and delete them
+					if timeNOW - feedback[:DATE].to_time > 63000000
+						fbnumbers[:fbARC] += 1
+					else #else just count them
+						fbnumbers[:fbG] += 1 if feedback[:SCORE] > 0
+						fbnumbers[:fbB] += 1 if feedback[:SCORE] < 0
+						fbnumbers[:fbN] += 1 if feedback[:SCORE] == 0
+						#count bugofb
+						if feedback[:pNAME] == "MrBug" && ( timeNOW - feedback[:DATE].to_time < 31500000 )
+							feedbacks[:fbBuG] += 1 if feedback[:SCORE] > 0
+							feedbacks[:fbBuB] += 1 if feedback[:SCORE] < 0	
+						end
+						newfbarray.push({
+							FEEDBACK: feedback[:FEEDBACK],
+							pNAME: feedback[:pNAME],
+							DATE: feedback[:DATE],
+							SCORE: feedback[:SCORE]
+						})
+					end
+				end
+				#save to variable
+				userFB[fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
+					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
+					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC] }
+				#save to db
+				@@userfb2[:userfb].replace_one( { _id: fb[:id] }, {
+					FEEDBACKS: newfbarray, troikaBAN: 0,
+					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
+					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC]
+				}, { upsert: true } )
+			#alert if theres nothing to count
+			else
+				#say fuckup
+			end
+		end
 
 		def show
 			#variables, duh
@@ -54,23 +110,18 @@ after_initialize do
 			#cache vars
 			gamelist = []
 
-			#get cache from db, drop it if its old
-			cacheDB = @@cache[:cache].find().to_a
-			if cacheDB[0]
-				if timeNOW - cacheDB[0][:TIME] > 900
-					@@cache[:cache].drop()
-				else
-					gamelist = cacheDB[0][:gamelist]
+			#drop chache if its old
+			if !autozCache.empty?
+				if timeNOW - autozCache[:TIME] > 900
+					autozCache = {}
 				end
 			end
 
-			if gamelist.empty?
+			if autozCache.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
-				#get all user feedbacks
-				userFB = @@userfb[:userfb].find( {}, projection: { FEEDBACKS: 0, troikaBAN: 0, fbBuG: 0, fbBuB: 0 } ).to_a
 
 				#start a loop for every game to display
 				gameDB.each do |game|
