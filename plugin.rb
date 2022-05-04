@@ -38,7 +38,6 @@ after_initialize do
 		db = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
-		@@cache = db.use('AutoZ_cache')
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 
@@ -54,16 +53,17 @@ after_initialize do
 
 		#get usefb from db and index it for easier global usage
 		userFB = {}
+		#userFB[:TIME] = Time.now
 		@@userfb[:userfb].find({}).to_a.each do |fb|
 
 			#check if fb valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
-				userFB[fb[:id]] = fb
+				userFB[:fblist][fb[:id]] = fb
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
 				fbnumbers = { fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
-				newfbarray = []; timeNOW = Time.now
+				newfbarray = []; timeN = Time.now
 
 				#remove duplicates
 				fb[:FEEDBACKS].uniq!
@@ -71,14 +71,14 @@ after_initialize do
 				#count and create numbers
 				fb[:FEEDBACKS].each do |feedback|
 					#look for old ones and delete them
-					if timeNOW - feedback[:DATE].to_time > 63000000
+					if Time.now - feedback[:DATE].to_time > 63000000
 						fbnumbers[:fbARC] += 1
 					else #else just count them
 						fbnumbers[:fbG] += 1 if feedback[:SCORE] > 0
 						fbnumbers[:fbB] += 1 if feedback[:SCORE] < 0
 						fbnumbers[:fbN] += 1 if feedback[:SCORE] == 0
 						#count bugofb
-						if feedback[:pNAME] == "MrBug" && ( timeNOW - feedback[:DATE].to_time < 31500000 )
+						if feedback[:pNAME] == "MrBug" && ( timeN - feedback[:DATE].to_time < 31500000 )
 							feedbacks[:fbBuG] += 1 if feedback[:SCORE] > 0
 							feedbacks[:fbBuB] += 1 if feedback[:SCORE] < 0	
 						end
@@ -92,7 +92,7 @@ after_initialize do
 				end
 
 				#save to variable
-				userFB[fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
+				userFB[:fblist][fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
 					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
 					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC] }
 
@@ -111,9 +111,7 @@ after_initialize do
 
 		def show
 			#variables, duh
-			finalvar = {}; finalvar[:qzstuff] = false; fbcount = 0; timeNOW = Time.now
-			#cache vars
-			gamelist = []
+			finalvar = {}; timeNOW = Time.now
 
 			#drop chache if its old
 			if !autozCache.empty?
@@ -122,6 +120,7 @@ after_initialize do
 				end
 			end
 
+			#create cache if theres none
 			if autozCache.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
@@ -340,51 +339,51 @@ after_initialize do
 
 							#find feedback for users
 							if p1.length > 0
-								feedbackp1 = userFB.find{ |h| h['_id'] == p1.downcase }
+								feedbackp1 = userFB[:fblist][p1.downcase]
 								if feedbackp1
-									p1FEEDBACK[:GOOD] = feedbackp1[:fbG] if feedbackp1[:fbG]
-									p1FEEDBACK[:BAD] = feedbackp1[:fbB] if feedbackp1[:fbB]
-									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN] if feedbackp1[:fbN]
+									p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
+									p1FEEDBACK[:BAD] = feedbackp1[:fbB]
+									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN]
 								end
 							end
 							if p2.length > 0
-								feedbackp2 = userFB.find{ |h| h['_id'] == p2.downcase }
+								feedbackp2 = userFB[:fblist][p2.downcase]
 								if feedbackp2
-									p2FEEDBACK[:GOOD] = feedbackp2[:fbG] if feedbackp2[:fbG]
-									p2FEEDBACK[:BAD] = feedbackp2[:fbB] if feedbackp2[:fbB]
-									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN] if feedbackp2[:fbN]
+									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
+									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
+									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
 								end
 							end
 							if p3.length > 0
-								feedbackp3 = userFB.find{ |h| h['_id'] == p3.downcase }
+								feedbackp3 = userFB[:fblist][p3.downcase]
 								if feedbackp3
-									p3FEEDBACK[:GOOD] = feedbackp3[:fbG] if feedbackp3[:fbG]
-									p3FEEDBACK[:BAD] = feedbackp3[:fbB] if feedbackp3[:fbB]
-									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN] if feedbackp3[:fbN]
+									p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
+									p3FEEDBACK[:BAD] = feedbackp3[:fbB]
+									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN]
 								end
 							end
 							if p4.length > 0
-								feedbackp4 = userFB.find{ |h| h['_id'] == p4.downcase }
+								feedbackp4 = userFB[:fblist][p4.downcase]
 								if feedbackp4
-									p4FEEDBACK[:GOOD] = feedbackp4[:fbG] if feedbackp4[:fbG]
-									p4FEEDBACK[:BAD] = feedbackp4[:fbB] if feedbackp4[:fbB]
-									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
+									p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
+									p4FEEDBACK[:BAD] = feedbackp4[:fbB]
+									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN]
 								end
 							end
 							if p5.length > 0
-								feedbackp5 = userFB.find{ |h| h['_id'] == p5.downcase }
+								feedbackp5 = userFB[:fblist][p5.downcase]
 								if feedbackp5
-									p5FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
-									p5FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
-									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
+									p5FEEDBACK[:GOOD] = feedbackp5[:fbG]
+									p5FEEDBACK[:BAD] = feedbackp5[:fbB]
+									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN]
 								end
 							end
 							if p6.length > 0
-								feedbackp6 = userFB.find{ |h| h['_id'] == p6.downcase }
+								feedbackp6 = userFB[:fblist][p6.downcase]
 								if feedbackp6
-									p6FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
-									p6FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
-									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
+									p6FEEDBACK[:GOOD] = feedbackp6[:fbG]
+									p6FEEDBACK[:BAD] = feedbackp6[:fbB]
+									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN]
 								end
 							end
 
@@ -410,7 +409,7 @@ after_initialize do
 							p6FBred = true if p6FEEDBACK[:PERCENT] < 100
 
 							#vizmem bez p1?!
-							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if game[:CONSOLE] == "PS5" && !game[:CONSOLE2] && p1 == ''
+							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if game[:TTYPE][1] && p1 == ''
 
 							#create final variable
 							game[:TROIKI].push( {
@@ -424,23 +423,21 @@ after_initialize do
 						end
 					end
 
-					#set display user numbers since we are looping through all games
+					#set display user numbers since we finished looping through this game users
 					game[:P1NO] = p1NO; game[:P2NO] = p2NO; game[:P3NO] = p3NO; game[:P4NO] = p4NO
 
 				end
 
-				#save cache to db
-				gamelist = gameDB
-				@@cache[:cache].insert_one({ 
-					gamelist: gameDB, TIME: timeNOW
-				})
+				#save everything tocache to db
+				autozCache[:gamelist] = gameDB
+				autozCache[:TIME] = timeNOW
 			end
 
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
 
-			gamelist.each do |game|
+			autozCache[:gamelist].each do |game|
 				#if not guest, check if user is in this troika
 				if current_user
 					#template shit for type 2 and 3 games displaying type 2 and 3 stuff
