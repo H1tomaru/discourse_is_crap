@@ -76,7 +76,7 @@ export default Ember.Controller.extend({
 					pNAME: this.get('currentUser.username')
 				}).then(result => {
 					Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
-						fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
+						fedbakibaki: btoa(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))
 					}).then(result => {
 						this.set('responz', result)
 						if ( result.winrars == true ) {
