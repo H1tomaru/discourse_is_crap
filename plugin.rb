@@ -584,9 +584,6 @@ after_initialize do
 					#end
 
 					#create forum notification if sobrano
-					#get game info from db to determine if were on ps4, ps5, ps4\ps5 type of game
-					thisgame = @@gamedb[:gameDB].find( { _id: code[2] }, projection: { TYPE:1, DATE:1, CONSOLE:1, CONSOLE2:1 } ).to_a
-
 					#get game userlist
 					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a
 					#find this troika index
@@ -594,8 +591,8 @@ after_initialize do
 					troino = troino / 2.0 if code[0] == "4" || code[0] == "4_4" || code[0] == "4_5"
 					trindx = troino - 1
 
-					#dont do shit if its a preorder thats more then a month away or if troika index not full number
-					unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000 && troino.to_i == troino
+					#dont do shit if troika index not full number
+					if troino.to_i == troino
 						#check if troika sobrana
 						if (gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
 							gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
@@ -603,152 +600,43 @@ after_initialize do
 							gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 						(gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
 							gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1])	
+							#add users to userlist
+							usernames = ["MrBug"]
+							usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
+							usernames.push(gameuzers[0][:P2][trindx][:NAME])	if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0
+							usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx][:STAT] == 0
+							usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx][:STAT] == 0
+							usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
+							usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2+1][:STAT] == 0
+							usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
+							usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
+							usernames = usernames.uniq
 							
-						end
-						
-						if thisgame[0][:CONSOLE] == "PS4" && !thisgame[0][:CONSOLE2]
-
-						elsif ( thisgame[0][:CONSOLE] == "PS5" && !thisgame[0][:CONSOLE2] ) || ( thisgame[0][:CONSOLE] == "PS4" && thisgame[0][:CONSOLE2] == "XXX" )
+							hrenka = "Тройка" if gameuzers[0]["P2"] && gameuzers[0]["P4"]
+							hrenka = "Четверка" if gameuzers[0][:P1] && gameuzers[0][:P1][trindx]
+							hrenka = "Пятерка" if gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]
+							hrenka = "Шестерка" if gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]	
 							
-						else
+							troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
+							troitext = "Здравствуйте! :robot:\n" +
+							"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
+							"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
+							"Вот план дальнейших действий:\n" +
+							"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
+							"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
+							"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
+							"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
+							"Держитесь! И да поможет вам :bug:"
 							
-						end
-						
-					end
-
-
-					#awful unoptimized mess
-					if thisgame[0][:CONSOLE] == "PS4" && !thisgame[0][:CONSOLE2]
-						if (code[0] == "2" && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-						(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
-						(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2"] && gameuzers[0]["P4_4"] &&
-							gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
-							#dont do shit if its a preorder thats more then a month away
-							unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
-								usernames = ["MrBug" , current_user[:username]]
-								usernames.push(gameuzers[0][:P2][trindx][:NAME])	if code[0] != "2" && gameuzers[0][:P2] && gameuzers[0][:P2][trindx] && gameuzers[0][:P2][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4][trindx*2] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if code[0] != "4_4" && gameuzers[0][:P4_4][trindx] && gameuzers[0][:P4_4][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5][trindx*2] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if code[0] != "4_5" && gameuzers[0][:P4_5][trindx*2+1] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
-								usernames = usernames.uniq
-
-								troititle = "Пятерка на " + code[3] + " собрана! Ждем оплату!"
-								troitext = "Здравствуйте! :robot:\n" +
-								"Случилось невероятное! Пятерка на " + code[3] + " собрана.\n" +
-								"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-								"Вот план дальнейших действий:\n" +
-								"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
-								"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
-								"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-								"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-								"Держитесь! И да поможет вам :bug:"
-
-								PostCreator.create(
-									Discourse.system_user,
-									skip_validations: true,
-									target_usernames: usernames.join(","),
-									archetype: Archetype.private_message,
-									subtype: TopicSubtype.system_message,
-									title: troititle,
-									raw: troitext
-								)
-							end
-						end
-					elsif ( thisgame[0][:CONSOLE] == "PS5" && !thisgame[0][:CONSOLE2] ) || ( thisgame[0][:CONSOLE] == "PS4" && thisgame[0][:CONSOLE2] == "XXX" )
-						if (code[0] == "1" && gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
-						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
-						(code[0] == "2" && gameuzers[0]["P4"] &&
-						gameuzers[0]["P4"][trindx*2+1]) ||
-						(code[0] == "4" && troino.to_i == troino && gameuzers[0]["P2"] &&
-							gameuzers[0]["P2"][trindx])
-							#dont do shit if its a preorder thats more then a month away
-							unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
-								usernames = ["MrBug" , current_user[:username]]
-								usernames.push(gameuzers[0][:P1][trindx][:NAME])	if code[0] != "1" && gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
-								usernames.push(gameuzers[0][:P2][trindx][:NAME])	if code[0] != "2" && gameuzers[0][:P2][trindx] && gameuzers[0][:P2][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P4][trindx*2][:NAME])	if gameuzers[0][:P4][trindx*2] && gameuzers[0][:P4][trindx*2][:STAT] == 0
-								usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME])	if code[0] != "4" && gameuzers[0][:P4][trindx*2+1] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0
-								usernames = usernames.uniq
-
-								if ( gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:NAME] != "-55" ) || code[0] == "1"
-									troititle = "Четверка на " + code[3] + " собрана! Ждем оплату!"
-									troitext = "Здравствуйте! :robot:\n" +
-									"Случилось невероятное! Четверка на " + code[3] + " собрана.\n" +
-									"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-									"Вот план дальнейших действий:\n" +
-									"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
-									"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
-									"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-									"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-									"Держитесь! И да поможет вам :bug:"
-								else
-									troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
-									troitext = "Здравствуйте! :robot:\n" +
-									"Случилось невероятное! Тройка на " + code[3] + " собрана.\n" +
-									"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-									"Вот план дальнейших действий:\n" +
-									"1) Оплатить свою позицию с учетом отсутствующего П1, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
-									"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
-									"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-									"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-									"Держитесь! И да поможет вам :bug:"
-								end
-
-								PostCreator.create(
-									Discourse.system_user,
-									skip_validations: true,
-									target_usernames: usernames.join(","),
-									archetype: Archetype.private_message,
-									subtype: TopicSubtype.system_message,
-									title: troititle,
-									raw: troitext
-								)
-							end
-						end
-					else
-						if (code[0] == "2_4" && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-						(code[0] == "2_5" && gameuzers[0]["P2_4"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-						(code[0] == "4_4" && troino.to_i == troino && gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_5"][trindx*2+1] ) ||
-						(code[0] == "4_5" && troino.to_i == troino && gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] &&
-						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1])
-							#dont do shit if its a preorder thats more then a month away
-							unless thisgame[0][:TYPE] == 3 && thisgame[0][:DATE].to_time - Time.now > 2600000
-								usernames = ["MrBug" , current_user[:username]]
-								usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if code[0] != "2_4" && gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx] && gameuzers[0][:P2_4][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if code[0] != "2_5" && gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx] && gameuzers[0][:P2_5][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4][trindx*2] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if code[0] != "4_4" && gameuzers[0][:P4_4][trindx] && gameuzers[0][:P4_4][trindx][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5][trindx*2] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
-								usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if code[0] != "4_5" && gameuzers[0][:P4_5][trindx*2+1] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
-								usernames = usernames.uniq
-
-								troititle = "Шестерка на " + code[3] + " собрана! Ждем оплату!"
-								troitext = "Здравствуйте! :robot:\n" +
-								"Случилось невероятное! Шестерка на " + code[3] + " собрана.\n" +
-								"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-								"Вот план дальнейших действий:\n" +
-								"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
-								"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
-								"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-								"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-								"Держитесь! И да поможет вам :bug:"
-
-								PostCreator.create(
-									Discourse.system_user,
-									skip_validations: true,
-									target_usernames: usernames.join(","),
-									archetype: Archetype.private_message,
-									subtype: TopicSubtype.system_message,
-									title: troititle,
-									raw: troitext
-								)
-							end
+							PostCreator.create(
+								Discourse.system_user,
+								skip_validations: true,
+								target_usernames: usernames.join(","),
+								archetype: Archetype.private_message,
+								subtype: TopicSubtype.system_message,
+								title: troititle,
+								raw: troitext
+							)
 						end
 					end
 				else
