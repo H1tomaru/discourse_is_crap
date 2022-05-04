@@ -45,20 +45,25 @@ after_initialize do
 
 		@@userdb2 = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
-		
+
+		#cache for 4tverki and rent pages
 		@@autozCache = {}
 		@@rentaCache = {}
+		
+		#user zapis count
+		@@zaipsalsq = {}
 
-		@@accountsDB = ???
+		#full account list saved from db
+		@@accountsDB = {}
 
 		#get usefb from db and index it for easier global usage
-		@@userFB = {}
-		#@@userFB[:TIME] = Time.now
+		@@user_FB = {}
+		#@@uuser_FB[:TIME] = Time.now.strftime("%d")
 		@@userfb[:userfb].find({}).to_a.each do |fb|
 
 			#check if fb valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
-				@@userFB[:fblist][fb[:id]] = fb
+				@@user_FB[:fblist][fb[:id]] = fb
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
@@ -92,7 +97,7 @@ after_initialize do
 				end
 
 				#save to variable
-				@@userFB[:fblist][fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
+				@@user_FB[:fblist][fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
 					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
 					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC] }
 
@@ -339,7 +344,7 @@ after_initialize do
 
 							#find feedback for users
 							if p1.length > 0
-								feedbackp1 = @@userFB[:fblist][p1.downcase]
+								feedbackp1 = @@user_FB[:fblist][p1.downcase]
 								if feedbackp1
 									p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
 									p1FEEDBACK[:BAD] = feedbackp1[:fbB]
@@ -347,7 +352,7 @@ after_initialize do
 								end
 							end
 							if p2.length > 0
-								feedbackp2 = @@userFB[:fblist][p2.downcase]
+								feedbackp2 = @@user_FB[:fblist][p2.downcase]
 								if feedbackp2
 									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
 									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
@@ -355,7 +360,7 @@ after_initialize do
 								end
 							end
 							if p3.length > 0
-								feedbackp3 = @@userFB[:fblist][p3.downcase]
+								feedbackp3 = @@user_FB[:fblist][p3.downcase]
 								if feedbackp3
 									p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
 									p3FEEDBACK[:BAD] = feedbackp3[:fbB]
@@ -363,7 +368,7 @@ after_initialize do
 								end
 							end
 							if p4.length > 0
-								feedbackp4 = @@userFB[:fblist][p4.downcase]
+								feedbackp4 = @@user_FB[:fblist][p4.downcase]
 								if feedbackp4
 									p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
 									p4FEEDBACK[:BAD] = feedbackp4[:fbB]
@@ -371,7 +376,7 @@ after_initialize do
 								end
 							end
 							if p5.length > 0
-								feedbackp5 = @@userFB[:fblist][p5.downcase]
+								feedbackp5 = @@user_FB[:fblist][p5.downcase]
 								if feedbackp5
 									p5FEEDBACK[:GOOD] = feedbackp5[:fbG]
 									p5FEEDBACK[:BAD] = feedbackp5[:fbB]
@@ -379,7 +384,7 @@ after_initialize do
 								end
 							end
 							if p6.length > 0
-								feedbackp6 = @@userFB[:fblist][p6.downcase]
+								feedbackp6 = @@user_FB[:fblist][p6.downcase]
 								if feedbackp6
 									p6FEEDBACK[:GOOD] = feedbackp6[:fbG]
 									p6FEEDBACK[:BAD] = feedbackp6[:fbB]
@@ -501,55 +506,31 @@ after_initialize do
 			code = Base64.decode64(params[:bagakruta]).split("~") #0 - position, 1 - gameCODE
 			#if viever registered, count his fb
 			if current_user && code.length == 2
-				fbcount = 0
-				fbcount2 = 0
-				feedback = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { troikaBAN: 1, fbBuG: 1, fbG: 1 } ).to_a
-				if feedback[0]
-					if feedback[0][:troikaBAN] && feedback[0][:troikaBAN] == 1
-						fbcount = 777
+				user_d = current_user[:username].downcase
+				if @@user_FB[:fblist][c_user] && @@user_FB[:fblist][user_d][:fbG] > 0 && @@user_FB[:fblist][user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000
+					#special message if its a p1 zapis with less then 5 mrbug feedback
+					if @@user_FB[:fblist][user_d][:fbBuG] < 5 && code[0] == "1" && current_user[:username] != 'MrBug'
+						render json: { piadin: true, fbcount: @@user_FB[:fblist][user_d][:fbBuG] }
 					else
-						fbcount = feedback[0][:fbBuG]
-					end
-					fbcount2 = feedback[0][:fbG]
-				end
-
-				#antibotbaby!!!
-				if fbcount2 == 0 || Time.now - current_user[:created_at] < 260000
-					fbcount = 777
-				end
-
-				#antispambaby!!!
-				#will do later ;)
-
-				if fbcount < 5 && code[0] == "1" && current_user[:username] != 'MrBug'
-					render json: { piadin: true, fbcount: fbcount }
-				elsif fbcount == 777
-					render json: { banned: true }
-				else
-					#find and count how many times user zaipsalsq
-					zcount = 0
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[1] ).to_a
-					if gameuzers[0] && gameuzers[0]["P"+code[0]]
-						gameuzers[0]["P"+code[0]].each do |user|
-							if user[:NAME] == current_user[:username]
-								zcount = zcount + 1
+						#find and count how many times user zaipsalsq
+						@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
+						if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] > 4
+							render json: { banned: true }
+						else
+							#get stuff from db
+							prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
+							if prezaips[0][:imgLINKHQ]
+								prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
+								prezaips[0].except!("imgLINKHQ")
 							end
+							prezaips[0][:position] = code[0]
+							prezaips[0][:winrars] = true
+							render json: prezaips[0]
 						end
-					end
-					if zcount > 2
-						render json: { banned: true }
-					else
-						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
-						if prezaips[0][:imgLINKHQ]
-							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0].except!("imgLINKHQ")
-						end
-						prezaips[0][:position] = code[0]
-						prezaips[0][:winrars] = true
-						render json: prezaips[0]
-					end
 
+					end
+				else
+					render json: { banned: true }
 				end
 			else
 				render json: { guest: true }
