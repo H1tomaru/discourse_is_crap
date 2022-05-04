@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
 		troikopoisk() {
 			this.set('bagamdal', true)
 			Ember.$.post("/MrBug/troikopoisk/", { 
-				input: btoa(unescape(encodeURIComponent(this.get('troikopoisk2'))))
+				input: btoa(this.get('troikopoisk2'))
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('mdalready', true)
@@ -49,7 +49,7 @@ export default Ember.Controller.extend({
 			this.set('mdalready', false)
 			this.set('prezaips.winrars', false)
 			Ember.$.post("/MrBug/zaips/", { 
-				bagatrolit: btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))
+				bagatrolit: btoa(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))
 			}).then(result => {
 				this.set('zaips', result)
 				Ember.$.ajax({
