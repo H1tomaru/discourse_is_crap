@@ -46,19 +46,19 @@ after_initialize do
 		@@userdb2 = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
 		@@userfb2 = @@userdb2.use('userfb')
 		
-		autozCache = {}
-		rentaCache = {}
+		@@autozCache = {}
+		@@rentaCache = {}
 
-		accountsDB = ???
+		@@accountsDB = ???
 
 		#get usefb from db and index it for easier global usage
-		userFB = {}
-		#userFB[:TIME] = Time.now
+		@@userFB = {}
+		#@@userFB[:TIME] = Time.now
 		@@userfb[:userfb].find({}).to_a.each do |fb|
 
 			#check if fb valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
-				userFB[:fblist][fb[:id]] = fb
+				@@userFB[:fblist][fb[:id]] = fb
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
@@ -92,7 +92,7 @@ after_initialize do
 				end
 
 				#save to variable
-				userFB[:fblist][fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
+				@@userFB[:fblist][fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
 					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
 					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC] }
 
@@ -114,14 +114,14 @@ after_initialize do
 			finalvar = {}; timeNOW = Time.now
 
 			#drop chache if its old
-			if !autozCache.empty?
-				if timeNOW - autozCache[:TIME] > 900
-					autozCache = {}
+			if !@@autozCache.empty?
+				if timeNOW - @@autozCache[:TIME] > 900
+					@@autozCache = {}
 				end
 			end
 
 			#create cache if theres none
-			if autozCache.empty?
+			if @@autozCache.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 				#get all users 2 list
@@ -339,7 +339,7 @@ after_initialize do
 
 							#find feedback for users
 							if p1.length > 0
-								feedbackp1 = userFB[:fblist][p1.downcase]
+								feedbackp1 = @@userFB[:fblist][p1.downcase]
 								if feedbackp1
 									p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
 									p1FEEDBACK[:BAD] = feedbackp1[:fbB]
@@ -347,7 +347,7 @@ after_initialize do
 								end
 							end
 							if p2.length > 0
-								feedbackp2 = userFB[:fblist][p2.downcase]
+								feedbackp2 = @@userFB[:fblist][p2.downcase]
 								if feedbackp2
 									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
 									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
@@ -355,7 +355,7 @@ after_initialize do
 								end
 							end
 							if p3.length > 0
-								feedbackp3 = userFB[:fblist][p3.downcase]
+								feedbackp3 = @@userFB[:fblist][p3.downcase]
 								if feedbackp3
 									p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
 									p3FEEDBACK[:BAD] = feedbackp3[:fbB]
@@ -363,7 +363,7 @@ after_initialize do
 								end
 							end
 							if p4.length > 0
-								feedbackp4 = userFB[:fblist][p4.downcase]
+								feedbackp4 = @@userFB[:fblist][p4.downcase]
 								if feedbackp4
 									p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
 									p4FEEDBACK[:BAD] = feedbackp4[:fbB]
@@ -371,7 +371,7 @@ after_initialize do
 								end
 							end
 							if p5.length > 0
-								feedbackp5 = userFB[:fblist][p5.downcase]
+								feedbackp5 = @@userFB[:fblist][p5.downcase]
 								if feedbackp5
 									p5FEEDBACK[:GOOD] = feedbackp5[:fbG]
 									p5FEEDBACK[:BAD] = feedbackp5[:fbB]
@@ -379,7 +379,7 @@ after_initialize do
 								end
 							end
 							if p6.length > 0
-								feedbackp6 = userFB[:fblist][p6.downcase]
+								feedbackp6 = @@userFB[:fblist][p6.downcase]
 								if feedbackp6
 									p6FEEDBACK[:GOOD] = feedbackp6[:fbG]
 									p6FEEDBACK[:BAD] = feedbackp6[:fbB]
@@ -429,15 +429,15 @@ after_initialize do
 				end
 
 				#save everything tocache to db
-				autozCache[:gamelist] = gameDB
-				autozCache[:TIME] = timeNOW
+				@@autozCache[:gamelist] = gameDB
+				@@autozCache[:TIME] = timeNOW
 			end
 
 			#make 3 variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
 
-			autozCache[:gamelist].each do |game|
+			@@autozCache[:gamelist].each do |game|
 				#if not guest, check if user is in this troika
 				if current_user
 					#template shit for type 2 and 3 games displaying type 2 and 3 stuff
