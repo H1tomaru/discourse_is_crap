@@ -55,9 +55,11 @@ after_initialize do
 		#get usefb from db and index it for easier global usage
 		userFB = {}
 		@@userfb[:userfb].find({}).to_a.each do |fb|
+
 			#check if fb valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
 				userFB[fb[:id]] = fb
+
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
 				fbnumbers = { fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
@@ -88,19 +90,22 @@ after_initialize do
 						})
 					end
 				end
+
 				#save to variable
 				userFB[fb[:id]] = { _id: fb[:id], FEEDBACKS: newfbarray, troikaBAN: 0,
 					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
 					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC] }
+
 				#save to db
 				@@userfb2[:userfb].replace_one( { _id: fb[:id] }, {
 					FEEDBACKS: newfbarray, troikaBAN: 0,
 					fbG: fbnumbers[:fbG], fbN: fbnumbers[:fbN], fbB: fbnumbers[:fbB],
 					fbBuG: fbnumbers[:fbBuG], fbBuB: fbnumbers[:fbBuB], fbARC: fbnumbers[:fbARC]
 				}, { upsert: true } )
+
 			#alert if theres nothing to count
 			else
-				#say fuckup
+				puts "###Warning!!!### "fb[:id]+" feedback is broken!"
 			end
 		end
 
