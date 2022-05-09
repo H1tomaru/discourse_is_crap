@@ -722,19 +722,23 @@ after_initialize do
 		def feedbacks
 			feedbacks = { FEEDBACKS: [], FEEDBACKS2: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			newfbarray = []; fbedit = false; timeNOW = Time.now
+			downU = params[:username].downcase
 
 			#page owners cant do feedbacks!
-			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == params[:username].downcase
+			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == downU
 			
-			#if found, go
-			if @@user_FB[params[:username].downcase]
-				feedbacks[:FEEDBACKS] = @@user_FB[params[:username].downcase][:FEEDBACKS]
-				feedbacks[:fbG] = @user_FB[params[:username].downcase][:fbG]
-				feedbacks[:fbN] = @user_FB[params[:username].downcase][:fbN]
-				feedbacks[:fbB] = @user_FB[params[:username].downcase][:fbB]
-				feedbacks[:fbBuG] = @user_FB[params[:username].downcase][:fbBuG]
-				feedbacks[:fbBuB] = @user_FB[params[:username].downcase][:fbBuB]
-				feedbacks[:fbARC] = @user_FB[params[:username].downcase][:fbARC]
+			#recount user fb, in case its old
+			ufbupdate(downU,false) if @@user_FB[downU]
+			
+			#if fb exists do stuff
+			if @@user_FB[downU]
+				feedbacks[:FEEDBACKS] = @@user_FB[downU][:FEEDBACKS]
+				feedbacks[:fbG] = @user_FB[downU][:fbG]
+				feedbacks[:fbN] = @user_FB[downU][:fbN]
+				feedbacks[:fbB] = @user_FB[downU][:fbB]
+				feedbacks[:fbBuG] = @user_FB[downU][:fbBuG]
+				feedbacks[:fbBuB] = @user_FB[downU][:fbBuB]
+				feedbacks[:fbARC] = @user_FB[downU][:fbARC]
 
 				#loop throug fb and set its color for template, also find last editable fb
 				feedbacks[:FEEDBACKS].reverse_each do |fb|
@@ -749,7 +753,6 @@ after_initialize do
 
 					#onetime check for users last feedback to make it editable
 					( newfbarray[-1][:eDit] = true; fbedit = true ) if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
-
 				end
 				
 				#save final variable
@@ -765,27 +768,30 @@ after_initialize do
 			#do the games owned display, for logged in users only
 			if current_user && params[:username] != 'MrBug'
 				#get user games from my database
-				ugamez = @@userdb[:PS4db].find( 
-					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
-                           		collation: { locale: 'en', strength: 2 } ).to_a
+				ugamez = @@accountsDB.select {|e| params[:username].in? e[:P2] || params[:username].in? e[:P4] }
+
 				#do stuff if we have some
-				if ugamez[0]
+				if ugamez
+					#show acc mail if user is owner of this page
+					aCC = false
+					aCC = true if current_user[:username].downcase == downU
+					
 					ugamezfinal = []
 					ugamez.each do |ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
-							#show acc mail if user is owner of this page
-							aCC = false
-							#select between + and @, \+ and \@
-							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if current_user[:username].downcase == params[:username].downcase
+							#select acc mail between + and @, \+ and \@ if were showing it
+							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if aCC
+
 							#create final variable
-							if (ugaz[:P2][0] && ugaz[:P2][0].downcase == params[:username].downcase) || (ugaz[:P2][1] && ugaz[:P2][1].downcase == params[:username].downcase)
-								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } )
-							else
-								ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } )
-							end
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == downU
 						end
 					end
-					feedbacks[:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }
+					feedbacks[:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side
 				end
 			end
 
