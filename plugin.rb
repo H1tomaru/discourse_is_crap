@@ -88,11 +88,7 @@ after_initialize do
 			finalvar = {}
 
 			#drop chache if its old
-			if !@@autozCache.empty?
-				if Time.now - @@autozCache[:TIME] > 900
-					@@autozCache = {}
-				end
-			end
+			@@autozCache = {} if !@@autozCache.empty? && Time.now - @@autozCache[:TIME] > 900
 
 			#create cache if theres none
 			if @@autozCache.empty?
@@ -373,9 +369,7 @@ after_initialize do
 							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
 							#create account variable if it exists
-							if users[(i+1).to_s]
-								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT]
-							end
+							account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s]
 
 							#template again, is feedback green or red?
 							p1FBred = true if p1FEEDBACK[:PERCENT] < 100
@@ -459,14 +453,9 @@ after_initialize do
 			troikopoisk = Base64.decode64(params[:input]).strip.downcase
 
 			#do stuff when finding acc or not
-			if troikopoisk.length > 20 && troikopoisk.length < 40
-				if @@accountsDB[troikopoisk] && ( Time.now - @@accountsDB[troikopoisk][:DATE].to_time < 63000000 )
-					render json: { _id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
-						P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4], poiskwin: true }
-				else
-					render json: { poiskfail: true }
-				end
-
+			if troikopoisk.length > 20 && troikopoisk.length < 40 && @@accountsDB[troikopoisk] && ( Time.now - @@accountsDB[troikopoisk][:DATE].to_time < 63000000 )
+				render json: { _id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
+				P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4], poiskwin: true }
 			else 
 				render json: { poiskfail: true }
 			end
@@ -735,9 +724,7 @@ after_initialize do
 			newfbarray = []; updfbarray = []; update = false; fbedit = false; timeNOW = Time.now
 
 			#page owners cant do feedbacks!
-			if current_user
-				feedbacks[:MENOSHO] = false if current_user[:username].downcase == params[:username].downcase
-			end
+			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == params[:username].downcase
 
 			#get feedbacks from my database
 			userfb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
