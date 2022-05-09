@@ -486,9 +486,9 @@ after_initialize do
 				#recount user fb, in case its old
 				ufbupdate(user_d) if @@user_FB[user_d]
 
-				#check if positive feedback exists or if user spam zaips
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) ||
-				!(@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] > 4 && current_user[:username] != 'MrBug')
+				#check if positive feedback or spam exists
+				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d])
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
@@ -525,14 +525,15 @@ after_initialize do
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#do everything checking again!
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) ||
-				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug') ||
-				!(@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] > 4 && current_user[:username] != 'MrBug')
+				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d]) &&
+				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
 						@@zaipsalsq[user_d] += 1
 					else
 						@@zaipsalsq[user_d] = 1
+						@@zaipsalsq[user_d][:DATE] = Time.now.strftime("%d")
 					end
 
 					#do actual zaips, wohoo
@@ -541,8 +542,7 @@ after_initialize do
 
 					@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 
-					zaips = { winrars: true, position: code[0], gameNAME: code[3] }
-					render json: zaips
+					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
 					#destroy cache
 					@@autozCache = {}
@@ -570,52 +570,50 @@ after_initialize do
 					trindx = troino - 1
 
 					#dont do shit if troika index not full number
-					if troino.to_i == troino
-						#check if troika sobrana
-						if (gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-							gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-						(gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
-							gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
-						(gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-							gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1])	
-							#add users to userlist
-							usernames = ["MrBug"]
-							usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
-							usernames.push(gameuzers[0][:P2][trindx][:NAME])	if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0
-							usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx][:STAT] == 0
-							usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx][:STAT] == 0
-							usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
-							usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2+1][:STAT] == 0
-							usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
-							usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
-							usernames = usernames.uniq
-							
-							hrenka = "Тройка" if gameuzers[0]["P2"] && gameuzers[0]["P4"]
-							hrenka = "Четверка" if gameuzers[0][:P1] && gameuzers[0][:P1][trindx]
-							hrenka = "Пятерка" if gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]
-							hrenka = "Шестерка" if gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]	
-							
-							troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
-							troitext = "Здравствуйте! :robot:\n" +
-							"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
-							"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-							"Вот план дальнейших действий:\n" +
-							"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
-							"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
-							"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-							"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-							"Держитесь! И да поможет вам :bug:"
-							
-							PostCreator.create(
-								Discourse.system_user,
-								skip_validations: true,
-								target_usernames: usernames.join(","),
-								archetype: Archetype.private_message,
-								subtype: TopicSubtype.system_message,
-								title: troititle,
-								raw: troitext
-							)
-						end
+					#check if troika sobrana
+					if troino.to_i == troino && ((gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
+					(gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
+						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
+					(gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]))
+						#add users to userlist
+						usernames = ["MrBug"]
+						usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
+						usernames.push(gameuzers[0][:P2][trindx][:NAME])	if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0
+						usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx][:STAT] == 0
+						usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx][:STAT] == 0
+						usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
+						usernames.uniq!
+
+						hrenka = "Тройка" if gameuzers[0]["P2"] && gameuzers[0]["P4"]
+						hrenka = "Четверка" if gameuzers[0][:P1] && gameuzers[0][:P1][trindx]
+						hrenka = "Пятерка" if gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]
+						hrenka = "Шестерка" if gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]	
+
+						troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
+						troitext = "Здравствуйте! :robot:\n" +
+						"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
+						"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
+						"Вот план дальнейших действий:\n" +
+						"1) Оплатить свою позицию, суммы и реквизиты указаны [на странице четверок, в начале страницы](/MrBug)\n" +
+						"2) Сразу же нажать кнопку 'ответить' под этим сообщением и сообщить что вы оплатили\n" +
+						"3) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
+						"4) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
+						"Держитесь! И да поможет вам :bug:"
+
+						PostCreator.create(
+							Discourse.system_user,
+							skip_validations: true,
+							target_usernames: usernames.join(","),
+							archetype: Archetype.private_message,
+							subtype: TopicSubtype.system_message,
+							title: troititle,
+							raw: troitext
+						)
 					end
 				else
 					render json: { zaipsfail: true }
@@ -702,7 +700,7 @@ after_initialize do
 				#add feedback if we're doing it
 				if addstuff[:ADDFB] == 'true'
 					#delete duplicate users
-					feedbacks = feedbacks.uniq
+					feedbacks.uniq!
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
 						ufb = @@userfb[:userfb].find( { _id: user.downcase }, projection: { FEEDBACKS: 1 } ).to_a
