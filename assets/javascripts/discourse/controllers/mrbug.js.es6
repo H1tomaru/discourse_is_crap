@@ -32,16 +32,12 @@ export default Ember.Controller.extend({
 
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
-			Ember.$.post("/posos/", { 
-				pNAME: this.get('currentUser.username')
+			Ember.$.post("/MrBug/prezaips/", { 
+				bagakruta: btoa(knopk+"~"+gcode)
 			}).then(result => {
-				Ember.$.post("/MrBug/prezaips/", { 
-					bagakruta: btoa(knopk+"~"+gcode)
-				}).then(result => {
-					this.set('prezaips', result)
-					if (result.hasOwnProperty('position')) this.set('pzposition', result.position.[0])
-					this.set('mdalready', true)
-				})
+				this.set('prezaips', result)
+				if (result.hasOwnProperty('position')) this.set('pzposition', result.position.[0])
+				this.set('mdalready', true)
 			})
 		},
 
