@@ -75,7 +75,7 @@ after_initialize do
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS") && fb[:FEEDBACKS].any?
-				ufbupdate(fb[:_id])
+				ufbupdate(fb[:_id],false)
 
 			#alert if theres nothing to count
 			else
@@ -473,7 +473,7 @@ after_initialize do
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#recount user fb, in case its old
-				ufbupdate(user_d) if @@user_FB[user_d]
+				ufbupdate(user_d,true) if @@user_FB[user_d]
 
 				#check if positive feedback or spam exists
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
@@ -920,9 +920,9 @@ after_initialize do
 			render json: finalrenta
 		end
 
-		def ufbupdate(u_id)
+		def ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
-			if @@user_FB[u_id] && (@@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") || !@@user_FB[u_id][:DATE])
+			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") || !@@user_FB[u_id][:DATE] ) || zchek )
 				#check user feedback, update it if needed
 				userfb = @@user_FB[u_id]
 
