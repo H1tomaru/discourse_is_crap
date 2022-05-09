@@ -38,36 +38,43 @@ after_initialize do
 		db = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
+		@@rentadb = db.use('rentagadb')
+
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
 
-		@@rentadb = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'rentagadb', user: 'rentaga', password: 'A75Z3E9R66' )
-
-		@@userdb2 = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], database: 'userdb', user: 'megaadd', password: '3HXED926MT' )
-		@@userfb2 = @@userdb2.use('userfb')
+		#user zapis count
+		@@zaipsalsq = {}
 
 		#cache for 4tverki and rent pages
 		@@autozCache = {}
 		@@rentaCache = {}
-		
-		#user zapis count
-		@@zaipsalsq = {}
 
 		#full account list saved from db
 		@@accountsDB = {}
+		@@userdb[:PS4db].find().to_a.each do |acc|
+
+			#check if account is valid
+			if acc.key?("GAME") && acc.key?("P2") && acc.key?("P4") && acc.key?("DATE")
+				@@accountsDB[acc[:_id]] = acc
+
+			#alert if theres something missing
+			else
+				puts "###Warning!!!### "acc[:_id]+" accountdb is broken!"
+			end
+		end
 
 		#get usefb from db and index it for easier global usage
 		@@user_FB = {}
 		#@@user_FB[:TIME] = Time.now.strftime("%d")
-		@@userfb[:userfb].find({}).to_a.each do |fb|
+		@@userfb[:userfb].find().to_a.each do |fb|
 
-			#check if fb valid
+			#check if fb is valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
 				@@user_FB[fb[:_id]] = fb
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS") && fb[:FEEDBACKS].any?
-				@@user_FB[fb[:_id]] = fb
 				ufbupdate(fb[:_id])
 
 			#alert if theres nothing to count
@@ -78,11 +85,11 @@ after_initialize do
 
 		def show
 			#variables, duh
-			finalvar = {}; timeNOW = Time.now
+			finalvar = {}
 
 			#drop chache if its old
 			if !@@autozCache.empty?
-				if timeNOW - @@autozCache[:TIME] > 900
+				if Time.now - @@autozCache[:TIME] > 900
 					@@autozCache = {}
 				end
 			end
@@ -134,6 +141,7 @@ after_initialize do
 							elsif game[:PRICE] > 7001	
 								p4UP = [0,300,300] 
 							end
+
 						elsif game[:TTYPE][1]
 							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
 
@@ -149,6 +157,7 @@ after_initialize do
 							elsif game[:PRICE] > 7001	
 								p4UP = [0,300,400] 
 							end
+
 						else
 							game[:P4PRICE1] = 0
 
@@ -202,20 +211,20 @@ after_initialize do
 							p2NO = users[:P4_4].length / 2.0 if users[:P4_4] #fix because 2 P4 per troika
 							p3NO = users[:P4_5].length / 2.0 if users[:P4_5] #fix because 2 P4 per troika
 							#get how many troikas, roundup p4 numbers cos theres 2 per troika
-							troikaNO = [p1NO, p2NO.ceil, p3NO.ceil].max-1
+							troikaNO = [p1NO, p2NO.ceil, p3NO.ceil].max - 1
 						elsif game[:TTYPE][1]
 							p1NO = users[:P1].length if users[:P1]
 							p2NO = users[:P2].length if users[:P2]
 							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
 							#get how many troikas, roundup p4 number cos theres 2 per troika
-							troikaNO = [p1NO, p2NO, p3NO.ceil].max-1
+							troikaNO = [p1NO, p2NO, p3NO.ceil].max - 1
 						else
 							p1NO = users[:P2_4].length if users[:P2_4]
 							p2NO = users[:P2_5].length if users[:P2_5]
 							p3NO = users[:P4_4].length / 2.0 if users[:P4_4] #fix because 2 P4 per troika
 							p4NO = users[:P4_5].length / 2.0 if users[:P4_5] #fix because 2 P4 per troika
 							#get how many troikas, roundup p4 number cos theres 2 per troika
-							troikaNO = [p1NO, p2NO, p3NO.ceil, p4NO.ceil].max-1
+							troikaNO = [p1NO, p2NO, p3NO.ceil, p4NO.ceil].max - 1
 						end
 
 						#create variables for every troika
@@ -396,12 +405,12 @@ after_initialize do
 
 				end
 
-				#save everything tocache to db
+				#save everything to cache to db
 				@@autozCache[:gamelist] = gameDB
-				@@autozCache[:TIME] = timeNOW
+				@@autozCache[:TIME] = Time.now
 			end
 
-			#make 3 variables for each game type
+			#make variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
 
@@ -451,12 +460,9 @@ after_initialize do
 
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40
-				zapislist = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a
-
-				if zapislist[0] && ( Time.now - zapislist[0][:DATE].to_time < 63000000 )
-					zapislist[0].except!(:DATE)
-					zapislist[0][:poiskwin] = true
-					render json: zapislist[0]
+				if @@accountsDB[troikopoisk] && ( Time.now - @@accountsDB[troikopoisk][:DATE].to_time < 63000000 )
+					render json: { _id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
+						P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4], poiskwin: true }
 				else
 					render json: { poiskfail: true }
 				end
@@ -642,7 +648,7 @@ after_initialize do
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 							end
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: [sostav[1].last], П4: [sostav[2].last, sostav[3].last] })
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {
+							@@userdb[:PS4db].replace_one( { _id: sostav[0].strip }, {
 								_id: sostav[0].strip, GAME: addstuff[:GAME].strip,
 								P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last],
 								DATE: Time.now.strftime("%Y.%m.%d")
@@ -661,7 +667,7 @@ after_initialize do
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 							end
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: [sostav[1].last, sostav[2].last], П4: [sostav[3].last, sostav[4].last, sostav[5].last, sostav[6].last] })
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {
+							@@userdb[:PS4db].replace_one( { _id: sostav[0].strip }, {
 								_id: sostav[0].strip, GAME: addstuff[:GAME].strip,
 								P2: [sostav[1].last, sostav[2].last], P4: [sostav[3].last, sostav[4].last, sostav[5].last, sostav[6].last],
 								DATE: Time.now.strftime("%Y.%m.%d")
@@ -680,7 +686,7 @@ after_initialize do
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 							end
 							addstuff[:RESULT].push({ GAME: addstuff[:GAME].strip, Mail: sostav[0].strip, П2: [sostav[1].last], П4: [sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last] })
-							@@userdb2[:PS4db].replace_one( { _id: sostav[0].strip }, {
+							@@userdb[:PS4db].replace_one( { _id: sostav[0].strip }, {
 								_id: sostav[0].strip, GAME: addstuff[:GAME].strip,
 								P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last],
 								DATE: Time.now.strftime("%Y.%m.%d")
@@ -704,7 +710,7 @@ after_initialize do
 							hasfb = ufb[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == "Участвовал в "+chetverk+" на "+addstuff[:GAME].strip+". Всё отлично!" && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
 						end
 						unless hasfb
-							@@userfb2[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
+							@@userfb[:userfb].find_one_and_update( { _id: user.downcase }, { "$push" => { 
 								FEEDBACKS: {
 									FEEDBACK: "Участвовал в "+chetverk+" на "+addstuff[:GAME].strip+". Всё отлично!",
 									pNAME: "MrBug",
@@ -820,7 +826,7 @@ after_initialize do
 
 			#update db with new correct values if needed
 			if update
-				@@userfb2[:userfb].replace_one( { _id: params[:username].downcase }, {
+				@@userfb[:userfb].replace_one( { _id: params[:username].downcase }, {
 					FEEDBACKS: updfbarray.reverse, troikaBAN: userfb[0][:troikaBAN],
 					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC]
@@ -856,7 +862,7 @@ after_initialize do
 						if fedbacks[3] && current_user[:username] != 'MrBug'
 							render json: { gavas: true }
 						else
-							@@userfb2[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
+							@@userfb[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
 								FEEDBACKS: {
 									FEEDBACK: fedbacks[2].strip,
 									pNAME: current_user[:username],
@@ -885,7 +891,7 @@ after_initialize do
 									break
 								end
 							end
-							@@userfb2[:userfb].replace_one( { _id: params[:username].downcase },
+							@@userfb[:userfb].replace_one( { _id: params[:username].downcase },
 								ufb[0], { upsert: true } )
 							render json: { winrars: true }
 						end
@@ -1003,7 +1009,7 @@ after_initialize do
 					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }
 
 				#save to db
-				@@userfb2[:userfb].replace_one( { _id: u_id }, {
+				@@userfb[:userfb].replace_one( { _id: u_id }, {
 					FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC]
