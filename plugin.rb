@@ -826,7 +826,7 @@ after_initialize do
 
 						#if gave feedback already, show stuff
 						if fedbacks[3] && current_user[:username] != 'MrBug'
-							render json: { gavas: true }
+							render json: { gavas_z: true }
 						else
 							@@userfb[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
 								FEEDBACKS: {
@@ -836,7 +836,7 @@ after_initialize do
 									SCORE: fedbacks[1]
 								}
 							} }, { upsert: true } )
-							render json: { winrars: true }
+							render json: { winrars_z: true }
 						end
 					#or edit last feedback given
 					elsif fedbacks[0] == 1337
@@ -847,7 +847,7 @@ after_initialize do
 
 						#if edited feedback already, show stuff
 						if fedbacks[3] && current_user[:username] != 'MrBug'
-							render json: { gavas2: true }
+							render json: { gavas_e: true }
 						else
 							ufb[0][:FEEDBACKS].reverse_each do |fb|
 								if fb[:pNAME] == current_user[:username]
@@ -859,7 +859,7 @@ after_initialize do
 							end
 							@@userfb[:userfb].replace_one( { _id: params[:username].downcase },
 								ufb[0], { upsert: true } )
-							render json: { winrars: true }
+							render json: { winrars_e: true }
 						end
 					else #if none of these happen, thats really wrong...
 						render json: { fail: true }
