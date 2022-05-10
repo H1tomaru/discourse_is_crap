@@ -32,21 +32,28 @@
 		{{/if}}
 	{{/if}}
 
-	{{#if responz.winrars}}
+	{{#if responz.winrars_z}}
 		<div class='netmudal'>
-			Отзыв Успешно {{if tempadd "Записан" "Изменен"}}!
+			Отзыв Успешно Записан!
+			<button {{action 'respCLOZ'}}></button>
+		</div>
+	{{/if}}
+	
+	{{#if responz.winrars_e}}
+		<div class='netmudal'>
+			Отзыв Успешно Изменен!
 			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
 
-	{{#if responz.gavas}}
+	{{#if responz.gavas_z}}
 		<div class='netmudal'>
 			Вы Уже Оставляли Отзыв, Попробуйте Завтра
 			<button {{action 'respCLOZ'}}></button>
 		</div>
 	{{/if}}
 	
-	{{#if responz.gavas2}}
+	{{#if responz.gavas_e}}
 		<div class='netmudal'>
 			Вы Уже Изменяли Отзыв, Попробуйте Завтра
 			<button {{action 'respCLOZ'}}></button>
