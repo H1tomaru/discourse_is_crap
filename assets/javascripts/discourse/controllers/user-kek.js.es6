@@ -6,33 +6,33 @@ export default Ember.Controller.extend({
 	score: 1,
 	ozmode: 666,
 	responz: null,
-	tempadd: true,
 
 	thisPA: 1,
+
 	pagesNO: Ember.computed('model.FEEDBACKS2', function() {
 		return this.get('model.FEEDBACKS2').length + 1
 	}),
+
 	pageFB: Ember.computed('model.FEEDBACKS', function() {
 		return this.get('model.FEEDBACKS')
  	}).property('model.FEEDBACKS.[]'),
-	
+
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
-	
+
 	cum2m: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('pagesNO') > 1) return true
 	}),
-	
+
 	showfbARC: Ember.computed('model.FEEDBACKS', function() {
 		if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
 	}),
-	
+
 	actions: {
-		
+
 		addOtziv() {
 			this.set('responz', null)
-			this.set('tempadd', true)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 666)
 			this.set('pisanina', null)
@@ -40,21 +40,17 @@ export default Ember.Controller.extend({
 
 		editOtziv(fb) {
 			this.set('responz', null)
-			this.set('tempadd', false)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 1337)
 			this.set('pisanina', fb)
 		},
-		
+
 		respCLOZ() {
 			this.set('responz', null)
-		},
-
-		smtexCLOZ() {
 			this.set('otzivsmall', false)
 			this.set('otzivbig', false)
 		},
-		
+
 		showMORZ() {
 			this.get('model.FEEDBACKS').pushObjects(this.get('model.FEEDBACKS2')[0])
 			this.get('model.FEEDBACKS2').removeAt(0)
