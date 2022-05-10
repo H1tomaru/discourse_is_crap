@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 	score: 1,
 	ozmode: 666,
 	responz: null,
-
+	
 	thisPA: 1,
 
 	pagesNO: Ember.computed('model.FEEDBACKS2', function() {
