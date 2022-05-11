@@ -404,6 +404,9 @@ after_initialize do
 				@@autozCache[:TIME] = Time.now
 			end
 
+			#do user side
+			#
+			#
 			#make variables for each game type
 			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
 			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
@@ -730,15 +733,14 @@ after_initialize do
 			#recount user fb, in case its old
 			ufbupdate(downU,false) if @@user_FB[downU]
 			
+			#find color and last editable fb user on side
+			#
+			#
 			#if fb exists do stuff
 			if @@user_FB[downU]
 				feedbacks[:FEEDBACKS] = @@user_FB[downU][:FEEDBACKS]
-				feedbacks[:fbG] = @user_FB[downU][:fbG]
-				feedbacks[:fbN] = @user_FB[downU][:fbN]
-				feedbacks[:fbB] = @user_FB[downU][:fbB]
-				feedbacks[:fbBuG] = @user_FB[downU][:fbBuG]
-				feedbacks[:fbBuB] = @user_FB[downU][:fbBuB]
-				feedbacks[:fbARC] = @user_FB[downU][:fbARC]
+				feedbacks[:fbG] = @user_FB[downU][:fbG]; feedbacks[:fbN] = @user_FB[downU][:fbN]; feedbacks[:fbB] = @user_FB[downU][:fbB]
+				feedbacks[:fbBuG] = @user_FB[downU][:fbBuG]; feedbacks[:fbBuB] = @user_FB[downU][:fbBuB]; feedbacks[:fbARC] = @user_FB[downU][:fbARC]
 
 				#loop throug fb and set its color for template, also find last editable fb
 				feedbacks[:FEEDBACKS].reverse_each do |fb|
@@ -765,6 +767,8 @@ after_initialize do
 				end
 			end
 
+			#cache this shit
+			#
 			#do the games owned display, for logged in users only
 			if current_user && params[:username] != 'MrBug'
 				#get user games from my database
