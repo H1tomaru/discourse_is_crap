@@ -693,7 +693,7 @@ after_initialize do
 				end
 
 				#drop fbgamezlist cache
-				@@fbglist = {} #can only drop for involved users... but eehh... drop everything
+				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
 				render json: addstuff
 
@@ -790,7 +790,7 @@ after_initialize do
 =end
 
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[params[:username]][:DATE] != Time.now.strftime("%d") )
+			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[downU][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
 				ugamez = @@accountsDB.select {|e| params[:username].in? e[:P2] || params[:username].in? e[:P4] }
 
@@ -813,12 +813,12 @@ after_initialize do
 					end
 
 					#save it to cache
-					@@fbglist[params[:username]][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
-					@@fbglist[params[:username]][:DATE] = Time.now.strftime("%d")
+					@@fbglist[downU][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
+					@@fbglist[downU][:DATE] = Time.now.strftime("%d")
 				end
 			end
 
-			feedbacks[:ugameZ] = @@fbglist[params[:username]][:ugameZ]
+			feedbacks[:ugameZ] = @@fbglist[downU][:ugameZ]
 
 			#show acc mail only if user is owner of this page
 			if current_user[:username].downcase != downU
