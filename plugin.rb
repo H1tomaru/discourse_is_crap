@@ -46,9 +46,10 @@ after_initialize do
 		#user zapis count
 		@@zaipsalsq = {}
 
-		#cache for 4tverki and rent pages
+		#cache for 4tverki and rent pages and fbgamezlist
 		@@autozCache = {}
 		@@rentaCache = {}
+		@@fbglist = {}
 
 		#full account list saved from db
 		@@accountsDB = {}
@@ -88,7 +89,7 @@ after_initialize do
 			finalvar = {}
 
 			#drop chache if its old
-			@@autozCache = {} if !@@autozCache.empty? && Time.now - @@autozCache[:TIME] > 900
+			@@autozCache = {} if !@@autozCache.empty? && Time.now - @@autozCache[:TIME] > 1800
 
 			#create cache if theres none
 			if @@autozCache.empty?
@@ -404,6 +405,11 @@ after_initialize do
 				@@autozCache[:TIME] = Time.now
 			end
 
+			render json: @@autozCache[:gamelist]
+
+		end
+
+=begin
 			#do user side
 			#
 			#
@@ -448,8 +454,7 @@ after_initialize do
 			end
 			
 			render json: finalvar
-
-		end
+=end
 
 		def troikopoisk
 			#decode shit
@@ -457,8 +462,11 @@ after_initialize do
 
 			#do stuff when finding acc or not
 			if troikopoisk.length > 20 && troikopoisk.length < 40 && @@accountsDB[troikopoisk] && ( Time.now - @@accountsDB[troikopoisk][:DATE].to_time < 63000000 )
-				render json: { _id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
-				P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4], poiskwin: true }
+				render json: { 
+					_id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
+					P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4],
+					poiskwin: true
+				}
 			else 
 				render json: { poiskfail: true }
 			end
@@ -480,7 +488,7 @@ after_initialize do
 
 				#check if positive feedback or spam exists
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d])
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug'))
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
@@ -518,7 +526,7 @@ after_initialize do
 
 				#do everything checking again!
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d]) &&
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug') &&
 				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
@@ -563,12 +571,12 @@ after_initialize do
 
 					#dont do shit if troika index not full number
 					#check if troika sobrana
-					if troino.to_i == troino && ((gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
+					if troino.to_i == troino && ( (gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
 						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
 					(gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
 						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
 					(gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]))
+						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) )
 						#add users to userlist
 						usernames = ["MrBug"]
 						usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
@@ -684,6 +692,9 @@ after_initialize do
 					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
 				end
 
+				#drop fbgamezlist cache
+				@@fbglist = {} #can only drop for involved users... but eehh... drop everything
+
 				render json: addstuff
 
 				#add feedback if we're doing it
@@ -723,16 +734,26 @@ after_initialize do
 		end
 
 		def feedbacks
-			feedbacks = { FEEDBACKS: [], FEEDBACKS2: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			newfbarray = []; fbedit = false; timeNOW = Time.now
-			downU = params[:username].downcase
+			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
+			timeNOW = Time.now; downU = params[:username].downcase
 
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == downU
 			
 			#recount user fb, in case its old
-			ufbupdate(downU,false) if @@user_FB[downU]
+			if @@user_FB[downU]
+				ufbupdate(downU,false)
+				feedbacks[:FEEDBACKS] = @@user_FB[downU][:FEEDBACKS]
+				feedbacks[:fbG] = @@user_FB[downU][:fbG]
+				feedbacks[:fbN] = @@user_FB[downU][:fbN]
+				feedbacks[:fbB] = @@user_FB[downU][:fbB]
+				feedbacks[:fbBuG] = @@user_FB[downU][:fbBuG]
+				feedbacks[:fbBuB] = @@user_FB[downU][:fbBuB]
+				feedbacks[:fbARC] = @@user_FB[downU][:fbARC]
+			end
 			
+			
+=begin
 			#find color and last editable fb user on side
 			#
 			#
@@ -766,25 +787,20 @@ after_initialize do
 					feedbacks[:FEEDBACKS2] = newfbarray.drop(12).each_slice(12)
 				end
 			end
+=end
 
-			#cache this shit
-			#
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug'
+			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[params[:username]][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
 				ugamez = @@accountsDB.select {|e| params[:username].in? e[:P2] || params[:username].in? e[:P4] }
 
 				#do stuff if we have some
 				if ugamez
-					#show acc mail if user is owner of this page
-					aCC = false
-					aCC = true if current_user[:username].downcase == downU
-					
 					ugamezfinal = []
 					ugamez.each do |ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
-							#select acc mail between + and @, \+ and \@ if were showing it
-							aCC = ugaz[:_id][/\+(.*?)\@/m, 1] if aCC
+							#select acc mail between + and @, \+ and \@
+							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 
 							#create final variable
 							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == downU
@@ -795,8 +811,18 @@ after_initialize do
 							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == downU
 						end
 					end
-					feedbacks[:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side
+
+					#save it to cache
+					@@fbglist[params[:username]][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
+					@@fbglist[params[:username]][:DATE] = Time.now.strftime("%d")
 				end
+			end
+
+			feedbacks[:ugameZ] = @@fbglist[params[:username]][:ugameZ]
+
+			#show acc mail only if user is owner of this page
+			if current_user[:username].downcase != downU
+				feedbacks[:ugameZ].each { |h| h.delete("aCC") }
 			end
 
 			#render fb
