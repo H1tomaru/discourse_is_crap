@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
 	showGAMEZ: true,
 	showCRAP: false,
 	rulez: false,
-	
+
 	LazyLoadLoad: function() {
 		Ember.run.scheduleOnce('afterRender', this, function() {
 			Ember.$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
@@ -31,6 +31,16 @@ export default Ember.Controller.extend({
 			localStorage.setItem('showLIST', "true")
 		},
 
+		showGAMEZ() {
+			this.set('showCRAP', false)
+			this.set('showGAMEZ', true)
+		},
+
+		showCRAP() {
+			this.set('showGAMEZ', false)
+			this.set('showCRAP', true)
+		},
+
 		showTYPE1() {
 			this.toggleProperty('showTYPE1')
 		},
@@ -45,18 +55,6 @@ export default Ember.Controller.extend({
 
 		showTYPE4() {
 			this.toggleProperty('showTYPE4')
-		},
-
-		showGAMEZ() {
-			this.set('showCRAP', false)
-			this.set('showHIDEOZ', false)
-			this.set('showGAMEZ', true)
-		},
-
-		showCRAP() {
-			this.set('showGAMEZ', false)
-			this.set('showHIDEOZ', false)
-			this.set('showCRAP', true)
 		}
 
 	}
