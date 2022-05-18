@@ -80,7 +80,12 @@
 		<span class="textright2">Неделя / Месяц</span>
 		<div class="innerbox">
 			{{#each model.rentaGAMEZ as |game|}}
-				<div>
+				<div class="
+					{{unless showTYPE1 (if game.TYPE1 "rentahideoz")}}
+					{{unless showTYPE2 (if game.TYPE2 "rentahideoz")}}
+					{{unless showTYPE3 (if game.TYPE3 "rentahideoz")}}
+					{{unless showTYPE4 (if game.TYPE4 "rentahideoz")}}
+				">
 					{{#if game.STATUS}}
 						<span class="red">
 							<b>[</b> <span class="hideoS">Занят</span>
