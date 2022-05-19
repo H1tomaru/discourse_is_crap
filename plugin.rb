@@ -793,7 +793,7 @@ after_initialize do
 			#do the games owned display, for logged in users only
 			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
-				ugamez = @@accountsDB.select {|e| params[:username].in? e[:P2] || params[:username].in? e[:P4] }
+				ugamez = @@accountsDB.select {|e| e[:P2].include? params[:username] || e[:P4].include? params[:username] }
 
 				#do stuff if we have some
 				if ugamez
