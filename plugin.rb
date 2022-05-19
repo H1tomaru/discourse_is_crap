@@ -2,7 +2,7 @@
 # version: 9.9.9
 # authors: MrBug
 
-#gem 'bson', "4.3.0"
+gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
 
 require 'mongo'
