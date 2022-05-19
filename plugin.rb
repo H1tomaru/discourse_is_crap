@@ -556,10 +556,8 @@ after_initialize do
 					)
 
 					#add message to telegram bot, if enabled
-					#unless SiteSetting.metatron_id.empty? || SiteSetting.telegram_id.empty?
-					#	tgurl = "https://api.telegram.org/bot"+SiteSetting.metatron_id+"/sendMessage?chat_id="+SiteSetting.telegram_id+"&text="+current_user[:username]+" записался на позицию П"+code[0][0]+" совместной покупки "+code[3]
-					#	Net::HTTP.get(tgurl.force_encoding('ASCII-8BIT'))
-					#end
+					uri = URI('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage')
+					Net::HTTP.post_form(uri, 'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3])
 
 					#create forum notification if sobrano
 					#get game userlist
