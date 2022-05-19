@@ -15,9 +15,9 @@ export default Ember.Controller.extend({
 			if (this.get('currentUser.username')) {
 				
 			}
-			if item.TYPE == 1 {finalvar.gamedb1.push(item)}
-			if item.TYPE == 2 {finalvar.gamedb2.push(item)}
-			if item.TYPE == 3 {finalvar.gamedb3.push(item)}
+			if (item.TYPE == 1) {finalvar.gamedb1.push(item)}
+			if (item.TYPE == 2) {finalvar.gamedb2.push(item)}
+			if (item.TYPE == 3) {finalvar.gamedb3.push(item)}
 		})
 		return finalvar
 	}),
