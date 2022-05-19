@@ -877,8 +877,8 @@ after_initialize do
 				@@fbglist[user_d][:DATE] = Time.now.strftime("%d")
 			end
 
-			#use cache if we have one
-			if params[:username] != 'MrBug'
+			#use cache if we have one and its not empty
+			if params[:username] != 'MrBug' && !@@fbglist[user_d][:ugameZ].empty?
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#show acc mail only if user is owner of this page
