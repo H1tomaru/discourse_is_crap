@@ -61,7 +61,7 @@ after_initialize do
 
 			#alert if theres something missing
 			else
-				puts "###Warning!!!### "acc[:_id]+" accountdb is broken!"
+				puts "###Warning!!!### "+acc[:_id]+" accountdb is broken!"
 			end
 		end
 
@@ -80,7 +80,7 @@ after_initialize do
 
 			#alert if theres nothing to count
 			else
-				puts "###Warning!!!### "fb[:_id]+" feedback is broken!"
+				puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
 			end
 		end
 
@@ -617,10 +617,12 @@ after_initialize do
 					end
 				else
 					render json: { zaipsfail: true }
+					puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 				end
 
 			else
 				render json: { zaipsfail: true }
+				puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 			end
 		end
 
@@ -735,21 +737,22 @@ after_initialize do
 
 		def feedbacks
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			timeNOW = Time.now; downU = params[:username].downcase
+			timeNOW = Time.now
+			user_d = params[:username].downcase
 
 			#page owners cant do feedbacks!
-			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == downU
+			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 			
 			#recount user fb, in case its old
-			if @@user_FB[downU]
-				ufbupdate(downU,false)
-				feedbacks[:FEEDBACKS] = @@user_FB[downU][:FEEDBACKS]
-				feedbacks[:fbG] = @@user_FB[downU][:fbG]
-				feedbacks[:fbN] = @@user_FB[downU][:fbN]
-				feedbacks[:fbB] = @@user_FB[downU][:fbB]
-				feedbacks[:fbBuG] = @@user_FB[downU][:fbBuG]
-				feedbacks[:fbBuB] = @@user_FB[downU][:fbBuB]
-				feedbacks[:fbARC] = @@user_FB[downU][:fbARC]
+			if @@user_FB[user_d]
+				ufbupdate(user_d,false)
+				feedbacks[:FEEDBACKS] = @@user_FB[user_d][:FEEDBACKS]
+				feedbacks[:fbG] = @@user_FB[user_d][:fbG]
+				feedbacks[:fbN] = @@user_FB[user_d][:fbN]
+				feedbacks[:fbB] = @@user_FB[user_d][:fbB]
+				feedbacks[:fbBuG] = @@user_FB[user_d][:fbBuG]
+				feedbacks[:fbBuB] = @@user_FB[user_d][:fbBuB]
+				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
 			end
 			
 			
@@ -790,7 +793,7 @@ after_initialize do
 =end
 
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[downU][:DATE] != Time.now.strftime("%d") )
+			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
 				ugamez = @@accountsDB.select {|e| params[:username].in? e[:P2] || params[:username].in? e[:P4] }
 
@@ -813,16 +816,18 @@ after_initialize do
 					end
 
 					#save it to cache
-					@@fbglist[downU][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
-					@@fbglist[downU][:DATE] = Time.now.strftime("%d")
+					@@fbglist[user_d][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
 				end
+				@@fbglist[user_d][:DATE] = Time.now.strftime("%d")
 			end
 
-			feedbacks[:ugameZ] = @@fbglist[downU][:ugameZ]
+			if params[:username] != 'MrBug'
+				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
-			#show acc mail only if user is owner of this page
-			if current_user[:username].downcase != downU
-				feedbacks[:ugameZ].each { |h| h.delete("aCC") }
+				#show acc mail only if user is owner of this page
+				if current_user[:username].downcase != user_d
+					feedbacks[:ugameZ].each { |h| h.delete("aCC") }
+				end
 			end
 
 			#render fb
@@ -833,25 +838,26 @@ after_initialize do
 		def zafeedback
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
-			#page owners and guests cant do feedbacks!
-			if current_user && fedbacks.length == 3 && current_user[:username].downcase != params[:username].downcase
-				#users with negative feedbacks cant do feedbacks!
-				userfb = @@userfb[:userfb].find( { _id: current_user[:username].downcase }, projection: { fbB: 1 } ).to_a
+			fedbacks[0] = fedbacks[0].to_i
+			fedbacks[1] = fedbacks[1].to_i
+			user_d = current_user[:username].downcase
+			pageu_d = params[:username].downcase
+			timeNOW = Time.now.strftime("%Y.%m.%d")
 
-				#if bad feedback present, show stuff
-				if userfb[0] && userfb[0][:fbB] > 0
+			#page owners and guests cant do feedbacks!
+			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == 666 || fedbacks[0] == 1337 )
+
+				#users with negative feedbacks cant do feedbacks!
+				if @@user_FB[user_d] && @@user_FB[user_d][:fbB] > 0
 					render json: { bakas: true }
 				else
-					#get user feedback
-					ufb = @@userfb[:userfb].find( { _id: params[:username].downcase } ).to_a
-
-					fedbacks[0] = fedbacks[0].to_i; fedbacks[1] = fedbacks[1].to_i
 
 					#do normal feedback add
 					if fedbacks[0] == 666
+
 						#find if user gave feedback already today
-						if ufb[0] && ufb[0][:FEEDBACKS]
-							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d")}
+						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
+							fedbacks[3] = @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW}
 						end
 
 						#if gave feedback already, show stuff
@@ -862,7 +868,7 @@ after_initialize do
 								FEEDBACKS: {
 									FEEDBACK: fedbacks[2].strip,
 									pNAME: current_user[:username],
-									DATE: Time.now.strftime("%Y.%m.%d"),
+									DATE: timeNOW,
 									SCORE: fedbacks[1]
 								}
 							} }, { upsert: true } )
@@ -871,8 +877,8 @@ after_initialize do
 					#or edit last feedback given
 					elsif fedbacks[0] == 1337
 						#find if user edited feedback already today
-						if ufb[0] && ufb[0][:FEEDBACKS]
-							fedbacks[3] = ufb[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == Time.now.strftime("%Y.%m.%d") && h[:EDITED] == Time.now.strftime("%Y.%m.%d")}
+						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
+							fedbacks[3] = @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:EDITED] == timeNOW}
 						end
 
 						#if edited feedback already, show stuff
@@ -883,7 +889,7 @@ after_initialize do
 								if fb[:pNAME] == current_user[:username]
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
-									fb[:EDITED] = Time.now.strftime("%Y.%m.%d")
+									fb[:EDITED] = timeNOW
 									break
 								end
 							end
@@ -891,13 +897,10 @@ after_initialize do
 								ufb[0], { upsert: true } )
 							render json: { winrars_e: true }
 						end
-					else #if none of these happen, thats really wrong...
-						render json: { fail: true }
-					end
-
 				end
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
+				puts "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
 			end
 		end
 			
@@ -958,7 +961,7 @@ after_initialize do
 
 		def ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
-			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") || !@@user_FB[u_id][:DATE] ) || zchek )
+			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
 				#check user feedback, update it if needed
 				userfb = @@user_FB[u_id]
 
@@ -972,7 +975,7 @@ after_initialize do
 				feedbacks[:troikaBAN] = userfb[:troikaBAN] if userfb.key?("troikaBAN")
 
 				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = @@user_FB[u_id][:fbARC] if userfb.key?("fbARC")
+				feedbacks[:fbARC] = userfb[:fbARC] if userfb.key?("fbARC")
 
 				#count and create numbers
 				userfb[:FEEDBACKS].each do |fb|
@@ -998,9 +1001,9 @@ after_initialize do
 				end
 
 				#update shit if numbers are different
-				if feedbacks[:troikaBAN] != @@user_FB[u_id][:troikaBAN] || feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] ||
-				feedbacks[:fbB] != @@user_FB[u_id][:fbB] || feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] ||
-				feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] || !@@user_FB[u_id][:DATE] || @@user_FB[u_id][:DATE] != Time.now.strftime("%d")
+				if feedbacks[:troikaBAN] != userfb[:troikaBAN] || feedbacks[:fbG] != userfb[:fbG] || feedbacks[:fbN] != userfb[:fbN] ||
+				feedbacks[:fbB] != userfb[:fbB] || feedbacks[:fbBuG] != userfb[:fbBuG] || feedbacks[:fbBuB] != userfb[:fbBuB] ||
+				feedbacks[:fbARC] != userfb[:fbARC] || !userfb[:DATE] || userfb[:DATE] != Time.now.strftime("%d")
 					#save to cache
 					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
