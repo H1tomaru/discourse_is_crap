@@ -66,7 +66,7 @@ after_initialize do
 		end
 
 		#very cute fb update method
-		def ufbupdate(u_id,zchek)
+		def self.ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
 			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
 				#check user feedback, update it if needed
@@ -852,7 +852,7 @@ after_initialize do
 			#do the games owned display, for logged in users only
 			if current_user && params[:username] != 'MrBug' && ( !@@fbglist || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
-				ugamez = @@accountsDB.select { |e| e[:P2].include? params[:username] } #|| e[:P4].include? params[:username] }
+				ugamez = @@accountsDB.select { |e| (e[:P2].include? params[:username]) || (e[:P4].include? params[:username]) }
 
 				#do stuff if we have some
 				if ugamez
