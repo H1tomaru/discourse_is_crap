@@ -48,7 +48,7 @@
 
 	<br>
 	
-	{{#if maigamez1}}
+	{{#if glizt.maigamez1}}
 		<div class="ghead red"><h2>ЖДЕМ ОПЛАТУ</h2></div>
 		<table class="atats kadu">
 		<colgroup>
@@ -58,7 +58,7 @@
 			<col width="0" />
 			<col width="50px" />
 		</colgroup>
-			{{#each maigamez1 as |game|}}
+			{{#each glizt.maigamez1 as |game|}}
 				<tr>
 					<td>
 						<img src="{{game.gPIC}}" alt="{{game.gNAME}}">
@@ -112,7 +112,7 @@
 
 	<br>
 
-	{{#if maigamez2}}
+	{{#if glizt.maigamez2}}
 		<div class="ghead green"><h2>ОПЛАЧЕНО</h2></div>
 		<table class="atats udak">
 		<colgroup>
@@ -120,7 +120,7 @@
 			<col width="30px" />
 			<col width="100%" />
 		</colgroup>
-			{{#each maigamez2 as |game|}}
+			{{#each glizt.maigamez2 as |game|}}
 				<tr>
 					<td>
 						<img src="{{game.gPIC}}" alt="{{game.gNAME}}">
@@ -261,12 +261,12 @@
 		</div>
 	{{/if}}
 
-	{{#if gamedb1}}
+	{{#if glizt.gamedb1}}
 		<div class='ghed {{unless showhideo.[0] "slut"}}' {{action 'showhideo' 0}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждём ещё желающих</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[0]}}
-		{{#each gamedb1 as |game index|}}
+		{{#each glizt.gamedb1 as |game index|}}
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo1' index}}>
 				<tr>
 					{{! PreButtonsGame }}
@@ -838,12 +838,12 @@
 		</div>
 	{{/if}}
 
-	{{#if gamedb2}}
+	{{#if glizt.gamedb2}}
 		<div class='ghed {{unless showhideo.[1] "slut"}}' {{action 'showhideo' 1}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые #$@&%*! скидки в PSN</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[1]}}
-		{{#each gamedb2 as |game index|}}
+		{{#each glizt.gamedb2 as |game index|}}
 
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo2' index}}>
 				<tr>
@@ -1417,12 +1417,12 @@
 		</div>
 	{{/if}}
 
-	{{#if gamedb3}}
+	{{#if glizt.gamedb3}}
 		<div class='ghed {{unless showhideo.[2] "slut"}}' {{action 'showhideo' 2}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
 		<div class='MrBug'>
 
 		{{#if showhideo.[2]}}
-		{{#each gamedb3 as |game index|}}
+		{{#each glizt.gamedb3 as |game index|}}
 
 			<table class='ggg {{if game.MODE1 'bgred2'}}{{if game.MODE2 'bggr3'}}' {{action 'showhideo3' index}}>
 				<tr>
