@@ -854,9 +854,9 @@ after_initialize do
 				#get user games from my database
 				ugamez = @@accountsDB.select { |e| (e[:P2].include? params[:username]) || (e[:P4].include? params[:username]) }
 
+				ugamezfinal = []
 				#do stuff if we have some
 				if ugamez
-					ugamezfinal = []
 					ugamez.each do |ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 							#select acc mail between + and @, \+ and \@
@@ -871,13 +871,13 @@ after_initialize do
 							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == downU
 						end
 					end
-
-					#save it to cache
-					@@fbglist[user_d][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
 				end
+				#save it to cache
+				@@fbglist[user_d][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] } #do web side? eeeh... cached anyway...
 				@@fbglist[user_d][:DATE] = Time.now.strftime("%d")
 			end
 
+			#use cache if we have one
 			if params[:username] != 'MrBug'
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
