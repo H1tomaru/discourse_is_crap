@@ -8,6 +8,19 @@ export default Ember.Controller.extend({
 	zaips: null,
 
 	showhideo: [true, true, true],
+	
+	glizt: computed('model.gamelist', function() {
+		finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
+		this.get('model.gamelist').forEach((item, index) => {
+			if (this.get('currentUser.username')) {
+				
+			}
+			if item.TYPE == 1 {finalvar.gamedb1.push(item)}
+			if item.TYPE == 2 {finalvar.gamedb2.push(item)}
+			if item.TYPE == 3 {finalvar.gamedb3.push(item)}
+		})
+		return finalvar
+	}),
 
 
 	actions: {
