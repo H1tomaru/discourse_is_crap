@@ -855,15 +855,12 @@ after_initialize do
 					#do normal feedback add
 					if fedbacks[0] == 666
 
-						#find if user gave feedback already today
-						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
-							fedbacks[3] = @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW}
-						end
-
 						#if gave feedback already, show stuff
-						if fedbacks[3] && current_user[:username] != 'MrBug'
+						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS] && @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
 							render json: { gavas_z: true }
 						else
+							#create fb array if user doesnt have any fb yet
+							@@user_FB[pageu_d][:FEEDBACKS] = [] unless @@user_FB[pageu_d] && @@user_FB[pageu_d].key?("FEEDBACKS")
 							#add feedback to fb cache
 							@@user_FB[pageu_d][:FEEDBACKS].push({
 								FEEDBACK: fedbacks[2].strip,
@@ -887,7 +884,6 @@ after_initialize do
 						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
-
 								if fb[:EDITED] && fb[:EDITED] == timeNOW
 									render json: { gavas_e: true }
 								else
@@ -903,12 +899,13 @@ after_initialize do
 									#recount fb and update fb
 									ufbupdate(pageu_d,false)
 								end
-
 								break
 							end
 						end
 					end
+
 				end
+
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
 				puts "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
@@ -916,31 +913,21 @@ after_initialize do
 		end
 			
 		def rentagama
-			finalrenta = {} # { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
+			#drop chache if it exists and is old
+			@@rentaCache = {} if !@@rentaCache.empty? && Time.now - @@rentaCache[:TIME] > 3600
 
-			#get cache from db, drop it if its old
-			cachedRENT = @@cache[:rentaCHA].find().to_a
-			if cachedRENT[0]
-				if Time.now - cachedRENT[0][:TIME] > 3600
-					@@cache[:rentaCHA].drop()
-				else
-					finalrenta = cachedRENT[0].symbolize_keys.except(:_id, :TIME)
-				end
-			end
-
-			if finalrenta.empty?
-				#find all rentagamez
-				rentagamez = @@rentadb[:rentagadb].find().to_a
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
+			if @@rentaCache.empty?
+				@@rentaCache[:finalrenta] = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
-				#create template shit
-				rentagamez.each do |games|
+
+				#find all rentagamez
+				@@rentadb[:rentagadb].find().to_a.each do |games|
 					gTYPE = [false,false,false,false]
 					count[0] = count[0] + 1
-					( gTYPE[0] = true; count[1] = count[1] + 1 ) if games[:GTYPE] == 1
-					( gTYPE[1] = true; count[2] = count[2] + 1 ) if games[:GTYPE] == 2
-					( gTYPE[2] = true; count[3] = count[3] + 1 ) if games[:GTYPE] == 3
-					( gTYPE[3] = true; count[4] = count[4] + 1 ) if games[:GTYPE] == 4
+					( gTYPE[0] = true; count[1] += 1 ) if games[:GTYPE] == 1
+					( gTYPE[1] = true; count[2] += 1 ) if games[:GTYPE] == 2
+					( gTYPE[2] = true; count[3] += 1 ) if games[:GTYPE] == 3
+					( gTYPE[3] = true; count[4] += 1 ) if games[:GTYPE] == 4
 					games[:GITEMS].each do |game|
 						gameojb = {
 							GNAME: games[:_id], GPIC: games[:GPIC], GCOMMENT: games[:GCOMMENT],
@@ -948,26 +935,20 @@ after_initialize do
 							GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
 							STATUS: game[:STATUS], LINE: game[:LINE]
 						}
-						finalrenta[:rentaGAMEZ].push( gameojb )
-						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
-						finalrenta[:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
+						@@rentaCache[:finalrenta][:rentaGAMEZ].push( gameojb )
+						@@rentaCache[:finalrenta][:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
+						@@rentaCache[:finalrenta][:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
 					end
 				end
-				finalrenta[:count] = count
+				@@rentaCache[:finalrenta][:count] = count
 
 				#sort this shit
-				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-
-				#save cache to db
-				@@cache[:rentaCHA].insert_one({ 
-					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], count: count, TIME: Time.now
-				})
+				@@rentaCache[:finalrenta][:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
+				@@rentaCache[:finalrenta][:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				@@rentaCache[:finalrenta][:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 			end
 
-			render json: finalrenta
+			render json: @@rentaCache[:finalrenta]
 		end
 
 		def ufbupdate(u_id,zchek)
