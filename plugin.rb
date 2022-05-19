@@ -464,7 +464,7 @@ after_initialize do
 				@@autozCache[:TIME] = Time.now
 			end
 
-			render json: @@autozCache[:gamelist]
+			render json: { gamelist: @@autozCache[:gamelist] }
 
 		end
 
