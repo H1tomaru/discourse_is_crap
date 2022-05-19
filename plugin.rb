@@ -134,7 +134,7 @@ after_initialize do
 				@@user_FB[fb[:_id]] = fb
 
 			#count shit if its not valid
-			elsif fb.key?("FEEDBACKS") && fb[:FEEDBACKS].any?
+			elsif fb.key?("FEEDBACKS")
 				ufbupdate(fb[:_id],false)
 
 			#alert if theres nothing to count
