@@ -757,7 +757,7 @@ after_initialize do
 			
 			
 =begin
-			#find color and last editable fb user on side
+			#find color and last editable fb on user side
 			#
 			#
 			#if fb exists do stuff
@@ -864,39 +864,50 @@ after_initialize do
 						if fedbacks[3] && current_user[:username] != 'MrBug'
 							render json: { gavas_z: true }
 						else
-							@@userfb[:userfb].find_one_and_update( { _id: params[:username].downcase }, { "$push" => { 
-								FEEDBACKS: {
-									FEEDBACK: fedbacks[2].strip,
-									pNAME: current_user[:username],
-									DATE: timeNOW,
-									SCORE: fedbacks[1]
-								}
-							} }, { upsert: true } )
+							#add feedback to fb cache
+							@@user_FB[pageu_d][:FEEDBACKS].push({
+								FEEDBACK: fedbacks[2].strip,
+								pNAME: current_user[:username],
+								DATE: timeNOW,
+								SCORE: fedbacks[1]
+							})
+							#remove date so we can rebuild and update db
+							@@user_FB[pageu_d].delete("DATE")
+
 							render json: { winrars_z: true }
-						end
-					#or edit last feedback given
-					elsif fedbacks[0] == 1337
-						#find if user edited feedback already today
-						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
-							fedbacks[3] = @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:EDITED] == timeNOW}
+
+							#recount fb and update fb
+							ufbupdate(pageu_d,false)
 						end
 
-						#if edited feedback already, show stuff
-						if fedbacks[3] && current_user[:username] != 'MrBug'
-							render json: { gavas_e: true }
-						else
-							ufb[0][:FEEDBACKS].reverse_each do |fb|
-								if fb[:pNAME] == current_user[:username]
+					#or edit last feedback given
+					elsif fedbacks[0] == 1337
+
+						#find last feedback and see if we edited it already today
+						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
+							#if found, do stuff
+							if fb[:pNAME] == current_user[:username]
+
+								if fb[:EDITED] && fb[:EDITED] == timeNOW
+									render json: { gavas_e: true }
+								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
 									fb[:EDITED] = timeNOW
-									break
+
+									#remove date so we can rebuild and update db
+									@@user_FB[pageu_d].delete("DATE")
+
+									render json: { winrars_e: true }
+
+									#recount fb and update fb
+									ufbupdate(pageu_d,false)
 								end
+
+								break
 							end
-							@@userfb[:userfb].replace_one( { _id: params[:username].downcase },
-								ufb[0], { upsert: true } )
-							render json: { winrars_e: true }
 						end
+					end
 				end
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
