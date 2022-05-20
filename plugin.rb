@@ -838,10 +838,8 @@ after_initialize do
 			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
-				#show acc mail only if user is owner of this page
-				if current_user[:username].downcase != user_d
-					feedbacks[:ugameZ].each { |h| h.delete("aCC") }
-				end
+				#remove acc mail if user is not owner of this page
+				feedbacks[:ugameZ].each { |h| h.delete("aCC") } if current_user[:username].downcase != user_d
 			end
 
 			#render fb
