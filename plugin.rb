@@ -57,7 +57,7 @@ after_initialize do
 
 			#check if account is valid
 			if acc.key?("GAME") && acc.key?("P2") && acc.key?("P4") && acc.key?("DATE")
-				@@accountsDB[acc[:_id]] = acc
+				@@accountsDB[acc[:_id]] = acc if acc[:DATE].to_time < 63000000
 
 			#alert if theres something missing
 			else
