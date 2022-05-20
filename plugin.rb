@@ -820,12 +820,12 @@ after_initialize do
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 
 							#create final variable
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == downU
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == downU
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == downU
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == downU
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == downU
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == downU
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == user_d
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == user_d
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == user_d
+							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == user_d
 						end
 					end
 				end
