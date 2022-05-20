@@ -4,9 +4,8 @@ export default Ember.Controller.extend({
 	checked2: false,
 	checked3: false,
 	score: 1,
-	ozmode: 666,
+	ozmode: true,
 	responz: null,
-	tempadd: true,
 
 	fEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
 		var finalvar = {fb1: [], fb2: []}
@@ -64,17 +63,15 @@ export default Ember.Controller.extend({
 
 		addOtziv() {
 			this.set('responz', null)
-			this.set('tempadd', true)
 			this.set('otzivmdal', true)
-			this.set('ozmode', 666)
+			this.set('ozmode', true)
 			this.set('pisanina', null)
 		},
 
 		editOtziv(fb) {
 			this.set('responz', null)
-			this.set('tempadd', false)
 			this.set('otzivmdal', true)
-			this.set('ozmode', 1337)
+			this.set('ozmode', false)
 			this.set('pisanina', fb)
 		},
 
@@ -103,7 +100,7 @@ export default Ember.Controller.extend({
 				}).then(result => {
 					this.set('responz', result)
 					if ( result.winrars == true ) {
-						if (this.get('ozmode') == 666) {
+						if (this.get('ozmode') == true) {
 
 							var color
 							if ( this.get('score') > 0 ) { 
