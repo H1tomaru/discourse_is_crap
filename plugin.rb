@@ -834,7 +834,7 @@ after_initialize do
 							render json: { gavas_z: true }
 						else
 							#create fb array if user doesnt have any fb yet
-							@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d].key?("FEEDBACKS")
+							#@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d].key?("FEEDBACKS")
 							#add feedback to fb cache
 							@@user_FB[pageu_d][:FEEDBACKS].push({
 								FEEDBACK: fedbacks[2].strip,
