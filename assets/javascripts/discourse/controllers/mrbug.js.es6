@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
 		troikopoisk() {
 			this.set('bagamdal', true)
 			Ember.$.post("/MrBug/troikopoisk/", { 
-				input: btoa(this.get('troikopoisk2'))
+				input: btoa(encodeURIComponent(this.get('troikopoisk2')))
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('mdalready', true)
