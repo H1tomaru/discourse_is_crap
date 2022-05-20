@@ -19,19 +19,19 @@ export default Ember.Controller.extend({
 			var currentuser = this.get('currentUser.username')
 			if (currentuser) {
 				//template shit for type 2 and 3 games displaying type 2 and 3 stuff
-				var gTYPE2 = false, var gTYPE3 = false
+				var gTYPE2 = false; var gTYPE3 = false
 				if (item.TYPE == 2) {gTYPE2 = true}
 				if (item.TYPE == 3) {gTYPE3 = true}
 
 				//loop thorought troikas and see if current user is in it
 				item.TROIKI.forEach((troika, index) => {
-					troika.MODE1 = false, troika.MODE2 = false
+					troika.MODE1 = false; troika.MODE2 = false
 
 					//calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
 					for (let i = 0; i < 6; i++) {
 						if (currentuser == troika.USERS.[i]) {
 							if (troika.PSTATUS.[i].[0] == true) {
-								item.MODE1 = true, troika.MODE1 = true
+								item.MODE1 = true; troika.MODE1 = true
 								finalvar.maigamez1.push( {
 									POSITION: item.PPOSITIONS.[i], gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: item.PPRICES.[i],
 									P1ADD: troika.NOP1ADD, DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
