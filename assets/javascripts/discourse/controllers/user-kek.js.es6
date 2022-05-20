@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
 	score: 1,
 	ozmode: 666,
 	responz: null,
+	tempadd: true,
 
 	fEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
 		var finalvar = {fb1: [], fb2: []}
@@ -63,6 +64,7 @@ export default Ember.Controller.extend({
 
 		addOtziv() {
 			this.set('responz', null)
+			this.set('tempadd', true)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 666)
 			this.set('pisanina', null)
@@ -70,6 +72,7 @@ export default Ember.Controller.extend({
 
 		editOtziv(fb) {
 			this.set('responz', null)
+			this.set('tempadd', false)
 			this.set('otzivmdal', true)
 			this.set('ozmode', 1337)
 			this.set('pisanina', fb)
