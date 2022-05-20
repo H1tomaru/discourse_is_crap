@@ -14,6 +14,7 @@ export default Ember.Controller.extend({
 		var finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 
 		this.get('model.gamelist').forEach((item, index) => {
+			item.MODE1 = false; item.MODE2 = false
 
 			//if not guest, check if user is in this troika
 			var currentuser = this.get('currentUser.username')
@@ -31,7 +32,7 @@ export default Ember.Controller.extend({
 					for (let i = 0; i < 6; i++) {
 						if (currentuser == troika.USERS.[i]) {
 							if (troika.PSTATUS.[i].[0] == true) {
-								item.MODE1 = true; troika.MODE1 = true
+								item.MODE1 = true; troika.MODE1 = true; item.MODE2 = false; troika.MODE2 = false
 								finalvar.maigamez1.push( {
 									POSITION: item.PPOSITIONS.[i], gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: item.PPRICES.[i],
 									P1ADD: troika.NOP1ADD, DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
