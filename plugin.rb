@@ -465,60 +465,9 @@ after_initialize do
 				@@autozCache[:TIME] = Time.now
 			end
 
-			if current_user[:username] == 'MrBug' || current_user[:username] != 'H1tomaru'
-				render json: { userfb: @@user_FB, gamedb: @@accountsDB, fbglist: @@fbglist, rentaCache: @@rentaCache, gamelist: @@autozCache[:gamelist] }
-			else
-				render json: { gamelist: @@autozCache[:gamelist] }
-			end
+			render json: { gamelist: @@autozCache[:gamelist] }
 
 		end
-
-=begin
-			#do user side
-			#
-			#
-			#make variables for each game type
-			finalvar[:gamedb1] = []; finalvar[:gamedb2] = []; finalvar[:gamedb3] = []
-			finalvar[:maigamez1] = []; finalvar[:maigamez2] = []
-
-			@@autozCache[:gamelist].each do |game|
-				#if not guest, check if user is in this troika
-				if current_user
-					#template shit for type 2 and 3 games displaying type 2 and 3 stuff
-					gTYPE2 = false; gTYPE3 = false
-					gTYPE2 = true if game[:TYPE] == 2
-					gTYPE3 = true if game[:TYPE] == 3
-
-					#loop thorought troikas and see if current user is in it
-					game[:TROIKI].each do |troika|
-						troika[:MODE1] = false; troika[:MODE2] = false
-
-						#calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
-						for i in 0..5
-							if current_user[:username] == troika[:USERS][i]
-								if troika[:PSTATUS][i][0]
-									game[:MODE1] = true; troika[:MODE1] = true
-									finalvar[:maigamez1].push( {
-										POSITION: game[:PPOSITIONS][i], gNAME: game[:gameNAME], gPIC: game[:imgLINK], PRICE: game[:PPRICES][i],
-										P1ADD: troika[:NOP1ADD], DATE: game[:DATE], TYPE2: gTYPE2, TYPE3: gTYPE3
-									} )
-								else
-									game[:MODE2] = true if !game[:MODE1]
-									troika[:MODE2] = true if !troika[:MODE1]
-									finalvar[:maigamez2].push( { POSITION: game[:PPOSITIONS][i], gNAME: game[:gameNAME], gPIC: game[:imgLINK] } )
-								end
-							end
-						end
-					end
-				end
-				#fill 3 variables for each game type
-				finalvar[:gamedb1].push(game.except("PRICE", "TYPE", "PPOSITIONS", "PPRICES")) if game[:TYPE] == 1
-				finalvar[:gamedb2].push(game.except("PRICE", "TYPE", "PPOSITIONS", "PPRICES")) if game[:TYPE] == 2
-				finalvar[:gamedb3].push(game.except("PRICE", "TYPE", "PPOSITIONS", "PPRICES")) if game[:TYPE] == 3
-			end
-			
-			render json: finalvar
-=end
 
 		def troikopoisk
 			#decode shit
@@ -879,9 +828,9 @@ after_initialize do
 				end
 				#save it to cache
 				@@fbglist[user_d] = { 
-					ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] },
+					ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, #do sorting web side? eeeh... cached anyway...
 					DATE: Time.now.strftime("%d")
-				} #do web side? eeeh... cached anyway...
+				}
 			end
 
 			#use cache if we have one and its not empty
