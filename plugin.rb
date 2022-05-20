@@ -829,7 +829,7 @@ after_initialize do
 				else
 
 					#do normal feedback add
-					if fedbacks[0] == true
+					if fedbacks[0] == "true"
 
 						#if gave feedback already, show stuff
 						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS] && @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
@@ -854,7 +854,7 @@ after_initialize do
 						end
 
 					#or edit last feedback given
-					elsif fedbacks[0] == false
+					elsif fedbacks[0] == "false"
 
 						#find last feedback and see if we edited it already today
 						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
