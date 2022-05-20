@@ -813,14 +813,13 @@ after_initialize do
 		def zafeedback
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
-			fedbacks[0] = fedbacks[0].to_i
 			fedbacks[1] = fedbacks[1].to_i
 			user_d = current_user[:username].downcase
 			pageu_d = params[:username].downcase
 			timeNOW = Time.now.strftime("%Y.%m.%d")
 
 			#page owners and guests cant do feedbacks!
-			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == 666 || fedbacks[0] == 1337 )
+			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == true || fedbacks[0] == false )
 
 				#users with negative feedbacks cant do feedbacks!
 				if @@user_FB[user_d] && @@user_FB[user_d][:fbB] > 0
@@ -828,7 +827,7 @@ after_initialize do
 				else
 
 					#do normal feedback add
-					if fedbacks[0] == 666
+					if fedbacks[0] == true
 
 						#if gave feedback already, show stuff
 						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS] && @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
@@ -853,7 +852,7 @@ after_initialize do
 						end
 
 					#or edit last feedback given
-					elsif fedbacks[0] == 1337
+					elsif fedbacks[0] == false
 
 						#find last feedback and see if we edited it already today
 						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
