@@ -692,7 +692,7 @@ after_initialize do
 							for i in 1..5
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 							end
-							addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, П2: [sostav[1].last], П4: [sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last], DATE: Time.now.strftime("%Y.%m.%d") })
+							addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last], DATE: Time.now.strftime("%Y.%m.%d") })
 
 							#add those users to a list of users to give them feedback after, if were giving it
 							feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last) if addstuff[:ADDFB]
@@ -705,7 +705,11 @@ after_initialize do
 					@@accountsDB[winrar[:_id]] = winrar
 
 					#save to db
-					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar.except(:_id), { upsert: true } )
+					@@userdb[:PS4db].replace_one( 
+						{ _id: winrar[:_id] },
+						{ GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] },
+						{ upsert: true }
+					)
 				end
 
 				#drop fbgamezlist cache
