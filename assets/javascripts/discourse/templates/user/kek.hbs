@@ -85,7 +85,7 @@
 					<button class="addZ" {{action 'addOtziv'}}>Оставить отзыв</button>
 				</div>
 			{{/if}}
-			{{#each pageFB as |feedback|}}
+			{{#each FEEDBACKS.fb1 as |feedback|}}
 				<div class='kekus {{feedback.COLOR}}'>
 					<div><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></div>
 					<div>{{feedback.DATE}}</div>
