@@ -837,7 +837,7 @@ after_initialize do
 			end
 
 			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
+			if params[:username] != 'MrBug' && @@fbglist[user_d] && @@fbglist[user_d][:ugameZ].any?
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#show acc mail only if user is owner of this page
