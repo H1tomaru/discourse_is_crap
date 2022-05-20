@@ -705,7 +705,7 @@ after_initialize do
 					@@accountsDB[winrar[:_id]] = winrar
 
 					#save to db
-					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar, { upsert: true } )
+					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar.except(:_id), { upsert: true } )
 				end
 
 				#drop fbgamezlist cache
