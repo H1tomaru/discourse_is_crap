@@ -124,8 +124,8 @@ after_initialize do
 			end
 		end
 		
-		def ufbupdate
-			self.class.ufbupdate
+		def ufbupdate(u_id,zchek)
+			self.class.ufbupdate(u_id,zchek)
 		end
 
 		#get usefb from db and index it for easier global usage
