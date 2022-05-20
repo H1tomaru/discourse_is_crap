@@ -807,7 +807,7 @@ after_initialize do
 =end
 
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( @@fbglist.empty? || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
+			if current_user && params[:username] != 'MrBug' && ( @@fbglist.empty? || ( @@fbglist[user_d] && @@fbglist[user_d][:DATE] != Time.now.strftime("%d") ) )
 				#get user games from my database
 				ugamez = @@accountsDB.select { |key, hash| (hash[:P2].include? params[:username]) || (hash[:P4].include? params[:username]) }
 
