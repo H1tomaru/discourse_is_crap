@@ -37,7 +37,9 @@ export default Ember.Controller.extend({
 									P1ADD: troika.NOP1ADD, DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							} else {
-								
+								if (item.MODE1 == false) {item.MODE2 = true}
+								if (troika.MODE1 == false) {troika.MODE2 = true}
+								finalvar.maigamez2.push( { POSITION: item.PPOSITIONS.[i], gNAME: item.gameNAME, gPIC: item.imgLINK } )
 							}
 						}
 					} 
