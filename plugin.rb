@@ -830,10 +830,8 @@ after_initialize do
 					end
 				end
 				#save it to cache
-				@@fbglist[user_d] = { 
-					ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, #do sorting web side? eeeh... cached anyway...
-					DATE: Time.now.strftime("%d")
-				}
+				#do sorting web side? eeeh... cached anyway...
+				@@fbglist[user_d] = { ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, DATE: Time.now.strftime("%d") }
 			end
 
 			#use cache if we have one and its not empty
