@@ -6,28 +6,56 @@ export default Ember.Controller.extend({
 	score: 1,
 	ozmode: 666,
 	responz: null,
-	
+
+	FEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
+		var finalvar = {fb1: [], fb2: [], pages = 1}
+		var newfbarray = []
+		var fbedit = false
+		var currentuser = this.get('currentUser.username')
+
+		//loop throug fb and set its color for template, also find last editable fb
+		this.get('model.FEEDBACKS').reverse().forEach((item, index) => {
+			if (item.SCORE) > 0 item.COLOR = 'zeG'
+			if (item.SCORE) < 0 item.COLOR = 'zeB'
+			if (item.SCORE) == 0 item.COLOR = 'zeN'
+
+			newfbarray.push({
+				FEEDBACK: item.FEEDBACK, pNAME: item.pNAME,
+				DATE: item.DATE, COLOR: item.COLOR
+			})
+
+			//onetime check for users last feedback to make it editable
+			if (fbedit == false && currentuser && item.pNAME == currentuser) { newfbarray.[newfbarray.length - 1].eDit = true; fbedit = true }
+		})
+
+		//save final variable
+		if ( this.get('model.MENOSHO') == true ) {
+			finalvar.fb1 = newfbarray.splice(0, 11)
+			//finalvar.fb2 = newfbarray.each_slice(12)
+		} else {
+			finalvar.fb1 = newfbarray.splice(0, 12)
+			//finalvar.fb2 = newfbarray.each_slice(12)
+		}
+
+		finalvar.pages = finalvar.fb2.length
+
+		return finalvar
+
+ 	}),
+
 	thisPA: 1,
-
-	pagesNO: Ember.computed('model.FEEDBACKS2', function() {
-		return this.get('model.FEEDBACKS2').length + 1
-	}),
-
-	pageFB: Ember.computed('model.FEEDBACKS', function() {
-		return this.get('model.FEEDBACKS')
- 	}).property('model.FEEDBACKS.[]'),
 
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
 
-	cum2m: Ember.computed('model.FEEDBACKS', function() {
-		if (this.get('pagesNO') > 1) return true
-	}),
+	//cum2m: Ember.computed('model.FEEDBACKS', function() {
+	//	if (this.get('pagesNO') > 1) return true
+	//}),
 
-	showfbARC: Ember.computed('model.FEEDBACKS', function() {
-		if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
-	}),
+	//showfbARC: Ember.computed('model.FEEDBACKS', function() {
+	//	if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
+	//}),
 
 	actions: {
 
