@@ -699,7 +699,7 @@ after_initialize do
 						end
 					end
 				end
-				
+=begin
 				addstuff[:RESULT].each do |winrar|
 					#save to cache
 					@@accountsDB[winrar[:_id]] = winrar
@@ -707,7 +707,7 @@ after_initialize do
 					#save to db
 					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
 				end
-
+=end
 				#drop fbgamezlist cache
 				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
@@ -768,43 +768,6 @@ after_initialize do
 				feedbacks[:fbBuB] = @@user_FB[user_d][:fbBuB]
 				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
 			end
-			
-			
-=begin
-			#find color and last editable fb on user side
-			#
-			#
-			#if fb exists do stuff
-			if @@user_FB[downU]
-				feedbacks[:FEEDBACKS] = @@user_FB[downU][:FEEDBACKS]
-				feedbacks[:fbG] = @user_FB[downU][:fbG]; feedbacks[:fbN] = @user_FB[downU][:fbN]; feedbacks[:fbB] = @user_FB[downU][:fbB]
-				feedbacks[:fbBuG] = @user_FB[downU][:fbBuG]; feedbacks[:fbBuB] = @user_FB[downU][:fbBuB]; feedbacks[:fbARC] = @user_FB[downU][:fbARC]
-
-				#loop throug fb and set its color for template, also find last editable fb
-				feedbacks[:FEEDBACKS].reverse_each do |fb|
-					fb[:COLOR] = 'zeG' if fb[:SCORE] > 0
-					fb[:COLOR] = 'zeB' if fb[:SCORE] < 0
-					fb[:COLOR] = 'zeN' if fb[:SCORE] == 0
-
-					newfbarray.push({
-						FEEDBACK: fb[:FEEDBACK], pNAME: fb[:pNAME],
-						DATE: fb[:DATE], COLOR: fb[:COLOR]
-					})
-
-					#onetime check for users last feedback to make it editable
-					( newfbarray[-1][:eDit] = true; fbedit = true ) if fbedit == false && current_user && fb[:pNAME] == current_user[:username]
-				end
-				
-				#save final variable
-				if feedbacks[:MENOSHO]
-					feedbacks[:FEEDBACKS] = newfbarray.take(11)
-					feedbacks[:FEEDBACKS2] = newfbarray.drop(11).each_slice(12)
-				else
-					feedbacks[:FEEDBACKS] = newfbarray.take(12)
-					feedbacks[:FEEDBACKS2] = newfbarray.drop(12).each_slice(12)
-				end
-			end
-=end
 
 			#do the games owned display, for logged in users only
 			if current_user && params[:username] != 'MrBug' && ( !@@fbglist[user_d] || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
