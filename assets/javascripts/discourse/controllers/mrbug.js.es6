@@ -10,15 +10,42 @@ export default Ember.Controller.extend({
 	showhideo: [true, true, true],
 	
 	glizt: computed('model.gamelist', function() {
+		//make variables for each game type
 		finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
+
 		this.get('model.gamelist').forEach((item, index) => {
-			if (this.get('currentUser.username')) {
-				
+
+			//if not guest, check if user is in this troika
+			currentuser = this.get('currentUser.username')
+			if (currentuser) {
+				//template shit for type 2 and 3 games displaying type 2 and 3 stuff
+				gTYPE2 = false, gTYPE3 = false
+				if (item.TYPE) == 2) {gTYPE2 = true}
+				if (item.TYPE) == 3) {gTYPE3 = true}
+
+				//loop thorought troikas and see if current user is in it
+				item.TROIKI.forEach((troika, index) => {
+					troika.MODE1 = false, troika.MODE2 = false
+
+					//calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
+					for (i = 0; i < 6; i++) {
+						if (currentuser == troika.USERS.[i]) {
+							if (troika.PSTATUS.[i].[0] == true) {
+								
+							} else {
+								
+							}
+						}
+					} 
+				})
 			}
+
+			//fill 3 variables for each game type
 			if (item.TYPE == 1) {finalvar.gamedb1.push(item)}
 			if (item.TYPE == 2) {finalvar.gamedb2.push(item)}
 			if (item.TYPE == 3) {finalvar.gamedb3.push(item)}
 		})
+
 		return finalvar
 	}),
 
