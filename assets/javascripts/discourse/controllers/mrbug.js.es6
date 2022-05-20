@@ -11,15 +11,15 @@ export default Ember.Controller.extend({
 	
 	glizt: Ember.computed('model.gamelist', function() {
 		//make variables for each game type
-		finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
+		var finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 
 		this.get('model.gamelist').forEach((item, index) => {
 
 			//if not guest, check if user is in this troika
-			currentuser = this.get('currentUser.username')
+			var currentuser = this.get('currentUser.username')
 			if (currentuser) {
 				//template shit for type 2 and 3 games displaying type 2 and 3 stuff
-				gTYPE2 = false, gTYPE3 = false
+				var gTYPE2 = false, var gTYPE3 = false
 				if (item.TYPE == 2) {gTYPE2 = true}
 				if (item.TYPE == 3) {gTYPE3 = true}
 
