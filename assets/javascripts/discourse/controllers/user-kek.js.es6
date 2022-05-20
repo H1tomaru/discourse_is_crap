@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
 	responz: null,
 
 	FEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
-		var finalvar = {fb1: [], fb2: [], pages = 1}
+		var finalvar = {fb1: [], fb2: []}
 		var newfbarray = []
 		var fbedit = false
 		var currentuser = this.get('currentUser.username')
@@ -31,10 +31,11 @@ export default Ember.Controller.extend({
 		//save final variable
 		if ( this.get('model.MENOSHO') == true ) {
 			finalvar.fb1 = newfbarray.splice(0, 11)
-			//finalvar.fb2 = newfbarray.each_slice(12)
 		} else {
 			finalvar.fb1 = newfbarray.splice(0, 12)
-			//finalvar.fb2 = newfbarray.each_slice(12)
+		}
+		while (newfbarray.length > 0) {
+			finalvar.fb2.push (newfbarray.splice(0, 12))
 		}
 
 		finalvar.pages = finalvar.fb2.length
@@ -43,7 +44,9 @@ export default Ember.Controller.extend({
 
  	}),
 
-	thisPA: 1,
+	MORE: Ember.computed('FEEDBACKS.pages', function() {
+		
+	}),
 
 	otzivmdal: false,
 	otzivsmall: false,
