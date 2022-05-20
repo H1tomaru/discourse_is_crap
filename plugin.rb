@@ -702,7 +702,7 @@ after_initialize do
 
 				addstuff[:RESULT].each do |winrar|
 					#save to cache
-					#@@accountsDB[winrar[:_id]] = winrar
+					@@accountsDB[winrar[:_id]] = winrar
 
 					puts winrar
 					puts winrar[:_id]
