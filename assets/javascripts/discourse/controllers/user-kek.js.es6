@@ -38,14 +38,21 @@ export default Ember.Controller.extend({
 			finalvar.fb2.push (newfbarray.splice(0, 12))
 		}
 
-		finalvar.pages = finalvar.fb2.length
-
 		return finalvar
 
  	}),
 
-	MORE: Ember.computed('FEEDBACKS.pages', function() {
-		
+	PAGES: Ember.computed('FEEDBACKS.fb2', function() {
+		return this.get('FEEDBACKS.fb2').length
+	}),
+
+	MORE: Ember.computed('PAGES', function() {
+		if (this.get('PAGES') > 0) {
+			return true
+		}
+		else {
+			return false
+		}
 	}),
 
 	otzivmdal: false,
