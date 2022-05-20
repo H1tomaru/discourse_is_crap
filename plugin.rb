@@ -807,7 +807,7 @@ after_initialize do
 =end
 
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( @@fbglist.empty? || ( @@fbglist[user_d] && @@fbglist[user_d][:DATE] != Time.now.strftime("%d") ) )
+			if current_user && params[:username] != 'MrBug' && ( !@@fbglist[user_d] || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") ) )
 				#get user games from my database
 				ugamez = @@accountsDB.select { |key, hash| (hash[:P2].include? params[:username]) || (hash[:P4].include? params[:username]) }
 
@@ -837,7 +837,7 @@ after_initialize do
 			end
 
 			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && @@fbglist[user_d] && @@fbglist[user_d][:ugameZ].any?
+			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#show acc mail only if user is owner of this page
