@@ -135,6 +135,7 @@ after_initialize do
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
+				@@user_FB[fb[:_id]] = fb
 				ufbupdate(fb[:_id],false)
 
 			#alert if theres nothing to count
