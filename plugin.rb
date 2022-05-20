@@ -149,7 +149,7 @@ after_initialize do
 			finalvar = {}
 
 			#drop chache if its old
-			@@autozCache = {} if !@@autozCache.empty? && Time.now - @@autozCache[:TIME] > 1800
+			@@autozCache = {} if @@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800
 
 			#create cache if theres none
 			if @@autozCache.empty?
@@ -834,7 +834,7 @@ after_initialize do
 			end
 
 			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && !@@fbglist[user_d][:ugameZ].empty?
+			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#show acc mail only if user is owner of this page
@@ -927,7 +927,7 @@ after_initialize do
 			
 		def rentagama
 			#drop chache if it exists and is old
-			@@rentaCache = {} if !@@rentaCache.empty? && Time.now - @@rentaCache[:TIME] > 3600
+			@@rentaCache = {} if @@rentaCache.any? && Time.now - @@rentaCache[:TIME] > 3600
 
 			if @@rentaCache.empty?
 				@@rentaCache[:finalrenta] = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
