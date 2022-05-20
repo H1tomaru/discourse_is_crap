@@ -651,12 +651,12 @@ after_initialize do
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				gameNAME = addstuff[:GAME].strip
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
-				addstuff[:NEWSTRING] = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
+				newstring = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
 				#check if were doing p2p4p4, p2p4p4p4p4 or p2p2p4p4p4p4
 				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П4_5")
 					#p2p4p4 version
 					chetverk = 'четверке'
-					addstuff[:NEWSTRING].each_slice(4) do |sostav|
+					newstring.each_slice(4) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP244] = true
 							for i in 1..3
@@ -671,7 +671,7 @@ after_initialize do
 				elsif (addstuff[:STRING].include? "П4_5") && (addstuff[:STRING].include? "П2_5")
 					#p2p2p4p4p4p4 version
 					chetverk = 'шестерке'
-					addstuff[:NEWSTRING].each_slice(7) do |sostav|
+					newstring.each_slice(7) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5] && sostav[6]
 							addstuff[:winrarP224444] = true
 							for i in 1..6
@@ -686,7 +686,7 @@ after_initialize do
 				else
 					#p2p4p4p4p4 version
 					chetverk = 'пятерке'
-					addstuff[:NEWSTRING].each_slice(6) do |sostav|
+					newstring.each_slice(6) do |sostav|
 						if sostav[0] && (sostav[0].include? "gmail.com") && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5]
 							addstuff[:winrarP24444] = true
 							for i in 1..5
@@ -802,7 +802,7 @@ after_initialize do
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#remove acc mail if user is not owner of this page
-				feedbacks[:ugameZ].each { |h| h.delete("aCC") } if current_user[:username].downcase != user_d
+				feedbacks[:ugameZ].each { |h| h.delete("aCC") } #if current_user[:username].downcase != user_d
 			end
 
 			#render fb
