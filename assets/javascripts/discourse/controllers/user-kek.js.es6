@@ -119,7 +119,8 @@ export default Ember.Controller.extend({
 								var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 								if ( ni >= 0 ) { Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'eDit',false) }
 							}
-							this.get('model.FEEDBACKS').unshiftObject({
+							//add this feedback to feedbacks
+							this.get('fEEDBACKS.fb1').unshiftObject({
 								'pNAME': this.get('currentUser.username'),
 								'FEEDBACK': this.get('pisanina'),
 								'DATE': new Date().getFullYear()+"."+String(new Date().getMonth()+1).padStart(2,'0')+"."+String(new Date().getDate()).padStart(2,'0'),
@@ -127,11 +128,13 @@ export default Ember.Controller.extend({
 								'eDit': true
 							})
 						} else {
-							var ni = this.get('pageFB').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-							Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'FEEDBACK',this.get('pisanina'))
-							if ( this.get('score') > 0 ) Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'COLOR','zeG')
-							if ( this.get('score') == 0 ) Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'COLOR','zeN')
-							if ( this.get('score') < 0 ) Ember.set(this.get('model.FEEDBACKS').objectAt(ni),'COLOR','zeB')
+							//find last feedback
+							var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+							//edit it
+							Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'FEEDBACK',this.get('pisanina'))
+							if ( this.get('score') > 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeG')
+							if ( this.get('score') == 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeN')
+							if ( this.get('score') < 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeB')
 						}
 						this.set('checked1', true)
 						this.set('checked2', false)
