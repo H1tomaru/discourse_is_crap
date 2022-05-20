@@ -547,10 +547,9 @@ after_initialize do
 				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
-						@@zaipsalsq[user_d] += 1
+						@@zaipsalsq[user_d][:count] += 1
 					else
-						@@zaipsalsq[user_d] = 1
-						@@zaipsalsq[user_d][:DATE] = Time.now.strftime("%d")
+						@@zaipsalsq[user_d] = {	count: 1, DATE: Time.now.strftime("%d") }
 					end
 
 					#do actual zaips, wohoo
@@ -815,7 +814,7 @@ after_initialize do
 				ugamezfinal = []
 				#do stuff if we have some
 				if ugamez
-					ugamez.each do |ugaz|
+					ugamez.each do |key, ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 							#select acc mail between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
