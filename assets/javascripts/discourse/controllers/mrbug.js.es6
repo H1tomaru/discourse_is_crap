@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
 
 	showhideo: [true, true, true],
 	
-	glizt: computed('model.gamelist', function() {
+	glizt: Ember.computed('model.gamelist', function() {
 		//make variables for each game type
 		finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 
