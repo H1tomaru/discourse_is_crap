@@ -802,7 +802,11 @@ after_initialize do
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#remove acc mail if user is not owner of this page
-				feedbacks[:ugameZ].each { |h| h.delete("aCC") } #if current_user[:username].downcase != user_d
+				if current_user[:username].downcase != user_d
+					feedbacks[:ugameZ].each do |h|
+						h.delete("aCC")
+					end
+				end
 			end
 
 			#render fb
