@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
 
 	pAGES: Ember.computed('fEEDBACKS.fb2', function() {
 		return this.get('fEEDBACKS.fb2').length
-	}),
+	}).property('fEEDBACKS.fb2.[]'),
 
 	mORE: Ember.computed('pAGES', function() {
 		if (this.get('pAGES') > 0) {
@@ -53,7 +53,7 @@ export default Ember.Controller.extend({
 		else {
 			return false
 		}
-	}),
+	}).property('pAGES'),
 
 	otzivmdal: false,
 	otzivsmall: false,
