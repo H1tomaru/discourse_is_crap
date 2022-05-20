@@ -15,9 +15,9 @@ export default Ember.Controller.extend({
 
 		//loop throug fb and set its color for template, also find last editable fb
 		this.get('model.FEEDBACKS').reverse().forEach((item, index) => {
-			if (item.SCORE) > 0) item.COLOR = 'zeG'
-			if (item.SCORE) < 0) item.COLOR = 'zeB'
-			if (item.SCORE) == 0) item.COLOR = 'zeN'
+			if (item.SCORE > 0) item.COLOR = 'zeG'
+			if (item.SCORE < 0) item.COLOR = 'zeB'
+			if (item.SCORE == 0) item.COLOR = 'zeN'
 
 			newfbarray.push({
 				FEEDBACK: item.FEEDBACK, pNAME: item.pNAME,
