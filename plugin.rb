@@ -123,6 +123,10 @@ after_initialize do
 				end
 			end
 		end
+		
+		def ufbupdate
+			self.class.ufbupdate
+		end
 
 		#get usefb from db and index it for easier global usage
 		@@user_FB = {}
