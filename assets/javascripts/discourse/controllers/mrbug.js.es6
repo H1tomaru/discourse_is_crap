@@ -109,15 +109,15 @@ export default Ember.Controller.extend({
 		},
 
 		showhideo1(index) {
-			Ember.set(this.get('model.gamedb1')[index],'SHOWHIDEO',!this.get('model.gamedb1')[index].SHOWHIDEO)
+			Ember.set(this.get('glizt.gamedb1')[index],'SHOWHIDEO',!this.get('glizt.gamedb1')[index].SHOWHIDEO)
 		},
 		
 		showhideo2(index) {
-			Ember.set(this.get('model.gamedb2')[index],'SHOWHIDEO',!this.get('model.gamedb2')[index].SHOWHIDEO)
+			Ember.set(this.get('glizt.gamedb2')[index],'SHOWHIDEO',!this.get('glizt.gamedb2')[index].SHOWHIDEO)
 		},
 
 		showhideo3(index) {
-			Ember.set(this.get('model.gamedb3')[index],'SHOWHIDEO',!this.get('model.gamedb3')[index].SHOWHIDEO)
+			Ember.set(this.get('glizt.gamedb3')[index],'SHOWHIDEO',!this.get('glizt.gamedb3')[index].SHOWHIDEO)
 		}
 
 	}
