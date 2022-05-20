@@ -704,8 +704,10 @@ after_initialize do
 					#save to cache
 					#@@accountsDB[winrar[:_id]] = winrar
 
+					puts winrar
+					puts winrar[:_id]
 					#save to db
-					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
+					#@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
 				end
 
 				#drop fbgamezlist cache
@@ -823,7 +825,7 @@ after_initialize do
 			timeNOW = Time.now.strftime("%Y.%m.%d")
 
 			#page owners and guests cant do feedbacks!
-			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == true || fedbacks[0] == false )
+			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == "true" || fedbacks[0] == "false" )
 
 				#users with negative feedbacks cant do feedbacks!
 				if @@user_FB[user_d] && @@user_FB[user_d][:fbB] > 0
