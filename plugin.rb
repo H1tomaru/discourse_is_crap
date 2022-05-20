@@ -804,11 +804,7 @@ after_initialize do
 				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#remove acc mail if user is not owner of this page
-				if current_user[:username].downcase != user_d
-					feedbacks[:ugameZ].each do |h|
-						h.delete("aCC")
-					end
-				end
+				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
 
 			#render fb
@@ -849,7 +845,7 @@ after_initialize do
 								SCORE: fedbacks[1]
 							})
 							#remove date so we can rebuild and update db
-							@@user_FB[pageu_d].delete("DATE")
+							@@user_FB[pageu_d].except!(:DATE)
 
 							render json: { winrars_z: true }
 
@@ -872,7 +868,7 @@ after_initialize do
 									fb[:EDITED] = timeNOW
 
 									#remove date so we can rebuild and update db
-									@@user_FB[pageu_d].delete("DATE")
+									@@user_FB[pageu_d].except!(:DATE)
 
 									render json: { winrars_e: true }
 
