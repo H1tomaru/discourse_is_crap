@@ -96,7 +96,7 @@ export default Ember.Controller.extend({
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
 				Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
-					fedbakibaki: btoa(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))
+					fedbakibaki: btoa("true"+"~"+this.get('score')+"~"+this.get('pisanina'))
 				}).then(result => {
 					this.set('responz', result)
 					if ( result.winrars == true ) {
