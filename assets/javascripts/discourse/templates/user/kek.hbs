@@ -85,7 +85,7 @@
 					<button class="addZ" {{action 'addOtziv'}}>Оставить отзыв</button>
 				</div>
 			{{/if}}
-			{{#each FEEDBACKS.fb1 as |feedback|}}
+			{{#each fEEDBACKS.fb1 as |feedback|}}
 				<div class='kekus {{feedback.COLOR}}'>
 					<div><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></div>
 					<div>{{feedback.DATE}}</div>
@@ -95,10 +95,9 @@
 					{{/if}}
 				</div>
 			{{/each}}
-			{{#if cum2m}}
+			{{#if mORE}}
 				<button class="morZ" {{action 'showMORZ'}}>ещё</button>
-			{{/if}}
-			{{#if showfbARC}}
+			{{else}}
 				<div class='kekus zeZ'>
 					<div><a>Отзывов в Архиве</a></div>
 					<div></div>
