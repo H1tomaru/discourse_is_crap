@@ -699,15 +699,15 @@ after_initialize do
 						end
 					end
 				end
-=begin
+
 				addstuff[:RESULT].each do |winrar|
 					#save to cache
-					@@accountsDB[winrar[:_id]] = winrar
+					#@@accountsDB[winrar[:_id]] = winrar
 
 					#save to db
-					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
+					#@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, winrar , { upsert: true } )
 				end
-=end
+
 				#drop fbgamezlist cache
 				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
