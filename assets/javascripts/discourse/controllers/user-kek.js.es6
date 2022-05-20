@@ -59,14 +59,6 @@ export default Ember.Controller.extend({
 	otzivsmall: false,
 	otzivbig: false,
 
-	//cum2m: Ember.computed('model.FEEDBACKS', function() {
-	//	if (this.get('pagesNO') > 1) return true
-	//}),
-
-	//showfbARC: Ember.computed('model.FEEDBACKS', function() {
-	//	if (this.get('pagesNO') == 1 && this.get('model.fbARC') > 0) return true
-	//}),
-
 	actions: {
 
 		addOtziv() {
@@ -90,11 +82,8 @@ export default Ember.Controller.extend({
 		},
 
 		showMORZ() {
-			this.get('model.FEEDBACKS').pushObjects(this.get('model.FEEDBACKS2')[0])
-			this.get('model.FEEDBACKS2').removeAt(0)
-			this.set('thisPA', this.get('thisPA') + 1)
-			if (this.get('thisPA') == this.get('pagesNO')) this.set('cum2m', false)
-			if (this.get('cum2m') == false && this.get('model.fbARC') > 0) this.set('showfbARC', true)			
+			this.get('fEEDBACKS.fb1').pushObjects(this.get('fEEDBACKS.fb2')[0])
+			this.get('fEEDBACKS.fb2').removeAt(0)
 		},
 
 		OtzivZaips() {
