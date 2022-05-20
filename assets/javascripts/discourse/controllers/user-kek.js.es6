@@ -129,6 +129,7 @@ export default Ember.Controller.extend({
 								'COLOR': color,
 								'eDit': true
 							})
+							console.log("Hello world22!")
 						} else {
 							//find last feedback
 							var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
