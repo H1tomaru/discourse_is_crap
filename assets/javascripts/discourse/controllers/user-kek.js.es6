@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
 	ozmode: 666,
 	responz: null,
 
-	FEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
+	fEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
 		var finalvar = {fb1: [], fb2: []}
 		var newfbarray = []
 		var fbedit = false
@@ -42,11 +42,11 @@ export default Ember.Controller.extend({
 
  	}),
 
-	PAGES: Ember.computed('FEEDBACKS.fb2', function() {
+	pAGES: Ember.computed('FEEDBACKS.fb2', function() {
 		return this.get('FEEDBACKS.fb2').length
 	}),
 
-	MORE: Ember.computed('PAGES', function() {
+	mORE: Ember.computed('PAGES', function() {
 		if (this.get('PAGES') > 0) {
 			return true
 		}
