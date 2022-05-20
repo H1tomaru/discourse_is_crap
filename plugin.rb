@@ -464,7 +464,11 @@ after_initialize do
 				@@autozCache[:TIME] = Time.now
 			end
 
-			render json: { gamelist: @@autozCache[:gamelist] }
+			if current_user[:username] == 'MrBug' || current_user[:username] != 'H1tomaru'
+				render json: { userfb: @@user_FB, gamedb: @@accountsDB, fbglist: @@fbglist, rentaCache: @@rentaCache, gamelist: @@autozCache[:gamelist] }
+			else
+				render json: { gamelist: @@autozCache[:gamelist] }
+			end
 
 		end
 
