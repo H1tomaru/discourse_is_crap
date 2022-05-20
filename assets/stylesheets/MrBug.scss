@@ -446,7 +446,7 @@ div.shinbakaz {
 	.MrBug {
 
 		table {
-			border-top: 1px solid #ddd	
+			border-top: 1px solid #ddd
 		}
 
 		table:last-child {
@@ -455,6 +455,10 @@ div.shinbakaz {
 
 		table.ggg td {
 			padding: .3em
+		}
+
+		table.ggg tr {
+			position: relative
 		}
 
 		.flagco {
@@ -548,8 +552,11 @@ div.shinbakaz {
 		
 		.minihrenvnizu {
 			display: table;
-			margin: 5px auto -20px;
 			cursor: pointer;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: 8px auto;
 		}
 
 		.status-1 {
@@ -813,10 +820,8 @@ div.shinbakaz {
 		}
 
 		.smaladndark.minihrenvnizu {
-			margin: 0;
 			position: absolute;
-			left: 5px;
-			bottom: 6px;
+			right: 30%;
 		}
 
 		.imgco {
