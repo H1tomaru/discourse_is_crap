@@ -100,38 +100,32 @@ after_initialize do
 					if timeNOW - fbb[:DATE].to_time > 63000000
 						feedbacks[:fbARC] += 1
 					else #else just count them
-						feedbacks[:fbG] += 1 if fb[:SCORE] > 0
-						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
-						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
+						feedbacks[:fbG] += 1 if fbb[:SCORE] > 0
+						feedbacks[:fbB] += 1 if fbb[:SCORE] < 0
+						feedbacks[:fbN] += 1 if fbb[:SCORE] == 0
 						#count bugofb
-						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
-							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
-							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+						if fbb[:pNAME] == "MrBug" && ( timeNOW - fbb[:DATE].to_time < 31500000 )
+							feedbacks[:fbBuG] += 1 if fbb[:SCORE] > 0
+							feedbacks[:fbBuB] += 1 if fbb[:SCORE] < 0	
 						end
 						newfbarray.push({
-							FEEDBACK: fb[:FEEDBACK],
-							pNAME: fb[:pNAME],
-							DATE: fb[:DATE],
-							SCORE: fb[:SCORE]
+							FEEDBACK: fbb[:FEEDBACK],
+							pNAME: fbb[:pNAME],
+							DATE: fbb[:DATE],
+							SCORE: fbb[:SCORE]
 						})
 					end
 				end
 
-				#update shit if numbers are different
-				if feedbacks[:troikaBAN] != userfb[:troikaBAN] || feedbacks[:fbG] != userfb[:fbG] || feedbacks[:fbN] != userfb[:fbN] ||
-				feedbacks[:fbB] != userfb[:fbB] || feedbacks[:fbBuG] != userfb[:fbBuG] || feedbacks[:fbBuB] != userfb[:fbBuB] ||
-				feedbacks[:fbARC] != userfb[:fbARC] || !userfb[:DATE] || userfb[:DATE] != Time.now.strftime("%d")
-					#save to cache
-					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
+				#save to cache
+				@@user_FB[fb[:_id]] = { _id: fb[:_id], FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
 
-					#save to db
-					@@userfb[:userfb].replace_one( { _id: u_id }, {	FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
-				end
-				@@user_FB[fb[:_id]] = fb
+				#save to db
+				@@userfb[:userfb].replace_one( { _id: fb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
 
 			#alert if theres nothing to count
 			else
@@ -974,7 +968,7 @@ after_initialize do
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
 
 					#save to db
-					@@userfb[:userfb].replace_one( { _id: u_id }, {	FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
 				end
