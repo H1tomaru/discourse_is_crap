@@ -99,9 +99,11 @@ export default Ember.Controller.extend({
 					fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
 				}).then(result => {
 					this.set('responz', result)
+
 					if ( result.winrars == true ) {
 						if (this.get('ozmode') == true) {
 
+							console.log("Hello world!")
 							var color
 							if ( this.get('score') > 0 ) { 
 								color = 'zeG'
@@ -136,6 +138,7 @@ export default Ember.Controller.extend({
 							if ( this.get('score') == 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeN')
 							if ( this.get('score') < 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeB')
 						}
+
 						this.set('checked1', true)
 						this.set('checked2', false)
 						this.set('checked3', false)
