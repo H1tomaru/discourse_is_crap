@@ -414,7 +414,7 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
-				#recount user fb, in case its old
+				#recount user fb, from db, in case we edited something there
 				ufbupdate(user_d,true) if @@user_FB[user_d]
 
 				#check if positive feedback or spam exists
