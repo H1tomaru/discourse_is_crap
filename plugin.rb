@@ -73,14 +73,10 @@ after_initialize do
 			#check if fb is valid
 			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
 
-				Rails.logger.info 'Adding ' + fb[:_id] + ' to cache'
-
 				@@user_FB[fb[:_id]] = fb
 
 			#count shit if its not valid
 			elsif fb.key?("FEEDBACKS")
-
-				Rails.logger.info 'Doing fb rebuilding for ' + fb[:_id]
 
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 				newfbarray = []; timeNOW = Time.now
@@ -920,8 +916,11 @@ after_initialize do
 		def ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
 			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
+				#get actual fb from db
+				userfb =  @@userfb[:userfb].find({ _id: u_id }).to_a.first()
+				
 				#check user feedback, update it if needed
-				userfb = @@user_FB[u_id]
+				#userfb = @@user_FB[u_id]
 
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 				newfbarray = []; timeNOW = Time.now
@@ -959,9 +958,9 @@ after_initialize do
 				end
 
 				#update shit if numbers are different
-				if feedbacks[:troikaBAN] != userfb[:troikaBAN] || feedbacks[:fbG] != userfb[:fbG] || feedbacks[:fbN] != userfb[:fbN] ||
-				feedbacks[:fbB] != userfb[:fbB] || feedbacks[:fbBuG] != userfb[:fbBuG] || feedbacks[:fbBuB] != userfb[:fbBuB] ||
-				feedbacks[:fbARC] != userfb[:fbARC] || !userfb[:DATE] || userfb[:DATE] != Time.now.strftime("%d")
+				if feedbacks[:troikaBAN] != @@user_FB[u_id][:troikaBAN] || feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] ||
+				feedbacks[:fbB] != @@user_FB[u_id][:fbB] || feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] ||
+				feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] || !userfb[:DATE] || userfb[:DATE] != @@user_FB[u_id][:DATE] || userfb[:DATE] != Time.now.strftime("%d")
 					#save to cache
 					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
