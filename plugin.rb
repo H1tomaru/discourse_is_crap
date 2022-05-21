@@ -70,58 +70,9 @@ after_initialize do
 		#@@user_FB[:TIME] = Time.now.strftime("%d")
 		@@userfb[:userfb].find().to_a.each do |fb|
 
-			#check if fb is valid
-			if fb.key?("FEEDBACKS") && fb.key?("troikaBAN") && fb.key?("fbG") && fb.key?("fbN") && fb.key?("fbB") && fb.key?("fbBuG") && fb.key?("fbBuB") && fb.key?("fbARC")
-
+			#check if fb exista
+			if fb.key?("FEEDBACKS")
 				@@user_FB[fb[:_id]] = fb
-
-			#count shit if its not valid
-			elsif fb.key?("FEEDBACKS")
-
-				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
-				newfbarray = []; timeNOW = Time.now
-
-				#remove duplicates
-				fb[:FEEDBACKS].uniq!
-
-				#create key if it doesnt exist yet
-				feedbacks[:troikaBAN] = fb[:troikaBAN] if fb.key?("troikaBAN")
-
-				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = fb[:fbARC] if fb.key?("fbARC")
-
-				#count and create numbers
-				fb[:FEEDBACKS].each do |fbb|
-					#look for old ones and delete them
-					if timeNOW - fbb[:DATE].to_time > 63000000
-						feedbacks[:fbARC] += 1
-					else #else just count them
-						feedbacks[:fbG] += 1 if fbb[:SCORE] > 0
-						feedbacks[:fbB] += 1 if fbb[:SCORE] < 0
-						feedbacks[:fbN] += 1 if fbb[:SCORE] == 0
-						#count bugofb
-						if fbb[:pNAME] == "MrBug" && ( timeNOW - fbb[:DATE].to_time < 31500000 )
-							feedbacks[:fbBuG] += 1 if fbb[:SCORE] > 0
-							feedbacks[:fbBuB] += 1 if fbb[:SCORE] < 0	
-						end
-						newfbarray.push({
-							FEEDBACK: fbb[:FEEDBACK],
-							pNAME: fbb[:pNAME],
-							DATE: fbb[:DATE],
-							SCORE: fbb[:SCORE]
-						})
-					end
-				end
-
-				#save to cache
-				@@user_FB[fb[:_id]] = { _id: fb[:_id], FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
-
-				#save to db
-				@@userfb[:userfb].replace_one( { _id: fb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
 
 			#alert if theres nothing to count
 			else
@@ -357,17 +308,14 @@ after_initialize do
 							(p6TAKEN = true; p6 = '') if p6 == '-55'
 							
 							#find feedback for users
-							if p1.length > 0
-								feedbackp1 = @@user_FB[p1.downcase]
-								if feedbackp1
-									p1FEEDBACK[:GOOD] = feedbackp1[:fbG]
-									p1FEEDBACK[:BAD] = feedbackp1[:fbB]
-									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN]
-								end
+							if p1.length > 0 && @@user_FB[p1.downcase] && @user_FB[p1.downcase].key?("fbG")
+								p1FEEDBACK[:GOOD] = @@user_FB[p1.downcase][:fbG]
+								p1FEEDBACK[:BAD] = @@user_FB[p1.downcase][:fbB]
+								p1FEEDBACK[:NEUTRAL] = @@user_FB[p1.downcase][:fbN]
 							end
 							if p2.length > 0
 								feedbackp2 = @@user_FB[p2.downcase]
-								if feedbackp2
+								if feedbackp2 && @user_FB[p1.downcase].key?("fbG")
 									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
 									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
 									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
