@@ -872,10 +872,10 @@ after_initialize do
 					userfb[:FEEDBACKS].uniq!
 
 					#create key if it doesnt exist yet
-					feedbacks[:troikaBAN] = userfb[:troikaBAN] if userfb.key?("troikaBAN")
+					feedbacks[:troikaBAN] = userfb[:troikaBAN] if userfb[:troikaBAN]
 
 					#get deleted feedback number if it exists
-					feedbacks[:fbARC] = userfb[:fbARC] if userfb.key?("fbARC")
+					feedbacks[:fbARC] = userfb[:fbARC] if userfb[:fbARC]
 
 					#count and create numbers
 					userfb[:FEEDBACKS].each do |fb|
