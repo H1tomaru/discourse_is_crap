@@ -911,9 +911,9 @@ after_initialize do
 							fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
 
 						#save to db
-						@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-							fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
+						#@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+						#	fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+						#	fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
 					end
 				else
 					#if cache exists but db does not, remove cache
