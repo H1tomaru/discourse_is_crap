@@ -918,58 +918,60 @@ after_initialize do
 			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
 				#get actual fb from db
 				userfb =  @@userfb[:userfb].find({ _id: u_id }).to_a.first()
-				
-				#check user feedback, update it if needed
-				#userfb = @@user_FB[u_id]
 
-				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
-				newfbarray = []; timeNOW = Time.now
+				if userfb	
+					feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+					newfbarray = []; timeNOW = Time.now
 
-				#remove duplicates
-				userfb[:FEEDBACKS].uniq!
+					#remove duplicates
+					userfb[:FEEDBACKS].uniq!
 
-				#create key if it doesnt exist yet
-				feedbacks[:troikaBAN] = userfb[:troikaBAN] if userfb.key?("troikaBAN")
+					#create key if it doesnt exist yet
+					feedbacks[:troikaBAN] = userfb[:troikaBAN] if userfb.key?("troikaBAN")
 
-				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = userfb[:fbARC] if userfb.key?("fbARC")
+					#get deleted feedback number if it exists
+					feedbacks[:fbARC] = userfb[:fbARC] if userfb.key?("fbARC")
 
-				#count and create numbers
-				userfb[:FEEDBACKS].each do |fb|
-					#look for old ones and delete them
-					if timeNOW - fb[:DATE].to_time > 63000000
-						feedbacks[:fbARC] += 1
-					else #else just count them
-						feedbacks[:fbG] += 1 if fb[:SCORE] > 0
-						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
-						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
-						#count bugofb
-						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
-							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
-							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+					#count and create numbers
+					userfb[:FEEDBACKS].each do |fb|
+						#look for old ones and delete them
+						if timeNOW - fb[:DATE].to_time > 63000000
+							feedbacks[:fbARC] += 1
+						else #else just count them
+							feedbacks[:fbG] += 1 if fb[:SCORE] > 0
+							feedbacks[:fbB] += 1 if fb[:SCORE] < 0
+							feedbacks[:fbN] += 1 if fb[:SCORE] == 0
+							#count bugofb
+							if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
+								feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
+								feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+							end
+							newfbarray.push({
+								FEEDBACK: fb[:FEEDBACK],
+								pNAME: fb[:pNAME],
+								DATE: fb[:DATE],
+								SCORE: fb[:SCORE]
+							})
 						end
-						newfbarray.push({
-							FEEDBACK: fb[:FEEDBACK],
-							pNAME: fb[:pNAME],
-							DATE: fb[:DATE],
-							SCORE: fb[:SCORE]
-						})
 					end
-				end
 
-				#update shit if numbers are different
-				if feedbacks[:troikaBAN] != @@user_FB[u_id][:troikaBAN] || feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] ||
-				feedbacks[:fbB] != @@user_FB[u_id][:fbB] || feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] ||
-				feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] || !userfb[:DATE] || userfb[:DATE] != @@user_FB[u_id][:DATE] || userfb[:DATE] != Time.now.strftime("%d")
-					#save to cache
-					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
+					#update shit if numbers are different
+					if feedbacks[:troikaBAN] != @@user_FB[u_id][:troikaBAN] || feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] ||
+					feedbacks[:fbB] != @@user_FB[u_id][:fbB] || feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] ||
+					feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] || !userfb[:DATE] || userfb[:DATE] != @@user_FB[u_id][:DATE] || userfb[:DATE] != Time.now.strftime("%d")
+						#save to cache
+						@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+							fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
 
-					#save to db
-					@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
+						#save to db
+						@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+							fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
+					end
+				else
+					#if cache exists but db does not, remove cache
+					@@user_FB.except!(u_id)
 				end
 			end
 		end
