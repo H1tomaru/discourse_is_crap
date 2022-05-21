@@ -775,12 +775,17 @@ after_initialize do
 						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
-								if fb[:EDITED] && fb[:EDITED] == timeNOW
+								#if edited feedback already, show stuff
+								if @@user_FB[:EDITED] && @@user_FB[:EDITED][pageu_d] && @@user_FB[:EDITED][pageu_d][current_user[:username]] && @@user_FB[:EDITED][pageu_d][current_user[:username]] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
-									fb[:EDITED] = timeNOW
+
+									#make edited mark
+									@@user_FB[:EDITED] = {} unless @@user_FB[:EDITED]
+									@@user_FB[:EDITED][pageu_d] = {} unless @@user_FB[:EDITED][pageu_d]
+									@@user_FB[:EDITED][pageu_d][current_user[:username]] = timeNOW
 
 									#remove date so we can rebuild and update db
 									@@user_FB[pageu_d].except!(:DATE)
