@@ -98,11 +98,13 @@
 			{{#if mORE}}
 				<button class="morZ" {{action 'showMORZ'}}>ещё</button>
 			{{else}}
+				{{#if model.fbARC}}
 				<div class='kekus zeZ'>
 					<div><a>Отзывов в Архиве</a></div>
 					<div></div>
 					<div><h3>{{model.fbARC}}</h3></div>
 				</div>
+				{{/if}}
 			{{/if}}
 		</div>
 	</div>
