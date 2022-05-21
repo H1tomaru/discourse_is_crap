@@ -414,9 +414,6 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
-				#recount user fb, from db, in case we edited something there
-				ufbupdate(user_d,true) if @@user_FB[user_d]
-
 				#check if positive feedback or spam exists
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
 					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug')
@@ -677,12 +674,8 @@ after_initialize do
 
 			#recount user fb, in case its old
 			if @@user_FB[user_d]
-				#update fb from db is im viewing it
-				if current_user[:username] == 'MrBug'
-					ufbupdate(user_d,true)
-				else
-					ufbupdate(user_d,false)
-				end
+				#recount fb in case some fb is old
+				ufbupdate(user_d)
 				feedbacks[:FEEDBACKS] = @@user_FB[user_d][:FEEDBACKS]
 				feedbacks[:fbG] = @@user_FB[user_d][:fbG]
 				feedbacks[:fbN] = @@user_FB[user_d][:fbN]
@@ -757,7 +750,7 @@ after_initialize do
 							render json: { gavas_z: true }
 						else
 							#create fb array if user doesnt have any fb yet
-							#@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
+							@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
 
 							#add feedback to fb cache
 							@@user_FB[pageu_d][:FEEDBACKS].push({
@@ -772,7 +765,7 @@ after_initialize do
 							render json: { winrars_z: true }
 
 							#recount fb and update fb
-							ufbupdate(pageu_d,false)
+							ufbupdate(pageu_d)
 						end
 
 					#or edit last feedback given
@@ -795,7 +788,7 @@ after_initialize do
 									render json: { winrars_e: true }
 
 									#recount fb and update fb
-									ufbupdate(pageu_d,false)
+									ufbupdate(pageu_d)
 								end
 								break
 							end
