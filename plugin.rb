@@ -56,7 +56,7 @@ after_initialize do
 		@@userdb[:PS4db].find().to_a.each do |acc|
 
 			#check if account is valid
-			if acc.key?("GAME") && acc.key?("P2") && acc.key?("P4") && acc.key?("DATE")
+			if acc[:GAME] && acc[:P2] && acc[:P4] && acc[:DATE]
 				@@accountsDB[acc[:_id]] = acc if acc[:DATE].to_time < 63000000
 
 			#alert if theres something missing
@@ -71,7 +71,7 @@ after_initialize do
 		@@userfb[:userfb].find().to_a.each do |fb|
 
 			#check if fb exista
-			if fb.key?("FEEDBACKS")
+			if fb[:FEEDBACKS]
 				@@user_FB[fb[:_id]] = fb
 
 			#alert if theres nothing to count
@@ -308,32 +308,32 @@ after_initialize do
 							(p6TAKEN = true; p6 = '') if p6 == '-55'
 							
 							#find feedback for users
-							if p1.length > 0 && @@user_FB[p1.downcase] && @user_FB[p1.downcase].key?("fbG")
+							if p1.length > 0 && @@user_FB[p1.downcase]
 								p1FEEDBACK[:GOOD] = @@user_FB[p1.downcase][:fbG]
 								p1FEEDBACK[:BAD] = @@user_FB[p1.downcase][:fbB]
 								p1FEEDBACK[:NEUTRAL] = @@user_FB[p1.downcase][:fbN]
 							end
-							if p2.length > 0 && @@user_FB[p2.downcase] && @user_FB[p2.downcase].key?("fbG")
+							if p2.length > 0 && @@user_FB[p2.downcase]
 								p2FEEDBACK[:GOOD] = @@user_FB[p2.downcase][:fbG]
 								p2FEEDBACK[:BAD] = @@user_FB[p2.downcase][:fbB]
 								p2FEEDBACK[:NEUTRAL] = @@user_FB[p2.downcase][:fbN]
 							end
-							if p3.length > 0 && @@user_FB[p3.downcase] && @user_FB[p3.downcase].key?("fbG")
+							if p3.length > 0 && @@user_FB[p3.downcase]
 								p3FEEDBACK[:GOOD] = @@user_FB[p3.downcase][:fbG]
 								p3FEEDBACK[:BAD] = @@user_FB[p3.downcase][:fbB]
 								p3FEEDBACK[:NEUTRAL] = @@user_FB[p3.downcase][:fbN]
 							end
-							if p4.length > 0 && @@user_FB[p4.downcase] && @user_FB[p4.downcase].key?("fbG")
+							if p4.length > 0 && @@user_FB[p4.downcase]
 									p4FEEDBACK[:GOOD] = @@user_FB[p4.downcase][:fbG]
 									p4FEEDBACK[:BAD] = @@user_FB[p4.downcase][:fbB]
 									p4FEEDBACK[:NEUTRAL] = @@user_FB[p4.downcase][:fbN]
 							end
-							if p5.length > 0 && @@user_FB[p5.downcase] && @user_FB[p5.downcase].key?("fbG")
+							if p5.length > 0 && @@user_FB[p5.downcase]
 								p5FEEDBACK[:GOOD] = @@user_FB[p5.downcase][:fbG]
 								p5FEEDBACK[:BAD] = @@user_FB[p5.downcase][:fbB]
 								p5FEEDBACK[:NEUTRAL] = @@user_FB[p5.downcase][:fbN]
 							end
-							if p6.length > 0 && @@user_FB[p6.downcase] && @user_FB[p6.downcase].key?("fbG")
+							if p6.length > 0 && @@user_FB[p6.downcase]
 								p6FEEDBACK[:GOOD] = @@user_FB[p6.downcase][:fbG]
 								p6FEEDBACK[:BAD] = @@user_FB[p6.downcase][:fbB]
 								p6FEEDBACK[:NEUTRAL] = @@user_FB[p6.downcase][:fbN]
@@ -757,7 +757,7 @@ after_initialize do
 							render json: { gavas_z: true }
 						else
 							#create fb array if user doesnt have any fb yet
-							#@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d].key?("FEEDBACKS")
+							#@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
 
 							#add feedback to fb cache
 							@@user_FB[pageu_d][:FEEDBACKS].push({
@@ -854,7 +854,7 @@ after_initialize do
 		#very cute fb update method
 		def ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
-			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id].key?("DATE") || zchek )
+			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
 
 				if zchek
 					#get actual fb from db
