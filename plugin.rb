@@ -85,7 +85,7 @@ after_initialize do
 			finalvar = {}
 
 			#drop chache if its old
-			@@autozCache = {} if @@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800
+			@@autozCache = {} if (@@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800)
 
 			#create cache if theres none
 			if @@autozCache.empty?
@@ -313,45 +313,30 @@ after_initialize do
 								p1FEEDBACK[:BAD] = @@user_FB[p1.downcase][:fbB]
 								p1FEEDBACK[:NEUTRAL] = @@user_FB[p1.downcase][:fbN]
 							end
-							if p2.length > 0
-								feedbackp2 = @@user_FB[p2.downcase]
-								if feedbackp2 && @user_FB[p1.downcase].key?("fbG")
-									p2FEEDBACK[:GOOD] = feedbackp2[:fbG]
-									p2FEEDBACK[:BAD] = feedbackp2[:fbB]
-									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN]
-								end
+							if p2.length > 0 && @@user_FB[p2.downcase] && @user_FB[p2.downcase].key?("fbG")
+								p2FEEDBACK[:GOOD] = @@user_FB[p2.downcase][:fbG]
+								p2FEEDBACK[:BAD] = @@user_FB[p2.downcase][:fbB]
+								p2FEEDBACK[:NEUTRAL] = @@user_FB[p2.downcase][:fbN]
 							end
-							if p3.length > 0
-								feedbackp3 = @@user_FB[p3.downcase]
-								if feedbackp3
-									p3FEEDBACK[:GOOD] = feedbackp3[:fbG]
-									p3FEEDBACK[:BAD] = feedbackp3[:fbB]
-									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN]
-								end
+							if p3.length > 0 && @@user_FB[p3.downcase] && @user_FB[p3.downcase].key?("fbG")
+								p3FEEDBACK[:GOOD] = @@user_FB[p3.downcase][:fbG]
+								p3FEEDBACK[:BAD] = @@user_FB[p3.downcase][:fbB]
+								p3FEEDBACK[:NEUTRAL] = @@user_FB[p3.downcase][:fbN]
 							end
-							if p4.length > 0
-								feedbackp4 = @@user_FB[p4.downcase]
-								if feedbackp4
-									p4FEEDBACK[:GOOD] = feedbackp4[:fbG]
-									p4FEEDBACK[:BAD] = feedbackp4[:fbB]
-									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN]
-								end
+							if p4.length > 0 && @@user_FB[p4.downcase] && @user_FB[p4.downcase].key?("fbG")
+									p4FEEDBACK[:GOOD] = @@user_FB[p4.downcase][:fbG]
+									p4FEEDBACK[:BAD] = @@user_FB[p4.downcase][:fbB]
+									p4FEEDBACK[:NEUTRAL] = @@user_FB[p4.downcase][:fbN]
 							end
-							if p5.length > 0
-								feedbackp5 = @@user_FB[p5.downcase]
-								if feedbackp5
-									p5FEEDBACK[:GOOD] = feedbackp5[:fbG]
-									p5FEEDBACK[:BAD] = feedbackp5[:fbB]
-									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN]
-								end
+							if p5.length > 0 && @@user_FB[p5.downcase] && @user_FB[p5.downcase].key?("fbG")
+								p5FEEDBACK[:GOOD] = @@user_FB[p5.downcase][:fbG]
+								p5FEEDBACK[:BAD] = @@user_FB[p5.downcase][:fbB]
+								p5FEEDBACK[:NEUTRAL] = @@user_FB[p5.downcase][:fbN]
 							end
-							if p6.length > 0
-								feedbackp6 = @@user_FB[p6.downcase]
-								if feedbackp6
-									p6FEEDBACK[:GOOD] = feedbackp6[:fbG]
-									p6FEEDBACK[:BAD] = feedbackp6[:fbB]
-									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN]
-								end
+							if p6.length > 0 && @@user_FB[p6.downcase] && @user_FB[p6.downcase].key?("fbG")
+								p6FEEDBACK[:GOOD] = @@user_FB[p6.downcase][:fbG]
+								p6FEEDBACK[:BAD] = @@user_FB[p6.downcase][:fbB]
+								p6FEEDBACK[:NEUTRAL] = @@user_FB[p6.downcase][:fbN]
 							end
 
 							#find feedback percentage
@@ -634,11 +619,7 @@ after_initialize do
 					@@accountsDB[winrar[:_id]] = winrar
 
 					#save to db
-					@@userdb[:PS4db].replace_one( 
-						{ _id: winrar[:_id] },
-						{ GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] },
-						{ upsert: true }
-					)
+					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, { GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] }, { upsert: true } )
 				end
 
 				#drop fbgamezlist cache
@@ -667,9 +648,13 @@ after_initialize do
 						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
 						unless hasfb
 							#save to cache
-							@@user_FB[user][:FEEDBACKS].push(neoFB)
-							@@user_FB[user][:fbG] += 1
-							@@user_FB[user][:fbBuG] += 1
+							if @@user_FB[user]
+								@@user_FB[user][:FEEDBACKS].push(neoFB)
+								@@user_FB[user][:fbG] += 1
+								@@user_FB[user][:fbBuG] += 1
+							else
+								@@user_FB[user] = {FEEDBACKS: neoFB }
+							end
 
 							#save to db
 							@@userfb[:userfb].find_one_and_update( { _id: user }, { 
@@ -689,10 +674,15 @@ after_initialize do
 
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
-			
+
 			#recount user fb, in case its old
 			if @@user_FB[user_d]
-				ufbupdate(user_d,false)
+				#update fb from db is im viewing it
+				if current_user[:username] == 'MrBug'
+					ufbupdate(user_d,true)
+				else
+					ufbupdate(user_d,false)
+				end
 				feedbacks[:FEEDBACKS] = @@user_FB[user_d][:FEEDBACKS]
 				feedbacks[:fbG] = @@user_FB[user_d][:fbG]
 				feedbacks[:fbN] = @@user_FB[user_d][:fbN]
@@ -768,6 +758,7 @@ after_initialize do
 						else
 							#create fb array if user doesnt have any fb yet
 							#@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d].key?("FEEDBACKS")
+
 							#add feedback to fb cache
 							@@user_FB[pageu_d][:FEEDBACKS].push({
 								FEEDBACK: fedbacks[2].strip,
@@ -778,7 +769,7 @@ after_initialize do
 							#remove date so we can rebuild and update db
 							@@user_FB[pageu_d].except!(:DATE)
 
-							render json: { winrars_z: true, test: @@user_FB[pageu_d] }
+							render json: { winrars_z: true }
 
 							#recount fb and update fb
 							ufbupdate(pageu_d,false)
@@ -863,9 +854,15 @@ after_initialize do
 		#very cute fb update method
 		def ufbupdate(u_id,zchek)
 			#do stuff if user fb exists and we didnt updated it today already
-			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] || zchek )
-				#get actual fb from db
-				userfb =  @@userfb[:userfb].find({ _id: u_id }).to_a.first()
+			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id].key?("DATE") || zchek )
+
+				if zchek
+					#get actual fb from db
+					userfb =  @@userfb[:userfb].find({ _id: u_id }).to_a.first()
+				else
+					#update and recount cache only
+					userfb = @@user_FB[u_id]
+				end
 
 				if userfb	
 					feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
@@ -904,9 +901,10 @@ after_initialize do
 					end
 
 					#update shit if numbers are different
-					if feedbacks[:troikaBAN] != @@user_FB[u_id][:troikaBAN] || feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] ||
-					feedbacks[:fbB] != @@user_FB[u_id][:fbB] || feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] ||
-					feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] || !userfb[:DATE] || userfb[:DATE] != @@user_FB[u_id][:DATE] || userfb[:DATE] != Time.now.strftime("%d")
+					if zchek || feedbacks[:fbARC] != userfb[:fbARC] ||
+					feedbacks[:fbG] != userfb[:fbG] || feedbacks[:fbN] != userfb[:fbN] || feedbacks[:fbB] != userfb[:fbB] ||
+					feedbacks[:fbBuG] != userfb[:fbBuG] || feedbacks[:fbBuB] != userfb[:fbBuB] ||
+					!userfb[:DATE] || userfb[:DATE] != Time.now.strftime("%d")
 						#save to cache
 						@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 							fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
