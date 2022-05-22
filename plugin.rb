@@ -566,8 +566,10 @@ after_initialize do
 							puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
 						end
 					end
+					render json: { HiMom: '!!!' }
 				elsif params[:killzone4tv] == 'gamez'
 					@@autozCache = {}
+					render json: { HiMom: '!!!' }
 				else
 					render json: { HiMom: '!!!' }
 				end
