@@ -672,15 +672,16 @@ after_initialize do
 								@@user_FB[user][:FEEDBACKS].push(neoFB)
 								@@user_FB[user][:fbG] += 1
 								@@user_FB[user][:fbBuG] += 1
+
+								#save to db
+								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
+									"$push" => { FEEDBACKS: neoFB },
+									"$inc" => { fbG: 1, fbBuG: 1 }							
+								}, { upsert: true } )
 							else
 								@@user_FB[user] = {FEEDBACKS: neoFB }
+								ufbupdate(user)
 							end
-
-							#save to db
-							@@userfb[:userfb].find_one_and_update( { _id: user }, { 
-								"$push" => { FEEDBACKS: neoFB },
-								"$inc" => { fbG: 1, fbBuG: 1 }							
-							}, { upsert: true } )
 						end
 					end
 				end
