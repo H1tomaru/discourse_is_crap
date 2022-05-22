@@ -49,7 +49,7 @@ export default Ember.Controller.extend({
 				data: { "killzonefb": "sleep" },
 				type: "GET"
 			}).then(result => {
-				this.set('killzonefb', result.killzonefb)
+				this.set('killzonefb', result)
 			})
 		},
 
