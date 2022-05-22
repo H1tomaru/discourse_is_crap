@@ -61,9 +61,9 @@ MegaAdd List some Pokemans<br>
 {{/if}}
 
 <br><br>
-<a href='/admin/MegaAdd.json?killzonefb=sleep'>DeleteFBCache</a>
+<button {{action 'killzonefb'}}>DeleteFBCache</button>
 <br><br>
-<a href='/admin/MegaAdd.json?killzone4tv=gamez'>Delete4tverkiCache</a>
+<button {{action 'killzone4tv'}}>Delete4tverkiCache</button>
 <br><br>
 
 {{#if killzone4tv}}
@@ -71,5 +71,5 @@ MegaAdd List some Pokemans<br>
 {{/if}}
 {{#if killzonefb}}
 	feedbacks cache dropped<br><br>
-	broken accounts: {{model.brokenaccs}}
+	broken accounts: {{brokenaccs}}
 {{/if}}
