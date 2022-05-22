@@ -47,6 +47,7 @@ export default Ember.Controller.extend({
 		killzonefb() {
 			Ember.$.ajax({
 				url: "/admin/MegaAdd.json",
+				data: { "killzonefb": "sleep" },
 				type: "GET"
 			}).then(result => {
 				this.set('killzonefb', result.killzonefb)
@@ -56,6 +57,7 @@ export default Ember.Controller.extend({
 		killzone4tv() {
 			Ember.$.ajax({
 				url: "/admin/MegaAdd.json",
+				data: { "killzone4tv": "gamez" },
 				type: "GET"
 			}).then(result => {
 				this.set('killzone4tv', result.killzone4tv)
