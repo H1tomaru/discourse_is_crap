@@ -555,6 +555,7 @@ after_initialize do
 			if current_user && current_user[:username] == 'H1tomaru'
 				if params[:killzonefb] == 'sleep'
 					@@user_FB = {}
+					broken = 0
 					@@userfb[:userfb].find().to_a.each do |fb|
 
 						#check if fb exista
@@ -564,12 +565,13 @@ after_initialize do
 						#alert if theres nothing to count
 						else
 							puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
+							broken += 1
 						end
 					end
-					render json: { HiMom: '!!!' }
+					render json: { killzonefb: true, brokenaccs: broken }
 				elsif params[:killzone4tv] == 'gamez'
 					@@autozCache = {}
-					render json: { HiMom: '!!!' }
+					render json: { killzone4tv: true }
 				else
 					render json: { HiMom: '!!!' }
 				end
