@@ -6,6 +6,9 @@ export default Ember.Controller.extend({
 
 	p4lista: null,
 	
+	killzone4tv: false,
+	killzonefb: false,
+	
 	actions: {
 
 		oops() {
@@ -38,6 +41,24 @@ export default Ember.Controller.extend({
 			}).then(result => {
 				result = result.gamedb1.concat(result.gamedb2,result.gamedb3)
 				this.set('p4lista', result)
+			})
+		},
+
+		killzonefb() {
+			Ember.$.ajax({
+				url: "/admin/MegaAdd.json",
+				type: "GET"
+			}).then(result => {
+				this.set('killzonefb', result.killzonefb)
+			})
+		},
+
+		killzone4tv() {
+			Ember.$.ajax({
+				url: "/admin/MegaAdd.json",
+				type: "GET"
+			}).then(result => {
+				this.set('killzone4tv', result.killzone4tv)
 			})
 		}
 
