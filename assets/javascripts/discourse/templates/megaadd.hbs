@@ -1,74 +1,77 @@
-{{#if model.HiMom}}
-	MegaAdd some Pokemans<br><br>
+MegaAdd some Pokemans<br><br>
 
-	<form class="MegaAdd" {{ action "oops" on="submit"}}>
-		{{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
-		<button type="submit">GoGoGo</button>
-		<button {{action 'Reset'}}>Reset</button><br>
-		<button {{action 'FeedbacksGo'}}>Add Feedback</button><button {{action 'FeedbacksStop'}}>No Feedback</button><br><br>
-		Add Feedback?: {{addstuff.ADDFB}}<br><br>
-		{{textarea style="width: 100%" rows="20" value=addstuff.STRING}}
-	</form>
+<form class="MegaAdd" {{ action "oops" on="submit"}}>
+	{{input class="poiskbox" type="text" size="64" value=addstuff.GAME}}
+	<button type="submit">GoGoGo</button>
+	<button {{action 'Reset'}}>Reset</button><br>
+	<button {{action 'FeedbacksGo'}}>Add Feedback</button><button {{action 'FeedbacksStop'}}>No Feedback</button><br><br>
+	Add Feedback?: {{addstuff.ADDFB}}<br><br>
+	{{textarea style="width: 100%" rows="20" value=addstuff.STRING}}
+</form>
 
-	<br>
+<br>
 
-	{{#if addstuff.winrarP24444}}
-		Winrars! P24444:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
-		{{/each}}
-	{{/if}}
+{{#if addstuff.winrarP24444}}
+	Winrars! P24444:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
+	{{/each}}
+{{/if}}
 
 
-	{{#if addstuff.winrarP244}}
-		Winrars! P244:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br>
-		{{/each}}
-	{{/if}}
+{{#if addstuff.winrarP244}}
+	Winrars! P244:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br>
+	{{/each}}
+{{/if}}
 
-	{{#if addstuff.winrarP224444}}
-		Winrars! P224444:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P2.[1]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
-		{{/each}}
-	{{/if}}
+{{#if addstuff.winrarP224444}}
+	Winrars! P224444:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P2.[1]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
+	{{/each}}
+{{/if}}
 
-	<br>
+<br>
 
-	MegaAdd List some Pokemans<br>
+MegaAdd List some Pokemans<br>
 
-	<button {{action 'P4Lista'}}>P4 lista:</button><br>
+<button {{action 'P4Lista'}}>P4 lista:</button><br>
 
-	{{#if p4lista}}
-		{{#each p4lista as |game|}}
-			{{#each game.TROIKI as |troika index|}}
-				{{#if troika.ACCOUNT}}
-					{{#unless index}}
-						<br><br><br>{{game.gameNAME}}<br>
-					{{/unless}}
-					{{#if game.TTYPE.[0]}}
-						<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[0]}}<br>П4_4 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_5 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>
-					{{/if}}
-					{{#if game.TTYPE.[1]}}
-						<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[1]}}<br>П4 - {{troika.USERS.[2]}}<br>П4 - {{troika.USERS.[3]}}<br>
-					{{/if}}
-					{{#if game.TTYPE.[2]}}
-						<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.USERS.[0]}}<br>П2_5 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_4 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>П4_5 - {{troika.USERS.[5]}}<br>
-					{{/if}}
+{{#if p4lista}}
+	{{#each p4lista as |game|}}
+		{{#each game.TROIKI as |troika index|}}
+			{{#if troika.ACCOUNT}}
+				{{#unless index}}
+					<br><br><br>{{game.gameNAME}}<br>
+				{{/unless}}
+				{{#if game.TTYPE.[0]}}
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[0]}}<br>П4_4 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_5 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>
 				{{/if}}
-			{{/each}}
+				{{#if game.TTYPE.[1]}}
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[1]}}<br>П4 - {{troika.USERS.[2]}}<br>П4 - {{troika.USERS.[3]}}<br>
+				{{/if}}
+				{{#if game.TTYPE.[2]}}
+					<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.USERS.[0]}}<br>П2_5 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_4 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>П4_5 - {{troika.USERS.[5]}}<br>
+				{{/if}}
+			{{/if}}
 		{{/each}}
-	{{/if}}
+	{{/each}}
+{{/if}}
 
+<br><br>
+<a href='/admin/MegaAdd/?killzonefb=sleep'>DeleteFBCache</a><br><br>
+<a href=/admin/MegaAdd/?killzone4tv=gamez'>Delete4tverkiCache</a>
+
+{{#if killzone4tv}}
 	<br><br>
-	<a href='/admin/MegaAdd/?killzonefb=sleep'>DeleteFBCache</a><br><br>
-	<a href=/admin/MegaAdd/?killzone4tv=gamez'>Delete4tverkiCache</a>
-{{/if}}
-{{#if model.killzone4tv}}
 	4tverki cache dropped
+	<br><br>
 {{/if}}
-{{#if model.killzonefb}}
+{{#if killzonefb}}
+	<br><br>
 	feedbacks cache dropped<br><br>
 	broken accounts: {{model.brokenaccs}}
+	<br><br>
 {{/if}}
