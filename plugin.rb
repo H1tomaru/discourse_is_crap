@@ -662,11 +662,13 @@ after_initialize do
 					feedbacks.uniq!
 					#downcase all names
 					feedbacks.map{|uname| uname.downcase}
+					
+					test = []
 
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
 						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
-						render json: {test1: feedbacks, test2: hasfb, test3: @@user_FB[user]}
+						test.push([{test1: feedbacks, test2: hasfb, test3: @@user_FB[user]}])
 =begin
 						unless hasfb
 							#save to cache
@@ -686,6 +688,7 @@ after_initialize do
 							end
 						end
 =end
+						render json: {test1: test}
 					end
 				end
 			end
