@@ -688,8 +688,8 @@ after_initialize do
 							end
 						end
 =end
-						render json: {test1: test}
 					end
+					render json: {test1: test}
 				end
 			end
 		end
