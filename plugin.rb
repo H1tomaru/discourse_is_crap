@@ -660,16 +660,13 @@ after_initialize do
 
 					#delete duplicate users
 					feedbacks.uniq!
-					#downcase all names
-					feedbacks.map{|uname| uname.downcase}
-					
-					test = []
 
+					#downcase all names
+					feedbacks.map!{|uname| uname.downcase}
+					
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
 						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
-						test.push([{test1: feedbacks, test2: hasfb, test3: @@user_FB[user]}])
-=begin
 						unless hasfb
 							#save to cache
 							if @@user_FB[user]
@@ -680,16 +677,14 @@ after_initialize do
 								#save to db
 								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
 									"$push" => { FEEDBACKS: neoFB },
-									"$inc" => { fbG: 1, fbBuG: 1 }							
+									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
 							else
-								@@user_FB[user] = { FEEDBACKS: neoFB }
+								@@user_FB[user] = { FEEDBACKS: [neoFB] }
 								ufbupdate(user)
 							end
 						end
-=end
 					end
-					render json: {test1: test}
 				end
 			end
 		end
