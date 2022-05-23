@@ -66,13 +66,13 @@ after_initialize do
 		end
 
 		#get usefb from db and index it for easier global usage
-		@@user_FB = {}
-		#@@user_FB[:TIME] = Time.now.strftime("%d")
+		$user_FB = {}
+		#$user_FB[:TIME] = Time.now.strftime("%d")
 		@@userfb[:userfb].find().to_a.each do |fb|
 
 			#check if fb exista
 			if fb[:FEEDBACKS]
-				@@user_FB[fb[:_id]] = fb
+				$user_FB[fb[:_id]] = fb
 
 			#alert if theres nothing to count
 			else
@@ -308,35 +308,35 @@ after_initialize do
 							(p6TAKEN = true; p6 = '') if p6 == '-55'
 							
 							#find feedback for users
-							if p1.length > 0 && @@user_FB[p1.downcase]
-								p1FEEDBACK[:GOOD] = @@user_FB[p1.downcase][:fbG]
-								p1FEEDBACK[:BAD] = @@user_FB[p1.downcase][:fbB]
-								p1FEEDBACK[:NEUTRAL] = @@user_FB[p1.downcase][:fbN]
+							if p1.length > 0 && $user_FB[p1.downcase]
+								p1FEEDBACK[:GOOD] = $user_FB[p1.downcase][:fbG]
+								p1FEEDBACK[:BAD] = $user_FB[p1.downcase][:fbB]
+								p1FEEDBACK[:NEUTRAL] = $user_FB[p1.downcase][:fbN]
 							end
-							if p2.length > 0 && @@user_FB[p2.downcase]
-								p2FEEDBACK[:GOOD] = @@user_FB[p2.downcase][:fbG]
-								p2FEEDBACK[:BAD] = @@user_FB[p2.downcase][:fbB]
-								p2FEEDBACK[:NEUTRAL] = @@user_FB[p2.downcase][:fbN]
+							if p2.length > 0 && $user_FB[p2.downcase]
+								p2FEEDBACK[:GOOD] = $user_FB[p2.downcase][:fbG]
+								p2FEEDBACK[:BAD] = $user_FB[p2.downcase][:fbB]
+								p2FEEDBACK[:NEUTRAL] = $user_FB[p2.downcase][:fbN]
 							end
-							if p3.length > 0 && @@user_FB[p3.downcase]
-								p3FEEDBACK[:GOOD] = @@user_FB[p3.downcase][:fbG]
-								p3FEEDBACK[:BAD] = @@user_FB[p3.downcase][:fbB]
-								p3FEEDBACK[:NEUTRAL] = @@user_FB[p3.downcase][:fbN]
+							if p3.length > 0 && $user_FB[p3.downcase]
+								p3FEEDBACK[:GOOD] = $user_FB[p3.downcase][:fbG]
+								p3FEEDBACK[:BAD] = $user_FB[p3.downcase][:fbB]
+								p3FEEDBACK[:NEUTRAL] = $user_FB[p3.downcase][:fbN]
 							end
-							if p4.length > 0 && @@user_FB[p4.downcase]
-									p4FEEDBACK[:GOOD] = @@user_FB[p4.downcase][:fbG]
-									p4FEEDBACK[:BAD] = @@user_FB[p4.downcase][:fbB]
-									p4FEEDBACK[:NEUTRAL] = @@user_FB[p4.downcase][:fbN]
+							if p4.length > 0 && $user_FB[p4.downcase]
+									p4FEEDBACK[:GOOD] = $user_FB[p4.downcase][:fbG]
+									p4FEEDBACK[:BAD] = $user_FB[p4.downcase][:fbB]
+									p4FEEDBACK[:NEUTRAL] = $user_FB[p4.downcase][:fbN]
 							end
-							if p5.length > 0 && @@user_FB[p5.downcase]
-								p5FEEDBACK[:GOOD] = @@user_FB[p5.downcase][:fbG]
-								p5FEEDBACK[:BAD] = @@user_FB[p5.downcase][:fbB]
-								p5FEEDBACK[:NEUTRAL] = @@user_FB[p5.downcase][:fbN]
+							if p5.length > 0 && $user_FB[p5.downcase]
+								p5FEEDBACK[:GOOD] = $user_FB[p5.downcase][:fbG]
+								p5FEEDBACK[:BAD] = $user_FB[p5.downcase][:fbB]
+								p5FEEDBACK[:NEUTRAL] = $user_FB[p5.downcase][:fbN]
 							end
-							if p6.length > 0 && @@user_FB[p6.downcase]
-								p6FEEDBACK[:GOOD] = @@user_FB[p6.downcase][:fbG]
-								p6FEEDBACK[:BAD] = @@user_FB[p6.downcase][:fbB]
-								p6FEEDBACK[:NEUTRAL] = @@user_FB[p6.downcase][:fbN]
+							if p6.length > 0 && $user_FB[p6.downcase]
+								p6FEEDBACK[:GOOD] = $user_FB[p6.downcase][:fbG]
+								p6FEEDBACK[:BAD] = $user_FB[p6.downcase][:fbB]
+								p6FEEDBACK[:NEUTRAL] = $user_FB[p6.downcase][:fbN]
 							end
 
 							#find feedback percentage
@@ -415,11 +415,11 @@ after_initialize do
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#check if positive feedback or spam exists
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
+				if ($user_FB[user_d] && $user_FB[user_d][:fbG] > 0 && $user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
 					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug')
 					#special message if its a p1 zapis with less then 5 mrbug feedback
-					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
-						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
+					if code[0] == "1" && $user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
+						render json: { piadin: true, fbcount: $user_FB[user_d][:fbBuG] }
 					else
 						#get stuff from db
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
@@ -453,9 +453,9 @@ after_initialize do
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#do everything checking again!
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
+				if ($user_FB[user_d] && $user_FB[user_d][:fbG] > 0 && $user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
 					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug') &&
-				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
+				!(code[0] == "1" && $user_FB[user_d] && $user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
 						@@zaipsalsq[user_d][:count] += 1
@@ -554,13 +554,13 @@ after_initialize do
 		def showadd
 			if current_user && current_user[:username] == 'H1tomaru'
 				if params[:killzonefb] == 'sleep'
-					@@user_FB = {}
+					$user_FB = {}
 					broken = 0
 					@@userfb[:userfb].find().to_a.each do |fb|
 
 						#check if fb exista
 						if fb[:FEEDBACKS]
-							@@user_FB[fb[:_id]] = fb
+							$user_FB[fb[:_id]] = fb
 
 						#alert if theres nothing to count
 						else
@@ -666,13 +666,13 @@ after_initialize do
 					
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
-						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
+						hasfb = $user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if $user_FB[user]
 						unless hasfb
 							#save to cache
-							if @@user_FB[user]
-								@@user_FB[user][:FEEDBACKS].push(neoFB)
-								@@user_FB[user][:fbG] += 1
-								@@user_FB[user][:fbBuG] += 1
+							if $user_FB[user]
+								$user_FB[user][:FEEDBACKS].push(neoFB)
+								$user_FB[user][:fbG] += 1
+								$user_FB[user][:fbBuG] += 1
 
 								#save to db
 								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
@@ -680,7 +680,7 @@ after_initialize do
 									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
 							else
-								@@user_FB[user] = { FEEDBACKS: [neoFB] }
+								$user_FB[user] = { FEEDBACKS: [neoFB] }
 								ufbupdate(user)
 							end
 						end
@@ -694,22 +694,22 @@ after_initialize do
 			timeNOW = Time.now
 			user_d = params[:username].downcase
 
-			winraruser = @@user_FB[user_d]
+			winraruser = $user_FB[user_d]
 			
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
 			#recount user fb, in case its old
-			if @@user_FB[user_d]
+			if $user_FB[user_d]
 				#recount fb in case some fb is old
 				ufbupdate(user_d)
-				feedbacks[:FEEDBACKS] = @@user_FB[user_d][:FEEDBACKS]
-				feedbacks[:fbG] = @@user_FB[user_d][:fbG]
-				feedbacks[:fbN] = @@user_FB[user_d][:fbN]
-				feedbacks[:fbB] = @@user_FB[user_d][:fbB]
-				feedbacks[:fbBuG] = @@user_FB[user_d][:fbBuG]
-				feedbacks[:fbBuB] = @@user_FB[user_d][:fbBuB]
-				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
+				feedbacks[:FEEDBACKS] = $user_FB[user_d][:FEEDBACKS]
+				feedbacks[:fbG] = $user_FB[user_d][:fbG]
+				feedbacks[:fbN] = $user_FB[user_d][:fbN]
+				feedbacks[:fbB] = $user_FB[user_d][:fbB]
+				feedbacks[:fbBuG] = $user_FB[user_d][:fbBuG]
+				feedbacks[:fbBuB] = $user_FB[user_d][:fbBuB]
+				feedbacks[:fbARC] = $user_FB[user_d][:fbARC]
 			end
 
 			#do the games owned display, for logged in users only
@@ -750,7 +750,7 @@ after_initialize do
 
 			feedbacks[:DATE999] = Time.now
 			feedbacks[:winraruser] = winraruser
-			feedbacks[:winraruser2] = @@user_FB[user_d]
+			feedbacks[:winraruser2] = $user_FB[user_d]
 			
 			#render fb
 			render json: feedbacks
@@ -769,7 +769,7 @@ after_initialize do
 			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == "true" || fedbacks[0] == "false" )
 
 				#users with negative feedbacks cant do feedbacks!
-				if @@user_FB[user_d] && @@user_FB[user_d][:fbB] > 0
+				if $user_FB[user_d] && $user_FB[user_d][:fbB] > 0
 					render json: { bakas: true }
 				else
 
@@ -777,31 +777,31 @@ after_initialize do
 					if fedbacks[0] == "true"
 
 						#if gave feedback already, show stuff
-						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS] && @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
+						if $user_FB[pageu_d] && $user_FB[pageu_d][:FEEDBACKS] && $user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
 							render json: { gavas_z: true }
 						else
 							#create fb array if user doesnt have any fb yet
-							@@user_FB[pageu_d] = { FEEDBACKS: [] } unless @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
+							$user_FB[pageu_d] = { FEEDBACKS: [] } unless $user_FB[pageu_d] && $user_FB[pageu_d][:FEEDBACKS]
 
 							#add feedback to fb cache
-							@@user_FB[pageu_d][:FEEDBACKS].push({
+							$user_FB[pageu_d][:FEEDBACKS].push({
 								FEEDBACK: fedbacks[2].strip,
 								pNAME: current_user[:username],
 								DATE: timeNOW,
 								SCORE: fedbacks[1]
 							})
 							#remove date so we can rebuild and update db
-							@@user_FB[pageu_d][:DATE] = false
-							@@user_FB[pageu_d][:DATE2] = Time.now
+							$user_FB[pageu_d][:DATE] = false
+							$user_FB[pageu_d][:DATE2] = Time.now
 
-							test = @@user_FB[pageu_d]
+							test = $user_FB[pageu_d]
 
 							#recount fb and update fb
 							ufbupdate(pageu_d)
 							
-							@@user_FB[pageu_d][:DATE3] = Time.now
+							$user_FB[pageu_d][:DATE3] = Time.now
 
-							render json: { winrars_z: true, before: test, after: @@user_FB[pageu_d] }
+							render json: { winrars_z: true, before: test, after: $user_FB[pageu_d] }
 
 						end
 
@@ -809,30 +809,30 @@ after_initialize do
 					elsif fedbacks[0] == "false"
 
 						#find last feedback and see if we edited it already today
-						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
+						$user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								if @@user_FB[:EDITED] && @@user_FB[:EDITED][pageu_d] && @@user_FB[:EDITED][pageu_d][current_user[:username]] && @@user_FB[:EDITED][pageu_d][current_user[:username]] == timeNOW
+								if $user_FB[:EDITED] && $user_FB[:EDITED][pageu_d] && $user_FB[:EDITED][pageu_d][current_user[:username]] && $user_FB[:EDITED][pageu_d][current_user[:username]] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@@user_FB[:EDITED] = {} unless @@user_FB[:EDITED]
-									@@user_FB[:EDITED][pageu_d] = {} unless @@user_FB[:EDITED][pageu_d]
-									@@user_FB[:EDITED][pageu_d][current_user[:username]] = timeNOW
+									$user_FB[:EDITED] = {} unless $user_FB[:EDITED]
+									$user_FB[:EDITED][pageu_d] = {} unless $user_FB[:EDITED][pageu_d]
+									$user_FB[:EDITED][pageu_d][current_user[:username]] = timeNOW
 
 									#remove date so we can rebuild and update db
-									@@user_FB[pageu_d][:DATE] = false
+									$user_FB[pageu_d][:DATE] = false
 
-									test = @@user_FB[pageu_d]
+									test = $user_FB[pageu_d]
 
 									#recount fb and update fb
 									ufbupdate(pageu_d)
 									
-									render json: { winrars_e: true, before: test, after: @@user_FB[pageu_d] }
+									render json: { winrars_e: true, before: test, after: $user_FB[pageu_d] }
 								end
 								break
 							end
@@ -891,22 +891,22 @@ after_initialize do
 		#very cute fb update method
 		def ufbupdate(u_id)
 			#do stuff if user fb exists and we didnt updated it today already
-			if @@user_FB[u_id] && ( ( @@user_FB[u_id][:DATE] && @@user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !@@user_FB[u_id][:DATE] )
+			if $user_FB[u_id] && ( ( $user_FB[u_id][:DATE] && $user_FB[u_id][:DATE] != Time.now.strftime("%d") ) || !$user_FB[u_id][:DATE] )
 
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 				newfbarray = []; timeNOW = Time.now
 
 				#remove duplicates
-				@@user_FB[u_id][:FEEDBACKS].uniq!
+				$user_FB[u_id][:FEEDBACKS].uniq!
 
 				#create key if it doesnt exist yet
-				feedbacks[:troikaBAN] = @@user_FB[u_id][:troikaBAN] if @@user_FB[u_id][:troikaBAN]
+				feedbacks[:troikaBAN] = $user_FB[u_id][:troikaBAN] if $user_FB[u_id][:troikaBAN]
 
 				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = @@user_FB[u_id][:fbARC] if @@user_FB[u_id][:fbARC]
+				feedbacks[:fbARC] = $user_FB[u_id][:fbARC] if $user_FB[u_id][:fbARC]
 
 				#count and create numbers
-				@@user_FB[u_id][:FEEDBACKS].each do |fb|
+				$user_FB[u_id][:FEEDBACKS].each do |fb|
 					#look for old ones and delete them
 					if timeNOW - fb[:DATE].to_time > 63000000
 						feedbacks[:fbARC] += 1
@@ -929,11 +929,11 @@ after_initialize do
 				end
 
 				#update shit if numbers are different
-				if feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] || feedbacks[:fbB] != @@user_FB[u_id][:fbB] ||
-				feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] || feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] ||
-				!@@user_FB[u_id][:DATE] || @@user_FB[u_id][:DATE] != Time.now.strftime("%d")
+				if feedbacks[:fbG] != $user_FB[u_id][:fbG] || feedbacks[:fbN] != $user_FB[u_id][:fbN] || feedbacks[:fbB] != $user_FB[u_id][:fbB] ||
+				feedbacks[:fbBuG] != $user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != $user_FB[u_id][:fbBuB] || feedbacks[:fbARC] != $user_FB[u_id][:fbARC] ||
+				!$user_FB[u_id][:DATE] || $user_FB[u_id][:DATE] != Time.now.strftime("%d")
 					#save to cache
-					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					$user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d"), DATE666: Time.now }
 
