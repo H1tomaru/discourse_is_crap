@@ -748,6 +748,7 @@ after_initialize do
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
 
+			feedbacks[:DATE999] = Time.now
 			feedbacks[:winraruser] = winraruser
 			feedbacks[:winraruser2] = @@user_FB[user_d]
 			
