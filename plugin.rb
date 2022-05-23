@@ -645,7 +645,7 @@ after_initialize do
 				#drop fbgamezlist cache
 				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
-				render json: addstuff
+				#render json: addstuff
 
 				#add feedback if we're doing it
 				if addstuff[:ADDFB] == 'true'
@@ -662,7 +662,8 @@ after_initialize do
 					feedbacks.uniq!
 					#downcase all names
 					feedbacks.map{|uname| uname.downcase}
-
+				render json: {test1: feedbacks, test2: @@user_FB}
+=begin
 					feedbacks.each do |user|
 						#find if we gave user this feedback already
 						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
@@ -679,11 +680,12 @@ after_initialize do
 									"$inc" => { fbG: 1, fbBuG: 1 }							
 								}, { upsert: true } )
 							else
-								@@user_FB[user] = {FEEDBACKS: neoFB }
+								@@user_FB[user] = { FEEDBACKS: neoFB }
 								ufbupdate(user)
 							end
 						end
 					end
+=end
 				end
 			end
 		end
