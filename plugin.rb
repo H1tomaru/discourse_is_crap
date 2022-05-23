@@ -798,7 +798,7 @@ after_initialize do
 							#recount fb and update fb
 							ufbupdate(pageu_d)
 							
-							@@user_FB[pageu_d][:DATE2] = Time.now
+							@@user_FB[pageu_d][:DATE3] = Time.now
 
 							render json: { winrars_z: true, before: test, after: @@user_FB[pageu_d] }
 
