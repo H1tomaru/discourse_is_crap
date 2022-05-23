@@ -926,7 +926,7 @@ after_initialize do
 					#save to db
 					@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }, { upsert: true } )
+						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 
 					#save to cache
 					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
