@@ -694,6 +694,8 @@ after_initialize do
 			timeNOW = Time.now
 			user_d = params[:username].downcase
 
+			winraruser = @@user_FB[user_d]
+			
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
@@ -746,6 +748,9 @@ after_initialize do
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
 
+			feedbacks[:winraruser] = winraruser
+			feedbacks[:winraruser2] = @@user_FB[user_d]
+			
 			#render fb
 			render json: feedbacks
 
@@ -786,11 +791,14 @@ after_initialize do
 							})
 							#remove date so we can rebuild and update db
 							@@user_FB[pageu_d][:DATE] = false
+							@@user_FB[pageu_d][:DATE2] = Time.now
 
 							test = @@user_FB[pageu_d]
 
 							#recount fb and update fb
 							ufbupdate(pageu_d)
+							
+							@@user_FB[pageu_d][:DATE2] = Time.now
 
 							render json: { winrars_z: true, before: test, after: @@user_FB[pageu_d] }
 
@@ -923,20 +931,16 @@ after_initialize do
 				if feedbacks[:fbG] != @@user_FB[u_id][:fbG] || feedbacks[:fbN] != @@user_FB[u_id][:fbN] || feedbacks[:fbB] != @@user_FB[u_id][:fbB] ||
 				feedbacks[:fbBuG] != @@user_FB[u_id][:fbBuG] || feedbacks[:fbBuB] != @@user_FB[u_id][:fbBuB] || feedbacks[:fbARC] != @@user_FB[u_id][:fbARC] ||
 				!@@user_FB[u_id][:DATE] || @@user_FB[u_id][:DATE] != Time.now.strftime("%d")
+					#save to cache
+					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d"), DATE666: Time.now }
+
 					#save to db
 					@@userfb[:userfb].replace_one( { _id: u_id }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 
-					#save to cache
-					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
-
-					#save to cache
-					@@user_FB[u_id] = { _id: u_id, FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC], DATE: Time.now.strftime("%d") }
 				end
 			end
 		end
