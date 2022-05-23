@@ -645,7 +645,7 @@ after_initialize do
 				#drop fbgamezlist cache
 				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
-				#render json: addstuff
+				render json: addstuff
 
 				#add feedback if we're doing it
 				if addstuff[:ADDFB] == 'true'
