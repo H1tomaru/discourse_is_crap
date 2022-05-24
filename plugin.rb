@@ -575,7 +575,7 @@ after_initialize do
 					@@autozCache = {}
 					render json: { killzone4tv: true }
 				else
-					render json: { HiMom: '!!!' }
+					render json: { HiMom: '!!!', test1: @@user_FB['allonsy'] }
 				end
 			end
 		end
