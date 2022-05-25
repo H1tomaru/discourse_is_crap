@@ -701,8 +701,6 @@ after_initialize do
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
-			@@user_FB[user_d][:DATE666] = Time.now
-
 			#recount user fb, in case its old
 			if @@user_FB[user_d]
 				#recount fb in case some fb is old
@@ -752,12 +750,6 @@ after_initialize do
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
 			
-			@@user_FB[user_d][:DATE999] = Time.now
-			@@fbglist[user_d][:DATE999] = Time.now
-			feedbacks[:test1] = @@fbglist[user_d]
-			feedbacks[:test2] = Time.now
-			feedbacks[:test3] = @@user_FB[user_d]
-
 			#render fb
 			render json: feedbacks
 
