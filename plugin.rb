@@ -45,9 +45,6 @@ after_initialize do
 		
 		@@cachedb = db.use('cacheDB')
 
-		#cache for 4tverki and rent pages and fbgamezlist
-		@@fbglist = {}
-
 		@@user_FB_date = {}
 		@@user_FB_edit = {}
 
@@ -597,7 +594,7 @@ after_initialize do
 				end
 
 				#drop fbgamezlist cache
-				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
+				@@cachedb[:fbglist].drop() #can drop it only for involved users... but eeeehh... drop everything
 
 				render json: addstuff
 
@@ -666,8 +663,10 @@ after_initialize do
 				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
 			end
 
+			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a
+
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( !@@fbglist[user_d] || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
+			if current_user && params[:username] != 'MrBug' && ( !fbglist[0] || fbglist[0][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
 				ugamez = @@accountsDB.select { |key, hash| (hash[:P2].include? params[:username]) || (hash[:P4].include? params[:username]) }
 
@@ -689,14 +688,19 @@ after_initialize do
 						end
 					end
 				end
-				#save it to cache
+
 				#do sorting web side? eeeh... cached anyway...
-				@@fbglist[user_d] = { ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, DATE: Time.now.strftime("%d") }
+				fbglist[0][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }
+
+				#save it to cache
+				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
+					ugameZ: fbglist[0][:ugameZ], DATE: Time.now.strftime("%d")
+				}, { upsert: true } )
 			end
 
 			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
-				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
+			if params[:username] != 'MrBug' && fbglist[0][:ugameZ].any?
+				feedbacks[:ugameZ] = fbglist[0][:ugameZ]
 
 				#remove acc mail if user is not owner of this page
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
