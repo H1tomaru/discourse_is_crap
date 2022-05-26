@@ -45,9 +45,6 @@ after_initialize do
 		
 		@@cachedb = db.use('cacheDB')
 
-		#user zapis count
-		@@zaipsalsq = {}
-
 		#cache for 4tverki and rent pages and fbgamezlist
 		@@autozCache = {}
 		@@rentaCache = {}
@@ -387,12 +384,13 @@ after_initialize do
 			if current_user && code.length == 2
 				user_d = current_user[:username].downcase
 
+				zaipsalsq = @@cachedb[:zaipsalsq].find({ _id: user_d }).to_a
 				#delete users zaipsalsq if its old
-				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
+				( @@cachedb[:zaipsalsq].deleteOne( { _id: user_d }); zaipsalsq = [] ) if zaipsalsq[0] && zaipsalsq[0][:DATE] != Time.now.strftime("%d")
 
 				#check if positive feedback or spam exists
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug')
+					((zaipsalsq[0] && zaipsalsq[0][:count] < 5 && current_user[:username] != 'MrBug') || !zaipsalsq[0] || current_user[:username] == 'MrBug')
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
@@ -425,18 +423,19 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				user_d = current_user[:username].downcase
 
+				zaipsalsq = @@cachedb[:zaipsalsq].find({ _id: user_d }).to_a
 				#delete users zaipsalsq if its old
-				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
+				@@cachedb[:zaipsalsq].deleteOne( { _id: user_d }) if zaipsalsq[0] && zaipsalsq[0][:DATE] != Time.now.strftime("%d")
 
 				#do everything checking again!
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug') &&
+					((zaipsalsq[0] && zaipsalsq[0][:count] < 5 && current_user[:username] != 'MrBug') || !zaipsalsq[0] || current_user[:username] == 'MrBug') &&
 				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
-					if @@zaipsalsq[user_d]
-						@@zaipsalsq[user_d][:count] += 1
+					if zaipsalsq[0]
+						@@cachedb[:zaipsalsq].find_one_and_update( { _id: user_d }, { "$inc" => { count: 1 } } )
 					else
-						@@zaipsalsq[user_d] = {	count: 1, DATE: Time.now.strftime("%d") }
+						@@cachedb[:zaipsalsq].insertOne( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
 					end
 
 					#do actual zaips, wohoo
