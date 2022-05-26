@@ -45,6 +45,14 @@ after_initialize do
 		
 		@@cachedb = db.use('cacheDB')
 
+		#user zapis count
+		@@zaipsalsq = {}
+
+		#cache for 4tverki and rent pages and fbgamezlist
+		@@autozCache = {}
+		@@rentaCache = {}
+		@@fbglist = {}
+
 		@@user_FB_date = {}
 		@@user_FB_edit = {}
 
@@ -52,13 +60,11 @@ after_initialize do
 			#variables, duh
 			finalvar = {}
 
-			autozCache = @@cachedb[:autozCache].find().to_a
-
 			#drop chache if its old
-			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && Time.now - autozCache[0][:TIME] > 1800
+			@@autozCache = {} if (@@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800)
 
 			#create cache if theres none
-			if autozCache[0].empty?
+			if @@autozCache.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -348,14 +354,12 @@ after_initialize do
 
 				end
 
-				#save everything to cachedb
-				@@cachedb[:zaipsalsq].insert_one( { gamelist: gameDB, TIME: Time.now } )
-
-				autozCache[0][:gamelist] = gameDB
-
+				#save everything to cache to db
+				@@autozCache[:gamelist] = gameDB
+				@@autozCache[:TIME] = Time.now
 			end
 
-			render json: { gamelist: autozCache[0][:gamelist] }
+			render json: { gamelist: @@autozCache[:gamelist] }
 
 		end
 
@@ -383,13 +387,12 @@ after_initialize do
 			if current_user && code.length == 2
 				user_d = current_user[:username].downcase
 
-				zaipsalsq = @@cachedb[:zaipsalsq].find({ _id: user_d }).to_a
 				#delete users zaipsalsq if its old
-				( @@cachedb[:zaipsalsq].deleteOne( { _id: user_d }); zaipsalsq = [] ) if zaipsalsq[0] && zaipsalsq[0][:DATE] != Time.now.strftime("%d")
+				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#check if positive feedback or spam exists
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((zaipsalsq[0] && zaipsalsq[0][:count] < 5 && current_user[:username] != 'MrBug') || !zaipsalsq[0] || current_user[:username] == 'MrBug')
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug')
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
@@ -422,19 +425,18 @@ after_initialize do
 			if current_user && code[3] && current_user[:username] == code[1]
 				user_d = current_user[:username].downcase
 
-				zaipsalsq = @@cachedb[:zaipsalsq].find({ _id: user_d }).to_a
 				#delete users zaipsalsq if its old
-				@@cachedb[:zaipsalsq].deleteOne( { _id: user_d }) if zaipsalsq[0] && zaipsalsq[0][:DATE] != Time.now.strftime("%d")
+				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
 				#do everything checking again!
 				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((zaipsalsq[0] && zaipsalsq[0][:count] < 5 && current_user[:username] != 'MrBug') || !zaipsalsq[0] || current_user[:username] == 'MrBug') &&
+					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug') &&
 				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
-					if zaipsalsq[0]
-						@@cachedb[:zaipsalsq].find_one_and_update( { _id: user_d }, { "$inc" => { count: 1 } } )
+					if @@zaipsalsq[user_d]
+						@@zaipsalsq[user_d][:count] += 1
 					else
-						@@cachedb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
+						@@zaipsalsq[user_d] = {	count: 1, DATE: Time.now.strftime("%d") }
 					end
 
 					#do actual zaips, wohoo
@@ -446,7 +448,7 @@ after_initialize do
 					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
 					#destroy cache
-					@@cachedb[:autozCache].drop()
+					@@autozCache = {}
 
 					#add message to chat
 					PostCreator.create(
@@ -526,7 +528,31 @@ after_initialize do
 		end
 
 		def showadd
-			render json: { HiMom: '!!!' }
+			if current_user && current_user[:username] == 'H1tomaru'
+				if params[:killzonefb] == 'sleep'
+					@@user_FB = {}
+					@@user_FB_date = {}
+					broken = 0
+					@@userfb[:userfb].find().to_a.each do |fb|
+
+						#check if fb exista
+						if fb[:FEEDBACKS]
+							@@user_FB[fb[:_id]] = fb
+
+						#alert if theres nothing to count
+						else
+							puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
+							broken += 1
+						end
+					end
+					render json: { killzonefb: true, brokenaccs: broken }
+				elsif params[:killzone4tv] == 'gamez'
+					@@autozCache = {}
+					render json: { killzone4tv: true }
+				else
+					render json: { HiMom: '!!!', test1: @@user_FB['allonsy'] }
+				end
+			end
 		end
 
 		def megaadd
@@ -594,7 +620,7 @@ after_initialize do
 				end
 
 				#drop fbgamezlist cache
-				@@cachedb[:fbglist].drop() #can drop it only for involved users... but eeeehh... drop everything
+				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
 
 				render json: addstuff
 
@@ -663,10 +689,8 @@ after_initialize do
 				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
 			end
 
-			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a
-
 			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( !fbglist[0] || fbglist[0][:DATE] != Time.now.strftime("%d") )
+			if current_user && params[:username] != 'MrBug' && ( !@@fbglist[user_d] || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
 				#get user games from my database
 				ugamez = @@accountsDB.select { |key, hash| (hash[:P2].include? params[:username]) || (hash[:P4].include? params[:username]) }
 
@@ -688,24 +712,19 @@ after_initialize do
 						end
 					end
 				end
-
-				#do sorting web side? eeeh... cached anyway...
-				fbglist[0][:ugameZ] = ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }
-
 				#save it to cache
-				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
-					ugameZ: fbglist[0][:ugameZ], DATE: Time.now.strftime("%d")
-				}, { upsert: true } )
+				#do sorting web side? eeeh... cached anyway...
+				@@fbglist[user_d] = { ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, DATE: Time.now.strftime("%d") }
 			end
 
 			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && fbglist[0][:ugameZ].any?
-				feedbacks[:ugameZ] = fbglist[0][:ugameZ]
+			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
+				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
 
 				#remove acc mail if user is not owner of this page
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
-
+			
 			#render fb
 			render json: feedbacks
 
@@ -798,13 +817,11 @@ after_initialize do
 		end
 
 		def rentagama
-			rentaCache = @@cachedb[:rentaCache].find().to_a
-
 			#drop chache if it exists and is old
-			(@@cachedb[:rentaCache].drop(); rentaCache = []) if rentaCache[0] && Time.now - rentaCache[0][:TIME] > 3600
+			@@rentaCache = {} if @@rentaCache.any? && Time.now - @@rentaCache[:TIME] > 3600
 
-			if rentaCache[0].empty?
-				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
+			if @@rentaCache.empty?
+				@@rentaCache[:finalrenta] = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 
 				#find all rentagamez
@@ -822,28 +839,22 @@ after_initialize do
 							GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
 							STATUS: game[:STATUS], LINE: game[:LINE]
 						}
-						finalrenta[:rentaGAMEZ].push( gameojb )
-						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
-						finalrenta[:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
+						@@rentaCache[:finalrenta][:rentaGAMEZ].push( gameojb )
+						@@rentaCache[:finalrenta][:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
+						@@rentaCache[:finalrenta][:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
 					end
 				end
+				@@rentaCache[:finalrenta][:count] = count
 
 				#sort this shit
-				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				@@rentaCache[:finalrenta][:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
+				@@rentaCache[:finalrenta][:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				@@rentaCache[:finalrenta][:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 
-				#save cache to db
-				@@cachedb[:rentaCache].insert_one({ 
-					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], count: count, TIME: Time.now
-				})
-
-				rentaCache[0] = finalrenta
-				rentaCache[0][:count] = count
+				@@rentaCache[:TIME] = Time.now
 			end
 
-			render json: rentaCache[0].except("TIME")
+			render json: @@rentaCache[:finalrenta]
 		end
 
 		#very cute fb update method
