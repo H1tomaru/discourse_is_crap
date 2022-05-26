@@ -640,7 +640,7 @@ after_initialize do
 					feedbacks.map!{|uname| uname.downcase}
 					
 					feedbacks.each do |user|
-						user_FB = @@userfb[:userfb].find({ _id: user }).to_a
+						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACK: 1 }).to_a
 						#find if we gave user this feedback already
 						hasfb = user_FB[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB[0]
 						unless hasfb
