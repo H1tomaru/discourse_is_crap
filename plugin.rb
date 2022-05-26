@@ -52,20 +52,6 @@ after_initialize do
 		@@rentaCache = {}
 		@@fbglist = {}
 
-		#full account list saved from db
-		@@accountsDB = {}
-		@@userdb[:PS4db].find().to_a.each do |acc|
-
-			#check if account is valid
-			if acc[:GAME] && acc[:P2] && acc[:P4] && acc[:DATE]
-				@@accountsDB[acc[:_id]] = acc if acc[:DATE].to_time < 63000000
-
-			#alert if theres something missing
-			else
-				puts "###Warning!!!### "+acc[:_id]+" accountdb is broken!"
-			end
-		end
-
 		#get usefb from db and index it for easier global usage
 		@@user_FB = {}
 		@@user_FB_date = {}
@@ -393,12 +379,14 @@ after_initialize do
 		def troikopoisk
 			#decode shit
 			troikopoisk = Base64.decode64(params[:input]).strip.downcase
+			
+			accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a
 
 			#do stuff when finding acc or not
-			if troikopoisk.length > 20 && troikopoisk.length < 40 && @@accountsDB[troikopoisk] && ( Time.now - @@accountsDB[troikopoisk][:DATE].to_time < 63000000 )
+			if troikopoisk.length > 20 && troikopoisk.length < 40 && accountsDB[0] && ( Time.now - accountsDB[0][:DATE].to_time < 63000000 )
 				render json: { 
-					_id: @@accountsDB[troikopoisk][:_id], GAME: @@accountsDB[troikopoisk][:GAME],
-					P2: @@accountsDB[troikopoisk][:P2], P4: @@accountsDB[troikopoisk][:P4],
+					_id: accountsDB[0][:_id], GAME: accountsDB[0][:GAME],
+					P2: accountsDB[0][:P2], P4: accountsDB[0][:P4],
 					poiskwin: true
 				}
 			else 
@@ -512,6 +500,8 @@ after_initialize do
 						usernames = ["MrBug"]
 						usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
 						usernames.push(gameuzers[0][:P2][trindx][:NAME])	if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0
+						usernames.push(gameuzers[0][:P4][trindx*2][:NAME])	if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME])	if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0
 						usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx][:STAT] == 0
 						usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx][:STAT] == 0
 						usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
@@ -558,31 +548,7 @@ after_initialize do
 		end
 
 		def showadd
-			if current_user && current_user[:username] == 'H1tomaru'
-				if params[:killzonefb] == 'sleep'
-					@@user_FB = {}
-					@@user_FB_date = {}
-					broken = 0
-					@@userfb[:userfb].find().to_a.each do |fb|
-
-						#check if fb exista
-						if fb[:FEEDBACKS]
-							@@user_FB[fb[:_id]] = fb
-
-						#alert if theres nothing to count
-						else
-							puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
-							broken += 1
-						end
-					end
-					render json: { killzonefb: true, brokenaccs: broken }
-				elsif params[:killzone4tv] == 'gamez'
-					@@autozCache = {}
-					render json: { killzone4tv: true }
-				else
-					render json: { HiMom: '!!!', test1: @@user_FB['allonsy'] }
-				end
-			end
+			render json: { HiMom: '!!!' }
 		end
 
 		def megaadd
@@ -642,15 +608,12 @@ after_initialize do
 				end
 
 				addstuff[:RESULT].each do |winrar|
-					#save to cache
-					@@accountsDB[winrar[:_id]] = winrar
-
 					#save to db
 					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, { GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] }, { upsert: true } )
 				end
 
 				#drop fbgamezlist cache
-				@@fbglist = {} #can drop it only for involved users... but eeeehh... drop everything
+				@@cachedb[:fbglist].drop() #can drop it only for involved users... but eeeehh... drop everything
 
 				render json: addstuff
 
@@ -673,24 +636,22 @@ after_initialize do
 					feedbacks.map!{|uname| uname.downcase}
 					
 					feedbacks.each do |user|
+						user_FB = @@userfb[:userfb].find({ _id: user }).to_a
 						#find if we gave user this feedback already
-						hasfb = @@user_FB[user][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if @@user_FB[user]
+						hasfb = user_FB[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB[0]
 						unless hasfb
 							#add to fb, or create new if there no fb
-							if @@user_FB[user]
-								#save to cache
-								@@user_FB[user][:FEEDBACKS].push(neoFB)
-								@@user_FB[user][:fbG] += 1
-								@@user_FB[user][:fbBuG] += 1
-
+							if user_FB[0]
 								#save to db
 								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
 									"$push" => { FEEDBACKS: neoFB },
 									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
 							else
-								@@user_FB[user] = { FEEDBACKS: [neoFB], troikaBAN: 0, fbG: 1, fbN: 0, fbB: 0, fbBuG: 1, fbBuB: 0, fbARC: 0  }
 								@@user_FB_date[user] = daTE_day
+								@@userfb[:userfb].insert_one( {
+									_id: user, FEEDBACKS: [neoFB], troikaBAN: 0, fbG: 1, fbN: 0, fbB: 0, fbBuG: 1, fbBuB: 0, fbARC: 0
+								} )
 							end
 						end
 					end
