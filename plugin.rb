@@ -42,36 +42,19 @@ after_initialize do
 
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
-		
+
 		@@cachedb = db.use('cacheDB')
 
-		#user zapis count, glitchy, not stable, must use db for it... but eh, not that important to bother
+		#user zapis count etc, glitchy, not stable, must use db for it... but eh, not that important to bother
 		@@zaipsalsq = {}
-
-		#cache for 4tverki and rent pages and fbgamezlist
-		@@rentaCache = {}
-		@@fbglist = {}
-
-		#get usefb from db and index it for easier global usage
-		@@user_FB = {}
 		@@user_FB_date = {}
 		@@user_FB_edit = {}
-		@@userfb[:userfb].find().to_a.each do |fb|
-
-			#check if fb exista
-			if fb[:FEEDBACKS]
-				@@user_FB[fb[:_id]] = fb
-
-			#alert if theres nothing to count
-			else
-				puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
-			end
-		end
 
 		def show
+			#get cache
 			autozCache = @@cachedb[:autozCache].find().to_a
 
-			#drop chache if its old
+			#drop chache, if its old
 			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && Time.now - autozCache[0][:TIME] > 1800
 
 			#create cache if theres none
@@ -81,6 +64,9 @@ after_initialize do
 
 				#get all users 2 list
 				userDB = @@userlistdb[:uListP4].find().to_a
+
+				#get all user feedbacks
+				userFB = @@userfb[:userfb].find( {}, projection: { fbG: 1, fbN: 1, fbB: 1 } ).to_a
 
 				#start a loop for every game to display
 				gameDB.each do |game|
@@ -295,35 +281,53 @@ after_initialize do
 							(p6TAKEN = true; p6 = '') if p6 == '-55'
 
 							#find feedback for users
-							if p1.length > 0 && @@user_FB[p1.downcase]
-								p1FEEDBACK[:GOOD] = @@user_FB[p1.downcase][:fbG]
-								p1FEEDBACK[:BAD] = @@user_FB[p1.downcase][:fbB]
-								p1FEEDBACK[:NEUTRAL] = @@user_FB[p1.downcase][:fbN]
+							if p1.length > 0
+								feedbackp1 = userFB.find{ |h| h['_id'] == p1.downcase }
+								if feedbackp1
+									p1FEEDBACK[:GOOD] = feedbackp1[:fbG] if feedbackp1[:fbG]
+									p1FEEDBACK[:BAD] = feedbackp1[:fbB] if feedbackp1[:fbB]
+									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN] if feedbackp1[:fbN]
+								end
 							end
-							if p2.length > 0 && @@user_FB[p2.downcase]
-								p2FEEDBACK[:GOOD] = @@user_FB[p2.downcase][:fbG]
-								p2FEEDBACK[:BAD] = @@user_FB[p2.downcase][:fbB]
-								p2FEEDBACK[:NEUTRAL] = @@user_FB[p2.downcase][:fbN]
+							if p2.length > 0
+								feedbackp2 = userFB.find{ |h| h['_id'] == p2.downcase }
+								if feedbackp2
+									p2FEEDBACK[:GOOD] = feedbackp2[:fbG] if feedbackp2[:fbG]
+									p2FEEDBACK[:BAD] = feedbackp2[:fbB] if feedbackp2[:fbB]
+									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN] if feedbackp2[:fbN]
+								end
 							end
-							if p3.length > 0 && @@user_FB[p3.downcase]
-								p3FEEDBACK[:GOOD] = @@user_FB[p3.downcase][:fbG]
-								p3FEEDBACK[:BAD] = @@user_FB[p3.downcase][:fbB]
-								p3FEEDBACK[:NEUTRAL] = @@user_FB[p3.downcase][:fbN]
+							if p3.length > 0
+								feedbackp3 = userFB.find{ |h| h['_id'] == p3.downcase }
+								if feedbackp3
+									p3FEEDBACK[:GOOD] = feedbackp3[:fbG] if feedbackp3[:fbG]
+									p3FEEDBACK[:BAD] = feedbackp3[:fbB] if feedbackp3[:fbB]
+									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN] if feedbackp3[:fbN]
+								end
 							end
-							if p4.length > 0 && @@user_FB[p4.downcase]
-									p4FEEDBACK[:GOOD] = @@user_FB[p4.downcase][:fbG]
-									p4FEEDBACK[:BAD] = @@user_FB[p4.downcase][:fbB]
-									p4FEEDBACK[:NEUTRAL] = @@user_FB[p4.downcase][:fbN]
+							if p4.length > 0
+								feedbackp4 = userFB.find{ |h| h['_id'] == p4.downcase }
+								if feedbackp4
+									p4FEEDBACK[:GOOD] = feedbackp4[:fbG] if feedbackp4[:fbG]
+									p4FEEDBACK[:BAD] = feedbackp4[:fbB] if feedbackp4[:fbB]
+									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
+								end
 							end
-							if p5.length > 0 && @@user_FB[p5.downcase]
-								p5FEEDBACK[:GOOD] = @@user_FB[p5.downcase][:fbG]
-								p5FEEDBACK[:BAD] = @@user_FB[p5.downcase][:fbB]
-								p5FEEDBACK[:NEUTRAL] = @@user_FB[p5.downcase][:fbN]
+							if p5.length > 0
+								feedbackp5 = userFB.find{ |h| h['_id'] == p5.downcase }
+								if feedbackp4
+									p4FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
+									p4FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
+									p4FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
+								end
 							end
-							if p6.length > 0 && @@user_FB[p6.downcase]
-								p6FEEDBACK[:GOOD] = @@user_FB[p6.downcase][:fbG]
-								p6FEEDBACK[:BAD] = @@user_FB[p6.downcase][:fbB]
-								p6FEEDBACK[:NEUTRAL] = @@user_FB[p6.downcase][:fbN]
+							if p6.length > 0
+								feedbackp6 = userFB.find{ |h| h['_id'] == p6.downcase }
+								if feedbackp4
+									p4FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
+									p4FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
+									p4FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
+								end
 							end
 
 							#find feedback percentage
