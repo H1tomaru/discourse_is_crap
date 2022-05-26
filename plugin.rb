@@ -46,7 +46,6 @@ after_initialize do
 		@@cachedb = db.use('cacheDB')
 
 		#cache for 4tverki and rent pages and fbgamezlist
-		@@autozCache = {}
 		@@rentaCache = {}
 		@@fbglist = {}
 
@@ -57,11 +56,13 @@ after_initialize do
 			#variables, duh
 			finalvar = {}
 
+			autozCache = @@cachedb[:autozCache].find().to_a
+
 			#drop chache if its old
-			@@autozCache = {} if (@@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800)
+			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && (Time.now - autozCache[0][:TIME] > 1800)
 
 			#create cache if theres none
-			if @@autozCache.empty?
+			if autozCache[0].empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -351,12 +352,14 @@ after_initialize do
 
 				end
 
-				#save everything to cache to db
-				@@autozCache[:gamelist] = gameDB
-				@@autozCache[:TIME] = Time.now
+				#save everything to cachedb
+				@@cachedb[:zaipsalsq].insert_one( { gamelist: gameDB, TIME: Time.now } )
+
+				autozCache[0][:gamelist] = gameDB
+
 			end
 
-			render json: { gamelist: @@autozCache[:gamelist] }
+			render json: { gamelist: autozCache[0][:gamelist] }
 
 		end
 
@@ -435,7 +438,7 @@ after_initialize do
 					if zaipsalsq[0]
 						@@cachedb[:zaipsalsq].find_one_and_update( { _id: user_d }, { "$inc" => { count: 1 } } )
 					else
-						@@cachedb[:zaipsalsq].insertOne( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
+						@@cachedb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
 					end
 
 					#do actual zaips, wohoo
@@ -447,7 +450,7 @@ after_initialize do
 					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
 					#destroy cache
-					@@autozCache = {}
+					@@cachedb[:autozCache].drop()
 
 					#add message to chat
 					PostCreator.create(
@@ -527,31 +530,7 @@ after_initialize do
 		end
 
 		def showadd
-			if current_user && current_user[:username] == 'H1tomaru'
-				if params[:killzonefb] == 'sleep'
-					@@user_FB = {}
-					@@user_FB_date = {}
-					broken = 0
-					@@userfb[:userfb].find().to_a.each do |fb|
-
-						#check if fb exista
-						if fb[:FEEDBACKS]
-							@@user_FB[fb[:_id]] = fb
-
-						#alert if theres nothing to count
-						else
-							puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
-							broken += 1
-						end
-					end
-					render json: { killzonefb: true, brokenaccs: broken }
-				elsif params[:killzone4tv] == 'gamez'
-					@@autozCache = {}
-					render json: { killzone4tv: true }
-				else
-					render json: { HiMom: '!!!', test1: @@user_FB['allonsy'] }
-				end
-			end
+			render json: { HiMom: '!!!' }
 		end
 
 		def megaadd
