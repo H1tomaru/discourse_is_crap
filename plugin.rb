@@ -42,6 +42,8 @@ after_initialize do
 
 		@@userdb = db.use('userdb')
 		@@userfb = db.use('userfb')
+		
+		@@cachedb = db.use('cacheDB')
 
 		#user zapis count
 		@@zaipsalsq = {}
@@ -51,35 +53,8 @@ after_initialize do
 		@@rentaCache = {}
 		@@fbglist = {}
 
-		#full account list saved from db
-		@@accountsDB = {}
-		@@userdb[:PS4db].find().to_a.each do |acc|
-
-			#check if account is valid
-			if acc[:GAME] && acc[:P2] && acc[:P4] && acc[:DATE]
-				@@accountsDB[acc[:_id]] = acc if acc[:DATE].to_time < 63000000
-
-			#alert if theres something missing
-			else
-				puts "###Warning!!!### "+acc[:_id]+" accountdb is broken!"
-			end
-		end
-
-		#get usefb from db and index it for easier global usage
-		@@user_FB = {}
 		@@user_FB_date = {}
 		@@user_FB_edit = {}
-		@@userfb[:userfb].find().to_a.each do |fb|
-
-			#check if fb exista
-			if fb[:FEEDBACKS]
-				@@user_FB[fb[:_id]] = fb
-
-			#alert if theres nothing to count
-			else
-				puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
-			end
-		end
 
 		def show
 			#variables, duh
