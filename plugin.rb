@@ -45,26 +45,51 @@ after_initialize do
 		
 		@@cachedb = db.use('cacheDB')
 
-		#user zapis count
+		#user zapis count, glitchy, not stable, must use db for it... but eh, not that important to bother
 		@@zaipsalsq = {}
 
 		#cache for 4tverki and rent pages and fbgamezlist
-		@@autozCache = {}
 		@@rentaCache = {}
 		@@fbglist = {}
 
+		#full account list saved from db
+		@@accountsDB = {}
+		@@userdb[:PS4db].find().to_a.each do |acc|
+
+			#check if account is valid
+			if acc[:GAME] && acc[:P2] && acc[:P4] && acc[:DATE]
+				@@accountsDB[acc[:_id]] = acc if acc[:DATE].to_time < 63000000
+
+			#alert if theres something missing
+			else
+				puts "###Warning!!!### "+acc[:_id]+" accountdb is broken!"
+			end
+		end
+
+		#get usefb from db and index it for easier global usage
+		@@user_FB = {}
 		@@user_FB_date = {}
 		@@user_FB_edit = {}
+		@@userfb[:userfb].find().to_a.each do |fb|
+
+			#check if fb exista
+			if fb[:FEEDBACKS]
+				@@user_FB[fb[:_id]] = fb
+
+			#alert if theres nothing to count
+			else
+				puts "###Warning!!!### "+fb[:_id]+" feedback is broken!"
+			end
+		end
 
 		def show
-			#variables, duh
-			finalvar = {}
+			autozCache = @@cachedb[:autozCache].find().to_a
 
 			#drop chache if its old
-			@@autozCache = {} if (@@autozCache.any? && Time.now - @@autozCache[:TIME] > 1800)
+			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && Time.now - autozCache[0][:TIME] > 1800
 
 			#create cache if theres none
-			if @@autozCache.empty?
+			if autozCache[0].empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -282,7 +307,7 @@ after_initialize do
 							(p4TAKEN = true; p4 = '') if p4 == '-55'
 							(p5TAKEN = true; p5 = '') if p5 == '-55'
 							(p6TAKEN = true; p6 = '') if p6 == '-55'
-							
+
 							#find feedback for users
 							if p1.length > 0 && @@user_FB[p1.downcase]
 								p1FEEDBACK[:GOOD] = @@user_FB[p1.downcase][:fbG]
@@ -354,12 +379,14 @@ after_initialize do
 
 				end
 
-				#save everything to cache to db
-				@@autozCache[:gamelist] = gameDB
-				@@autozCache[:TIME] = Time.now
+				#save everything to cachedb
+				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } )
+
+				autozCache[0][:gamelist] = gameDB
+
 			end
 
-			render json: { gamelist: @@autozCache[:gamelist] }
+			render json: { gamelist: autozCache[0][:gamelist] }
 
 		end
 
@@ -377,7 +404,7 @@ after_initialize do
 			else 
 				render json: { poiskfail: true }
 			end
-		end 
+		end
 
 		def prezaips
 			#decode shit
@@ -390,12 +417,14 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a
+
 				#check if positive feedback or spam exists
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug')
+				if user_FB[0] && user_FB[0][:fbG] > 0 && user_FB[0][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
+					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) )
 					#special message if its a p1 zapis with less then 5 mrbug feedback
-					if code[0] == "1" && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug'
-						render json: { piadin: true, fbcount: @@user_FB[user_d][:fbBuG] }
+					if code[0] == "1" && user_FB[0][:fbBuG] < 5 && current_user[:username] != 'MrBug'
+						render json: { piadin: true, fbcount: user_FB[0][:fbBuG] }
 					else
 						#get stuff from db
 						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
@@ -428,10 +457,12 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a
+
 				#do everything checking again!
-				if (@@user_FB[user_d] && @@user_FB[user_d][:fbG] > 0 && @@user_FB[user_d][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000) &&
-					((@@zaipsalsq[user_d] && @@zaipsalsq[user_d][:count] < 5 && current_user[:username] != 'MrBug') || !@@zaipsalsq[user_d] || current_user[:username] == 'MrBug') &&
-				!(code[0] == "1" && @@user_FB[user_d] && @@user_FB[user_d][:fbBuG] < 5 && current_user[:username] != 'MrBug')
+				if user_FB[0] && user_FB[0][:fbG] > 0 && user_FB[0][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
+					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) ) &&
+				!(code[0] == "1" && user_FB[0][:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
 						@@zaipsalsq[user_d][:count] += 1
@@ -440,15 +471,14 @@ after_initialize do
 					end
 
 					#do actual zaips, wohoo
-					push = {}
-					push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
+					push = { "P"+code[0]: { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 } }
 
 					@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 
 					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
-					#destroy cache
-					@@autozCache = {}
+					#destroy 4tverki cache
+					@@cachedb[:autozCache].drop()
 
 					#add message to chat
 					PostCreator.create(
