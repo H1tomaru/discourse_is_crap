@@ -463,7 +463,8 @@ after_initialize do
 					end
 
 					#do actual zaips, wohoo
-					push = { "P"+code[0]: { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 } }
+					push = {}
+					push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 
 					@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 
