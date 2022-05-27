@@ -914,6 +914,7 @@ after_initialize do
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 
+					@@user_FB_date[uzar] = Time.now.strftime("%d")
 				end
 			end
 		end
