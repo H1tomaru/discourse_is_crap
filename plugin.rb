@@ -718,6 +718,8 @@ after_initialize do
 				#do sorting web side? eeeh... cached anyway...
 				ugamezfinal.sort_by! { |k| [k[:gNAME].downcase, k[:poZ]] }
 
+				fbglist = { ugameZ: ugamezfinal }
+
 				#save it to cache
 				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
 					ugameZ: ugamezfinal, DATE: Time.now.strftime("%d")
@@ -726,7 +728,7 @@ after_initialize do
 
 			#for logged in users only
 			if current_user && user_d != 'mrbug'
-				feedbacks[:ugameZ] = ugamezfinal
+				feedbacks[:ugameZ] = fbglist[:ugameZ]
 
 				#remove acc mail if user is not owner of this page
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
