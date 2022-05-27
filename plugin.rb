@@ -793,14 +793,14 @@ after_initialize do
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								if @@user_FB_edit[pageu_d+user_d] && @user_FB_edit[pageu_d+user_d] == timeNOW
+								if @@user_FB_edit[pageu_d+user_d] && @@user_FB_edit[pageu_d+user_d] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@user_FB_edit[pageu_d+user_d] == timeNOW
+									@@user_FB_edit[pageu_d+user_d] = timeNOW
 
 									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
