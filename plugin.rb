@@ -638,7 +638,7 @@ after_initialize do
 
 					#downcase all names
 					feedbacks.map!{|uname| uname.downcase}
-					
+
 					feedbacks.each do |user|
 						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACK: 1 }).to_a
 						#find if we gave user this feedback already
@@ -665,34 +665,43 @@ after_initialize do
 
 		def feedbacks
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			timeNOW = Time.now
+			timeNOW = Time.now; ugamezfinal = []
 			user_d = params[:username].downcase
 
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
 			#recount user fb, in case its old
-			if @@user_FB[user_d]
-				#recount fb in case some fb is old
-				( ufbupdate(@@user_FB[user_d]); @@user_FB_date[user_d] = Time.now.strftime("%d") ) if !@@user_FB_date[user_d] || @@user_FB_date[user_d] != Time.now.strftime("%d")
-				feedbacks[:FEEDBACKS] = @@user_FB[user_d][:FEEDBACKS]
-				feedbacks[:fbG] = @@user_FB[user_d][:fbG]
-				feedbacks[:fbN] = @@user_FB[user_d][:fbN]
-				feedbacks[:fbB] = @@user_FB[user_d][:fbB]
-				feedbacks[:fbBuG] = @@user_FB[user_d][:fbBuG]
-				feedbacks[:fbBuB] = @@user_FB[user_d][:fbBuB]
-				feedbacks[:fbARC] = @@user_FB[user_d][:fbARC]
+			( ufbupdate(user_d); @@user_FB_date[user_d] = Time.now.strftime("%d") ) if !@@user_FB_date[user_d] || @@user_FB_date[user_d] != Time.now.strftime("%d")
+
+			#get userfb
+			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a
+
+			#display userfb it it exists
+			if user_FB[0]
+				feedbacks[:FEEDBACKS] = user_FB[0][:FEEDBACKS]
+				feedbacks[:fbG] = user_FB[0][:fbG]
+				feedbacks[:fbN] = user_FB[0][:fbN]
+				feedbacks[:fbB] = user_FB[0][:fbB]
+				feedbacks[:fbARC] = user_FB[0][:fbARC]
 			end
 
-			#do the games owned display, for logged in users only
-			if current_user && params[:username] != 'MrBug' && ( !@@fbglist[user_d] || @@fbglist[user_d][:DATE] != Time.now.strftime("%d") )
-				#get user games from my database
-				ugamez = @@accountsDB.select { |key, hash| (hash[:P2].include? params[:username]) || (hash[:P4].include? params[:username]) }
+			#get fbglist cache
+			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a
 
-				ugamezfinal = []
+			#drop chache, if its old
+			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist[0] && Time.now - fbglist[0][:DATE] != Time.now.strftime("%d")
+
+			#do the games owned display
+			if fbglist[0].empty?
+				#get user games from my database
+				ugamez = @@userdb[:PS4db].find( 
+					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
+                           		collation: { locale: 'en', strength: 2 } ).to_a
+
 				#do stuff if we have some
-				if ugamez
-					ugamez.each do |key, ugaz|
+				if ugamez[0]
+					ugamez.each do | ugaz|
 						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 							#select acc mail between + and @, \+ and \@
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
@@ -707,19 +716,24 @@ after_initialize do
 						end
 					end
 				end
-				#save it to cache
+
 				#do sorting web side? eeeh... cached anyway...
-				@@fbglist[user_d] = { ugameZ: ugamezfinal.sort_by { |k| [k[:gNAME].downcase, k[:poZ]] }, DATE: Time.now.strftime("%d") }
+				ugamezfinal.sort_by! { |k| [k[:gNAME].downcase, k[:poZ]] }
+
+				#save it to cache
+				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
+					ugameZ: ugamezfinal, DATE: Time.now.strftime("%d")
+				}, { upsert: true } )
 			end
 
-			#use cache if we have one and its not empty
-			if params[:username] != 'MrBug' && @@fbglist[user_d][:ugameZ].any?
-				feedbacks[:ugameZ] = @@fbglist[user_d][:ugameZ]
+			#for logged in users only
+			if current_user && user_d != 'mrbug'
+				feedbacks[:ugameZ] = ugamezfinal
 
 				#remove acc mail if user is not owner of this page
 				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d
 			end
-			
+
 			#render fb
 			render json: feedbacks
 
@@ -853,50 +867,54 @@ after_initialize do
 		end
 
 		#very cute fb update method
-		def ufbupdate(inputfb)
-			feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
-			newfbarray = []; timeNOW = Time.now
+		def ufbupdate(uzar)
+			inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a
 
-			#remove duplicates
-			inputfb[:FEEDBACKS].uniq!
+			if inputfb[0] && inputfb[0][:FEEDBACKS]
+				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+				newfbarray = []; timeNOW = Time.now
 
-			#create key if it doesnt exist yet
-			feedbacks[:troikaBAN] = inputfb[:troikaBAN] if inputfb[:troikaBAN]
+				#remove duplicates
+				inputfb[0][:FEEDBACKS].uniq!
 
-			#get deleted feedback number if it exists
-			feedbacks[:fbARC] = inputfb[:fbARC] if inputfb[:fbARC]
+				#create key if it doesnt exist yet
+				feedbacks[:troikaBAN] = inputfb[0][:troikaBAN] if inputfb[0][:troikaBAN]
 
-			#count and create numbers
-			inputfb[:FEEDBACKS].each do |fb|
-				#look for old ones and delete them
-				if timeNOW - fb[:DATE].to_time > 63000000
-					feedbacks[:fbARC] += 1
-				else #else just count them
-					feedbacks[:fbG] += 1 if fb[:SCORE] > 0
-					feedbacks[:fbB] += 1 if fb[:SCORE] < 0
-					feedbacks[:fbN] += 1 if fb[:SCORE] == 0
-					#count bugofb
-					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
-						feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
-						feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+				#get deleted feedback number if it exists
+				feedbacks[:fbARC] = inputfb[0][:fbARC] if inputfb[0][:fbARC]
+
+				#count and create numbers
+				inputfb[0][:FEEDBACKS].each do |fb|
+					#look for old ones and delete them
+					if timeNOW - fb[:DATE].to_time > 63000000
+						feedbacks[:fbARC] += 1
+					else #else just count them
+						feedbacks[:fbG] += 1 if fb[:SCORE] > 0
+						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
+						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
+						#count bugofb
+						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
+							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
+							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+						end
+						newfbarray.push({
+							FEEDBACK: fb[:FEEDBACK],
+							pNAME: fb[:pNAME],
+							DATE: fb[:DATE],
+							SCORE: fb[:SCORE]
+						})
 					end
-					newfbarray.push({
-						FEEDBACK: fb[:FEEDBACK],
-						pNAME: fb[:pNAME],
-						DATE: fb[:DATE],
-						SCORE: fb[:SCORE]
-					})
 				end
-			end
 
-			#update shit if numbers are different
-			if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
-			feedbacks[:fbBuG] != inputfb[:fbBuG] || feedbacks[:fbBuB] != inputfb[:fbBuB] || feedbacks[:fbARC] != inputfb[:fbARC]
-				#save to db
-				@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
-					fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
-					fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
+				#update shit if numbers are different
+				if feedbacks[:fbG] != inputfb[0][:fbG] || feedbacks[:fbN] != inputfb[0][:fbN] || feedbacks[:fbB] != inputfb[0][:fbB] ||
+				feedbacks[:fbBuG] != inputfb[0][:fbBuG] || feedbacks[:fbBuB] != inputfb[0][:fbBuB] || feedbacks[:fbARC] != inputfb[0][:fbARC]
+					#save to db
+					@@userfb[:userfb].replace_one( { _id: inputfb[0][:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
+						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 
+				end
 			end
 		end
 
