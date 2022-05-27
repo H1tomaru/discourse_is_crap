@@ -750,16 +750,22 @@ after_initialize do
 			#page owners and guests cant do feedbacks!
 			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == "true" || fedbacks[0] == "false" )
 
+				#get poster fb
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbB: 1 }).to_a
+
 				#users with negative feedbacks cant do feedbacks!
-				if @@user_FB[user_d] && @@user_FB[user_d][:fbB] > 0
+				if user_FB[0] && user_FB[0][:fbB] > 0
 					render json: { bakas: true }
 				else
+
+					#get user fb
+					pageu_FB = @@userfb[:userfb].find({ _id: pageu_d }).to_a
 
 					#do normal feedback add
 					if fedbacks[0] == "true"
 
 						#if gave feedback already, show stuff
-						if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS] && @@user_FB[pageu_d][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
+						if pageu_FB[0] && pageu_FB[0][:FEEDBACKS] && pageu_FB[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
 							render json: { gavas_z: true }
 						else
 							new_fb = {
@@ -770,17 +776,10 @@ after_initialize do
 							}
 
 							#if fb exists, add to it, or create new fb if its not
-							if @@user_FB[pageu_d] && @@user_FB[pageu_d][:FEEDBACKS]
-								#add feedback to fb cache
-								@@user_FB[pageu_d][:FEEDBACKS].push(new_fb)
-							else
-								#create fb array if user doesnt have any fb yet
-								@@user_FB[pageu_d] = { FEEDBACKS: [new_fb] }
-							end
+							@@userfb[:userfb].find_one_and_update( { _id: pageu_d }, { "$push" => { FEEDBACKS: new_fb } }, { upsert: true } )
 
-							#update fb with glitchy function... hope it works...
-							ufbupdate(@@user_FB[pageu_d])
-							@@user_FB_date[pageu_d] = Time.now.strftime("%d") 
+							#update and recount fb
+							ufbupdate(pageu_d)
 
 							render json: { winrars_z: true }
 
@@ -790,28 +789,28 @@ after_initialize do
 					elsif fedbacks[0] == "false"
 
 						#find last feedback and see if we edited it already today
-						@@user_FB[pageu_d][:FEEDBACKS].reverse_each do |fb|
+						pageu_FB[0][:FEEDBACKS].reverse_each do |fb|
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								if @@user_FB_edit[pageu_d+current_user[:username]] && @user_FB_edit[pageu_d+current_user[:username]] == timeNOW
+								if @@user_FB_edit[pageu_d+user_d] && @user_FB_edit[pageu_d+user_d] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@user_FB_edit[pageu_d+current_user[:username]] == timeNOW if !@@user_FB_edit[pageu_d+current_user[:username]]
+									@user_FB_edit[pageu_d+user_d] == timeNOW
 
-									#add bogus trash to fb so it will recount and update db
-									@@user_FB[pageu_d][:fbN] =  999
+									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB[0] )
 
-									#update fb with glitchy function... hope it works...
-									ufbupdate(@@user_FB[pageu_d])
-									@@user_FB_date[pageu_d] = Time.now.strftime("%d") 
+									#update and recount fb
+									ufbupdate(pageu_d)
 
 									render json: { winrars_e: true }
+
 								end
+								#stop loop
 								break
 							end
 						end
