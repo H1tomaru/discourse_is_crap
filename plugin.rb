@@ -52,13 +52,13 @@ after_initialize do
 
 		def show
 			#get cache
-			autozCache = @@cachedb[:autozCache].find().to_a
+			autozCache = @@cachedb[:autozCache].find().to_a.first()
 
 			#drop chache, if its old
-			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && Time.now - autozCache[0][:TIME] > 1800
+			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none
-			unless autozCache[0]
+			unless autozCache
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -372,11 +372,11 @@ after_initialize do
 				#save everything to cachedb
 				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } )
 
-				autozCache[0][:gamelist] = gameDB
+				autozCache[:gamelist] = gameDB
 
 			end
 
-			render json: { gamelist: autozCache[0][:gamelist] }
+			render json: { gamelist: autozCache[:gamelist] }
 
 		end
 
@@ -384,13 +384,13 @@ after_initialize do
 			#decode shit
 			troikopoisk = Base64.decode64(params[:input]).strip.downcase
 			
-			accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a
+			accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
 
 			#do stuff when finding acc or not
-			if troikopoisk.length > 20 && troikopoisk.length < 40 && accountsDB[0] && ( Time.now - accountsDB[0][:DATE].to_time < 63000000 )
+			if troikopoisk.length > 20 && troikopoisk.length < 40 && accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
 				render json: { 
-					_id: accountsDB[0][:_id], GAME: accountsDB[0][:GAME],
-					P2: accountsDB[0][:P2], P4: accountsDB[0][:P4],
+					_id: accountsDB[:_id], GAME: accountsDB[:GAME],
+					P2: accountsDB[:P2], P4: accountsDB[:P4],
 					poiskwin: true
 				}
 			else 
@@ -409,26 +409,26 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#check if positive feedback or spam exists
-				if user_FB[0] && user_FB[0][:fbG] > 0 && user_FB[0][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
+				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
 					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) )
 					#special message if its a p1 zapis with less then 5 mrbug feedback
-					if code[0] == "1" && user_FB[0][:fbBuG] < 5 && current_user[:username] != 'MrBug'
-						render json: { piadin: true, fbcount: user_FB[0][:fbBuG] }
+					if code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug'
+						render json: { piadin: true, fbcount: user_FB[:fbBuG] }
 					else
 						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a
-						if prezaips[0][:imgLINKHQ]
-							prezaips[0][:imgLINK] = prezaips[0][:imgLINKHQ]
-							prezaips[0].except!("imgLINKHQ")
+						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.first()
+						if prezaips[:imgLINKHQ]
+							prezaips[:imgLINK] = prezaips[:imgLINKHQ]
+							prezaips.except!("imgLINKHQ")
 						end
 
-						prezaips[0][:position] = code[0]
-						prezaips[0][:winrars] = true
+						prezaips[:position] = code[0]
+						prezaips[:winrars] = true
 
-						render json: prezaips[0]
+						render json: prezaips
 					end
 				else
 					render json: { banned: true }
@@ -449,12 +449,12 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
 
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#do everything checking again!
-				if user_FB[0] && user_FB[0][:fbG] > 0 && user_FB[0][:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
+				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
 					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) ) &&
-				!(code[0] == "1" && user_FB[0][:fbBuG] < 5 && current_user[:username] != 'MrBug')
+				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if @@zaipsalsq[user_d]
 						@@zaipsalsq[user_d][:count] += 1
@@ -487,38 +487,38 @@ after_initialize do
 
 					#create forum notification if sobrano
 					#get game userlist
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
 					#find this troika index
-					troino = gameuzers[0]["P"+code[0]].count
+					troino = gameuzers["P"+code[0]].count
 					troino = troino / 2.0 if code[0] == "4" || code[0] == "4_4" || code[0] == "4_5"
 					trindx = troino - 1
 
 					#dont do shit if troika index not full number
 					#check if troika sobrana
-					if troino.to_i == troino && ( (gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) ||
-					(gameuzers[0]["P2"] && gameuzers[0]["P4"] &&
-						gameuzers[0]["P2"][trindx] && gameuzers[0]["P4"][trindx*2+1]) ||
-					(gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"] &&
-						gameuzers[0]["P2_4"][trindx] && gameuzers[0]["P2_5"][trindx] && gameuzers[0]["P4_4"][trindx*2+1] && gameuzers[0]["P4_5"][trindx*2+1]) )
+					if troino.to_i == troino && ( (gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
+						gameuzers["P2"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) ||
+					(gameuzers["P2"] && gameuzers["P4"] &&
+						gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1]) ||
+					(gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
+						gameuzers["P2_4"][trindx] && gameuzers["P2_5"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) )
 						#add users to userlist
 						usernames = ["MrBug"]
-						usernames.push(gameuzers[0][:P1][trindx][:NAME])	if gameuzers[0][:P1] && gameuzers[0][:P1][trindx] && gameuzers[0][:P1][trindx][:STAT] == 0 && gameuzers[0][:P1][trindx][:NAME] != "-55"
-						usernames.push(gameuzers[0][:P2][trindx][:NAME])	if gameuzers[0][:P2] && gameuzers[0][:P2][trindx][:STAT] == 0
-						usernames.push(gameuzers[0][:P4][trindx*2][:NAME])	if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[0][:P4][trindx*2+1][:NAME])	if gameuzers[0][:P4] && gameuzers[0][:P4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[0][:P2_4][trindx][:NAME])	if gameuzers[0][:P2_4] && gameuzers[0][:P2_4][trindx][:STAT] == 0
-						usernames.push(gameuzers[0][:P2_5][trindx][:NAME])	if gameuzers[0][:P2_5] && gameuzers[0][:P2_5][trindx][:STAT] == 0
-						usernames.push(gameuzers[0][:P4_4][trindx*2][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[0][:P4_4][trindx*2+1][:NAME])	if gameuzers[0][:P4_4] && gameuzers[0][:P4_4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[0][:P4_5][trindx*2][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[0][:P4_5][trindx*2+1][:NAME])	if gameuzers[0][:P4_5] && gameuzers[0][:P4_5][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[:P1][trindx][:NAME])		if gameuzers[:P1] && gameuzers[:P1][trindx] && gameuzers[:P1][trindx][:STAT] == 0 && gameuzers[:P1][trindx][:NAME] != "-55"
+						usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] && gameuzers[:P2][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] && gameuzers[:P4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] && gameuzers[:P4][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[:P2_4][trindx][:NAME])		if gameuzers[:P2_4] && gameuzers[:P2_4][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P2_5][trindx][:NAME])		if gameuzers[:P2_5] && gameuzers[:P2_5][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P4_4][trindx*2][:NAME])	if gameuzers[:P4_4] && gameuzers[:P4_4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4_4][trindx*2+1][:NAME])	if gameuzers[:P4_4] && gameuzers[:P4_4][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[:P4_5][trindx*2][:NAME])	if gameuzers[:P4_5] && gameuzers[:P4_5][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4_5][trindx*2+1][:NAME])	if gameuzers[:P4_5] && gameuzers[:P4_5][trindx*2+1][:STAT] == 0
 						usernames.uniq!
 
-						hrenka = "Тройка" if gameuzers[0]["P2"] && gameuzers[0]["P4"]
-						hrenka = "Четверка" if gameuzers[0][:P1] && gameuzers[0][:P1][trindx]
-						hrenka = "Пятерка" if gameuzers[0]["P2"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]
-						hrenka = "Шестерка" if gameuzers[0]["P2_4"] && gameuzers[0]["P2_5"] && gameuzers[0]["P4_4"] && gameuzers[0]["P4_5"]	
+						hrenka = "Тройка" 	if gameuzers["P2"] && gameuzers["P4"]
+						hrenka = "Четверка" 	if gameuzers[:P1] && gameuzers[:P1][trindx]
+						hrenka = "Пятерка" 	if gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"]
+						hrenka = "Шестерка" 	if gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"]	
 
 						troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
 						troitext = "Здравствуйте! :robot:\n" +
@@ -641,12 +641,12 @@ after_initialize do
 					feedbacks.map!{|uname| uname.downcase}
 
 					feedbacks.each do |user|
-						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACK: 1 }).to_a
+						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACK: 1 }).to_a.first()
 						#find if we gave user this feedback already
-						hasfb = user_FB[0][:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB[0]
+						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB
 						unless hasfb
 							#add to fb, or create new if there no fb
-							if user_FB[0]
+							if user_FB
 								#save to db
 								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
 									"$push" => { FEEDBACKS: neoFB },
@@ -676,47 +676,44 @@ after_initialize do
 			( ufbupdate(user_d); @@user_FB_date[user_d] = Time.now.strftime("%d") ) if !@@user_FB_date[user_d] || @@user_FB_date[user_d] != Time.now.strftime("%d")
 
 			#get userfb
-			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a
+			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
 
 			#display userfb it it exists
-			if user_FB[0]
-				feedbacks[:FEEDBACKS] = user_FB[0][:FEEDBACKS]
-				feedbacks[:fbG] = user_FB[0][:fbG]
-				feedbacks[:fbN] = user_FB[0][:fbN]
-				feedbacks[:fbB] = user_FB[0][:fbB]
-				feedbacks[:fbARC] = user_FB[0][:fbARC]
+			if user_FB
+				feedbacks[:FEEDBACKS] = user_FB[:FEEDBACKS]
+				feedbacks[:fbG] = user_FB[:fbG]
+				feedbacks[:fbN] = user_FB[:fbN]
+				feedbacks[:fbB] = user_FB[:fbB]
+				feedbacks[:fbARC] = user_FB[:fbARC]
 			end
 
 			#get fbglist cache
-			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a
+			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
 			#drop chache, if its old
-			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist[0] && Time.now - fbglist[0][:DATE] != Time.now.strftime("%d")
+			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist && Time.now - fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
-			unless fbglist[0]
-				#get user games from my database
-				ugamez = @@userdb[:PS4db].find( 
+			unless fbglist
+				#get user games from my database #do stuff if we have some
+				@@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
-                           		collation: { locale: 'en', strength: 2 } ).to_a
+					collation: { locale: 'en', strength: 2 }
+				).to_a.each do |ugaz| #do stuff if we have some
+					if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
+						#select acc mail between + and @, \+ and \@
+						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 
-				#do stuff if we have some
-				if ugamez[0]
-					ugamez.each do | ugaz|
-						if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
-							#select acc mail between + and @, \+ and \@
-							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
-
-							#create final variable
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == user_d
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == user_d
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == user_d
-							ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == user_d
-						end
+						#create final variable
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 2, aCC: aCC } ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == user_d
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == user_d
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == user_d
+						ugamezfinal.push( { gNAME: ugaz[:GAME], poZ: 4, aCC: aCC } ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == user_d
 					end
 				end
+
 
 				#do sorting web side? eeeh... cached anyway...
 				ugamezfinal.sort_by! { |k| [k[:gNAME].downcase, k[:poZ]] }
@@ -752,21 +749,21 @@ after_initialize do
 			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == "true" || fedbacks[0] == "false" )
 
 				#get poster fb
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbB: 1 }).to_a
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbB: 1 }).to_a.first()
 
 				#users with negative feedbacks cant do feedbacks!
-				if user_FB[0] && user_FB[0][:fbB] > 0
+				if user_FB && user_FB[:fbB] > 0
 					render json: { bakas: true }
 				else
 
 					#get user fb
-					pageu_FB = @@userfb[:userfb].find({ _id: pageu_d }).to_a
+					pageu_FB = @@userfb[:userfb].find({ _id: pageu_d }).to_a.first()
 
 					#do normal feedback add
 					if fedbacks[0] == "true"
 
 						#if gave feedback already, show stuff
-						if pageu_FB[0] && pageu_FB[0][:FEEDBACKS] && pageu_FB[0][:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
+						if pageu_FB && pageu_FB[:FEEDBACKS] && pageu_FB[:FEEDBACKS].any? {|h| h[:pNAME] == current_user[:username] && h[:DATE] == timeNOW} && current_user[:username] != 'MrBug'
 							render json: { gavas_z: true }
 						else
 							new_fb = {
@@ -790,7 +787,7 @@ after_initialize do
 					elsif fedbacks[0] == "false"
 
 						#find last feedback and see if we edited it already today
-						pageu_FB[0][:FEEDBACKS].reverse_each do |fb|
+						pageu_FB[:FEEDBACKS].reverse_each do |fb|
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
@@ -803,7 +800,7 @@ after_initialize do
 									#make edited mark
 									@user_FB_edit[pageu_d+user_d] == timeNOW
 
-									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB[0] )
+									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
 									#update and recount fb
 									ufbupdate(pageu_d)
@@ -827,12 +824,12 @@ after_initialize do
 
 		def rentagama
 			#get cache
-			rentaCache = @@cachedb[:rentaCache].find().to_a
+			rentaCache = @@cachedb[:rentaCache].find().to_a.first()
 
 			#drop chache if it exists and is old
-			( @@cachedb[:rentaCache].drop(); rentaCache = [] ) if rentaCache[0] && Time.now - rentaCache[0][:TIME] > 1800
+			( @@cachedb[:rentaCache].drop(); rentaCache = [] ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
 
-			unless rentaCache[0]
+			unless rentaCache
 				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 
@@ -863,7 +860,7 @@ after_initialize do
 				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 
-				rentaCache[0] = finalrenta
+				rentaCache = finalrenta
 
 				#save cache to db
 				@@cachedb[:rentaCache].insert_one( { 
@@ -872,28 +869,28 @@ after_initialize do
 				} )
 			end
 
-			render json: rentaCache[0]
+			render json: rentaCache
 		end
 
 		#very cute fb update method
 		def ufbupdate(uzar)
-			inputfb = @@userfb[:userfb].find({ _id: uzar }).to_a
+			inputfb = @@userfb[:userfb].find({ _id: uzar }).to_a.first()
 
-			if inputfb[0] && inputfb[0][:FEEDBACKS]
+			if inputfb && inputfb[:FEEDBACKS]
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 				newfbarray = []; timeNOW = Time.now
 
 				#remove duplicates
-				inputfb[0][:FEEDBACKS].uniq!
+				inputfb[:FEEDBACKS].uniq!
 
 				#create key if it doesnt exist yet
-				feedbacks[:troikaBAN] = inputfb[0][:troikaBAN] if inputfb[0][:troikaBAN]
+				feedbacks[:troikaBAN] = inputfb[:troikaBAN] if inputfb[:troikaBAN]
 
 				#get deleted feedback number if it exists
-				feedbacks[:fbARC] = inputfb[0][:fbARC] if inputfb[0][:fbARC]
+				feedbacks[:fbARC] = inputfb[:fbARC] if inputfb[:fbARC]
 
 				#count and create numbers
-				inputfb[0][:FEEDBACKS].each do |fb|
+				inputfb[:FEEDBACKS].each do |fb|
 					#look for old ones and delete them
 					if timeNOW - fb[:DATE].to_time > 63000000
 						feedbacks[:fbARC] += 1
@@ -916,10 +913,10 @@ after_initialize do
 				end
 
 				#update shit if numbers are different
-				if feedbacks[:fbG] != inputfb[0][:fbG] || feedbacks[:fbN] != inputfb[0][:fbN] || feedbacks[:fbB] != inputfb[0][:fbB] ||
-				feedbacks[:fbBuG] != inputfb[0][:fbBuG] || feedbacks[:fbBuB] != inputfb[0][:fbBuB] || feedbacks[:fbARC] != inputfb[0][:fbARC]
+				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
+				feedbacks[:fbBuG] != inputfb[:fbBuG] || feedbacks[:fbBuB] != inputfb[:fbBuB] || feedbacks[:fbARC] != inputfb[:fbARC]
 					#save to db
-					@@userfb[:userfb].replace_one( { _id: inputfb[0][:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 
