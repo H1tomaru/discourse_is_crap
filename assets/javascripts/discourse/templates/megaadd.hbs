@@ -59,17 +59,3 @@ MegaAdd List some Pokemans<br>
 		{{/each}}
 	{{/each}}
 {{/if}}
-
-<br><br>
-<button {{action 'killzonefb'}}>DeleteFBCache</button>
-<br><br>
-<button {{action 'killzone4tv'}}>Delete4tverkiCache</button>
-<br><br>
-
-{{#if killzone4tv}}
-	4tverki cache dropped
-{{/if}}
-{{#if killzonefb.killzonefb}}
-	feedbacks cache dropped<br><br>
-	broken accounts: {{killzonefb.brokenaccs}}
-{{/if}}
