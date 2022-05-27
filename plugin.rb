@@ -372,7 +372,7 @@ after_initialize do
 				#save everything to cachedb
 				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } )
 
-				autozCache[:gamelist] = gameDB
+				autozCache = { gamelist: gameDB }
 
 			end
 
