@@ -58,7 +58,7 @@ after_initialize do
 			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache[0] && Time.now - autozCache[0][:TIME] > 1800
 
 			#create cache if theres none
-			if autozCache[0].empty?
+			unless autozCache[0]
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -693,7 +693,7 @@ after_initialize do
 			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist[0] && Time.now - fbglist[0][:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
-			if fbglist[0].empty?
+			unless fbglist[0]
 				#get user games from my database
 				ugamez = @@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
@@ -825,17 +825,20 @@ after_initialize do
 		end
 
 		def rentagama
-			#drop chache if it exists and is old
-			@@rentaCache = {} if @@rentaCache.any? && Time.now - @@rentaCache[:TIME] > 3600
+			#get cache
+			rentaCache = @@cachedb[:rentaCache].find().to_a
 
-			if @@rentaCache.empty?
-				@@rentaCache[:finalrenta] = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
+			#drop chache if it exists and is old
+			( @@cachedb[:rentaCache].drop(); rentaCache = [] ) if rentaCache[0] && Time.now - rentaCache[0][:TIME] > 1800
+
+			unless rentaCache[0]
+				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 
 				#find all rentagamez
 				@@rentadb[:rentagadb].find().to_a.each do |games|
 					gTYPE = [false,false,false,false]
-					count[0] = count[0] + 1
+					count[0] += 1
 					( gTYPE[0] = true; count[1] += 1 ) if games[:GTYPE] == 1
 					( gTYPE[1] = true; count[2] += 1 ) if games[:GTYPE] == 2
 					( gTYPE[2] = true; count[3] += 1 ) if games[:GTYPE] == 3
@@ -847,22 +850,28 @@ after_initialize do
 							GNEW: games[:GNEW], POSITION: game[:POSITION], PRICE: game[:PRICE],
 							STATUS: game[:STATUS], LINE: game[:LINE]
 						}
-						@@rentaCache[:finalrenta][:rentaGAMEZ].push( gameojb )
-						@@rentaCache[:finalrenta][:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
-						@@rentaCache[:finalrenta][:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
+						finalrenta[:rentaGAMEZ].push( gameojb )
+						finalrenta[:rentaGAMEZ1].push( gameojb ) if games[:GTYPE] == 1 || games[:GTYPE] == 4
+						finalrenta[:rentaGAMEZ2].push( gameojb ) if games[:GTYPE] == 2 || games[:GTYPE] == 3
 					end
 				end
-				@@rentaCache[:finalrenta][:count] = count
+				finalrenta[:count] = count
 
 				#sort this shit
-				@@rentaCache[:finalrenta][:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-				@@rentaCache[:finalrenta][:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				@@rentaCache[:finalrenta][:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
 
-				@@rentaCache[:TIME] = Time.now
+				rentaCache[0] = finalrenta
+
+				#save cache to db
+				@@cachedb[:rentaCache].insert_one( { 
+					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
+					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], TIME: Time.now
+				} )
 			end
 
-			render json: @@rentaCache[:finalrenta]
+			render json: rentaCache[0]
 		end
 
 		#very cute fb update method
