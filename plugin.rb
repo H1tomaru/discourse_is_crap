@@ -877,7 +877,7 @@ after_initialize do
 
 		#very cute fb update method
 		def ufbupdate(uzar)
-			inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a
+			inputfb = @@userfb[:userfb].find({ _id: uzar }).to_a
 
 			if inputfb[0] && inputfb[0][:FEEDBACKS]
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
