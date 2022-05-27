@@ -691,7 +691,7 @@ after_initialize do
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
 			#drop chache, if its old
-			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist && Time.now - fbglist[:DATE] != Time.now.strftime("%d")
+			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
 			unless fbglist
