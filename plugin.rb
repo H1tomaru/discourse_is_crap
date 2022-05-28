@@ -55,7 +55,7 @@ after_initialize do
 			autozCache = @@cachedb[:autozCache].find().to_a.first()
 
 			#drop chache, if its old
-			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache && Time.now - autozCache[:TIME] > 1800
+			( @@cachedb[:autozCache].drop(); autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none
 			unless autozCache
@@ -691,7 +691,7 @@ after_initialize do
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
 			#drop chache, if its old
-			( @@cachedb[:fbglist].drop(); fbglist = [] ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
+			( @@cachedb[:fbglist].drop(); fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
 			unless fbglist
@@ -829,7 +829,7 @@ after_initialize do
 			rentaCache = @@cachedb[:rentaCache].find().to_a.first()
 
 			#drop chache if it exists and is old
-			( @@cachedb[:rentaCache].drop(); rentaCache = [] ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
+			( @@cachedb[:rentaCache].drop(); rentaCache = {} ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
 
 			unless rentaCache
 				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
