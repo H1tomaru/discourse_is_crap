@@ -53,6 +53,7 @@ after_initialize do
 		def show
 			#get cache
 			autozCache = @@cachedb[:autozCache].find().to_a.first()
+			test = @@cachedb[:autozCache].find().to_a.first()
 
 			#drop chache, if its old
 			( @@cachedb[:autozCache].drop(); autozCache = [] ) if autozCache && Time.now - autozCache[:TIME] > 1800
@@ -376,7 +377,7 @@ after_initialize do
 
 			end
 
-			render json: { gamelist: autozCache[:gamelist], test: @@cachedb[:autozCache].find().to_a.first() }
+			render json: { gamelist: autozCache[:gamelist], test: test }
 
 		end
 
