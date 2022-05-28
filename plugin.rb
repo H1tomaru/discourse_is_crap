@@ -376,7 +376,7 @@ after_initialize do
 
 			end
 
-			render json: { gamelist: autozCache[:gamelist] }
+			render json: { gamelist: autozCache[:gamelist], test: @@cachedb[:autozCache].find().to_a.first() }
 
 		end
 
