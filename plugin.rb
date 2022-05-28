@@ -315,18 +315,18 @@ after_initialize do
 							end
 							if p5.length > 0
 								feedbackp5 = userFB.find{ |h| h['_id'] == p5.downcase }
-								if feedbackp4
-									p4FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
-									p4FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
-									p4FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
+								if feedbackp5
+									p5FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
+									p5FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
+									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
 								end
 							end
 							if p6.length > 0
 								feedbackp6 = userFB.find{ |h| h['_id'] == p6.downcase }
-								if feedbackp4
-									p4FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
-									p4FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
-									p4FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
+								if feedbackp6
+									p6FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
+									p6FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
+									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
 								end
 							end
 
