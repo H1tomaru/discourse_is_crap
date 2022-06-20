@@ -58,7 +58,7 @@ after_initialize do
 			( @@cachedb[:autozCache].drop(); autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none
-			unless autozCache
+			if autozCache.empty?
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -679,7 +679,7 @@ after_initialize do
 			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
 
 			#display userfb it it exists
-			if user_FB
+			unless user_FB.empty?
 				feedbacks[:FEEDBACKS] = user_FB[:FEEDBACKS]
 				feedbacks[:fbG] = user_FB[:fbG]
 				feedbacks[:fbN] = user_FB[:fbN]
@@ -694,7 +694,7 @@ after_initialize do
 			( @@cachedb[:fbglist].drop(); fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
-			unless fbglist
+			if fbglist.empty?
 				#get user games from my database #do stuff if we have some
 				@@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
@@ -831,7 +831,7 @@ after_initialize do
 			#drop chache if it exists and is old
 			( @@cachedb[:rentaCache].drop(); rentaCache = {} ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
 
-			unless rentaCache
+			if rentaCache.empty?
 				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 
