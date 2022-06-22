@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
 
 					//calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
 					for (let i = 0; i < 6; i++) {
-						if (currentuser == troika.USERS.[i]) {
+						if (currentuser == troika['USERS'][i]) {
 							if (troika.PSTATUS.[i].[0] == true) {
 								item.MODE1 = true; troika.MODE1 = true; item.MODE2 = false; troika.MODE2 = false
 								finalvar.maigamez1.push( {
