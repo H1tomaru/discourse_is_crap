@@ -31,16 +31,16 @@ export default Ember.Controller.extend({
 					//calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
 					for (let i = 0; i < 6; i++) {
 						if (currentuser == troika['USERS'][i]) {
-							if (troika.PSTATUS.[i].[0] == true) {
+							if (troika['PSTATUS'][i].[0] == true) {
 								item.MODE1 = true; troika.MODE1 = true; item.MODE2 = false; troika.MODE2 = false
 								finalvar.maigamez1.push( {
-									POSITION: item.PPOSITIONS.[i], gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: item.PPRICES.[i],
+									POSITION: item['PPOSITIONS'][i], gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: item['PPRICES'][i],
 									P1ADD: troika.NOP1ADD, DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							} else {
 								if (item.MODE1 == false) item.MODE2 = true
 								if (troika.MODE1 == false) troika.MODE2 = true
-								finalvar.maigamez2.push( { POSITION: item.PPOSITIONS.[i], gNAME: item.gameNAME, gPIC: item.imgLINK } )
+								finalvar.maigamez2.push( { POSITION: item['PPOSITIONS'][i], gNAME: item.gameNAME, gPIC: item.imgLINK } )
 							}
 						}
 					} 
