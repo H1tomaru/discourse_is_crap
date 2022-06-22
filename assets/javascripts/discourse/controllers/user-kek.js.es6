@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
 			})
 
 			//onetime check for users last feedback to make it editable
-			if (fbedit == false && currentuser && item.pNAME == currentuser) { newfbarray.[newfbarray.length - 1].eDit = true; fbedit = true }
+			if (fbedit == false && currentuser && item.pNAME == currentuser) { newfbarray[newfbarray.length - 1]['eDit'] = true; fbedit = true }
 		})
 
 		//save final variable
