@@ -41,14 +41,24 @@ export default Ember.Controller.extend({
 		return finalvar
 
  	}),
-	
-	fbPAGE: this.get('fEEDBACKS.fb1'),
-	
-	fbMORE: this.get('fEEDBACKS.fb2'),
-	
-	fbG: this.get('model.fbG'),
-	fbN: this.get('model.fbN'),
-	fbB: this.get('model.fbB'),
+
+	fbPAGE: Ember.computed('fEEDBACKS.fb1', function() {
+		return this.get('fEEDBACKS.fb1')
+	}),
+
+	fbMORE: Ember.computed('fEEDBACKS.fb2', function() {
+		return this.get('fEEDBACKS.fb2')
+	}),
+
+	fbG: Ember.computed('model.fbG', function() {
+		return this.get('model.fbG')
+	}),
+	fbN: Ember.computed('model.fbN', function() {
+		return this.get('model.fbN')
+	}),
+	fbB: Ember.computed('model.fbB', function() {
+		return this.get('model.fbB')
+	}),
 
 	mORE: Ember.computed('fbMORE', function() {
 		if (this.get('fbMORE').length > 0) {
