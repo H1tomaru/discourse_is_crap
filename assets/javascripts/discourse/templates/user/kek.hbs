@@ -77,7 +77,7 @@
 	<div class='kekkok'>
 		<h2>Отзывы</h2>
 		<div class='xdux'>
-			<span style='color: #27ae60'>{{model.fbG}}</span> / <span style='color: gray'>{{model.fbN}}</span> / <span style='color: lightcoral'>{{model.fbB}}</span>
+			<span style='color: #27ae60'>{{fbG}}</span> / <span style='color: gray'>{{fbN}}</span> / <span style='color: lightcoral'>{{fbB}}</span>
 		</div>
 		<div class='keklist'>
 			{{#if model.MENOSHO}}
@@ -85,7 +85,7 @@
 					<button class="addZ" {{action 'addOtziv'}}>Оставить отзыв</button>
 				</div>
 			{{/if}}
-			{{#each fEEDBACKS.fb1 as |feedback|}}
+			{{#each fbPAGE as |feedback|}}
 				<div class='kekus {{feedback.COLOR}}'>
 					<div><a href='/u/{{feedback.pNAME}}'>{{feedback.pNAME}}</a></div>
 					<div>{{feedback.DATE}}</div>
