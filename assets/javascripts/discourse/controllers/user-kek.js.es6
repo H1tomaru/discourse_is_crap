@@ -94,7 +94,7 @@ export default Ember.Controller.extend({
 		showMORZ() {
 			this.get('fEEDBACKS.fb1').pushObjects(this.get('fEEDBACKS.fb2')[0])
 			this.get('fEEDBACKS.fb2').removeAt(0)
-			Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
+			Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
 			this.set('model.fbB', this.get('model.fbB') + 1)
 			this.set('fbN', this.get('fbN') + 1)
 		},
@@ -130,7 +130,7 @@ export default Ember.Controller.extend({
 								color = 'zeB'
 								Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
 								this.set('model.fbB', this.get('model.fbB') + 1)
-								this.set('fbN', this.get('fbN') + 1)
+								this.set('fbB', this.get('fbB') + 1)
 							}
 
 							//remove edit tag from now not last feedback
