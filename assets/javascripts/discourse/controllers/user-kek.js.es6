@@ -44,7 +44,7 @@ export default Ember.Controller.extend({
 
 	fbPAGE: Ember.computed('fEEDBACKS.fb1', function() {
 		return this.get('fEEDBACKS.fb1')
-	}).property('fEEDBACKS.fb1'),
+	}).property('fEEDBACKS.fb1.[]'),
 
 	fbG: Ember.computed('model.fbG', function() {
 		return this.get('model.fbG')
@@ -94,6 +94,9 @@ export default Ember.Controller.extend({
 		showMORZ() {
 			this.get('fEEDBACKS.fb1').pushObjects(this.get('fEEDBACKS.fb2')[0])
 			this.get('fEEDBACKS.fb2').removeAt(0)
+			Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
+			this.set('model.fbB', this.get('model.fbB') + 1)
+			this.set('fbN', this.get('fbN') + 1)
 		},
 
 		OtzivZaips() {
@@ -117,14 +120,17 @@ export default Ember.Controller.extend({
 								color = 'zeG'
 								Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
 								this.set('model.fbG', this.get('model.fbG') + 1)
+								this.set('fbG', this.get('fbG') + 1)
 							} else if ( this.get('score') == 0 ) {
 								color = 'zeN'
 								Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1)
 								this.set('model.fbN', this.get('model.fbN') + 1)
+								this.set('fbN', this.get('fbN') + 1)
 							} else if ( this.get('score') < 0 ) {
 								color = 'zeB'
 								Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
 								this.set('model.fbB', this.get('model.fbB') + 1)
+								this.set('fbN', this.get('fbN') + 1)
 							}
 
 							//remove edit tag from now not last feedback
