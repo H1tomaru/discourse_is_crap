@@ -42,20 +42,6 @@ export default Ember.Controller.extend({
 
  	}),
 
-	fbPAGE: Ember.computed('fEEDBACKS.fb1', function() {
-		return this.get('fEEDBACKS.fb1')
-	}).property('fEEDBACKS.fb1.[]'),
-
-	fbG: Ember.computed('model.fbG', function() {
-		return this.get('model.fbG')
-	}).property('model.fbG'),
-	fbN: Ember.computed('model.fbN', function() {
-		return this.get('model.fbN')
-	}).property('model.fbN'),
-	fbB: Ember.computed('model.fbB', function() {
-		return this.get('model.fbB')
-	}).property('model.fbB'),
-
 	mORE: Ember.computed('fEEDBACKS.fb2', function() {
 		if (this.get('fEEDBACKS.fb2').length > 0) {
 			return true
@@ -94,9 +80,9 @@ export default Ember.Controller.extend({
 		showMORZ() {
 			this.get('fEEDBACKS.fb1').pushObjects(this.get('fEEDBACKS.fb2')[0])
 			this.get('fEEDBACKS.fb2').removeAt(0)
-			Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
+			this.set('model.fbG', this.get('model.fbG') + 1)
+			this.set('model.fbN', this.get('model.fbN') + 1)
 			this.set('model.fbB', this.get('model.fbB') + 1)
-			this.set('fbN', this.get('fbN') + 1)
 		},
 
 		OtzivZaips() {
@@ -108,14 +94,13 @@ export default Ember.Controller.extend({
 				this.set('otzivmdal', false)
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
-				//Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
-				//	fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
-				//})
-					
-				Ember.$.ajax({
-					url: "/u/" + this.get('model.uZar') + "/kek",
-					type: "POST",
-					data: { "fedbakibaki": btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina')))) }
+
+				this.set('model.fbG', this.get('model.fbG') + 1)
+				this.set('model.fbN', this.get('model.fbN') + 1)
+				this.set('model.fbB', this.get('model.fbB') + 1)
+
+				Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
+					fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
 				}).then(result => {
 					this.set('responz', result)
 
@@ -126,17 +111,14 @@ export default Ember.Controller.extend({
 								color = 'zeG'
 								Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
 								this.set('model.fbG', this.get('model.fbG') + 1)
-								this.set('fbG', this.get('fbG') + 1)
 							} else if ( this.get('score') == 0 ) {
 								color = 'zeN'
 								Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1)
 								this.set('model.fbN', this.get('model.fbN') + 1)
-								this.set('fbN', this.get('fbN') + 1)
 							} else if ( this.get('score') < 0 ) {
 								color = 'zeB'
 								Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
 								this.set('model.fbB', this.get('model.fbB') + 1)
-								this.set('fbB', this.get('fbB') + 1)
 							}
 
 							//remove edit tag from now not last feedback
