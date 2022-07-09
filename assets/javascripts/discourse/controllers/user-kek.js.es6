@@ -99,13 +99,13 @@ export default Ember.Controller.extend({
 					fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
 				}).then(result => {
 					this.set('responz', result)
-					
-					this.set('model.fbG', this.get('model.fbG') + 1)
-					this.set('model.fbN', this.get('model.fbN') + 1)
+
 					this.set('model.fbB', this.get('model.fbB') + 1)
 
 					if ( result.winrars == true ) {
+						this.set('model.fbB', this.get('model.fbB') + 10)
 						if (this.get('ozmode') == true) {
+							this.set('model.fbN', this.get('model.fbN') + 10)
 							var color
 							if ( this.get('score') > 0 ) { 
 								color = 'zeG'
@@ -132,6 +132,7 @@ export default Ember.Controller.extend({
 								'eDit': true
 							})
 						} else {
+							this.set('model.fbG', this.get('model.fbG') + 10)
 							//find last feedback
 							var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 							//edit it
