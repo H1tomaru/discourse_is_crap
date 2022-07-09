@@ -41,15 +41,23 @@ export default Ember.Controller.extend({
 		return finalvar
 
  	}),
+	
+	fbPAGE: this.get('fEEDBACKS.fb1'),
+	
+	fbMORE: this.get('fEEDBACKS.fb2'),
+	
+	fbG: this.get('model.fbG'),
+	fbN: this.get('model.fbN'),
+	fbB: this.get('model.fbB'),
 
-	mORE: Ember.computed('fEEDBACKS.fb2', function() {
-		if (this.get('fEEDBACKS.fb2').length > 0) {
+	mORE: Ember.computed('fbMORE', function() {
+		if (this.get('fbMORE').length > 0) {
 			return true
 		}
 		else {
 			return false
 		}
-	}).property('fEEDBACKS.fb2.[]'),
+	}).property('fbMORE.[]'),
 
 	otzivmdal: false,
 	otzivsmall: false,
@@ -78,8 +86,8 @@ export default Ember.Controller.extend({
 		},
 
 		showMORZ() {
-			this.get('fEEDBACKS.fb1').pushObjects(this.get('fEEDBACKS.fb2')[0])
-			this.get('fEEDBACKS.fb2').removeAt(0)
+			this.get('fbPAGE').pushObjects(this.get('fbMORE')[0])
+			this.get('fbMORE').removeAt(0)
 		},
 
 		OtzivZaips() {
@@ -98,45 +106,39 @@ export default Ember.Controller.extend({
 
 					if ( result.winrars == true ) {
 						if (this.get('ozmode') == true) {
-
-							console.log("Hello world!")
 							var color
 							if ( this.get('score') > 0 ) { 
 								color = 'zeG'
-								Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
-								this.set('model.fbG', this.get('model.fbG') + 1)
+								this.set('fbG', this.get('fbG') + 1)
 							} else if ( this.get('score') == 0 ) {
 								color = 'zeN'
-								Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1)
-								this.set('model.fbN', this.get('model.fbN') + 1)
+								this.set('fbN', this.get('fbN') + 1)
 							} else if ( this.get('score') < 0 ) {
 								color = 'zeB'
-								Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
-								this.set('model.fbB', this.get('model.fbB') + 1)
+								this.set('fbB', this.get('fbB') + 1)
 							}
 
 							//remove edit tag from now not last feedback
-							if (this.get('fEEDBACKS.fb1').length > 0) {
-								var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-								if ( ni >= 0 ) { Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'eDit',false) }
+							if (this.get('fbPAGE').length > 0) {
+								var ni = this.get('fbPAGE').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+								if ( ni >= 0 ) { Ember.set(this.get('fbPAGE').objectAt(ni), 'eDit', false) }
 							}
 							//add this feedback to feedbacks
-							this.get('fEEDBACKS.fb1').unshiftObject({
+							this.get('fbPAGE').unshiftObject({
 								'pNAME': this.get('currentUser.username'),
 								'FEEDBACK': this.get('pisanina'),
 								'DATE': new Date().getFullYear()+"."+String(new Date().getMonth()+1).padStart(2,'0')+"."+String(new Date().getDate()).padStart(2,'0'),
 								'COLOR': color,
 								'eDit': true
 							})
-							console.log("Hello world22!")
 						} else {
 							//find last feedback
-							var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
+							var ni = this.get('fbPAGE').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
 							//edit it
-							Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'FEEDBACK',this.get('pisanina'))
-							if ( this.get('score') > 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeG')
-							if ( this.get('score') == 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeN')
-							if ( this.get('score') < 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeB')
+							Ember.set(this.get('fbPAGE').objectAt(ni),'FEEDBACK',this.get('pisanina'))
+							if ( this.get('score') > 0 ) Ember.set(this.get('fbPAGE').objectAt(ni),'COLOR','zeG')
+							if ( this.get('score') == 0 ) Ember.set(this.get('fbPAGE').objectAt(ni),'COLOR','zeN')
+							if ( this.get('score') < 0 ) Ember.set(this.get('fbPAGE').objectAt(ni),'COLOR','zeB')
 						}
 
 						this.set('checked1', true)
