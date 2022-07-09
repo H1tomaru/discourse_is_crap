@@ -108,15 +108,15 @@ export default Ember.Controller.extend({
 							if ( this.get('score') > 0 ) { 
 								color = 'zeG'
 								Ember.set(this.get('model'), 'fbG', this.get('model.fbG') + 1)
-								this.get('model.fbG') = this.get('model.fbG') + 1
+								this.set('model.fbG', this.get('model.fbG') + 1)
 							} else if ( this.get('score') == 0 ) {
 								color = 'zeN'
 								Ember.set(this.get('model'), 'fbN', this.get('model.fbN') + 1)
-								this.get('model.fbN') = this.get('model.fbN') + 1
+								this.set('model.fbN', this.get('model.fbN') + 1)
 							} else if ( this.get('score') < 0 ) {
 								color = 'zeB'
 								Ember.set(this.get('model'), 'fbB', this.get('model.fbB') + 1)
-								this.get('model.fbB') = this.get('model.fbB') + 1
+								this.set('model.fbB', this.get('model.fbB') + 1)
 							}
 
 							//remove edit tag from now not last feedback
