@@ -856,6 +856,7 @@ after_initialize do
 					end
 				end
 				finalrenta[:count] = count
+				finalrenta[:TIME] = Time.now
 
 				#sort this shit
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
@@ -865,10 +866,7 @@ after_initialize do
 				rentaCache = finalrenta
 
 				#save cache to db
-				@@cachedb[:rentaCache].insert_one( { 
-					rentaGAMEZ: finalrenta[:rentaGAMEZ], rentaGAMEZ1: finalrenta[:rentaGAMEZ1],
-					rentaGAMEZ2: finalrenta[:rentaGAMEZ2], TIME: Time.now
-				} )
+				@@cachedb[:rentaCache].insert_one( finalrenta )
 			end
 
 			render json: rentaCache
