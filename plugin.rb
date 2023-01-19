@@ -87,9 +87,9 @@ after_initialize do
 
 					#create display prices
 					if game[:PRICE] > 0
-						game[:P4PDOWN1] = 0 if !game[:P4PDOWN1]
-						game[:P4PDOWN2] = 0 if !game[:P4PDOWN2]
-						game[:P4PDOWN3] = 0 if !game[:P4PDOWN3]
+						game[:PDOWN1] = 0 if !game[:PDOWN1]
+						game[:PDOWN2] = 0 if !game[:PDOWN2]
+						game[:PDOWN3] = 0 if !game[:PDOWN3]
 
 						#calculate prices, for ps4 only game, for ps5 only game, and ps4\ps5 game type
 						if game[:TTYPE][0]
@@ -141,9 +141,9 @@ after_initialize do
 							end
 						end
 						
-						game[:P4PRICE1] = game[:P4PRICE1] - game[:P4PDOWN1] + p4UP[0] if game[:TTYPE][1]
-						game[:P4PRICE2] = game[:P4PRICE2] - game[:P4PDOWN2] + p4UP[1]
-						game[:P4PRICE3] = game[:P4PRICE3] - game[:P4PDOWN3] + p4UP[2]
+						game[:P4PRICE1] = game[:P4PRICE1] - game[:PDOWN1] + p4UP[0] if game[:TTYPE][1]
+						game[:P4PRICE2] = game[:P4PRICE2] - game[:PDOWN2] + p4UP[1]
+						game[:P4PRICE3] = game[:P4PRICE3] - game[:PDOWN3] + p4UP[2]
 						
 						#set price to -10 if its x100
 						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:TTYPE][1] && game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
