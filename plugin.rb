@@ -394,7 +394,7 @@ after_initialize do
 					poiskwin: true
 				}
 			else 
-				render json: { poiskfail: true; whyfail: troikopoisk }
+				render json: { poiskfail: true, whyfail: troikopoisk }
 			end
 		end
 
