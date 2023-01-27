@@ -665,7 +665,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! nil
+			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! 'null'
 
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; ugamezfinal = []
@@ -749,7 +749,7 @@ after_initialize do
 		end
 
 		def zafeedback
-			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! nil
+			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! 'null'
 
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
