@@ -134,7 +134,8 @@
 			<div class="bagaspin"></div>
 
 		{{else}}
-		
+
+		{{#if troikopoisk.poiskwin}}
 		<div class='kekkok'>
 			<h2>{{troikopoisk._id}}</h2>
 			{{#if cangetpass}}
@@ -171,7 +172,10 @@
 				{{/if}}
 			</div>
 		</div>
-
+		{{else}}
+			<h1 style="text-align: center">Epic Fail Is Epic</h1>
+			<img src="https://i.imgur.com/33FJekg.png" style="width: 100%">
+		{{/if}}
 		{{/if}}
 	{{/if}}
 
