@@ -719,7 +719,7 @@ after_initialize do
 				end
 
 				#do sorting web side? eeeh... cached anyway...
-				ugamezfinal.sort_by! { |k| [k[:gNAME].downcase, k[:poZ]] }
+				ugamezfinal.sort_by! { |k| k[:gNAME].downcase }
 
 				#get and add den feedback
 				#
@@ -734,12 +734,9 @@ after_initialize do
 			end
 
 			#for logged in users only
-			if current_user && user_d != 'mrbug'
-				feedbacks[:ugameZ] = fbglist[:ugameZ]
-
-				#remove acc mail if user is not owner of this page, and feedback is not empty
-				feedbacks[:ugameZ].each { |h| h.except!(:aCC) } if current_user[:username].downcase != user_d && fbglist
-			end
+			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
+			
+			feedbacks[:uzr] = current_user #del
 
 			#render fb
 			render json: feedbacks
