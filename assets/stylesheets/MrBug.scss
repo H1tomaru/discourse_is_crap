@@ -102,42 +102,6 @@ div.shinbakaz {
 			transition-duration: 1s;
 		}
 
-		.bleft {
-			float: left;
-			margin-left: 20%;
-		}
-
-		.bright {
-			float: right;
-			margin-right: 20%;
-		}
-
-		.poiskbutt {
-			background: #2980B9;
-			border: 0;
-			color: #fff;
-			padding: 8px 15px;
-			border-radius: 0 2px 2px 0;
-		}
-
-		.poiskbox {
-			border: 1px solid #303030;
-			border-right: none;
-			padding: 5px 0px;
-			width: 70%;
-			border-radius: 2px 0 0 2px;
-			margin-right: -5px;
-			text-align: center;
-		}
-
-		.poiskbox:focus {
-			border-color: #08c
-		}
-
-		form, input {
-			margin: 3px 0 0 0	
-		}
-
 	}
 
 	.etomudal {
@@ -151,10 +115,6 @@ div.shinbakaz {
 		background: rgba(0,0,0,0.7);
 		text-align: center;
 		
-		table.vladista td {
-		 	width: 15%
-		}
-
 		.netmudal {
 			width: 100%;
 			height: 100%;
