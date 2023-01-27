@@ -137,15 +137,15 @@
 			{{#if troikopoisk.poiskwin}}
 			<div class='kekkok'>
 				<h2>{{troikopoisk._id}}</h2>
-				{{#if cangetpass}}
+				{{#unless model.MENOSHO}}
 					<div class='xdux'>
-						{{#unless gotpass}}
+						{{#unless actualgp}}
 							<button {{action 'getPaZZ' troikopoisk._id}}>Получит пароль</button>
 						{{else}}
 							{{actualgp}}
 						{{/unless}}
 					</div>
-				{{/if}}
+				{{/unless}}
 				<div class='keklist gamZ'>
 					<div class="kekus zeZ" style="width: 100%"><div style="text-align: center">{{troikopoisk.GAME}}</div></div>
 					{{#if troikopoisk.P2.[1]}}
