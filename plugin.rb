@@ -743,7 +743,7 @@ after_initialize do
 			render json: feedbacks
 
 			else
-				render json: { test: [current_user[:trust_level], current_user[:silenced_till]] }
+				render json: { test: [current_user[:trust_level], current_user[:silenced_till], current_user] }
 			end #unless end
 
 		end
