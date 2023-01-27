@@ -88,7 +88,7 @@
 		</table>
 		<div style="text-align: center"><span class="kawaiNO">Сбер / Тинькофф +7 9169493363</span></div>
 		<span class="smaladndark tablq">
-			Реквизиты на оплату Webmoney и Яндекс можно получить через <a href='/u/MrBug'>Личные Сообщения</a><br>
+			Реквизиты на оплату Яндекс можно получить через <a href='/u/MrBug'>Личные Сообщения</a><br>
 			В комментарии к платежу, по возможности, укажите ваш ник!<br>
 			Составы с пометкой "без П1" оформляются на троих, стоимость свободной позиции П1 делится поровну между всеми участниками<br>
 			Сообщите об оплате в соответсвующей личке "Тройка\Четверка\Пятерка\Шестерка собрана! Ждем оплату!"!<br>
@@ -142,53 +142,6 @@
 			{{#if mdalready}}
 
 				<button class="netmudal" {{action 'netmudal'}}></button>
-
-				{{#if troikopoisk.poiskwin}}
-
-					<div class="mudalcontent mudaladdon headin3">
-						<div class="bagariban">{{troikopoisk.GAME}}</div>
-						<span>{{troikopoisk._id}}</span>
-						<table class="vladista"><tbody>
-							{{#if troikopoisk.P2.[1]}}
-								<tr>
-									<td>П2 PS4<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
-									<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
-									<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
-								</tr>
-								<tr>
-									<td>П2 PS5<br><a href="/u/{{troikopoisk.P2.[1]}}">{{troikopoisk.P2.[1]}}</a></td>
-									<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></td>
-									<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></td>
-								</tr>
-							{{else}}
-								{{#if troikopoisk.P4.[3]}}
-									<tr>
-										<td rowspan="2">П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
-										<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
-										<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
-									</tr>
-									<tr>
-										<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></td>
-										<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></td>
-									</tr>
-								{{else}}
-									<tr>
-										<td>П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
-										<td>П4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
-										<td>П4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
-									</tr>
-								{{/if}}
-							{{/if}}
-						</tbody></table>
-					</div>
-				{{/if}}
-
-				{{#if troikopoisk.poiskfail}}
-					<div class="mudalcontent mudaladdon headin3">
-						<div class="bagariban">НЕ НАЙДЕН</div>
-						<span>{{troikopoisk2}}</span>
-					</div>
-				{{/if}}
 
 				{{#if prezaips.guest}}
 					<div class="mudalcontent mudaladdon headin3">
