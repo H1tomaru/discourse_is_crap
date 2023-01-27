@@ -739,6 +739,8 @@ after_initialize do
 			#for logged in users only
 			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
 
+			feedbacks[:testwinrat] = 'winrar' if current_user[:silenced_till] == 'null' #del
+
 			#render fb
 			render json: feedbacks
 
