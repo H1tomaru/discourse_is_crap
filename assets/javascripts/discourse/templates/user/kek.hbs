@@ -134,47 +134,47 @@
 
 		{{else}}
 
-		{{#if troikopoisk.poiskwin}}
-		<div class='kekkok'>
-			<h2>{{troikopoisk._id}}</h2>
-			{{#if cangetpass}}
-				<div class='xdux'>
-					{{#unless gotpass}}
-						<button {{action 'getPaZZ' gamez.gNAMEid}}>Получит пароль</button>
-					{{else}}
-						{{actualgp}}
-					{{/unless}}
-				</div>
-			{{/if}}
-			<div class='keklist gamZ'>
-				<div class="kekus zeZ" style="width: 100%"><div style="text-align: center">{{gamez.gNAME}}</div>
-				{{#if troikopoisk.P2.[1]}}
-					<div class='kekus zeZ'><div><a>П2 PS4</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
-					<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
-					<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
-
-					<div class='kekus zeZ'><div><a>П2 PS5</a></div><div><a href="/u/{{troikopoisk.P2.[1]}}">{{troikopoisk.P2.[1]}}</a></div></div>
-					<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></div></div>
-					<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></div></div>
-				{{else}}
-					{{#if troikopoisk.P4.[3]}}
-						<div class='kekus zeZ'><div><a>П2</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
+			{{#if troikopoisk.poiskwin}}
+			<div class='kekkok'>
+				<h2>{{troikopoisk._id}}</h2>
+				{{#if cangetpass}}
+					<div class='xdux'>
+						{{#unless gotpass}}
+							<button {{action 'getPaZZ' gamez.gNAMEid}}>Получит пароль</button>
+						{{else}}
+							{{actualgp}}
+						{{/unless}}
+					</div>
+				{{/if}}
+				<div class='keklist gamZ'>
+					<div class="kekus zeZ" style="width: 100%"><div style="text-align: center">{{gamez.gNAME}}</div>
+					{{#if troikopoisk.P2.[1]}}
+						<div class='kekus zeZ'><div><a>П2 PS4</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
 						<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
 						<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
+
+						<div class='kekus zeZ'><div><a>П2 PS5</a></div><div><a href="/u/{{troikopoisk.P2.[1]}}">{{troikopoisk.P2.[1]}}</a></div></div>
 						<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></div></div>
 						<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></div></div>
 					{{else}}
-						<div class='kekus zeZ'><div><a>П2</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
-						<div class='kekus zeZ'><div><a>П4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
-						<div class='kekus zeZ'><div><a>П4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
+						{{#if troikopoisk.P4.[3]}}
+							<div class='kekus zeZ'><div><a>П2</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></div></div>
+						{{else}}
+							<div class='kekus zeZ'><div><a>П2</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
+							<div class='kekus zeZ'><div><a>П4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
+						{{/if}}
 					{{/if}}
-				{{/if}}
+				</div>
 			</div>
-		</div>
-		{{else}}
-			<h1 style="text-align: center">Epic Fail Is Epic</h1>
-			<img src="https://i.imgur.com/33FJekg.png" style="width: 100%">
-		{{/if}}
+			{{else}}
+				<h1 style="text-align: center">Epic Fail Is Epic</h1>
+				<img src="https://i.imgur.com/33FJekg.png" style="width: 100%">
+			{{/if}}
 		{{/if}}
 	{{/if}}
 
