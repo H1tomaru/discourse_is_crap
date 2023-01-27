@@ -1394,6 +1394,18 @@ div.kekbakaz {
 		text-decoration: none;
 	}
 
+	.bagaspin {
+		border: 8px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 8px solid #3498db;
+		width: 15px;
+		height: 15px;
+		animation: spin 1s linear infinite;
+		top: 10%;
+		position: relative;
+		margin: 0 auto;
+	}
+
 	.netmudal {
 
 		width: 100%;
