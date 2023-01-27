@@ -126,4 +126,58 @@
 		</div>
 	</div>
 
+	<br>
+
+	{{#if accamdal}}
+		{{#if accawait}}
+
+			<div class="bagaspin"></div>
+
+		{{else}}
+		
+		<div class='kekkok'>
+			<h2>{{troikopoisk._id}}</h2>
+			{{#if cangetpass}}
+				<div class='xdux'>
+					{{#unless gotpass}}
+						<button {{action 'getPaZZ' gamez.gNAMEfu}}>Получит пароль</button>
+					{{else}}
+						{{actualgp}}
+					{{/unless}}
+				</div>
+			{{/if}}
+			<div class='keklist gamZ'>
+				{{#if troikopoisk.P2.[1]}}
+					<div class='kekus zeZ'><div><a>П2 PS4</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
+					<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
+					<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></div></div>
+
+					<div class='kekus zeZ'><div><a>П2 PS5</a></div><div><a href="/u/{{troikopoisk.P2.[1]}}">{{troikopoisk.P2.[1]}}</a></div></div>
+					<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></div></div>
+					<div class='kekus zeZ'><div><a>П4 PS5</a></div><div><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></div></div>
+				{{else}}
+					{{#if troikopoisk.P4.[3]}}
+						<tr>
+							<td rowspan="2">П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
+							<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
+							<td>П4 PS4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
+						</tr>
+						<tr>
+							<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[2]}}">{{troikopoisk.P4.[2]}}</a></td>
+							<td>П4 PS5<br><a href="/u/{{troikopoisk.P4.[3]}}">{{troikopoisk.P4.[3]}}</a></td>
+						</tr>
+					{{else}}
+						<tr>
+							<td>П2<br><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></td>
+							<td>П4<br><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></td>
+							<td>П4<br><a href="/u/{{troikopoisk.P4.[1]}}">{{troikopoisk.P4.[1]}}</a></td>
+						</tr>
+					{{/if}}
+				{{/if}}
+			</div>
+		</div>
+
+		{{/if}}
+	{{/if}}
+
 </div>
