@@ -55,8 +55,10 @@ export default Ember.Controller.extend({
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
+
 	accamdal: false,
 	accawait: false,
+	actualgp: false,
 
 	actions: {
 
@@ -173,16 +175,13 @@ export default Ember.Controller.extend({
 		troikopoisk(input) {
 			this.set('accamdal', true)
 			this.set('accawait', true)
+			this.set('actualgp', false)
 			Ember.$.post("/MrBug/troikopoisk/", { 
 				input: btoa(unescape(encodeURIComponent(input)))
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('accawait', false)
 			})
-		},
-
-		accamdalCLOZ() {
-			this.set('accamdal', false)
 		},
 
 		getPaZZ(input) {
