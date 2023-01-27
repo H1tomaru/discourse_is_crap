@@ -387,7 +387,7 @@ after_initialize do
 			accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
 
 			#do stuff when finding acc or not
-			if troikopoisk.length > 20 && troikopoisk.length < 40 && accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
+			if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
 				render json: { 
 					_id: accountsDB[:_id], GAME: accountsDB[:GAME],
 					P2: accountsDB[:P2], P4: accountsDB[:P4],
@@ -665,6 +665,8 @@ after_initialize do
 		end
 
 		def feedbacks
+			#if not silenced, do
+
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; ugamezfinal = []
 			user_d = params[:username].downcase
@@ -723,6 +725,7 @@ after_initialize do
 
 				#get and add den feedback
 				#
+				#ugamezfinal.push( { gNAMEfu: ugaz[:_id], gNAME: ugaz[:GAME], poZ: poZz, aCC: 'Den888' } ) 
 				#
 
 				fbglist = { ugameZ: ugamezfinal }
@@ -735,15 +738,19 @@ after_initialize do
 
 			#for logged in users only
 			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
-			
+
 			feedbacks[:uzr] = current_user #del
 
 			#render fb
 			render json: feedbacks
 
+			#end
+
 		end
 
 		def zafeedback
+			#if not silenced, do
+
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
 			fedbacks[1] = fedbacks[1].to_i
@@ -826,6 +833,8 @@ after_initialize do
 				render json: { fail: true }
 				puts "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
 			end
+
+			#end
 		end
 
 		def rentagama
