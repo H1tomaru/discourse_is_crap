@@ -2,7 +2,6 @@ export default Ember.Controller.extend({
 	//default states
 	bagamdal: false,
 	mdalready: false,
-	troikopoisk: null,
 	prezaips: null,
 	pzposition: null,
 	zaips: null,
@@ -65,16 +64,6 @@ export default Ember.Controller.extend({
 			this.set('troikopoisk', null)
 			this.set('prezaips', null)
 			this.set('zaips', null)
-		},
-
-		troikopoisk() {
-			this.set('bagamdal', true)
-			Ember.$.post("/MrBug/troikopoisk/", { 
-				input: btoa(unescape(encodeURIComponent(this.get('troikopoisk2'))))
-			}).then(result => {
-				this.set('troikopoisk', result)
-				this.set('mdalready', true)
-			})
 		},
 
 		zaips(knopk, gcode) {
