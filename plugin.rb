@@ -742,6 +742,8 @@ after_initialize do
 			#render fb
 			render json: feedbacks
 
+			else
+				render json: { test: [current_user[:trust_level], current_user[:silenced_till]] }
 			end #unless end
 
 		end
