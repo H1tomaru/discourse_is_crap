@@ -394,7 +394,7 @@ after_initialize do
 					poiskwin: true
 				}
 			else 
-				render json: { poiskfail: true, whyfail: troikopoisk }
+				render json: { poiskfail: true, whyfail: troikopoisk, whyfail2: params[:input] }
 			end
 		end
 
@@ -707,7 +707,7 @@ after_initialize do
 						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 
 						#get pisitions list
-						poZz = {}
+						poZz = []
 						poZz.push( 2 ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
 						poZz.push( 2 ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
 						poZz.push( 4 ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == user_d
@@ -739,7 +739,7 @@ after_initialize do
 			#for logged in users only
 			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
 
-			feedbacks[:testwinrat] = 'winrar' if current_user[:silenced_till] == 'null' #del
+			feedbacks[:testwinrat] = 'winrar' if current_user[:silenced_till].empty? #del
 
 			#render fb
 			render json: feedbacks
