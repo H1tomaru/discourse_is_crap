@@ -116,7 +116,7 @@
 		<div class='keklist gamZ'>
 			{{#each model.ugameZ as |gamez|}}
 				<div class='kekus zeZ'>
-					<div><a>П{{gamez.poZ}}</a></div>
+					<div><a>{{#each gamez.poZ}}П{{this}} {{/each}}</a></div>
 					<div>{{gamez.gNAME}}</div>
 					{{#if gamez.aCC}}
 						<div class='acN'>{{gamez.aCC}}</div>
