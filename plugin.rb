@@ -394,7 +394,7 @@ after_initialize do
 					poiskwin: true
 				}
 			else 
-				render json: { poiskfail: true }
+				render json: { poiskfail: true; whyfail: troikopoisk }
 			end
 		end
 
@@ -716,7 +716,7 @@ after_initialize do
 						poZz.push( 4 ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == user_d
 
 						#create final variable
-						ugamezfinal.push( { gNAMEfu: ugaz[:_id], gNAME: ugaz[:GAME], poZ: poZz, aCC: aCC } ) 
+						ugamezfinal.push( { gNAMEid: ugaz[:_id], gNAME: ugaz[:GAME], poZ: poZz, aCC: aCC } ) 
 					end
 				end
 
