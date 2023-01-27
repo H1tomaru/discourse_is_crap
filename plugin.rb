@@ -394,7 +394,7 @@ after_initialize do
 					poiskwin: true
 				}
 			else 
-				render json: { poiskfail: true, whyfail: troikopoisk, whyfail2: params[:input] }
+				render json: { poiskfail: true}
 			end
 		end
 
@@ -665,7 +665,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! 'null'
+			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; ugamezfinal = []
@@ -736,22 +736,18 @@ after_initialize do
 				}, { upsert: true } )
 			end
 
-			#for logged in users only
+			#show for logged in users only
 			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
-
-			feedbacks[:testwinrat] = 'winrar' if current_user[:silenced_till].nil? #del
 
 			#render fb
 			render json: feedbacks
 
-			else
-				render json: { test: [current_user[:trust_level], current_user[:silenced_till], current_user] }
 			end #unless end
 
 		end
 
 		def zafeedback
-			unless current_user[:trust_level] == 0 || current_user[:silenced_till] =! 'null'
+			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
