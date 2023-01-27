@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
 	checked3: false,
 	score: 1,
 	ozmode: true,
+	troikopoisk: null,
 	responz: null,
 
 	fEEDBACKS: Ember.computed('model.FEEDBACKS', function() {
@@ -54,6 +55,8 @@ export default Ember.Controller.extend({
 	otzivmdal: false,
 	otzivsmall: false,
 	otzivbig: false,
+	accamdal: false,
+	accawait: false,
 
 	actions: {
 
@@ -165,6 +168,25 @@ export default Ember.Controller.extend({
 				this.set('checked3', true)
 				this.set('score', -1)
 			} 
+		},
+
+		troikopoisk(input) {
+			this.set('accamdal', true)
+			this.set('accawait', true)
+			Ember.$.post("/MrBug/troikopoisk/", { 
+				input: btoa(unescape(encodeURIComponent(input)))
+			}).then(result => {
+				this.set('troikopoisk', result)
+				this.set('accawait', false)
+			})
+		},
+
+		accamdalCLOZ() {
+			this.set('accamdal', false)
+		},
+
+		getPaZZ(input) {
+
 		}
 
 	}
