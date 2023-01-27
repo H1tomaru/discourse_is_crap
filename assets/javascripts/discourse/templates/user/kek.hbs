@@ -116,7 +116,7 @@
 		<div class='keklist gamZ'>
 			{{#each model.ugameZ as |gamez|}}
 				<div class='kekus zeZ'>
-					<div><a>{{#each gamez.poZ}}П{{this}} {{/each}}</a></div>
+					<div><a>{{#each gamez.poZ as |poZ|}}П{{poZ}} {{/each}}</a></div>
 					<div>{{gamez.gNAME}}</div>
 					<div class='acN'>{{gamez.aCC}}</div>
 					<button class='findZ' {{action 'troikopoisk' gamez.gNAMEid}}></button>
@@ -140,14 +140,14 @@
 				{{#if cangetpass}}
 					<div class='xdux'>
 						{{#unless gotpass}}
-							<button {{action 'getPaZZ' gamez.gNAMEid}}>Получит пароль</button>
+							<button {{action 'getPaZZ' troikopoisk._id}}>Получит пароль</button>
 						{{else}}
 							{{actualgp}}
 						{{/unless}}
 					</div>
 				{{/if}}
 				<div class='keklist gamZ'>
-					<div class="kekus zeZ" style="width: 100%"><div style="text-align: center">{{gamez.gNAME}}</div></div>
+					<div class="kekus zeZ" style="width: 100%"><div style="text-align: center">{{troikopoisk.GAME}}</div></div>
 					{{#if troikopoisk.P2.[1]}}
 						<div class='kekus zeZ'><div><a>П2 PS4</a></div><div><a href="/u/{{troikopoisk.P2.[0]}}">{{troikopoisk.P2.[0]}}</a></div></div>
 						<div class='kekus zeZ'><div><a>П4 PS4</a></div><div><a href="/u/{{troikopoisk.P4.[0]}}">{{troikopoisk.P4.[0]}}</a></div></div>
