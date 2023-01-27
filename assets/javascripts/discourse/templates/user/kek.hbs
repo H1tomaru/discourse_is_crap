@@ -118,9 +118,8 @@
 				<div class='kekus zeZ'>
 					<div><a>{{#each gamez.poZ}}П{{this}} {{/each}}</a></div>
 					<div>{{gamez.gNAME}}</div>
-					{{#if gamez.aCC}}
-						<div class='acN'>{{gamez.aCC}}</div>
-					{{/if}}
+					<div class='acN'>{{gamez.aCC}}</div>
+					<button {{action 'troikopoisk' gamez.gNAMEid}}></button>
 				</div>
 			{{/each}}
 		</div>
