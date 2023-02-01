@@ -46,11 +46,6 @@ after_initialize do
 
 		@@cachedb = db.use('cacheDB')
 
-		#user zapis count etc, glitchy, not stable, must use db for it... but eh, not that important to bother
-		@@zaipsalsq = {}
-		@@user_FB_date = {}
-		@@user_FB_edit = {}
-
 		def show
 			#get cache
 			autozCache = @@cachedb[:autozCache].find().to_a.first()
@@ -413,13 +408,15 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
+				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+
+				@@userfb[:zaipsalsq].remove( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) )
+					( current_user[:username] == 'MrBug' || (!zaipsalsq || zaipsalsq[:count] < 4) )
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: user_FB[:fbBuG] }
@@ -453,19 +450,23 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				@@zaipsalsq.except!(user_d) if @@zaipsalsq[user_d] && @@zaipsalsq[user_d][:DATE] != Time.now.strftime("%d")
+				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+
+				@@userfb[:zaipsalsq].remove( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#do everything checking again!
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (!@@zaipsalsq[user_d] || @@zaipsalsq[user_d][:count] < 4) ) &&
+					( current_user[:username] == 'MrBug' || (!zaipsalsq || zaipsalsq[:count] < 4) ) &&
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
-					if @@zaipsalsq[user_d]
-						@@zaipsalsq[user_d][:count] += 1
+					if zaipsalsq && zaipsalsq[:count]
+						@@userfb[:zaipsalsq].find_one_and_update( { _id: user_d }, { 
+							"$inc" => { count: 1 }
+						}, { upsert: true } )
 					else
-						@@zaipsalsq[user_d] = {	count: 1, DATE: Time.now.strftime("%d") }
+						@@userfb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
 					end
 
 					#do actual zaips, wohoo
@@ -651,6 +652,9 @@ after_initialize do
 						#find if we gave user this feedback already
 						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB
 						unless hasfb
+							#mark that todays fb is uptodate
+							@@userfb[:user_FB_date].insert_one( { _id: user, DATE: daTE_day } )
+
 							#add to fb, or create new if there no fb
 							if user_FB
 								#save to db
@@ -659,7 +663,6 @@ after_initialize do
 									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
 							else
-								@@user_FB_date[user] = daTE_day
 								@@userfb[:userfb].insert_one( {
 									_id: user, FEEDBACKS: [neoFB], troikaBAN: 0, fbG: 1, fbN: 0, fbB: 0, fbBuG: 1, fbBuB: 0, fbARC: 0
 								} )
@@ -680,8 +683,10 @@ after_initialize do
 			#page owners cant do feedbacks!
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
+			#get fb update date
+			fbupdate_date = @@userfb[:user_FB_date].find( { _id: user_d } ).to_a.first()
 			#recount user fb, in case its old
-			( ufbupdate(user_d); @@user_FB_date[user_d] = Time.now.strftime("%d") ) if !@@user_FB_date[user_d] || @@user_FB_date[user_d] != Time.now.strftime("%d")
+			ufbupdate(user_d) unless fbupdate_date && fbupdate_date[:DATE] == Time.now.strftime("%d")
 
 			#get userfb
 			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
@@ -698,7 +703,19 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
-			#drop chache, if its old
+
+			#check if den db exists
+			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
+
+			#if not exist or old, activate pbot
+			unless dendb_date && dendb_date[:DATE] == Time.now.strftime("%d")
+				@@userdb[:PS4db_den].drop()
+				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
+				res = Net::HTTP.post_form(uri, 'winrars' => true)
+			end
+
+
+			#drop chache, if its old, or dendb old
 			( @@cachedb[:fbglist].drop(); fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
@@ -709,20 +726,12 @@ after_initialize do
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
-				#check if den db exists
-				dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
-				
-				#if not exist or old, activate pbot
-				if dendb_date && dendb_date[:DATE] == Time.now.strftime("%d")
-					uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-					res = Net::HTTP.post_form(uri, 'winrars' => true)
-				end
-
+				#get user games from den database
 				user_DGZ = @@userdb[:PS4db_den].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
 					collation: { locale: 'en', strength: 2 }
 				).to_a
-				
+
 				user_gamez = user_BGZ + user_DGZ
 
 				#do stuff if we have some
@@ -826,14 +835,15 @@ after_initialize do
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								if @@user_FB_edit[pageu_d+user_d] && @@user_FB_edit[pageu_d+user_d] == timeNOW
+								user_FB_edit = @@userfb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
+								if user_FB_edit && user_FB_edit[:DATE] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@@user_FB_edit[pageu_d+user_d] = timeNOW
+									@@userfb[:user_FB_edit].find_one_and_update( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
 
 									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
@@ -947,6 +957,9 @@ after_initialize do
 					end
 				end
 
+				#mark that todays fb is uptodate
+				@@userfb[:user_FB_date].find_one_and_update( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
+
 				#update shit if numbers are different
 				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
 				feedbacks[:fbBuG] != inputfb[:fbBuG] || feedbacks[:fbBuB] != inputfb[:fbBuB] || feedbacks[:fbARC] != inputfb[:fbARC]
@@ -954,8 +967,6 @@ after_initialize do
 					@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
-
-					@@user_FB_date[uzar] = Time.now.strftime("%d")
 				end
 			end
 		end
