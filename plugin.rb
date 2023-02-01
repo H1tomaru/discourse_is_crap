@@ -707,7 +707,7 @@ after_initialize do
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
 			#if not exist or old, activate pbot
-			unless dendb_date || dendb_date[:DATE] == Time.now.strftime("%d")
+			if !dendb_date || (dendb_date && dendb_date[:DATE] == Time.now.strftime("%d"))
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
 				res = Net::HTTP.post_form(uri, 'winrars' => true)
 				if res.code == '200' && res.message =='OK'
