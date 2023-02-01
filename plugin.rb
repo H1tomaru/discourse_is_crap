@@ -410,7 +410,7 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				if zaipsalsq[:DATE] != Time.now.strftime("%d")	
+				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
 					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
 					zaipsalsq = 0
 				end
@@ -455,7 +455,7 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				if zaipsalsq[:DATE] != Time.now.strftime("%d")	
+				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
 					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
 					zaipsalsq = 0
 				end
@@ -683,7 +683,7 @@ after_initialize do
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			timeNOW = Time.now; ugamezfinal = []
+			timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
 			user_d = params[:username].downcase
 
 			#page owners cant do feedbacks!
@@ -692,7 +692,7 @@ after_initialize do
 			#get fb update date
 			fbupdate_date = @@cachedb[:user_FB_date].find( { _id: user_d } ).to_a.first()
 			#recount user fb, in case its old
-			ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != Time.now.strftime("%d")
+			ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != timeDAY
 
 			#get userfb
 			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
@@ -713,7 +713,7 @@ after_initialize do
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
 			#if not exist or old, activate pbot
-			if dendb_date.blank? || dendb_date[:DATE] == Time.now.strftime("%d")
+			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
 				res = Net::HTTP.post_form(uri, 'winrars' => true)
 				if res.code == '200' && res.message =='OK'
@@ -726,7 +726,7 @@ after_initialize do
 
 
 			#update chache for this user, if its old
-			( fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
+			( fbglist = {} ) if fbglist && fbglist[:DATE] != timeDAY
 
 			#do the games owned display for logged in users only
 			if fbglist.blank? && current_user && user_d != 'mrbug'
@@ -775,7 +775,7 @@ after_initialize do
 
 				#save it to cache
 				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
-					ugameZ: ugamezfinal, DATE: Time.now.strftime("%d")
+					ugameZ: ugamezfinal, DATE: timeDAY
 				}, { upsert: true } )
 			end
 
@@ -845,7 +845,7 @@ after_initialize do
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
 								user_FB_edit = @@cachedb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
-								if user_FB_edit[:DATE] == timeNOW
+								if user_FB_edit.blank? && user_FB_edit[:DATE] != timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
