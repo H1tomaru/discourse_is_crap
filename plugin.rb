@@ -408,10 +408,10 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
 				if zaipsalsq[:DATE] != Time.now.strftime("%d")	
-					@@userfb[:zaipsalsq].delete_one( { _id: user_d } )
+					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
 					zaipsalsq = 0
 				end
 
@@ -453,10 +453,10 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
 				if zaipsalsq[:DATE] != Time.now.strftime("%d")	
-					@@userfb[:zaipsalsq].delete_one( { _id: user_d } )
+					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
 					zaipsalsq = 0
 				end
 
@@ -468,11 +468,11 @@ after_initialize do
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if zaipsalsq && zaipsalsq[:count]
-						@@userfb[:zaipsalsq].find_one_and_update( { _id: user_d }, { 
+						@@cachedb[:zaipsalsq].find_one_and_update( { _id: user_d }, { 
 							"$inc" => { count: 1 }
 						}, { upsert: true } )
 					else
-						@@userfb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
+						@@cachedb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
 					end
 
 					#do actual zaips, wohoo
@@ -659,7 +659,7 @@ after_initialize do
 						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB
 						unless hasfb
 							#mark that todays fb is uptodate
-							@@userfb[:user_FB_date].insert_one( { _id: user, DATE: daTE_day } )
+							@@cachedb[:user_FB_date].insert_one( { _id: user, DATE: daTE_day } )
 
 							#add to fb, or create new if there no fb
 							if user_FB
@@ -690,7 +690,7 @@ after_initialize do
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
 			#get fb update date
-			fbupdate_date = @@userfb[:user_FB_date].find( { _id: user_d } ).to_a.first()
+			fbupdate_date = @@cachedb[:user_FB_date].find( { _id: user_d } ).to_a.first()
 			#recount user fb, in case its old
 			ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != Time.now.strftime("%d")
 
@@ -834,7 +834,6 @@ after_initialize do
 							ufbupdate(pageu_d)
 
 							render json: { winrars_z: true }
-
 						end
 
 					#or edit last feedback given
@@ -845,7 +844,7 @@ after_initialize do
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								user_FB_edit = @@userfb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
+								user_FB_edit = @@cachedb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
 								if user_FB_edit[:DATE] == timeNOW
 									render json: { gavas_e: true }
 								else
@@ -853,7 +852,7 @@ after_initialize do
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@@userfb[:user_FB_edit].find_one_and_update( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
+									@@cachedb[:user_FB_edit].find_one_and_update( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
 
 									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
@@ -968,7 +967,7 @@ after_initialize do
 				end
 
 				#mark that todays fb is uptodate
-				@@userfb[:user_FB_date].find_one_and_update( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
+				@@cachedb[:user_FB_date].find_one_and_update( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
 
 				#update shit if numbers are different
 				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
