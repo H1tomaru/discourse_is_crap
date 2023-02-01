@@ -12,6 +12,7 @@ require 'net/http'
 enabled_site_setting :metatron_id
 enabled_site_setting :telegram_id
 enabled_site_setting :site_ip
+enabled_site_setting :pbot_ip
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -382,9 +383,14 @@ after_initialize do
 
 		def troikopoisk
 			#decode shit
-			troikopoisk = Base64.decode64(params[:input]).strip.downcase
+			troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
+			acc = Base64.decode64(params[:acc]).strip.downcase
 			
-			accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
+			if acc == 'Den888'
+				accountsDB = @@userdb[:PS4db_den].find( { _id: troikopoisk } ).to_a.first()
+			else
+				accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
+			end
 
 			#do stuff when finding acc or not
 			if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
@@ -697,14 +703,37 @@ after_initialize do
 
 			#do the games owned display
 			if fbglist.blank?
-				#get user games from my database #do stuff if we have some
-				@@userdb[:PS4db].find( 
+				#get user games from my database
+				user_BGZ = @@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
 					collation: { locale: 'en', strength: 2 }
-				).to_a.each do |ugaz| #do stuff if we have some
+				).to_a
+
+				#check if den db exists
+				dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
+				
+				#if not exist or old, activate pbot
+				if dendb_date && dendb_date[:DATE] == Time.now.strftime("%d")
+					uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
+					res = Net::HTTP.post_form(uri, 'winrars' => true)
+				end
+
+				user_DGZ = @@userdb[:PS4db_den].find( 
+					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
+					collation: { locale: 'en', strength: 2 }
+				).to_a
+				
+				user_gamez = user_BGZ + user_DGZ
+
+				#do stuff if we have some
+				user_gamez.each do |ugaz| #do stuff if we have some
 					if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 						#select acc mail between + and @, \+ and \@
-						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
+						if ugaz[:den]
+							aCC = 'Den888'
+						else
+							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
+						end
 
 						#get pisitions list
 						poZz = []
@@ -722,11 +751,6 @@ after_initialize do
 
 				#do sorting web side? eeeh... cached anyway...
 				ugamezfinal.sort_by! { |k| k[:gNAME].downcase }
-
-				#get and add den feedback
-				#
-				#ugamezfinal.push( { gNAMEfu: ugaz[:_id], gNAME: ugaz[:GAME], poZ: poZz, aCC: 'Den888' } ) 
-				#
 
 				fbglist = { ugameZ: ugamezfinal }
 
