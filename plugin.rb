@@ -703,11 +703,11 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
-
+=begin
 			#check if den db uptodate
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
-			#if not exist or old, activate pbot
+			#*if not exist or old, activate pbot
 			unless dendb_date && dendb_date[:DATE] == Time.now.strftime("%d")
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
 				res = Net::HTTP.post_form(uri, 'winrars' => true)
@@ -717,7 +717,7 @@ after_initialize do
 					feedbacks[:test_shit] = res.body
 				end
 			end
-
+=end
 
 			#update chache for this user, if its old
 			( fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
