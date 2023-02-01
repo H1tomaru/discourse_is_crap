@@ -715,12 +715,17 @@ after_initialize do
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-				res = Net::HTTP.post_form(uri, 'winrars' => true)
-				if res.code == '200' && res.message =='OK'
-					fbglist = {} #remake cache cos we updated db
-				else
-					feedbacks[:test_shit1] = res.code
-					feedbacks[:test_shit2] = res.message
+				begin
+					res = Net::HTTP.post_form(uri, 'winrars' => true)
+
+					if res.code == '200' && res.message =='OK'
+						fbglist = {} #remake cache cos we updated db
+					else
+						feedbacks[:test_shit1] = res.code
+						feedbacks[:test_shit2] = res.message
+					end
+				rescue Timeout::Error => e
+					feedbacks[:test_shit1] = e
 				end
 			end
 
