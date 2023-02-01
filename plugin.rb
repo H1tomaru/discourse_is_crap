@@ -704,7 +704,7 @@ after_initialize do
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
 
-			#check if den db exists
+			#check if den db uptodate
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
 			#if not exist or old, activate pbot
@@ -722,8 +722,8 @@ after_initialize do
 			#update chache for this user, if its old
 			( fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
-			#do the games owned display
-			if fbglist.blank?
+			#do the games owned display for logged in users only
+			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
 				user_BGZ = @@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
@@ -748,7 +748,7 @@ after_initialize do
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 						end
 
-						#get pisitions list
+						#get positions list
 						poZz = []
 						poZz.push( 2 ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
 						poZz.push( 2 ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
@@ -774,7 +774,7 @@ after_initialize do
 			end
 
 			#show for logged in users only
-			feedbacks[:ugameZ] = fbglist[:ugameZ] if current_user && user_d != 'mrbug'
+			feedbacks[:ugameZ] = fbglist[:ugameZ]
 
 			#render fb
 			render json: feedbacks
