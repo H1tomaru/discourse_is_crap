@@ -709,14 +709,18 @@ after_initialize do
 
 			#if not exist or old, activate pbot
 			unless dendb_date && dendb_date[:DATE] == Time.now.strftime("%d")
-				@@userdb[:PS4db_den].drop()
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
 				res = Net::HTTP.post_form(uri, 'winrars' => true)
+				if res.code == '200' && res.message =='OK'
+					fbglist = {} #remake cache cos we updated db
+				else
+					feedbacks[:test_shit] = res.body
+				end
 			end
 
 
-			#update chache for this user, if its old, or dendb old
-			( fbglist = {} ) if fbglist && (fbglist[:DATE] != Time.now.strftime("%d") || fbglist[:DATE_den] != Time.now.strftime("%d"))
+			#update chache for this user, if its old
+			( fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
 
 			#do the games owned display
 			if fbglist.blank?
