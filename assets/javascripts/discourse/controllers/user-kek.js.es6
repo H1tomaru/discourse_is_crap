@@ -172,12 +172,13 @@ export default Ember.Controller.extend({
 			} 
 		},
 
-		troikopoisk(input) {
+		troikopoisk(poisk, acc) {
 			this.set('accamdal', true)
 			this.set('accawait', true)
 			this.set('actualgp', false)
 			Ember.$.post("/MrBug/troikopoisk/", { 
-				input: btoa(unescape(encodeURIComponent(input)))
+				poisk: btoa(unescape(encodeURIComponent(poisk))),
+				acc: btoa(unescape(encodeURIComponent(acc)))
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('accawait', false)
