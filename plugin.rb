@@ -410,7 +410,7 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				@@userfb[:zaipsalsq].remove( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
+				@@userfb[:zaipsalsq].delete_one( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
@@ -452,7 +452,7 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				@@userfb[:zaipsalsq].remove( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
+				@@userfb[:zaipsalsq].delete_one( { _id: user_d } ) unless zaipsalsq && zaipsalsq[:DATE] == Time.now.strftime("%d")
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
