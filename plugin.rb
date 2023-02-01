@@ -715,8 +715,8 @@ after_initialize do
 			end
 
 
-			#drop chache, if its old, or dendb old
-			( @@cachedb[:fbglist].drop(); fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
+			#update chache for this user, if its old, or dendb old
+			( fbglist = {} ) if fbglist && (fbglist[:DATE] != Time.now.strftime("%d") || fbglist[:DATE_den] != Time.now.strftime("%d"))
 
 			#do the games owned display
 			if fbglist.blank?
