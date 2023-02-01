@@ -676,7 +676,7 @@ after_initialize do
 
 		def feedbacks
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
-=begin
+
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; ugamezfinal = []
 			user_d = params[:username].downcase
@@ -778,7 +778,7 @@ after_initialize do
 
 			#render fb
 			render json: feedbacks
-=end
+
 			end #unless end
 
 		end
