@@ -410,7 +410,10 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				@@userfb[:zaipsalsq].delete_one( { _id: user_d } ) if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")
+				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
+					@@userfb[:zaipsalsq].delete_one( { _id: user_d } )
+					zaipsalsq = 0
+				end
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
@@ -452,7 +455,10 @@ after_initialize do
 				#delete users zaipsalsq if its old
 				zaipsalsq = @@userfb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
 
-				@@userfb[:zaipsalsq].delete_one( { _id: user_d } ) if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")
+				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
+					@@userfb[:zaipsalsq].delete_one( { _id: user_d } )
+					zaipsalsq = 0
+				end
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
@@ -686,7 +692,7 @@ after_initialize do
 			#get fb update date
 			fbupdate_date = @@userfb[:user_FB_date].find( { _id: user_d } ).to_a.first()
 			#recount user fb, in case its old
-			ufbupdate(user_d) if fbupdate_date && fbupdate_date[:DATE] != Time.now.strftime("%d")
+			ufbupdate(user_d) if !fbupdate_date || fbupdate_date[:DATE] != Time.now.strftime("%d")
 
 			#get userfb
 			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
@@ -707,7 +713,7 @@ after_initialize do
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
 			#if not exist or old, activate pbot
-			if !dendb_date || (dendb_date && dendb_date[:DATE] == Time.now.strftime("%d"))
+			if !dendb_date || dendb_date[:DATE] == Time.now.strftime("%d")
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
 				res = Net::HTTP.post_form(uri, 'winrars' => true)
 				if res.code == '200' && res.message =='OK'
