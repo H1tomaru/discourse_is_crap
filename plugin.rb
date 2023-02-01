@@ -713,7 +713,8 @@ after_initialize do
 				if res.code == '200' && res.message =='OK'
 					fbglist = {} #remake cache cos we updated db
 				else
-					feedbacks[:test_shit] = res.body
+					feedbacks[:test_shit1] = res.code
+					feedbacks[:test_shit2] = res.message
 				end
 			end
 
