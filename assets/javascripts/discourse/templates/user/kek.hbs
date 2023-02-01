@@ -119,7 +119,7 @@
 					<div><a>{{#each gamez.poZ as |poZ|}}П{{poZ}} {{/each}}</a></div>
 					<div>{{gamez.gNAME}}</div>
 					<div class='acN'>{{gamez.aCC}}</div>
-					<button class='findZ' {{action 'troikopoisk' gamez.gNAMEid}}></button>
+					<button class='findZ' {{action 'troikopoisk' gamez.gNAMEid gamez.aCC}}></button>
 				</div>
 			{{/each}}
 			<span class="minihrenvnizu">кто владелец? я владелец! он владелец? жми на аккаунт!? узнай владельцев!</span>
