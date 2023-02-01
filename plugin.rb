@@ -656,7 +656,7 @@ after_initialize do
 					feedbacks.each do |user|
 						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACKS: 1 }).to_a.first()
 						#find if we gave user this feedback already
-						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } if user_FB
+						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } unless user_FB.blank?
 						unless hasfb
 							#mark that todays fb is uptodate
 							@@cachedb[:user_FB_date].insert_one( { _id: user, DATE: daTE_day } )
@@ -726,7 +726,7 @@ after_initialize do
 
 
 			#update chache for this user, if its old
-			( fbglist = {} ) if fbglist && fbglist[:DATE] != timeDAY
+			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
 			#do the games owned display for logged in users only
 			if fbglist.blank? && current_user && user_d != 'mrbug'
@@ -845,7 +845,7 @@ after_initialize do
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
 								user_FB_edit = @@cachedb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
-								if user_FB_edit.blank? && user_FB_edit[:DATE] != timeNOW
+								if user_FB_edit && user_FB_edit[:DATE] == timeNOW
 									render json: { gavas_e: true }
 								else
 									fb[:FEEDBACK] = fedbacks[2].strip
