@@ -8,3 +8,6 @@ plugins:
   site_ip:
     default: ""
     client: false
+  pbot_ip:
+    default: ""
+    client: false
