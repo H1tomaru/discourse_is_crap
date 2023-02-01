@@ -35,6 +35,7 @@ after_initialize do
 	class ::MrbugController < ::ApplicationController
 
 		SiteSetting.site_ip = 'union3.vg' if SiteSetting.site_ip.empty?
+		SiteSetting.pbot_ip = 'union3.vg' if SiteSetting.pbot_ip.empty?
 
 		db = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
@@ -675,7 +676,7 @@ after_initialize do
 
 		def feedbacks
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
-
+=begin
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; ugamezfinal = []
 			user_d = params[:username].downcase
@@ -703,7 +704,6 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
-=begin
 			#check if den db uptodate
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
@@ -717,7 +717,7 @@ after_initialize do
 					feedbacks[:test_shit] = res.body
 				end
 			end
-=end
+
 
 			#update chache for this user, if its old
 			( fbglist = {} ) if fbglist && fbglist[:DATE] != Time.now.strftime("%d")
@@ -778,7 +778,7 @@ after_initialize do
 
 			#render fb
 			render json: feedbacks
-
+=end
 			end #unless end
 
 		end
