@@ -720,7 +720,7 @@ after_initialize do
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				begin
 					res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 2 }
-					if res.status == '200'
+					if res.status == 200
 						fbglist = {} 	
 					else
 						feedbacks[:test_shit1] = res.status
