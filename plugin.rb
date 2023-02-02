@@ -715,11 +715,10 @@ after_initialize do
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				res = Faraday.post('https://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true)
-				if res.code == '200' && res.message =='OK'
+				if res.status == '200'
 					fbglist = {} 	
 				else
-					feedbacks[:test_shit1] = res.code
-					feedbacks[:test_shit2] = res.message
+					feedbacks[:test_shit1] = res.status
 				end
 			end
 
