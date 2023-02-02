@@ -724,7 +724,7 @@ after_initialize do
 						feedbacks[:test_shit1] = res.code
 						feedbacks[:test_shit2] = res.message
 					end
-				rescue Timeout::Error => e
+				rescue StandardError => e
 					feedbacks[:test_shit1] = e
 				end
 			end
