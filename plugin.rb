@@ -709,6 +709,28 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
+
+			#check if den db uptodate
+			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
+
+			#if not exist or old, activate pbot
+			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
+				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
+				begin
+					res = Net::HTTP.post_form(uri, 'winrars' => true)
+					if res.code == '200' && res.message =='OK'
+						fbglist = {} 	
+					else
+						feedbacks[:test_shit1] = res.code
+						feedbacks[:test_shit2] = res.message
+					end
+				rescue Exception
+					raise Exception.new('Unable connect to host')
+					feedbacks[:test_shit1] = Exception
+				end
+			end
+
+
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
@@ -768,23 +790,6 @@ after_initialize do
 
 			#render fb
 			render json: feedbacks
-
-
-			#check if den db uptodate
-			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
-
-			#if not exist or old, activate pbot
-			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
-				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-				begin
-					res = Net::HTTP.post_form(uri, 'winrars' => true)
-					if res.code == '200' && res.message =='OK'
-						@@cachedb[:fbglist].drop() #drop cache cos we updated db
-					end
-				rescue Exception
-					raise Exception.new('Unable connect to host')
-				end
-			end
 
 			end #unless end
 		end
