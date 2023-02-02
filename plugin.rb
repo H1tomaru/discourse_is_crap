@@ -714,7 +714,6 @@ after_initialize do
 
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
-				#res = Faraday.post('https://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true)
 				begin
 					res = Faraday::Connection.new.post('https://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 2 }
 					if res.status == '200'
@@ -722,8 +721,8 @@ after_initialize do
 					else
 						feedbacks[:test_shit1] = res.status
 					end
-				rescue
-					feedbacks[:test_shit1] = 'ConnectionFailed'
+				rescue => e
+					feedbacks[:test_shit1] = e
 				end
 			end
 
