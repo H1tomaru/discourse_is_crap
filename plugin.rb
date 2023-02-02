@@ -725,7 +725,7 @@ after_initialize do
 						feedbacks[:test_shit2] = res.message
 					end
 				rescue Exception
-					raise Exception.new('Unable connect to host')
+					#raise Exception.new('Unable connect to host')
 					feedbacks[:test_shit1] = Exception
 				end
 			end
