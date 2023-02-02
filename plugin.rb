@@ -495,7 +495,11 @@ after_initialize do
 					)
 
 					#add message to telegram bot, if enabled
-					Faraday.post('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage', {'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3]})
+					begin
+						Faraday::Connection.new.post('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage', {'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3]}) { |request| request.options.timeout = 20 }
+					rescue
+						#nope
+					end
 
 					#create forum notification if sobrano
 					#get game userlist
