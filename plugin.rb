@@ -7,7 +7,7 @@ gem 'mongo', "2.5.0"
 
 require 'mongo'
 require 'base64'
-require 'net/http'
+require 'faraday'
 
 enabled_site_setting :metatron_id
 enabled_site_setting :telegram_id
@@ -495,8 +495,7 @@ after_initialize do
 					)
 
 					#add message to telegram bot, if enabled
-					uri = URI('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage')
-					Net::HTTP.post_form(uri, 'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3])
+					Faraday.post('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage', {'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3]})
 
 					#create forum notification if sobrano
 					#get game userlist
@@ -715,18 +714,12 @@ after_initialize do
 
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
-				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-				begin
-					res = Net::HTTP.post_form(uri, 'winrars' => true)
-					if res.code == '200' && res.message =='OK'
-						fbglist = {} 	
-					else
-						feedbacks[:test_shit1] = res.code
-						feedbacks[:test_shit2] = res.message
-					end
-				rescue Exception
-					#raise Exception.new('Unable connect to host')
-					feedbacks[:test_shit1] = Exception
+				res = Faraday.post("https://'+SiteSetting.pbot_ip+'/make_dendb", 'winrars' => true)
+				if res.code == '200' && res.message =='OK'
+					fbglist = {} 	
+				else
+					feedbacks[:test_shit1] = res.code
+					feedbacks[:test_shit2] = res.message
 				end
 			end
 
