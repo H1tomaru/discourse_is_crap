@@ -776,10 +776,13 @@ after_initialize do
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-				res = Net::HTTP.post_form(uri, 'winrars' => true)
-
-				if res.code == '200' && res.message =='OK'
-					@@cachedb[:fbglist].drop() #drop cache cos we updated db
+				begin
+					res = Net::HTTP.post_form(uri, 'winrars' => true)
+					if res.code == '200' && res.message =='OK'
+						@@cachedb[:fbglist].drop() #drop cache cos we updated db
+					end
+				rescue Exception
+					raise Exception.new('Unable connect to host')
 				end
 			end
 
