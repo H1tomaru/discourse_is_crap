@@ -419,7 +419,7 @@ after_initialize do
 
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (!zaipsalsq || zaipsalsq[:count] < 4) )
+					( current_user[:username] == 'MrBug' || (zaipsalsq.blank? || zaipsalsq[:count] < 4) )
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: user_FB[:fbBuG] }
@@ -464,7 +464,7 @@ after_initialize do
 
 				#do everything checking again!
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (!zaipsalsq || zaipsalsq[:count] < 4) ) &&
+					( current_user[:username] == 'MrBug' || (zaipsalsq.blank? || zaipsalsq[:count] < 4) ) &&
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if zaipsalsq && zaipsalsq[:count]
@@ -709,27 +709,6 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
-			#check if den db uptodate
-			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
-
-			#if not exist or old, activate pbot
-			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
-				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
-				begin
-					res = Net::HTTP.post_form(uri, 'winrars' => true)
-
-					if res.code == '200' && res.message =='OK'
-						fbglist = {} #remake cache cos we updated db
-					else
-						feedbacks[:test_shit1] = res.code
-						feedbacks[:test_shit2] = res.message
-					end
-				rescue StandardError => e
-					feedbacks[:test_shit1] = e
-				end
-			end
-
-
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
@@ -790,8 +769,21 @@ after_initialize do
 			#render fb
 			render json: feedbacks
 
-			end #unless end
 
+			#check if den db uptodate
+			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
+
+			#if not exist or old, activate pbot
+			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
+				uri = URI('https://'+SiteSetting.pbot_ip+'/make_dendb')
+				res = Net::HTTP.post_form(uri, 'winrars' => true)
+
+				if res.code == '200' && res.message =='OK'
+					@@cachedb[:fbglist].drop() #drop cache cos we updated db
+				end
+			end
+
+			end #unless end
 		end
 
 		def zafeedback
