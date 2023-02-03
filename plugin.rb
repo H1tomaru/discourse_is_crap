@@ -713,6 +713,7 @@ after_initialize do
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
 
+=begin
 			#check if den db uptodate
 			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
 
@@ -729,6 +730,7 @@ after_initialize do
 					feedbacks[:test_shit1] = e
 				end
 			end
+=end
 
 
 			#update chache for this user, if its old
