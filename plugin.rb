@@ -721,7 +721,7 @@ after_initialize do
 				begin
 					res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 2 }
 					if res.status == 200
-						fbglist = {} 	
+						fbglist = {}
 					else
 						feedbacks[:test_shit1] = res.status
 					end
@@ -734,6 +734,7 @@ after_initialize do
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
+			feedbacks[:test_shit3] = fbglist
 			#do the games owned display for logged in users only
 			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
