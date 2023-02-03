@@ -788,7 +788,7 @@ after_initialize do
 			end
 
 			#show for logged in users only
-			feedbacks[:ugameZ] = fbglist[:ugameZ]
+			feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank? 
 
 			#render fb
 			render json: feedbacks
