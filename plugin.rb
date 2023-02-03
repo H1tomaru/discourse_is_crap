@@ -749,6 +749,7 @@ after_initialize do
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
+				feedbacks[:test_shit4] = user_DGZ
 				user_gamez = user_BGZ + user_DGZ
 
 				#do stuff if we have some
