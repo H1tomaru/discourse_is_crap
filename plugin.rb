@@ -719,7 +719,7 @@ after_initialize do
 			#if not exist or old, activate pbot
 			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
 				begin
-					res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 10 }
+					res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 3 }
 					if res.status == 200
 						fbglist = {}
 					else
@@ -734,7 +734,6 @@ after_initialize do
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
-			feedbacks[:test_shit3] = fbglist
 			#do the games owned display for logged in users only
 			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
@@ -749,7 +748,6 @@ after_initialize do
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
-				feedbacks[:test_shit4] = user_DGZ
 				user_gamez = user_BGZ + user_DGZ
 
 				#do stuff if we have some
