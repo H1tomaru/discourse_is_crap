@@ -379,7 +379,7 @@ after_initialize do
 		def troikopoisk
 			#decode shit
 			troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
-			acc = Base64.decode64(params[:acc]).strip.downcase
+			acc = Base64.decode64(params[:acc]).strip
 			
 			if acc == 'Den888'
 				accountsDB = @@userdb[:PS4db_den].find( { _id: troikopoisk } ).to_a.first()
