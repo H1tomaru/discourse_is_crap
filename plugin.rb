@@ -751,6 +751,7 @@ after_initialize do
 				).to_a
 
 				user_gamez = user_BGZ + user_DGZ
+				user_gamez = user_BGZ if user_d == 'den888'
 
 				#do stuff if we have some
 				user_gamez.each do |ugaz| #do stuff if we have some
