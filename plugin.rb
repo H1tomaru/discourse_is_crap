@@ -662,7 +662,7 @@ after_initialize do
 						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } unless user_FB.blank?
 						unless hasfb
 							#mark that todays fb is uptodate
-							@@cachedb[:user_FB_date].insert_one( { _id: user, DATE: daTE_day } )
+							@@cachedb[:user_FB_date].find_one_and_update( { _id: user }, { DATE: daTE_day }, { upsert: true } )
 
 							#add to fb, or create new if there no fb
 							if user_FB
