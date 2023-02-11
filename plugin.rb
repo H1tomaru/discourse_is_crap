@@ -514,7 +514,7 @@ after_initialize do
 						end
 					end
 
-					unless SiteSetting.metatron_id.empty?
+					unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
 						#add message to telegram bot, if enabled
 						begin
 							Faraday::Connection.new.post(
