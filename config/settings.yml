@@ -11,3 +11,6 @@ plugins:
   pbot_ip:
     default: ""
     client: false
+  chat_webhook:
+    default: ""
+    client: false
