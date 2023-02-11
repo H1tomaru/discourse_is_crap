@@ -13,6 +13,7 @@ enabled_site_setting :metatron_id
 enabled_site_setting :telegram_id
 enabled_site_setting :site_ip
 enabled_site_setting :pbot_ip
+enabled_site_setting :chat_webhook
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -486,19 +487,48 @@ after_initialize do
 					#destroy 4tverki cache
 					@@cachedb[:autozCache].drop()
 
-					#add message to chat
+
+					msgtext = current_user[:username]+" записался на позицию П"+code[0][0]+" совместной покупки "+code[3]
+					#add message to old topic
 					PostCreator.create(
 						Discourse.system_user,
 						skip_validations: true,
 						topic_id: 61653,
-						raw: current_user[:username]+" записался на позицию П"+code[0][0]+" совместной покупки "+code[3]
+						raw: msgtext
 					)
 
-					#add message to telegram bot, if enabled
-					begin
-						Faraday::Connection.new.post('https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage', {'chat_id' => SiteSetting.telegram_id, 'text' => current_user[:username]+' записался на позицию П'+code[0][0]+' совместной покупки '+code[3]}) { |request| request.options.timeout = 20 }
-					rescue
-						#nope
+					unless SiteSetting.chat_webhook.empty?
+						#add message to discourse chat, if enabled
+						begin
+							Faraday::Connection.new.post(
+								SiteSetting.chat_webhook,
+								'text' => msgtext
+							) { |request| request.options.timeout = 10 }
+						rescue => e
+							PostCreator.create(
+								Discourse.system_user,
+								skip_validations: true,
+								topic_id: 61653,
+								raw: 'Chat webhook fail: ' + e
+							)
+						end
+					end
+
+					unless SiteSetting.metatron_id.empty?
+						#add message to telegram bot, if enabled
+						begin
+							Faraday::Connection.new.post(
+								'https://api.telegram.org/bot'+SiteSetting.metatron_id+'/sendMessage',
+								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
+							) { |request| request.options.timeout = 20 }
+						rescue => e
+							PostCreator.create(
+								Discourse.system_user,
+								skip_validations: true,
+								topic_id: 61653,
+								raw: 'TG webhook fail: ' + e
+							)
+						end
 					end
 
 					#create forum notification if sobrano
