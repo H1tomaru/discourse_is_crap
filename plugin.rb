@@ -31,6 +31,7 @@ after_initialize do
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
 		get '/u/:username/kek' => 'mrbug#feedbacks', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
+		post '/u/:username/kek/oishiiii' => 'mrbug#zapass', constraints: { username: RouteFormat.username }
 	end
 
 	class ::MrbugController < ::ApplicationController
@@ -742,27 +743,6 @@ after_initialize do
 			#get fbglist cache
 			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
 
-
-=begin
-			#check if den db uptodate
-			dendb_date = @@userdb[:PS4db_den].find({ _id: 'den_date' }).to_a.first()
-
-			#if not exist or old, activate pbot
-			if dendb_date.blank? || dendb_date[:DATE] != timeDAY
-				begin
-					res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/make_dendb', 'winrars' => true) { |request| request.options.timeout = 3 }
-					if res.status == 200
-						fbglist = {}
-					else
-						feedbacks[:test_shit1] = res.status
-					end
-				rescue => e
-					feedbacks[:test_shit1] = e
-				end
-			end
-=end
-
-
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
 
@@ -914,6 +894,48 @@ after_initialize do
 			end
 
 			end #unless end
+		end
+
+		def zapass
+			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
+
+			#decode shit
+			findmail = Base64.decode64(params[:myylo])
+
+			user_d = current_user[:username].downcase
+			pageu_d = params[:username].downcase
+
+				#only page owners can do zapass!
+				if current_user && !findmail.nil? && user_d != pageu_d
+					#get pass how many times from cache db
+					
+					#if first time ask pass today, go
+					if
+						begin
+							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 10 }
+							if res.status == 200
+								#message pass to user
+								render json: { winrar: Base64.decode64(res.passzss) }
+							else
+								#message something about failure
+								render json: { noconnect: true; status: res.status }
+							end
+						rescue => e
+							#message something about error
+							render json: { error: true; status: e }
+						end
+					else #if already asked pass today, message something about it
+						render json: { spam: true }
+					end
+				else #if that is a guest or not a page owner... thats really really wrong...
+					render json: { fail: true }
+					puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
+				end
+				
+			else #message something about ban
+				render json: { banned: true }
+			end
+			end
 		end
 
 		def rentagama
