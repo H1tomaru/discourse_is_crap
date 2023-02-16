@@ -904,8 +904,8 @@ after_initialize do
 
 				#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
 				user_BGZ = @@userdb[:PS4db].find( 
-					{ "$or": [ { P2: user_d }, { P4: user_d } ] },
-					collation: { locale: 'en', strength: 2 }
+					{ id: Base64.decode64(params[:myylo]), "$or": [ { P2: user_d }, { P4: user_d } ] },
+					projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
 				).to_a
 
 				#only page owners can do zapass!
