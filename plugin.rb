@@ -750,13 +750,13 @@ after_initialize do
 			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
 				user_BGZ = @@userdb[:PS4db].find( 
-					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
+					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
 				#get user games from den database
 				user_DGZ = @@userdb[:PS4db_den].find( 
-					{ "$or": [ { P2: params[:username] }, { P4: params[:username] }	] },
+					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
@@ -899,23 +899,32 @@ after_initialize do
 		def zapass
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
-			#decode shit
-			findmail = Base64.decode64(params[:myylo])
-
 			user_d = current_user[:username].downcase
-			pageu_d = params[:username].downcase
+			timeNOW = Time.now.strftime("%Y.%m.%d")
+
+				#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
+				user_BGZ = @@userdb[:PS4db].find( 
+					{ "$or": [ { P2: user_d }, { P4: user_d } ] },
+					collation: { locale: 'en', strength: 2 }
+				).to_a
 
 				#only page owners can do zapass!
-				if current_user && !findmail.nil? && user_d != pageu_d
-					#get pass how many times from cache db
-					
-					#if first time ask pass today, go
-					if
+				if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.nil?
+					#get how many pass times from cache db
+					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
+
+					#if already asked pass today, message something about it
+					if user_apasaz && user_apasaz[:DATE] == Time.now.strftime("%Y.%m.%d") && azuser_apasaz[:MAIL] != params[:myylo]
+						render json: { spam: true }
+					else #if first time ask pass today, go
 						begin
 							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 10 }
 							if res.status == 200
 								#message pass to user
 								render json: { winrar: Base64.decode64(res.passzss) }
+
+								#add any pass times to cache db
+								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: timeNOW, MAIL: params[:myylo] }, { upsert: true } )
 							else
 								#message something about failure
 								render json: { noconnect: true; status: res.status }
@@ -924,17 +933,14 @@ after_initialize do
 							#message something about error
 							render json: { error: true; status: e }
 						end
-					else #if already asked pass today, message something about it
-						render json: { spam: true }
 					end
 				else #if that is a guest or not a page owner... thats really really wrong...
 					render json: { fail: true }
 					puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
 				end
-				
+
 			else #message something about ban
 				render json: { banned: true }
-			end
 			end
 		end
 
