@@ -927,11 +927,11 @@ after_initialize do
 								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: timeNOW, MAIL: params[:myylo] }, { upsert: true } )
 							else
 								#message something about failure
-								render json: { noconnect: true; status: res.status }
+								render json: { noconnect: true, status: res.status }
 							end
 						rescue => e
 							#message something about error
-							render json: { error: true; status: e }
+							render json: { error: true, status: e }
 						end
 					end
 				else #if that is a guest or not a page owner... thats really really wrong...
