@@ -899,17 +899,29 @@ after_initialize do
 		def zapass
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
+			dukan = false
 			user_d = current_user[:username].downcase
 			timeNOW = Time.now.strftime("%Y.%m.%d")
 
-				#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
-				user_BGZ = @@userdb[:PS4db].find( 
-					{ id: Base64.decode64(params[:myylo]), "$or": [ { P2: user_d }, { P4: user_d } ] },
-					projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
-				).to_a
+			#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
+			user_BGZ = @@userdb[:PS4db].find( 
+				{ id: Base64.decode64(params[:myylo]), "$or": [ { P2: user_d }, { P4: user_d } ] },
+				projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
+			).to_a
 
-				#only page owners can do zapass!
-				if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.nil?
+			#only page owners can do zapass!
+			if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.nil?
+				#check fb to see if eligible to get pass
+				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
+				inputfb[:FEEDBACKS].each do |fb|
+					#look for my recent fb
+					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
+						dukan = true
+						break
+					end
+				end
+				
+				if dukan
 					#get how many pass times from cache db
 					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
 
@@ -934,10 +946,14 @@ after_initialize do
 							render json: { error: true, status: e }
 						end
 					end
-				else #if that is a guest or not a page owner... thats really really wrong...
-					render json: { fail: true }
-					puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
+				else
+					#message something about not having fb
+					render json: { noufb: true }
 				end
+			else #if that is a guest or not a page owner... thats really really wrong...
+				render json: { fail: true }
+				puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
+			end
 
 			else #message something about ban
 				render json: { banned: true }
