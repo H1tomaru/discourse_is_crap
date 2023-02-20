@@ -901,7 +901,6 @@ after_initialize do
 
 			dukan = false
 			user_d = current_user[:username].downcase
-			timeNOW = Time.now.strftime("%Y.%m.%d")
 
 			#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
 			user_BGZ = @@userdb[:PS4db].find( 
@@ -911,6 +910,7 @@ after_initialize do
 
 			#only page owners can do zapass!
 			if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.nil?
+				timeNOW = Time.now
 				#check fb to see if eligible to get pass
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
 				inputfb[:FEEDBACKS].each do |fb|
@@ -936,7 +936,7 @@ after_initialize do
 								render json: { winrar: Base64.decode64(res.passzss) }
 
 								#add any pass times to cache db
-								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: timeNOW, MAIL: params[:myylo] }, { upsert: true } )
+								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } )
 							else
 								#message something about failure
 								render json: { noconnect: true, status: res.status }
