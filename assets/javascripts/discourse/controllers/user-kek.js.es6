@@ -58,6 +58,7 @@ export default Ember.Controller.extend({
 
 	accamdal: false,
 	accawait: false,
+	passwait: false,
 	actualgp: false,
 
 	actions: {
@@ -186,7 +187,13 @@ export default Ember.Controller.extend({
 		},
 
 		getPaZZ(input) {
-
+			this.set('passwait', true)
+			Ember.$.post("/u/"+this.get('currentUser.username')+"/kek/oishiiii", { 
+				myylo: btoa(unescape(encodeURIComponent(input)))
+			}).then(result => {
+				this.set('actualgp', result)
+				this.set('passwait', false)
+			})
 		}
 
 	}
