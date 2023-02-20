@@ -141,7 +141,11 @@
 				{{#unless model.MENOSHO}}
 					<div class='xdux'>
 						{{#unless actualgp}}
-							<button class="buttZ" {{action 'getPaZZ' troikopoisk._id}}>&#215; получить пароль &#215;</button>
+							{{#if accamdal}}
+								<div class="bagaspin"></div>
+							{{else}}
+								<button class="buttZ" {{action 'getPaZZ' troikopoisk._id}}>&#215; получить пароль &#215;</button>
+							{{/if}}
 						{{else}}
 							{{#if actualgp.winrar}}
 								{{actualgp.winrar}}
