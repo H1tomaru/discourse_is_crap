@@ -926,7 +926,7 @@ after_initialize do
 					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
 
 					#if already asked pass today, message something about it
-					if user_apasaz && user_apasaz[:DATE] == Time.now.strftime("%Y.%m.%d") && azuser_apasaz[:MAIL] != params[:myylo]
+					if user_apasaz && user_apasaz[:DATE] == Time.now.strftime("%Y.%m.%d") && user_apasaz[:MAIL] != params[:myylo]
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
