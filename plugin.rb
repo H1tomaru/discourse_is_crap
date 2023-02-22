@@ -933,17 +933,17 @@ after_initialize do
 							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 10 }
 							if res.status == 200
 								#message pass to user
-								render json: { winrar: Base64.decode64(res.passzss) }
+								render json: { winrar: Base64.decode64(res.body.passzss) }
 
 								#add any pass times to cache db
 								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } )
 							else
 								#message something about failure
-								render json: { noconnect: true, status: res.status }
+								render json: { noconnect: true, status: res.status[0...30] }
 							end
 						rescue => e
 							#message something about error
-							render json: { error: true, status: e }
+							render json: { error: true, status: e[0...30] }
 						end
 					end
 				else
