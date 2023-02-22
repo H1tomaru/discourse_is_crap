@@ -147,6 +147,7 @@
 								<button class="buttZ" {{action 'getPaZZ' troikopoisk._id}}>&#215; получить пароль &#215;</button>
 							{{/if}}
 						{{else}}
+							<span>
 							{{#if actualgp.winrar}}
 								{{actualgp.winrar}}
 							{{/if}}
@@ -163,8 +164,9 @@
 								Бот не работать без отзывов от организатора
 							{{/if}}
 							{{#if actualgp.banned}}
-								Бот не работать когда бан
+								<Бот не работать когда бан
 							{{/if}}
+							</span>
 						{{/unless}}
 					</div>
 				{{/unless}}
