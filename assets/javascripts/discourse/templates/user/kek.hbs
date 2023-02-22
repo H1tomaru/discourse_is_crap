@@ -147,9 +147,8 @@
 								<button class="buttZ" {{action 'getPaZZ' troikopoisk._id}}>&#215; получить пароль &#215;</button>
 							{{/if}}
 						{{else}}
-							<span>
 							{{#if actualgp.winrar}}
-								{{actualgp.winrar}}
+								{{{actualgp.winrar}}}
 							{{/if}}
 							{{#if actualgp.spam}}
 								Бот выдает только <b>один</b> пароль в день<br>Пользуйтесь, других сегодня небудет
@@ -166,7 +165,6 @@
 							{{#if actualgp.banned}}
 								Бот не работать когда бан
 							{{/if}}
-							</span>
 						{{/unless}}
 					</div>
 				{{/unless}}
