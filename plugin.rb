@@ -915,7 +915,7 @@ after_initialize do
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
 				inputfb[:FEEDBACKS].each do |fb|
 					#look for my recent fb
-					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
+					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 15800000 )
 						dukan = true
 						break
 					end
