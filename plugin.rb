@@ -716,9 +716,12 @@ after_initialize do
 		def feedbacks
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
-			feedbacks = { FEEDBACKS: [], fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
+			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
 			user_d = params[:username].downcase
+				
+			#page owners cant do feedbacks!
+			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
 			#get fb update date
 			fbupdate_date = @@cachedb[:user_FB_date].find( { _id: user_d } ).to_a.first()
