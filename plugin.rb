@@ -906,7 +906,7 @@ after_initialize do
 			user_BGZ = @@userdb[:PS4db].find( 
 				{ id: Base64.decode64(params[:myylo]), "$or": [ { P2: user_d }, { P4: user_d } ] },
 				projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
-			).to_a
+			).to_a.first()
 
 			#only page owners can do zapass!
 			if current_user && params[:myylo] && user_d == params[:username].downcase && user_BGZ
