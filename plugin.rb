@@ -803,16 +803,6 @@ after_initialize do
 			#show for logged in users only
 			feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank?
 
-			user_BGZ = @@userdb[:PS4db].find( 
-				{ _id: "mrbugsubacc+testtest@gmail.com", "$or": [ { P2: 'h1tomaru' }, { P4: 'h1tomaru' } ] },
-				projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
-			).to_a.first()
-				
-			feedbacks[:testtesttest1] = user_BGZ
-			feedbacks[:testtesttest2] = user_BGZ.blank?
-			feedbacks[:testtesttest3] = !user_BGZ.blank?
-			feedbacks[:testtesttest4] = !(user_BGZ.blank?)
-			
 			#render fb
 			render json: feedbacks
 
