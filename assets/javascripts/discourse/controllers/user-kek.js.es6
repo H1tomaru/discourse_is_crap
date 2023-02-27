@@ -38,6 +38,12 @@ export default Ember.Controller.extend({
 		while (newfbarray.length > 0) {
 			finalvar.fb2.push (newfbarray.splice(0, 12))
 		}
+		
+		//reset page, cos shit not reset if no page reload
+		this.set('accamdal', false)
+		this.set('actualgp', false)
+		this.set('troikopoisk', false)
+		this.set('responz', false)
 
 		return finalvar
 
