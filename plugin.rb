@@ -801,8 +801,18 @@ after_initialize do
 			end
 
 			#show for logged in users only
-			feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank? 
+			feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank?
 
+			user_BGZ = @@userdb[:PS4db].find( 
+				{ id: "mrbugsubacc+testtest@gmail.com"), "$or": [ { P2: 'h1tomaru' }, { P4: 'h1tomaru' } ] },
+				projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
+			).to_a.first()
+			
+			feedbacks[:testtesttest1] = user_BGZ
+			feedbacks[:testtesttest2] = user_BGZ.blank?
+			feedbacks[:testtesttest3] = !user_BGZ.blank?
+			feedbacks[:testtesttest4] = !(user_BGZ.blank?)
+			
 			#render fb
 			render json: feedbacks
 
@@ -912,7 +922,7 @@ after_initialize do
 			).to_a.first()
 
 			#only page owners can do zapass!
-			if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.blank?
+			if current_user && params[:myylo] && user_d == params[:username].downcase && !(user_BGZ.blank?)
 				timeNOW = Time.now
 				#check fb to see if eligible to get pass
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
