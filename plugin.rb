@@ -590,11 +590,13 @@ after_initialize do
 					end
 				else
 					render json: { zaipsfail: true }
+					Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 					puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 				end
 
 			else
 				render json: { zaipsfail: true }
+				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 				puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 			end
 		end
@@ -890,6 +892,7 @@ after_initialize do
 
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
+				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
 				puts "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
 			end
 
@@ -952,6 +955,7 @@ after_initialize do
 				end
 			else #if that is a guest or not a page owner... thats really really wrong...
 				render json: { fail: true }
+				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
 				puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
 			end
 
