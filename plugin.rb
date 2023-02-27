@@ -716,7 +716,7 @@ after_initialize do
 		def feedbacks
 			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
-			feedbacks = { FEEDBACKS: [], fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
+			feedbacks = { FEEDBACKS: [], fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
 			timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
 			user_d = params[:username].downcase
 
