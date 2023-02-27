@@ -955,8 +955,8 @@ after_initialize do
 				end
 			else #if that is a guest or not a page owner... thats really really wrong...
 				render json: { fail: true }
-				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
-				puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!"
+				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking passzss!: "+Base64.decode64(params[:myylo]
+				puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!: "+Base64.decode64(params[:myylo]
 			end
 
 			else #message something about ban
