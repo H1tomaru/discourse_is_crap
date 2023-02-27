@@ -906,7 +906,7 @@ after_initialize do
 			).to_a
 
 			#only page owners can do zapass!
-			if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.nil?
+			if current_user && params[:myylo] && user_d == params[:username].downcase && user_BGZ
 				timeNOW = Time.now
 				#check fb to see if eligible to get pass
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
