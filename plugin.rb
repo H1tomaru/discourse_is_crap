@@ -939,7 +939,7 @@ after_initialize do
 								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } )
 							else
 								#message something about failure
-								render json: { noconnect: true, status: res.status[0..30] }
+								render json: { noconnect: true, status: res.status[0..28] }
 							end
 						rescue => e
 							#message something about error
