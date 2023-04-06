@@ -421,7 +421,7 @@ after_initialize do
 
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (zaipsalsq.blank? || zaipsalsq[:count] < 4) )
+					( (zaipsalsq.blank? || zaipsalsq[:count] < 4)  || current_user[:username] == 'MrBug' )
 					#special message if its a p1 zapis with less then 5 mrbug feedback
 					if code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug'
 						render json: { piadin: true, fbcount: user_FB[:fbBuG] }
@@ -466,7 +466,7 @@ after_initialize do
 
 				#do everything checking again!
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
-					( current_user[:username] == 'MrBug' || (zaipsalsq.blank? || zaipsalsq[:count] < 4) ) &&
+					( (zaipsalsq.blank? || zaipsalsq[:count] < 4) || current_user[:username] == 'MrBug' ) &&
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if zaipsalsq && zaipsalsq[:count]
