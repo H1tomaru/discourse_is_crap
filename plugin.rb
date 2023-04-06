@@ -924,7 +924,7 @@ after_initialize do
 					end
 				end
 				
-				if dukan
+				if dukan && inputfb[:fbBuB] == 0
 					#get how many pass times from cache db
 					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
 
@@ -1039,8 +1039,10 @@ after_initialize do
 						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
 						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
 						#count bugofb
-						feedbacks[:fbBuG] += 1 if fb[:pNAME] == "MrBug" && fb[:SCORE] > 0 && ( timeNOW - fb[:DATE].to_time < 31500000 )
-						#feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+						if fb[:pNAME] == "MrBug"  && ( timeNOW - fb[:DATE].to_time < 31500000 )
+							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
+							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0
+						end
 
 						newfbarray.push({
 							FEEDBACK: fb[:FEEDBACK],
