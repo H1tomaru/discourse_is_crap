@@ -915,7 +915,7 @@ after_initialize do
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
 				inputfb[:FEEDBACKS].each do |fb|
 					#look for my recent fb
-					if fb[:pNAME] == "MrBug" && fb[:SCORE] > 0 &&  ( timeNOW - fb[:DATE].to_time < 7900000 )
+					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 7900000 )
 						dukan = true
 						break
 					end
@@ -943,7 +943,7 @@ after_initialize do
 							end
 						rescue => e
 							#message something about error
-							render json: { error: true, status: e.to_s.[0..30] }
+							render json: { error: true, status: e.to_s[0..30] }
 						end
 					end
 				else
