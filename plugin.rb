@@ -918,7 +918,7 @@ after_initialize do
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
 				inputfb[:FEEDBACKS].each do |fb|
 					#look for my recent fb
-					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 15800000 )
+					if fb[:pNAME] == "MrBug" && fb[:SCORE] > 0 &&  ( timeNOW - fb[:DATE].to_time < 7900000 )
 						dukan = true
 						break
 					end
@@ -1039,10 +1039,9 @@ after_initialize do
 						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
 						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
 						#count bugofb
-						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 31500000 )
-							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
-							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
-						end
+						feedbacks[:fbBuG] += 1 if fb[:pNAME] == "MrBug" && fb[:SCORE] > 0 && ( timeNOW - fb[:DATE].to_time < 31500000 )
+						#feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0	
+
 						newfbarray.push({
 							FEEDBACK: fb[:FEEDBACK],
 							pNAME: fb[:pNAME],
