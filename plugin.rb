@@ -591,13 +591,11 @@ after_initialize do
 				else
 					render json: { zaipsfail: true }
 					Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
-					puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 				end
 
 			else
 				render json: { zaipsfail: true }
 				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
-				puts "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
 			end
 		end
 
@@ -893,7 +891,6 @@ after_initialize do
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
 				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
-				puts "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
 			end
 
 			end #unless end
@@ -946,7 +943,7 @@ after_initialize do
 							end
 						rescue => e
 							#message something about error
-							render json: { error: true, status: e[0..30] }
+							render json: { error: true, status: e.to_s.[0..30] }
 						end
 					end
 				else
@@ -956,7 +953,6 @@ after_initialize do
 			else #if that is a guest or not a page owner... thats really really wrong...
 				render json: { fail: true }
 				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking passzss!: "+Base64.decode64(params[:myylo])
-				puts "###Warning!!!### "+current_user[:username]+" is hacking passzss!: "+Base64.decode64(params[:myylo])
 			end
 
 			else #message something about ban
