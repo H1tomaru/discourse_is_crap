@@ -414,7 +414,7 @@ after_initialize do
 
 				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
 					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
-					zaipsalsq = 0
+					zaipsalsq[:count] = 0
 				end
 
 				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
