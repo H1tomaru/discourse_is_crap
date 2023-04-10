@@ -56,7 +56,7 @@ after_initialize do
 			( @@cachedb[:autozCache].drop(); autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none //no show account mail anymore edition//
-			if autozCache.blank? || ['MrBug','H1tomaru'].include? current_user[:username]
+			if autozCache.blank? || current_user[:username] == 'H1tomaru'
 				#get all type 123 games
 				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
 
@@ -337,7 +337,7 @@ after_initialize do
 							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
 							#create account variable if it exists //no show account mail anymore edition//
-							if ['MrBug','H1tomaru'].include? current_user[:username]
+							if current_user[:username] == 'H1tomaru'
 								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
 							else
 								account = (i+1).to_s if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
@@ -372,7 +372,7 @@ after_initialize do
 				end
 
 				#save everything to cachedb //no show account mail anymore edition//
-				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } ) unless ['MrBug','H1tomaru'].include? current_user[:username]
+				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } ) unless current_user[:username] == 'H1tomaru'
 
 				autozCache = { gamelist: gameDB }
 
