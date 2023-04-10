@@ -336,7 +336,7 @@ after_initialize do
 							p5FEEDBACK[:PERCENT] = (p5FEEDBACK[:GOOD].to_f/(p5FEEDBACK[:GOOD] + p5FEEDBACK[:BAD]) * 100.0).floor if p5FEEDBACK[:GOOD] > 0
 							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
-							#create account variable if it exists //no more actual account mail edition//
+							#create account variable if it exists
 							account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
 
 							#template again, is feedback green or red?
