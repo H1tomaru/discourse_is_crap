@@ -337,7 +337,7 @@ after_initialize do
 							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
 							#create account variable if it exists //no more actual account mail edition//
-							account = i+1 if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
+							account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
 
 							#template again, is feedback green or red?
 							p1FBred = true if p1FEEDBACK[:PERCENT] < 100
