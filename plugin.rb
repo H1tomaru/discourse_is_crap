@@ -917,14 +917,17 @@ after_initialize do
 				timeNOW = Time.now
 				#check fb to see if eligible to get pass
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
-				inputfb[:FEEDBACKS].each do |fb|
-					#look for my recent fb
-					if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 7900000 )
-						dukan = true
-						break
+
+				if inputfb && inputfb[:FEEDBACKS]
+					inputfb[:FEEDBACKS].each do |fb|
+						#look for my recent fb
+						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 7900000 )
+							dukan = true
+							break
+						end
 					end
 				end
-				
+
 				if dukan && inputfb[:fbBuB] == 0
 					#get how many pass times from cache db
 					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
