@@ -1507,6 +1507,14 @@ div.kekbakaz {
 			font-weight: bold;
 		}
 
+		@media (max-width: 600px) {
+
+			.xdux {
+				margin-top: 0;
+			}
+
+		}
+
 		.buttZ {
 			padding: 2px 8px;
 			color: gray;
@@ -1523,6 +1531,7 @@ div.kekbakaz {
 
 			display: flex;
 			flex-wrap: wrap;
+			clear: right;
 
 			.zeG {
 				background: #cef7d2 center no-repeat url('https://i.imgur.com/sXgt6Ie.png')
