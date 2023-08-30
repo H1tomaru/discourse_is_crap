@@ -38,7 +38,7 @@ after_initialize do
 
 		SiteSetting.site_ip = 'union3.vg' if SiteSetting.site_ip.empty?
 
-		db = Mongo::Client.new([ SiteSetting.site_ip+':33775' ], user: 'troiko_user', password: '47TTGLRLR3' )
+		db = Mongo::Client.new([ SiteSetting.site_ip+':17113' ], user: 'troiko_user', password: '47TTGLRLR3' )
 		@@gamedb = db.use('AutoZ_gameDB')
 		@@userlistdb = db.use('AutoZ_gameZ')
 		@@rentadb = db.use('rentagadb')
