@@ -421,7 +421,7 @@ after_initialize do
 					zaipsalsq[:count] = 0
 				end
 
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
+				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, : 1 }).to_a.first()
 
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
@@ -918,7 +918,7 @@ after_initialize do
 				#check fb to see if eligible to get pass
 				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
 
-				if inputfb && inputfb[:FEEDBACKS]
+				if inputfb && inputfb[:FEEDBACKS] && inputfb[:troikaBAN] == 0
 					inputfb[:FEEDBACKS].each do |fb|
 						#look for my recent fb
 						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 7900000 )
@@ -1063,7 +1063,7 @@ after_initialize do
 				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
 				feedbacks[:fbBuG] != inputfb[:fbBuG] || feedbacks[:fbBuB] != inputfb[:fbBuB] || feedbacks[:fbARC] != inputfb[:fbARC]
 					#save to db
-					@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, : feedbacks[:],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 				end
