@@ -943,7 +943,7 @@ after_initialize do
 								render json: { winrar: Base64.decode64(res.body) }
 
 								#add any pass times to cache db, if its a pass and not not found message
-								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } ) unless Base64.decode64(res.body)[0] == 'Б'
+								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } ) unless Base64.decode64(res.body)[3] == '3'
 							else
 								#message something about failure
 								render json: { noconnect: true, status: res.status[0..28] }
