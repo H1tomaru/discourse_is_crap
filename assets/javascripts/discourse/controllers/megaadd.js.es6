@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			data = {
+			let data = {
 				GAME: this.get('addstuff.GAME'),
 				STRING: this.get('addstuff.STRING'),
 				ADDFB: this.get('addstuff.ADDFB')
