@@ -37,9 +37,28 @@ export default Ember.Controller.extend({
  		},
 
 		P4Lista() {
-			return fetch('/MrBug.json').then(result => {
-				this.set('p4lista', result.gamelist)
+			return fetch('/MrBug.json')
+			.then(function(response) {
+				if (response.ok) {
+					this.set('p4lista', response.gamelist)
+				} else if (isUnauthorizedResponse(response)) {
+					// handle 401 response
+				} else if (isServerErrorResponse(response)) {
+					// handle 5xx respones
+				}
 			})
+			.catch(function(error) {
+				if (isAbortError(error)) {
+					// handle aborted network error
+				}
+				// handle network error
+			})
+
+
+
+			//.then(result => {
+				//this.set('p4lista', result.gamelist)
+			//})
 		}
 
 	}
