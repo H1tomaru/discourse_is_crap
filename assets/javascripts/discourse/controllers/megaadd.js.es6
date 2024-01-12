@@ -15,13 +15,13 @@ export default Ember.Controller.extend({
 				GAME: this.get('addstuff.GAME'),
 				STRING: this.get('addstuff.STRING'),
 				ADDFB: this.get('addstuff.ADDFB')
-			},
+			}
 
 			let result = await fetch("/admin/MegaAdd/", {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data);
-			}),
+			})
 
 			if (result.ok) {
 				this.set('addstuff', result)
@@ -42,7 +42,7 @@ export default Ember.Controller.extend({
 		},
 
 		P4Lista() {
-			let result = await fetch('/MrBug.json'),
+			let result = await fetch('/MrBug.json')
 
 			if (result.ok) {
 				this.set('p4lista', result.gamelist)
