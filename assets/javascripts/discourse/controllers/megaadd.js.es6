@@ -17,16 +17,14 @@ export default Ember.Controller.extend({
 				ADDFB: this.get('addstuff.ADDFB')
 			}
 
-			let result = fetch("/admin/MegaAdd/", {
+			fetch("/admin/MegaAdd/", {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data);
-			})
-
-			if (result.ok) {
+				body: JSON.stringify(data)
+			}).then(result => {
 				this.set('addstuff', result)
 				this.set('addstuff.ADDFB', false)
-			}
+			})
 		},
 
 		Reset() {
@@ -42,11 +40,9 @@ export default Ember.Controller.extend({
 		},
 
 		P4Lista() {
-			let result = fetch('/MrBug.json')
-
-			if (result.ok) {
+			fetch('/MrBug.json').then(result => {
 				this.set('p4lista', result.gamelist)
-			}
+			})
 		}
 
 	}
