@@ -11,16 +11,13 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			let data = {
-				GAME: this.get('addstuff.GAME'),
-				STRING: this.get('addstuff.STRING'),
-				ADDFB: this.get('addstuff.ADDFB')
-			}
-
 			return fetch("/admin/MegaAdd/", {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(data)
+				body: {
+					GAME: this.get('addstuff.GAME'),
+					STRING: this.get('addstuff.STRING'),
+					ADDFB: this.get('addstuff.ADDFB')
+				}
 			}).then(result => {
 				this.set('addstuff', result.json())
 				this.set('addstuff.ADDFB', false)
