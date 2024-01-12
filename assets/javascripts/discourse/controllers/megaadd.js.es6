@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 				ADDFB: this.get('addstuff.ADDFB')
 			},
 
-			const result = await fetch("/admin/MegaAdd/", {
+			let result = await fetch("/admin/MegaAdd/", {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data);
@@ -42,7 +42,7 @@ export default Ember.Controller.extend({
 		},
 
 		P4Lista() {
-			const result = await fetch('/MrBug.json'),
+			let result = await fetch('/MrBug.json'),
 
 			if (result.ok) {
 				this.set('p4lista', result.gamelist)
