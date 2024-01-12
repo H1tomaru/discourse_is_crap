@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			}).then(result => {
-				this.set('addstuff', result)
+				this.set('addstuff', result.json())
 				this.set('addstuff.ADDFB', false)
 			})
 		},
@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
 
 		P4Lista() {
 			return fetch('/MrBug.json').then(result => {
-				this.set('p4lista', result.gamelist)
+				this.set('p4lista', result.json().gamelist)
 			})
 		}
 
