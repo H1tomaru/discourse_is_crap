@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 					ADDFB: this.get('addstuff.ADDFB')
 				}
 			}).then(result => {
-				this.set('addstuff', result.json())
+				this.set('addstuff', result)
 				this.set('addstuff.ADDFB', false)
 			})
 		},
@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
 		P4Lista() {
 			return fetch('/MrBug.json').then(result => {
 				this.set('addstuff.ADDFB', 'Start!')
-				this.set('p4lista', result.json().gamelist)
+				this.set('p4lista', result.gamelist)
 				this.set('addstuff.ADDFB', 'Works!')
 			})
 		}
