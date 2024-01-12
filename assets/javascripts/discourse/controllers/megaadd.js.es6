@@ -18,6 +18,8 @@ export default Ember.Controller.extend({
 					STRING: this.get('addstuff.STRING'),
 					ADDFB: this.get('addstuff.ADDFB')
 				}
+			}).then(function(response) {
+				return response.json();
 			}).then(result => {
 				this.set('addstuff', result)
 				this.set('addstuff.ADDFB', false)
@@ -37,28 +39,11 @@ export default Ember.Controller.extend({
  		},
 
 		P4Lista() {
-			return fetch('/MrBug.json')
-			.then(function(response) {
-				if (response.ok) {
-					this.set('p4lista', response.gamelist)
-				} else if (isUnauthorizedResponse(response)) {
-					// handle 401 response
-				} else if (isServerErrorResponse(response)) {
-					// handle 5xx respones
-				}
+			return fetch('/MrBug.json').then(function(response) {
+				return response.json();
+			}).then(result => {
+				this.set('p4lista', result.gamelist)
 			})
-			.catch(function(error) {
-				if (isAbortError(error)) {
-					// handle aborted network error
-				}
-				// handle network error
-			})
-
-
-
-			//.then(result => {
-				//this.set('p4lista', result.gamelist)
-			//})
 		}
 
 	}
