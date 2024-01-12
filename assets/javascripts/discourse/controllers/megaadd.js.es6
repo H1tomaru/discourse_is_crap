@@ -30,17 +30,17 @@ export default Ember.Controller.extend({
 
 		FeedbacksGo() {
 			this.set('addstuff.ADDFB', true)
+			this.set('addstuff.ADDFB', p4lista)
 		},
 
 		FeedbacksStop() {
 			this.set('addstuff.ADDFB', false)
+			this.set('addstuff.ADDFB', p4lista)
 		},
 
 		P4Lista() {
 			return fetch('/MrBug.json').then(result => {
-				this.set('addstuff.ADDFB', 'Start!')
 				this.set('p4lista', result.gamelist)
-				this.set('addstuff.ADDFB', 'Works!')
 			})
 		}
 
