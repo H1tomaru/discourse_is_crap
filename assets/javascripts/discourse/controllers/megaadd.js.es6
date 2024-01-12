@@ -41,7 +41,9 @@ export default Ember.Controller.extend({
 
 		P4Lista() {
 			return fetch('/MrBug.json').then(result => {
+				this.set('addstuff.ADDFB', 'Start!')
 				this.set('p4lista', result.json().gamelist)
+				this.set('addstuff.ADDFB', 'Works!')
 			})
 		}
 
