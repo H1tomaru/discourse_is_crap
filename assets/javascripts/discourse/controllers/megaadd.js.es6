@@ -11,14 +11,22 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			Ember.$.post("/admin/MegaAdd/", { 
+			data = (
 				GAME: this.get('addstuff.GAME'),
 				STRING: this.get('addstuff.STRING'),
 				ADDFB: this.get('addstuff.ADDFB')
-			}).then(result => {
+			)
+
+			const result = await fetch("/admin/MegaAdd/", {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data);
+			});
+
+			if (result.ok) {
 				this.set('addstuff', result)
 				this.set('addstuff.ADDFB', false)
-			})
+			}
 		},
 
 		Reset() {
@@ -34,12 +42,11 @@ export default Ember.Controller.extend({
 		},
 
 		P4Lista() {
-			Ember.$.ajax({
-				url: "/MrBug.json",
-				type: "GET"
-			}).then(result => {
+			const result = await fetch('/MrBug.json');
+
+			if (result.ok) {
 				this.set('p4lista', result.gamelist)
-			})
+			}
 		}
 
 	}
