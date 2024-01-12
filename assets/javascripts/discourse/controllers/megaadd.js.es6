@@ -11,11 +11,11 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			data = (
+			data = {
 				GAME: this.get('addstuff.GAME'),
 				STRING: this.get('addstuff.STRING'),
 				ADDFB: this.get('addstuff.ADDFB')
-			)
+			}
 
 			const result = await fetch("/admin/MegaAdd/", {
 				method: 'POST',
