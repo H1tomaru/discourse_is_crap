@@ -18,11 +18,11 @@ export default Ember.Controller.extend({
 					'Api-Key': '90fee712da230eefb6a785217edf7323b248b4a54fad680ad02e7d87f242808a',
 					'Api-Username': 'H1tomaru'
 					},
-				body: JSON.stringify({
+				body: {
 					GAME: this.get('addstuff.GAME'),
 					STRING: this.get('addstuff.STRING'),
 					ADDFB: this.get('addstuff.ADDFB')
-				})
+				}
 			}).then(function(response) {
 				return response.json();
 			}).then(result => {
