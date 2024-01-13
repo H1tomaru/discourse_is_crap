@@ -70,8 +70,16 @@ export default Ember.Controller.extend({
 
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
-			Ember.$.post("/MrBug/prezaips/", { 
-				bagakruta: btoa(knopk+"~"+gcode)
+			return fetch("/MrBug/prezaips/", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+					},
+				body: JSON.stringify({ 
+					bagakruta: btoa(knopk+"~"+gcode)
+				})
+			}).then(function(response) {
+				return response.json();
 			}).then(result => {
 				this.set('prezaips', result)
 				if (result.hasOwnProperty('position')) this.set('pzposition', result['position'][0])
@@ -82,8 +90,16 @@ export default Ember.Controller.extend({
 		imgoingin() {
 			this.set('mdalready', false)
 			this.set('prezaips.winrars', false)
-			Ember.$.post("/MrBug/zaips/", { 
-				bagatrolit: btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))
+			return fetch("/MrBug/zaips/", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+					},
+				body: JSON.stringify({ 
+					bagatrolit: btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))
+				})
+			}).then(function(response) {
+				return response.json();
 			}).then(result => {
 				this.set('zaips', result)
 				Ember.$.ajax({
