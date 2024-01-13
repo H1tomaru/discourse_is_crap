@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Controller.extend({
 	//default states
@@ -70,7 +71,7 @@ export default Ember.Controller.extend({
 
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
-			Ember.$.post("/MrBug/prezaips/", { 
+			$.post("/MrBug/prezaips/", { 
 				bagakruta: btoa(knopk+"~"+gcode)
 			}).then(result => {
 				this.set('prezaips', result)
@@ -82,7 +83,7 @@ export default Ember.Controller.extend({
 		imgoingin() {
 			this.set('mdalready', false)
 			this.set('prezaips.winrars', false)
-			Ember.$.post("/MrBug/zaips/", { 
+			$.post("/MrBug/zaips/", { 
 				bagatrolit: btoa(unescape(encodeURIComponent(this.get('prezaips.position')+"~"+this.get('currentUser.username')+"~"+this.get('prezaips._id')+"~"+this.get('prezaips.gameNAME'))))
 			}).then(result => {
 				this.set('zaips', result)
