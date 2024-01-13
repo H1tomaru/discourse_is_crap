@@ -106,8 +106,16 @@ export default Ember.Controller.extend({
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
 
-				Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
-					fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
+				return fetch("/u/" + this.get('model.uZar') + "/kek", {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+						},
+					body: JSON.stringify({ 
+						fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
+					})
+				}).then(function(response) {
+					return response.json();
 				}).then(result => {
 					this.set('responz', result)
 
@@ -185,9 +193,18 @@ export default Ember.Controller.extend({
 			this.set('accamdal', true)
 			this.set('accawait', true)
 			this.set('actualgp', false)
-			Ember.$.post("/MrBug/troikopoisk/", { 
-				poisk: btoa(unescape(encodeURIComponent(poisk))),
-				acc: btoa(unescape(encodeURIComponent(acc)))
+
+			return fetch("/MrBug/troikopoisk/", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+					},
+				body: JSON.stringify({ 
+					poisk: btoa(unescape(encodeURIComponent(poisk))),
+					acc: btoa(unescape(encodeURIComponent(acc)))
+				})
+			}).then(function(response) {
+				return response.json();
 			}).then(result => {
 				this.set('troikopoisk', result)
 				this.set('accawait', false)
@@ -196,8 +213,16 @@ export default Ember.Controller.extend({
 
 		getPaZZ(input) {
 			this.set('passwait', true)
-			Ember.$.post("/u/"+this.get('currentUser.username')+"/kek/oishiiii", { 
-				myylo: btoa(unescape(encodeURIComponent(input)))
+			return fetch("/u/"+this.get('currentUser.username')+"/kek/oishiiii", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+					},
+				body: JSON.stringify({ 
+					myylo: btoa(unescape(encodeURIComponent(input)))
+				})
+			}).then(function(response) {
+				return response.json();
 			}).then(result => {
 				this.set('actualgp', result)
 				this.set('passwait', false)
