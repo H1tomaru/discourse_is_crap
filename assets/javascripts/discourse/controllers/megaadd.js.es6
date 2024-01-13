@@ -15,8 +15,7 @@ export default Ember.Controller.extend({
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Api-Key': 'a3f527c441bed95f46263e584ce92da9297c41b311a2667bac82ead4941c1a16',
-					'Api-Username': 'H1tomaru'
+					'Api-Key': '3b117c5ce9e85f6ad38860c35d4ea9955a9a8dd2c57ce3290104988f68636757'
 					},
 				body: JSON.stringify({
 					GAME: this.get('addstuff.GAME'),
