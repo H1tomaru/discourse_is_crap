@@ -12,9 +12,9 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	rulez: false,
 
-	LazyLoadLoad: function() {
+	LazyLoadLoad: on('init', function() {
 		$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
-	}.on('init'),
+	}),
 
 	actions: {
 
