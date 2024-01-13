@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Controller.extend({
 
@@ -11,7 +12,7 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			Ember.$.post("/admin/MegaAdd/", { 
+			$.post("/admin/MegaAdd/", { 
 				GAME: this.get('addstuff.GAME'),
 				STRING: this.get('addstuff.STRING'),
 				ADDFB: this.get('addstuff.ADDFB')
