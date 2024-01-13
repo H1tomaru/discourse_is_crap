@@ -51,14 +51,14 @@ export default Ember.Controller.extend({
 
  	}),
 
-	mORE: Ember.computed('fEEDBACKS.fb2', function() {
+	mORE: Ember.computed('fEEDBACKS.fb2', 'fEEDBACKS.fb2.[]', function() {
 		if (this.get('fEEDBACKS.fb2').length > 0) {
 			return true
 		}
 		else {
 			return false
 		}
-	}).property('fEEDBACKS.fb2.[]'),
+	}),
 
 	otzivmdal: false,
 	otzivsmall: false,
