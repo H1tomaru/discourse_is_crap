@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Controller.extend({
 
@@ -106,7 +107,7 @@ export default Ember.Controller.extend({
 				this.set('otzivsmall', false)
 				this.set('otzivbig', false)
 
-				Ember.$.post("/u/" + this.get('model.uZar') + "/kek", { 
+				$.post("/u/" + this.get('model.uZar') + "/kek", { 
 					fedbakibaki: btoa(unescape(encodeURIComponent(this.get('ozmode')+"~"+this.get('score')+"~"+this.get('pisanina'))))
 				}).then(result => {
 					this.set('responz', result)
@@ -186,7 +187,7 @@ export default Ember.Controller.extend({
 			this.set('accawait', true)
 			this.set('actualgp', false)
 
-			Ember.$.post("/MrBug/troikopoisk/", { 
+			$.post("/MrBug/troikopoisk/", { 
 				poisk: btoa(unescape(encodeURIComponent(poisk))),
 				acc: btoa(unescape(encodeURIComponent(acc)))
 			}).then(result => {
@@ -197,7 +198,7 @@ export default Ember.Controller.extend({
 
 		getPaZZ(input) {
 			this.set('passwait', true)
-			Ember.$.post("/u/"+this.get('currentUser.username')+"/kek/oishiiii", { 
+			$.post("/u/"+this.get('currentUser.username')+"/kek/oishiiii", { 
 				myylo: btoa(unescape(encodeURIComponent(input)))
 			}).then(result => {
 				this.set('actualgp', result)
