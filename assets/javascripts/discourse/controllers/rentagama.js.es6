@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 export default Ember.Controller.extend({
 
@@ -12,7 +13,7 @@ export default Ember.Controller.extend({
 	rulez: false,
 
 	LazyLoadLoad: function() {
-		Ember.$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
+		$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
 	}.on('init'),
 
 	actions: {
