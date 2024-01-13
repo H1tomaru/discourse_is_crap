@@ -12,11 +12,7 @@ export default Ember.Controller.extend({
 	showCRAP: false,
 	rulez: false,
 
-	LazyLoadLoad: function() {
-		Ember.run.scheduleOnce('afterRender', this, function() {
-			$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
-		})
-	}.on('init'),
+	didInsertElement: function() { $.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js') },
 
 	actions: {
 
