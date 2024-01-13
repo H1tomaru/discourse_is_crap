@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { on } from '@ember/object/evented';
 import $ from 'jquery';
 
 export default Ember.Controller.extend({
