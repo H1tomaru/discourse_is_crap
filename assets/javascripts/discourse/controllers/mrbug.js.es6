@@ -102,9 +102,8 @@ export default Ember.Controller.extend({
 				return response.json();
 			}).then(result => {
 				this.set('zaips', result)
-				Ember.$.ajax({
-					url: "/MrBug.json",
-					type: "GET"
+				return fetch('/MrBug.json').then(function(response) {
+					return response.json();
 				}).then(result => {
 					this.set('model', result)
 					this.set('mdalready', true)
