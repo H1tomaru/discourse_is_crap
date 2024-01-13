@@ -11,19 +11,10 @@ export default Ember.Controller.extend({
 	actions: {
 
 		oops() {
-			return fetch("/admin/MegaAdd/", {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Api-Key': '3b117c5ce9e85f6ad38860c35d4ea9955a9a8dd2c57ce3290104988f68636757'
-					},
-				body: JSON.stringify({
-					GAME: this.get('addstuff.GAME'),
-					STRING: this.get('addstuff.STRING'),
-					ADDFB: this.get('addstuff.ADDFB')
-				})
-			}).then(function(response) {
-				return response.json();
+			Ember.$.post("/admin/MegaAdd/", { 
+				GAME: this.get('addstuff.GAME'),
+				STRING: this.get('addstuff.STRING'),
+				ADDFB: this.get('addstuff.ADDFB')
 			}).then(result => {
 				this.set('addstuff', result)
 				this.set('addstuff.ADDFB', false)
