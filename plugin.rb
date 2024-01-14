@@ -650,7 +650,7 @@ after_initialize do
 					#p2p4p4p4p4 version
 					chetverk = 'пятерке'
 					newstring.each_slice(6) do |sostav|
-						if sostav[0] && (sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5]
+						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5]
 							addstuff[:winrarP24444] = true
 							for i in 1..5
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
