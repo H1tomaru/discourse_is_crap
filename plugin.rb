@@ -620,7 +620,7 @@ after_initialize do
 					#p2p4p4 version
 					chetverk = 'четверке'
 					newstring.each_slice(4) do |sostav|
-						if sostav[0] && (sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3]
+						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3]
 							addstuff[:winrarP244] = true
 							for i in 1..3
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
@@ -635,7 +635,7 @@ after_initialize do
 					#p2p2p4p4p4p4 version
 					chetverk = 'шестерке'
 					newstring.each_slice(7) do |sostav|
-						if sostav[0] && (sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5] && sostav[6]
+						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5] && sostav[6]
 							addstuff[:winrarP224444] = true
 							for i in 1..6
 								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
