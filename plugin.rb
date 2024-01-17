@@ -14,6 +14,7 @@ enabled_site_setting :telegram_id
 enabled_site_setting :site_ip
 enabled_site_setting :pbot_ip
 enabled_site_setting :chat_webhook
+enabled_site_setting :chat2_webhook
 
 register_asset 'stylesheets/MrBug.scss'
 
@@ -26,6 +27,7 @@ after_initialize do
 		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
 		post '/MrBug/prezaips' => 'mrbug#prezaips'
 		post '/MrBug/zaips' => 'mrbug#zaips'
+		post '/MrBug/pochtokod' => 'mrbug#pochtokod'
 		get '/renta-haleguu' => 'mrbug#rentagama'
 		get '/admin/MegaAdd' => 'mrbug#showadd', constraints: AdminConstraint.new
 		post '/admin/MegaAdd' => 'mrbug#megaadd', constraints: AdminConstraint.new
@@ -1013,6 +1015,28 @@ after_initialize do
 			end
 
 			render json: rentaCache
+		end
+
+		def pochtokod
+
+			msgtext = 
+			unless SiteSetting.chat2_webhook.empty?
+				#add message to discourse chat, if enabled
+				begin
+					Faraday::Connection.new.post(
+						SiteSetting.chat2_webhook,
+						'text' => msgtext
+					) { |request| request.options.timeout = 10 }
+				rescue => e
+					PostCreator.create(
+						Discourse.system_user,
+						skip_validations: true,
+						topic_id: 61653,
+						raw: 'Chat2 webhook fail: ' + e
+					)
+				end
+			end
+
 		end
 
 		#very cute fb update method
