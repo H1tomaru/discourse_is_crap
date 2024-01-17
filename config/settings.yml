@@ -14,3 +14,6 @@ plugins:
   chat_webhook:
     default: ""
     client: false
+  chat2_webhook:
+    default: ""
+    client: false
