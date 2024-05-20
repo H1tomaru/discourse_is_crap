@@ -73,7 +73,7 @@ export default Ember.Controller.extend({
 			this.set('bagamdal', true)
 			//if not guest, do prezaips, else display guest message
 			var currentuser = this.get('currentUser.username')
-			if (currentUser) {
+			if (currentuser) {
 				$.post("/MrBug/prezaips/", { 
 					bagakruta: btoa(knopk+"~"+gcode)
 				}).then(result => {
