@@ -383,25 +383,27 @@ after_initialize do
 		end
 
 		def troikopoisk
-			#decode shit
-			troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
-			acc = Base64.decode64(params[:acc]).strip
-			
-			if acc == 'Den888'
-				accountsDB = @@userdb[:PS4db_den].find( { _id: troikopoisk } ).to_a.first()
-			else
-				accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
-			end
-
-			#do stuff when finding acc or not
-			if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
-				render json: { 
-					_id: accountsDB[:_id], GAME: accountsDB[:GAME],
-					P2: accountsDB[:P2], P4: accountsDB[:P4],
-					poiskwin: true
-				}
-			else 
-				render json: { poiskfail: true}
+			if current_user
+				#decode shit
+				troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
+				acc = Base64.decode64(params[:acc]).strip
+				
+				if acc == 'Den888'
+					accountsDB = @@userdb[:PS4db_den].find( { _id: troikopoisk } ).to_a.first()
+				else
+					accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
+				end
+	
+				#do stuff when finding acc or not
+				if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
+					render json: { 
+						_id: accountsDB[:_id], GAME: accountsDB[:GAME],
+						P2: accountsDB[:P2], P4: accountsDB[:P4],
+						poiskwin: true
+					}
+				else 
+					render json: { poiskfail: true}
+				end
 			end
 		end
 
@@ -717,7 +719,7 @@ after_initialize do
 		end
 
 		def feedbacks
-			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
+			unless !current_user || current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 			timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
@@ -811,7 +813,7 @@ after_initialize do
 		end
 
 		def zafeedback
-			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
+			unless !current_user || current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			#decode shit
 			fedbacks = Base64.decode64(params[:fedbakibaki]).split("~") #0 - mode, 1 - score, 2 - otziv
@@ -900,7 +902,7 @@ after_initialize do
 		end
 
 		def zapass
-			unless current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
+			unless !current_user || current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
 
 			dukan = false
 			user_d = current_user[:username].downcase
