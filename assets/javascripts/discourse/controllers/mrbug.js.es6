@@ -71,13 +71,18 @@ export default Ember.Controller.extend({
 
 		zaips(knopk, gcode) {
 			this.set('bagamdal', true)
-			$.post("/MrBug/prezaips/", { 
-				bagakruta: btoa(knopk+"~"+gcode)
-			}).then(result => {
-				this.set('prezaips', result)
-				if (result.hasOwnProperty('position')) this.set('pzposition', result['position'][0])
+			if (currentUser) {
+				$.post("/MrBug/prezaips/", { 
+					bagakruta: btoa(knopk+"~"+gcode)
+				}).then(result => {
+					this.set('prezaips', result)
+					if (result.hasOwnProperty('position')) this.set('pzposition', result['position'][0])
+					this.set('mdalready', true)
+				})
+			} else {
+				this.set('prezaips', {'guest': true})
 				this.set('mdalready', true)
-			})
+			}
 		},
 
 		imgoingin() {
