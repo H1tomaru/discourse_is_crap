@@ -97,13 +97,13 @@ after_initialize do
 
 							game[:P4PRICE2] = game[:PRICE] - 4 * game[:P4PRICE3]
 							
-							p4UP = [0,50,100]
+							p4UP = [0,0,100]
 							if game[:PRICE] < 1001
 								p4UP = [0,0,50]
 							elsif game[:PRICE] > 8001
-								p4UP = [0,150,200]
+								p4UP = [0,50,200]
 							elsif game[:PRICE] > 4001	
-								p4UP = [0,100,150] 
+								p4UP = [0,0,150] 
 							end
 
 						elsif game[:TTYPE][1]
@@ -113,13 +113,13 @@ after_initialize do
 
 							game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
 							
-							p4UP = [0,50,150]
+							p4UP = [0,0,150]
 							if game[:PRICE] < 1001
 								p4UP = [0,0,100]
 							elsif game[:PRICE] > 8001
-								p4UP = [0,150,250]
+								p4UP = [0,50,250]
 							elsif game[:PRICE] > 4001	
-								p4UP = [0,100,200] 
+								p4UP = [0,0,200] 
 							end
 
 						else
@@ -129,13 +129,13 @@ after_initialize do
 
 							game[:P4PRICE2] = (game[:PRICE] - 4 * game[:P4PRICE3]) / 2
 							
-							p4UP = [0,50,100]
+							p4UP = [0,0,100]
 							if game[:PRICE] < 1001
 								p4UP = [0,0,50]
 							elsif game[:PRICE] > 8001
-								p4UP = [0,150,200]
+								p4UP = [0,50,200]
 							elsif game[:PRICE] > 4001	
-								p4UP = [0,100,150] 
+								p4UP = [0,0,150] 
 							end
 						end
 						
