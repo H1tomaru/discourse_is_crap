@@ -1015,7 +1015,7 @@ after_initialize do
 
 			#render json: rentaCache
 			respond_to do |format|
-				format.html { render raw: 'Hello, world!' }
+				format.html { render json: {title:"custom route"} }
 				format.json { render json: rentaCache }
 			end
 
