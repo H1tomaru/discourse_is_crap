@@ -1013,8 +1013,7 @@ after_initialize do
 				@@cachedb[:rentaCache].insert_one( finalrenta )
 			end
 
-			#render json: rentaCache
-			render html: 'hello world', layout: true
+			render json: rentaCache
 
 		end
 
