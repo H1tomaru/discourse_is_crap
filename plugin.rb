@@ -1014,7 +1014,8 @@ after_initialize do
 			end
 
 			#render json: rentaCache
-			render html: 'hello world'
+			render html: 'hello world', layout: true
+
 		end
 
 		#very cute fb update method
