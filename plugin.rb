@@ -1013,7 +1013,8 @@ after_initialize do
 				@@cachedb[:rentaCache].insert_one( finalrenta )
 			end
 
-			render json: rentaCache
+			#render json: rentaCache
+			render html: 'hello world'
 		end
 
 		#very cute fb update method
