@@ -1017,8 +1017,8 @@ after_initialize do
 			respond_to do |format|
 				format.html { render plain: "hello world" }
 				format.json { render json: rentaCache }
-				render plain: "hello world"
 			end
+			render plain: "hello world"
 
 		end
 
