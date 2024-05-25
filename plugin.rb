@@ -1018,7 +1018,7 @@ after_initialize do
 			#format.html { render plain: "hello world" }
 			#format.json { render json: rentaCache }
 			#end
-			render plain: "hello world"
+			#render plain: "hello world"
 
 		end
 
