@@ -1015,8 +1015,9 @@ after_initialize do
 
 			#render json: rentaCache
 			respond_to do |format|
-				format.html { render "default/custom" }
+				format.html { render plain: "hello world" }
 				format.json { render json: rentaCache }
+				render plain: "hello world"
 			end
 
 		end
