@@ -5,4 +5,5 @@ export default function() {
 	this.route('user', function() {
  		this.route('kek');
  	});
+	this.resource('customroute', { path: '/customroute' });
 };
