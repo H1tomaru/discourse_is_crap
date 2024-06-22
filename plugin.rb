@@ -72,9 +72,10 @@ after_initialize do
 					p1NO = 0; p2NO = 0; p3NO = 0; p4NO = 0; troikaNO = 0, game[:TTYPE] = [false, false, false] #0 - 24444, 1 - 1244, 2 - 224444
 
 					#do each game postitions for futher template and other stuff usage
-					if game[:CONSOLE] == "PS4" && !game[:CONSOLE2]
+					if game[:CONSOLE] == "PS4" && (!game[:CONSOLE2] || game[:CONSOLE2] == "PS5v2")
 						game[:TTYPE][0] = true
 						game[:PPOSITIONS] = [2,4,4,4,4,0]
+						game[:CONSOLE2] == "PS5"
 					elsif ( game[:CONSOLE] == "PS5" && !game[:CONSOLE2] ) || ( game[:CONSOLE] == "PS4" && game[:CONSOLE2] == "XXX" )
 						game[:TTYPE][1] = true
 						game[:PPOSITIONS] = [1,2,4,4,0,0]
