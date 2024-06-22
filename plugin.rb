@@ -75,7 +75,7 @@ after_initialize do
 					if game[:CONSOLE] == "PS4" && (!game[:CONSOLE2] || game[:CONSOLE2] == "PS5v2")
 						game[:TTYPE][0] = true
 						game[:PPOSITIONS] = [2,4,4,4,4,0]
-						game[:CONSOLE2] == "PS5"
+						game[:CONSOLE2] = "PS5"
 					elsif ( game[:CONSOLE] == "PS5" && !game[:CONSOLE2] ) || ( game[:CONSOLE] == "PS4" && game[:CONSOLE2] == "XXX" )
 						game[:TTYPE][1] = true
 						game[:PPOSITIONS] = [1,2,4,4,0,0]
