@@ -835,8 +835,14 @@ div.shinbakaz {
 				font-size: .7em
 			}
 
-			.flagco, .repala {
-				display: none	
+			.flagco {
+				position: absolute;
+				left: 1px;
+				bottom: 0px;
+			}
+
+			repala {
+				display: none
 			}
 
 			table.ggg td {
