@@ -33,8 +33,8 @@ after_initialize do
 		post '/u/:username/kek' => 'mrbug#zafeedback', constraints: { username: RouteFormat.username }
 		post '/u/:username/kek/oishiiii' => 'mrbug#zapass', constraints: { username: RouteFormat.username }
 
-		get '/MrBug2', to: redirect('/MrBug')
-		get '/renta-haleguu2', to: redirect('/renta-haleguu')
+		get '/pub/MrBug', to: redirect('/MrBug')
+		get '/pub/renta-haleguu', to: redirect('/renta-haleguu')
 	end
 
 	class ::MrbugController < ::ApplicationController
