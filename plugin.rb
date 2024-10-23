@@ -26,7 +26,7 @@ after_initialize do
 	end
 
 	Discourse::Application.routes.draw do
-		get '/renta-haleguu2' => 'mrbug#test'
+		get '/renta-haleguu3' => 'mrbug#test'
 	end
 
 	Discourse::Application.routes.append do
