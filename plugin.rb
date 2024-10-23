@@ -21,14 +21,6 @@ register_svg_icon "star-half-alt" if respond_to?(:register_svg_icon)
 
 after_initialize do
 
-	Discourse::Application.routes.prepend do
-		get '/renta-haleguu2' => 'mrbug#test'
-	end
-
-	Discourse::Application.routes.draw do
-		get '/renta-haleguu3' => 'mrbug#test'
-	end
-
 	Discourse::Application.routes.append do
 		get '/MrBug' => 'mrbug#show'
 		post '/MrBug/troikopoisk' => 'mrbug#troikopoisk'
@@ -55,10 +47,6 @@ after_initialize do
 		@@userfb = db.use('userfb')
 
 		@@cachedb = db.use('cacheDB')
-
-		def test
-			render plain: "OK"
-		end
 
 		def show
 			#get cache
