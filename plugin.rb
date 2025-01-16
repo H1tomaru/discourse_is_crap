@@ -511,7 +511,7 @@ after_initialize do
 							Faraday::Connection.new.post(
 								SiteSetting.chat_webhook,
 								'text' => msgtext
-							) { |request| request.options.timeout = 10 }
+							) { |request| request.options.timeout = 20 }
 						rescue => e
 							PostCreator.create(
 								Discourse.system_user,
@@ -939,7 +939,7 @@ after_initialize do
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
-							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 10 }
+							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 20 }
 							if res.status == 200
 								#message pass to user
 								render json: { winrar: Base64.decode64(res.body) }
