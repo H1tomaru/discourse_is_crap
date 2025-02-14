@@ -597,7 +597,12 @@ div.shinbakaz {
 		table.djuke {
 
 			tr:nth-child(odd) {
-				text-align: center
+				
+				text-align: center;
+
+				td:nth-child(even) {
+					display: none
+				}
 			}
 
 			tr:nth-child(even) {
