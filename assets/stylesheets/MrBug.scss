@@ -600,6 +600,10 @@ div.shinbakaz {
 				
 				text-align: center;
 
+				td {
+					padding-top: 0.5%
+				}
+
 				td:nth-child(even) {
 					display: none
 				}
@@ -609,15 +613,19 @@ div.shinbakaz {
 
 				border-bottom: 1px dashed #ddd;
 
+				td {
+					padding-bottom: 0.5%
+				}
+
 				td:nth-child(odd) {
 					white-space: nowrap;
 					overflow: hidden;
-					padding-left: 0.5%;
+					padding-left: 1%;
 				}
 	
 				td:nth-child(even) {
 					width: 90px;
-					padding-right: 0.5%;
+					padding-right: 1%;
 				}
 			}
 
