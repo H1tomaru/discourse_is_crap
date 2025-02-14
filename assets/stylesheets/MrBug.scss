@@ -596,41 +596,27 @@ div.shinbakaz {
 
 		table.djuke {
 
-			tr {
+			tr:nth-child(even) {
+
 				border-bottom: 1px dashed #ddd
+
+				td:nth-child(odd) {
+					white-space: nowrap;
+					overflow: hidden;
+					padding-left: 0.5%;
+				}
+	
+				td:nth-child(even) {
+					width: 90px
+					padding-right: 0.5%;
+				}
 			}
-			
+
 			tr:last-child {
 				border: none
 			}
 
-			td:nth-child(even) {
-				width: 90px
-			}
-
-			td:nth-child(odd) {
-				white-space: nowrap;
-				overflow: hidden;
-			}
-			
-			td:nth-child(2n+1) {
-				padding-left: 0.5%
-			}
-			
-			td:nth-child(2n) {
-				padding-right: 0.5%
-			}
-			
-			.uddah {
-
-				text-align: center;
-				
-				td {
-					background-color: transparent!important
-				}
-			}
-			
-			tr:nth-child(odd)  {
+			tr:nth-child(2n+1)  {
 
 				td:nth-child(4n+1), td:nth-child(4n+2) {
 					background-color: #f2f2f2
@@ -638,7 +624,7 @@ div.shinbakaz {
 
 			}
 			
-			tr:nth-child(even)  {
+			tr:nth-child(2n)  {
 
 				td:nth-child(4n+3), td:nth-child(4n+4) {
 					background-color: #f2f2f2
