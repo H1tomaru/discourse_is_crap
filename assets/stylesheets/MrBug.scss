@@ -607,6 +607,19 @@ div.shinbakaz {
 				td:nth-child(even) {
 					display: none
 				}
+
+				td:first-child div {
+
+					position: relative;
+					width: 0;
+					height: 0;
+
+					span {
+						position: absolute;
+						left: -24px;
+						top: 17px;
+					}
+				}
 			}
 
 			tr:nth-child(even) {
