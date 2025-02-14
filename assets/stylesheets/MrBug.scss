@@ -394,19 +394,12 @@ div.shinbakaz {
 
 		.flagco {
 
-			text-align: center;
-			width: 16px;
-
-			div {
-				position: relative;
-				width: 0;
-				height: 0;
-			}
+			position: relative;
 
 			.fa-exclamation {
 				position: absolute;
 				left: -30px;
-				top: -5px;
+				top: 30px;
 			}
 
 		}
@@ -608,16 +601,14 @@ div.shinbakaz {
 					display: none
 				}
 
-				td:first-child div {
+				td:first-child {
 
 					position: relative;
-					width: 0;
-					height: 0;
 
 					span {
 						position: absolute;
 						left: -24px;
-						top: 17px;
+						top: 23px;
 					}
 				}
 			}
