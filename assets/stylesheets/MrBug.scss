@@ -620,7 +620,7 @@ div.shinbakaz {
 				border: none
 			}
 
-			tr:nth-child(2n+1)  {
+			tr:nth-child(4n+1),tr:nth-child(4n+2)  {
 
 				td:nth-child(4n+1), td:nth-child(4n+2) {
 					background-color: #f2f2f2
@@ -628,7 +628,7 @@ div.shinbakaz {
 
 			}
 			
-			tr:nth-child(2n)  {
+			tr:nth-child(4n+3),tr:nth-child(4n+4)  {
 
 				td:nth-child(4n+3), td:nth-child(4n+4) {
 					background-color: #f2f2f2
