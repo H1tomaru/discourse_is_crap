@@ -596,6 +596,10 @@ div.shinbakaz {
 
 		table.djuke {
 
+			tr:nth-child(odd) {
+				text-align: center
+			}
+
 			tr:nth-child(even) {
 
 				border-bottom: 1px dashed #ddd
@@ -607,7 +611,7 @@ div.shinbakaz {
 				}
 	
 				td:nth-child(even) {
-					width: 90px
+					width: 90px;
 					padding-right: 0.5%;
 				}
 			}
@@ -769,8 +773,11 @@ div.shinbakaz {
 
 		.MrBug table.djuke {
 
-			td:nth-child(even) {
-				width: 50px!important
+			tr:nth-child(even) {
+
+				td:nth-child(even) {
+					width: 50px!important
+				}
 			}
 
 		}
@@ -865,9 +872,12 @@ div.shinbakaz {
 		.MrBug table.djuke {
 			
 			font-size: .65em;
-			
-			td:nth-child(even) {
-				width: 70px
+
+			tr:nth-child(even) {
+
+				td:nth-child(even) {
+					width: 70px
+				}
 			}
 
 		}
