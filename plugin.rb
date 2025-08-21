@@ -755,29 +755,30 @@ after_initialize do
 			#do the games owned display for logged in users only
 			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
-				user_BGZ = @@userdb[:PS4db].find( 
+				#user_BGZ
+				user_gamez = @@userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
 				#get user games from den database
-				user_DGZ = @@userdb[:PS4db_den].find( 
-					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
-					collation: { locale: 'en', strength: 2 }
-				).to_a
+				#user_DGZ = @@userdb[:PS4db_den].find( 
+				#	{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
+				#	collation: { locale: 'en', strength: 2 }
+				#).to_a
 
-				user_gamez = user_BGZ + user_DGZ
-				user_gamez = user_BGZ if user_d == 'den888'
+				#user_gamez = user_BGZ + user_DGZ
+				#user_gamez = user_BGZ if user_d == 'den888'
 
 				#do stuff if we have some
 				user_gamez.each do |ugaz| #do stuff if we have some
 					if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
 						#select acc mail between + and @, \+ and \@
-						if ugaz[:den]
-							aCC = 'Den888'
-						else
+						#if ugaz[:den]
+						#	aCC = 'Den888'
+						#else
 							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
-						end
+						#end
 
 						#get positions list
 						poZz = []
