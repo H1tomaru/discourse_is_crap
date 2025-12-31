@@ -934,9 +934,10 @@ after_initialize do
 				if dukan && inputfb[:fbBuB] == 0
 					#get how many pass times from cache db
 					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
+					ddatte_now = Time.now.strftime("%Y.%m.%d")
 
 					#if already asked pass today, message something about it
-					if user_apasaz && user_apasaz[:DATE] == Time.now.strftime("%Y.%m.%d") && user_apasaz[:MAIL] != params[:myylo]
+					if user_apasaz && user_apasaz[:DATE1] == ddatte_now && user_apasaz[:DATE2] == ddatte_now && (user_apasaz[:MAIL1] != params[:myylo] || user_apasaz[:MAIL2] != params[:myylo])
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
@@ -946,7 +947,13 @@ after_initialize do
 								render json: { winrar: Base64.decode64(res.body) }
 
 								#add any pass times to cache db, if its a pass and not not found message
-								@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE: Time.now.strftime("%Y.%m.%d"), MAIL: params[:myylo] }, { upsert: true } ) unless Base64.decode64(res.body)[4] == '3'
+								if Base64.decode64(res.body)[4] != '3'
+									if ddatte_now == user_apasaz[:DATE1] 
+										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE2: ddatte_now, MAIL2: params[:myylo]}, { upsert: true } )
+									else
+										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE1: ddatte_now, MAIL1: params[:myylo]}, { upsert: true } )
+									end
+								end
 							else
 								#message something about failure
 								render json: { noconnect: true, status: res.status[0..28] }
