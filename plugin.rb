@@ -950,7 +950,7 @@ after_initialize do
 								#message pass to user
 								render json: { winrar: Base64.decode64(res.body) }
 								#add any pass times to cache db, if its a pass and not not found message
-								if Base64.decode64(res.body)[4] != '3'
+								if Base64.decode64(res.body)[4] != '3' && user_apasaz && (user_apasaz[:DATE1] != ddatte_now || user_apasaz[:DATE2] != ddatte_now)
 									if user_apasaz && user_apasaz[:DATE1] == ddatte_now
 										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } )
 									else
