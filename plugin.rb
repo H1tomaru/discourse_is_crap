@@ -951,7 +951,7 @@ after_initialize do
 								render json: { winrar: Base64.decode64(res.body) }
 								#add any pass times to cache db, if its a pass and not not found message
 								if Base64.decode64(res.body)[4] != '3'
-									if ddatte_now == user_apasaz[:DATE1] 
+									if user_apasaz && user_apasaz[:DATE1] == ddatte_now
 										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE2: ddatte_now, MAIL2: params[:myylo]}, { upsert: true } )
 									else
 										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE1: ddatte_now, MAIL1: params[:myylo]}, { upsert: true } )
