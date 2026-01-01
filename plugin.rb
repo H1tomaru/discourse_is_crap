@@ -937,7 +937,7 @@ after_initialize do
 					ddatte_now = Time.now.strftime("%Y.%m.%d")
 
 					#if already asked pass today, message something about it
-					if user_apasaz && user_apasaz[:DATE1] == ddatte_now && user_apasaz[:DATE2] == ddatte_now && (user_apasaz[:MAIL1] != params[:myylo] || user_apasaz[:MAIL2] != params[:myylo])
+					if user_apasaz && user_apasaz[:DATE1] == ddatte_now && user_apasaz[:DATE2] == ddatte_now && user_apasaz[:MAIL1] != params[:myylo] && user_apasaz[:MAIL2] != params[:myylo]
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
