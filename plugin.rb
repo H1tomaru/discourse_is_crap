@@ -942,10 +942,13 @@ after_initialize do
 					else #if first time ask pass today, go
 						begin
 							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 20 }
+						rescue => e
+							#message something about error
+							render json: { error: true, status: e.to_s[0..30] }
+						else
 							if res.status == 200
 								#message pass to user
 								render json: { winrar: Base64.decode64(res.body) }
-
 								#add any pass times to cache db, if its a pass and not not found message
 								if Base64.decode64(res.body)[4] != '3'
 									if ddatte_now == user_apasaz[:DATE1] 
@@ -958,9 +961,6 @@ after_initialize do
 								#message something about failure
 								render json: { noconnect: true, status: res.status[0..28] }
 							end
-						rescue => e
-							#message something about error
-							render json: { error: true, status: e.to_s[0..30] }
 						end
 					end
 				else
