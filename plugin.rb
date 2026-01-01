@@ -477,7 +477,7 @@ after_initialize do
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if zaipsalsq && zaipsalsq[:count]
-						@@cachedb[:zaipsalsq].find_one_and_update( { _id: user_d }, { 
+						@@cachedb[:zaipsalsq].update_one( { _id: user_d }, { 
 							"$inc" => { count: 1 }
 						}, { upsert: true } )
 					else
@@ -488,7 +488,7 @@ after_initialize do
 					push = {}
 					push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 
-					@@userlistdb[:uListP4].find_one_and_update( { _id: code[2] }, { "$push" => push }, { upsert: true } )
+					@@userlistdb[:uListP4].update_one( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 
 					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
@@ -699,12 +699,12 @@ after_initialize do
 						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } unless user_FB.blank?
 						unless hasfb
 							#mark that todays fb is uptodate
-							@@cachedb[:user_FB_date].find_one_and_update( { _id: user }, { DATE: daTE_day }, { upsert: true } )
+							@@cachedb[:user_FB_date].update_one( { _id: user }, { DATE: daTE_day }, { upsert: true } )
 
 							#add to fb, or create new if there no fb
 							if user_FB
 								#save to db
-								@@userfb[:userfb].find_one_and_update( { _id: user }, { 
+								@@userfb[:userfb].update_one( { _id: user }, { 
 									"$push" => { FEEDBACKS: neoFB },
 									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
@@ -800,7 +800,7 @@ after_initialize do
 				fbglist = { ugameZ: ugamezfinal }
 
 				#save it to cache
-				@@cachedb[:fbglist].find_one_and_update( { _id: user_d }, {
+				@@cachedb[:fbglist].update_one( { _id: user_d }, {
 					ugameZ: ugamezfinal, DATE: timeDAY
 				}, { upsert: true } )
 			end
@@ -853,7 +853,7 @@ after_initialize do
 							}
 
 							#if fb exists, add to it, or create new fb if its not
-							@@userfb[:userfb].find_one_and_update( { _id: pageu_d }, { "$push" => { FEEDBACKS: new_fb } }, { upsert: true } )
+							@@userfb[:userfb].update_one( { _id: pageu_d }, { "$push" => { FEEDBACKS: new_fb } }, { upsert: true } )
 
 							#update and recount fb
 							ufbupdate(pageu_d)
@@ -877,7 +877,7 @@ after_initialize do
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@@cachedb[:user_FB_edit].find_one_and_update( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
+									@@cachedb[:user_FB_edit].update_one( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
 
 									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
@@ -952,9 +952,9 @@ after_initialize do
 								#add any pass times to cache db, if its a pass and not not found message
 								if Base64.decode64(res.body)[4] != '3'
 									if user_apasaz && user_apasaz[:DATE1] == ddatte_now
-										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE2: ddatte_now, MAIL2: params[:myylo]}, { upsert: true } )
+										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } )
 									else
-										@@cachedb[:user_passzss].find_one_and_update( { _id: user_d }, { DATE1: ddatte_now, MAIL1: params[:myylo]}, { upsert: true } )
+										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE1: ddatte_now, MAIL1: params[:myylo]}}, { upsert: true } )
 									end
 								end
 							else
@@ -1072,7 +1072,7 @@ after_initialize do
 				end
 
 				#mark that todays fb is uptodate
-				@@cachedb[:user_FB_date].find_one_and_update( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
+				@@cachedb[:user_FB_date].update_one( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
 
 				#update shit if numbers are different
 				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
