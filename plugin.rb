@@ -950,9 +950,9 @@ after_initialize do
 								#message pass to user
 								render json: { winrar: Base64.decode64(res.body) }
 								#add used up acc in cache db, only if its a new acc for today and not not found message
-								if Base64.decode64(res.body)[4] != '3' && user_apasaz && (user_apasaz[:DATE1] != ddatte_now || user_apasaz[:DATE2] != ddatte_now)
+								if Base64.decode64(res.body)[4] != '3'
 									if user_apasaz && user_apasaz[:DATE1] == ddatte_now
-										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } )
+										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } ) if user_apasaz[:MAIL1] != params[:myylo]
 									else
 										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE1: ddatte_now, MAIL1: params[:myylo]}}, { upsert: true } )
 									end
