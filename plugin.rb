@@ -505,6 +505,62 @@ after_initialize do
 						raw: msgtext
 					)
 
+					#create forum notification if sobrano
+					#get game userlist
+					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
+					#find this troika index
+					troino = gameuzers["P"+code[0]].count
+					troino = troino / 2.0 if code[0] == "4" || code[0] == "4_4" || code[0] == "4_5"
+					trindx = troino - 1
+
+					#dont do shit if troika index not full number
+					#check if troika sobrana
+					if troino.to_i == troino && ( (gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
+						gameuzers["P2"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) ||
+					(gameuzers["P2"] && gameuzers["P4"] &&
+						gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1]) ||
+					(gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
+						gameuzers["P2_4"][trindx] && gameuzers["P2_5"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) )
+						#add users to userlist
+						usernames = ["MrBug"]
+						usernames.push(gameuzers[:P1][trindx][:NAME])		if gameuzers[:P1] && gameuzers[:P1][trindx] && gameuzers[:P1][trindx][:NAME] != "-55" # && gameuzers[:P1][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] # && gameuzers[:P2][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] # && gameuzers[:P4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] # && gameuzers[:P4][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[:P2_4][trindx][:NAME])		if gameuzers[:P2_4] # && gameuzers[:P2_4][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P2_5][trindx][:NAME])		if gameuzers[:P2_5] # && gameuzers[:P2_5][trindx][:STAT] == 0
+						usernames.push(gameuzers[:P4_4][trindx*2][:NAME])	if gameuzers[:P4_4] # && gameuzers[:P4_4][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4_4][trindx*2+1][:NAME])	if gameuzers[:P4_4] # && gameuzers[:P4_4][trindx*2+1][:STAT] == 0
+						usernames.push(gameuzers[:P4_5][trindx*2][:NAME])	if gameuzers[:P4_5] # && gameuzers[:P4_5][trindx*2][:STAT] == 0
+						usernames.push(gameuzers[:P4_5][trindx*2+1][:NAME])	if gameuzers[:P4_5] # && gameuzers[:P4_5][trindx*2+1][:STAT] == 0
+						usernames.uniq!
+
+						hrenka = "Тройка" 		if gameuzers["P2"] && gameuzers["P4"]
+						hrenka = "Четверка" 	if gameuzers[:P1] && gameuzers[:P1][trindx]
+						hrenka = "Пятерка" 		if gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"]
+						hrenka = "Шестерка" 	if gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"]	
+
+						troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
+						troitext = "Здравствуйте! :robot:\n" +
+						"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
+						"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
+						"Вот план дальнейших действий:\n" +
+						"1) Оплатить свою позицию, суммы и реквизиты узнать у [MrBug в личных сообщениях](/u/MrBug)\n" +
+						"2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
+						"3) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
+						"Держитесь! И да поможет вам :bug:"
+
+						PostCreator.create(
+							Discourse.system_user,
+							skip_validations: true,
+							target_usernames: usernames.join(","),
+							archetype: Archetype.private_message,
+							subtype: TopicSubtype.system_message,
+							title: troititle,
+							raw: troitext
+						)
+					end
+
 					unless SiteSetting.chat_webhook.empty?
 						#add message to discourse chat, if enabled
 						begin
@@ -537,62 +593,6 @@ after_initialize do
 								raw: 'TG webhook fail: ' + e
 							)
 						end
-					end
-
-					#create forum notification if sobrano
-					#get game userlist
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
-					#find this troika index
-					troino = gameuzers["P"+code[0]].count
-					troino = troino / 2.0 if code[0] == "4" || code[0] == "4_4" || code[0] == "4_5"
-					trindx = troino - 1
-
-					#dont do shit if troika index not full number
-					#check if troika sobrana
-					if troino.to_i == troino && ( (gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
-						gameuzers["P2"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) ||
-					(gameuzers["P2"] && gameuzers["P4"] &&
-						gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1]) ||
-					(gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
-						gameuzers["P2_4"][trindx] && gameuzers["P2_5"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) )
-						#add users to userlist
-						usernames = ["MrBug"]
-						usernames.push(gameuzers[:P1][trindx][:NAME])		if gameuzers[:P1] && gameuzers[:P1][trindx] && gameuzers[:P1][trindx][:STAT] == 0 && gameuzers[:P1][trindx][:NAME] != "-55"
-						usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] && gameuzers[:P2][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] && gameuzers[:P4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] && gameuzers[:P4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[:P2_4][trindx][:NAME])		if gameuzers[:P2_4] && gameuzers[:P2_4][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P2_5][trindx][:NAME])		if gameuzers[:P2_5] && gameuzers[:P2_5][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P4_4][trindx*2][:NAME])	if gameuzers[:P4_4] && gameuzers[:P4_4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4_4][trindx*2+1][:NAME])	if gameuzers[:P4_4] && gameuzers[:P4_4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[:P4_5][trindx*2][:NAME])	if gameuzers[:P4_5] && gameuzers[:P4_5][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4_5][trindx*2+1][:NAME])	if gameuzers[:P4_5] && gameuzers[:P4_5][trindx*2+1][:STAT] == 0
-						usernames.uniq!
-
-						hrenka = "Тройка" 	if gameuzers["P2"] && gameuzers["P4"]
-						hrenka = "Четверка" 	if gameuzers[:P1] && gameuzers[:P1][trindx]
-						hrenka = "Пятерка" 	if gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"]
-						hrenka = "Шестерка" 	if gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"]	
-
-						troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
-						troitext = "Здравствуйте! :robot:\n" +
-						"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
-						"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
-						"Вот план дальнейших действий:\n" +
-						"1) Оплатить свою позицию, суммы и реквизиты узнать у [MrBug в личных сообщениях](/u/MrBug)\n" +
-						"2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-						"3) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-						"Держитесь! И да поможет вам :bug:"
-
-						PostCreator.create(
-							Discourse.system_user,
-							skip_validations: true,
-							target_usernames: usernames.join(","),
-							archetype: Archetype.private_message,
-							subtype: TopicSubtype.system_message,
-							title: troititle,
-							raw: troitext
-						)
 					end
 				else
 					render json: { zaipsfail: true }
