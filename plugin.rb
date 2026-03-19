@@ -573,7 +573,7 @@ after_initialize do
 								Discourse.system_user,
 								skip_validations: true,
 								topic_id: 61653,
-								raw: 'Chat webhook fail: ' + e
+								raw: 'Chat webhook fail: ' + e.message
 							)
 						end
 					end
@@ -590,7 +590,7 @@ after_initialize do
 								Discourse.system_user,
 								skip_validations: true,
 								topic_id: 61653,
-								raw: 'TG webhook fail: ' + e
+								raw: 'TG webhook fail: ' + e.message
 							)
 						end
 					end
