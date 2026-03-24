@@ -582,7 +582,7 @@ after_initialize do
 						#add message to telegram bot, if enabled
 						begin
 							Faraday::Connection.new.post(
-								'https://tg-redirect-up9km.bunny.run/bot'+SiteSetting.metatron_id+'/sendMessage',
+								'https://tg-redirect-i0uzm.bunny.run/bot'+SiteSetting.metatron_id+'/sendMessage',
 								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
 							) { |request| request.options.timeout = 20 }
 						rescue => e
