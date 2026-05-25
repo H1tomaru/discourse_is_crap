@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import $ from 'jquery';
 
-export default Ember.Controller.extend({
+export default class MyController extends Controller {
 
 	addstuff: {"GAME": null,
 		  "STRING": null,
@@ -44,4 +44,4 @@ export default Ember.Controller.extend({
 
 	}
 
-})
+}
