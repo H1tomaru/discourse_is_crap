@@ -29,7 +29,7 @@ export default class MyController extends Controller {
 			//ember doesnt update on 2nd level variables, so use this shit
 			this.addstuff = { ...this.addstuff, ADDFB: false }
 		} catch (error) {
-			console.error("MegaAdd failed:", error);
+			console.error("MegaAdd failed:", error)
 		}
 	}
 	
