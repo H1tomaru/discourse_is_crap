@@ -98,12 +98,8 @@ after_initialize do
 						#game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
 						#game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 
-						#do each game prices for futher template and other stuff usage
-						game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3]]
 					else
 						game[:P4PRICE2] = game[:P4PRICE3] = 0
-
-						game[:PPRICES] = [0,0,0]
 					end
 					
 					#see if we have users to display
