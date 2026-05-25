@@ -79,10 +79,7 @@ export default class MyController extends Controller {
 
 	@action
 	netmudal() {
-		this.bagamdal = false
-		this.mdalready = false
-		this.prezaips = null
-		this.zaips = null
+		Object.assign(this, { bagamdal: false, mdalready: false, prezaips: null, zaips: null })
 	}
 
 	@action
@@ -92,22 +89,22 @@ export default class MyController extends Controller {
 		const currentuser = this.currentUser?.username
 		
 		if (currentuser) {
-		  try {
-			const response = await fetch("/MrBug/prezaips/", {
-			  method: 'POST',
-			  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			  body: new URLSearchParams({ bagakruta: btoa(`${knopk}~${gcode}`) })
-			})
-			const result = await response.json()
-		
-			this.prezaips = result;
-			if (Object.prototype.hasOwnProperty.call(result, 'position')) {
-			  this.pzposition = result['position']?.[0]
+			try {
+				const response = await fetch("/MrBug/prezaips/", {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({ bagakruta: btoa(`${knopk}~${gcode}`) })
+				})
+				const result = await response.json()
+				this.prezaips = result
+			  
+				if (result?.position) {
+					this.pzposition = result['position']?.[0]
+				}
+				this.mdalready = true
+		 	} catch (error) {
+				console.error("Failed to run prezaips post syntax:", error)
 			}
-			this.mdalready = true
-		  } catch (error) {
-			console.error("Failed to run prezaips post syntax:", error);
-		  }
 		} else {
 			this.prezaips = { guest: true }
 			this.mdalready = true
@@ -143,11 +140,12 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo(index) {
+		// Unpacks list reference array to toggle dashboard filter tab visibility flags
 		const newShowHideo = [...this.showhideo]
 		newShowHideo[index] = !newShowHideo[index]
 		this.showhideo = newShowHideo
 	}
-	
+
 	@action
 	showhideo1(index) {
 		const item = this.glizt.gamedb1?.[index]
@@ -156,7 +154,7 @@ export default class MyController extends Controller {
 			this.model = { ...this.model }
 		}
 	}
-	
+
 	@action
 	showhideo2(index) {
 		const item = this.glizt.gamedb2?.[index]
@@ -165,7 +163,7 @@ export default class MyController extends Controller {
 			this.model = { ...this.model }
 		}
 	}
-	
+
 	@action
 	showhideo3(index) {
 		const item = this.glizt.gamedb3?.[index]
