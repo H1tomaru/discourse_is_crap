@@ -70,7 +70,7 @@ after_initialize do
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
-					p2NO = 0; p3NO = 0; p4NO = 0; troikaNO = 0
+					p2NO = 0; p4NO = 0; troikaNO = 0
 
 					#create display prices
 					if game[:PRICE] > 0
@@ -110,9 +110,9 @@ after_initialize do
 					if users
 						#find how many p2 p3 we have, and how many troikas to display
 						p2NO = users[:P2].length if users[:P2]
-						p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						p4NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
 						#get how many troikas, roundup p4 number cos theres 2 per troika
-						troikaNO = [p2NO, p3NO.ceil].max - 1 #-1 cos next line, for i in 0..0 goes 1 time, 0..1 goes 2 times, etc
+						troikaNO = [p2NO, p4NO.ceil].max - 1 #-1 cos next line, for i in 0..0 goes 1 time, 0..1 goes 2 times, etc
 
 						#create variables for every troika
 						for i in 0..troikaNO
@@ -202,7 +202,7 @@ after_initialize do
 					end
 
 					#set display user numbers since we finished looping through this game users
-					game[:P2NO] = p2NO; game[:P3NO] = p3NO; game[:P4NO] = p4NO
+					game[:P2NO] = p2NO; game[:P4NO] = p4NO
 
 				end
 
