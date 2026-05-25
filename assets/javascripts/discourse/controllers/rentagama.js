@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import { on } from '@ember/object/evented';
 import $ from 'jquery';
 
-export default Ember.Controller.extend({
+export default class MyController extends Controller {
 
 	showLIST: localStorage.getItem('showLIST') == "true",
 	showTYPE1: true,
@@ -61,4 +61,4 @@ export default Ember.Controller.extend({
 
 	}
 
-})
+}
