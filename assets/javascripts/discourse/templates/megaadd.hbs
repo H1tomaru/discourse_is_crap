@@ -11,28 +11,11 @@
 
 	<br>
 
-	{{#if addstuff.winrarP24444}}
-		Winrars! P24444:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
-		{{/each}}
-	{{/if}}
-	
-	
-	{{#if addstuff.winrarP244}}
-		Winrars! P244:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br>
-		{{/each}}
-	{{/if}}
-	
-	{{#if addstuff.winrarP224444}}
-		Winrars! P224444:<br>
-		{{#each addstuff.RESULT as |game|}}
-			{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P2.[1]}} {{game.P4.[0]}} {{game.P4.[1]}} {{game.P4.[2]}} {{game.P4.[3]}}<br>
-		{{/each}}
-	{{/if}}
-	
+	Winrars! P244:<br>
+	{{#each addstuff.RESULT as |game|}}
+		{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br>
+	{{/each}}
+
 	<br>
 	
 	MegaAdd List some Pokemans<br>
@@ -46,15 +29,7 @@
 					{{#unless index}}
 						<br><br><br>{{game.gameNAME}}<br>
 					{{/unless}}
-					{{#if game.TTYPE.[0]}}
-						<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[0]}}<br>П4_4 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_5 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>
-					{{/if}}
-					{{#if game.TTYPE.[1]}}
-						<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[1]}}<br>П4 - {{troika.USERS.[2]}}<br>П4 - {{troika.USERS.[3]}}<br>
-					{{/if}}
-					{{#if game.TTYPE.[2]}}
-						<br>{{troika.ACCOUNT}}<br>П2_4 - {{troika.USERS.[0]}}<br>П2_5 - {{troika.USERS.[1]}}<br>П4_4 - {{troika.USERS.[2]}}<br>П4_4 - {{troika.USERS.[3]}}<br>П4_5 - {{troika.USERS.[4]}}<br>П4_5 - {{troika.USERS.[5]}}<br>
-					{{/if}}
+					<br>{{troika.ACCOUNT}}<br>П2 - {{troika.USERS.[0]}}<br>П4 - {{troika.USERS.[1]}}<br>П4 - {{troika.USERS.[2]}}<br>
 				{{/if}}
 			{{/each}}
 		{{/each}}
