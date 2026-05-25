@@ -1,6 +1,7 @@
 # name: MrBug-TroikiPoisk
 # version: 9.9.9
 # authors: MrBug
+# 25.05.2026 troika only edition
 
 gem 'bson', "4.3.0"
 gem 'mongo', "2.5.0"
@@ -69,99 +70,40 @@ after_initialize do
 				#start a loop for every game to display
 				gameDB.each do |game|
 					#somevariables
-					p1NO = 0; p2NO = 0; p3NO = 0; p4NO = 0; troikaNO = 0, game[:TTYPE] = [false, false, false] #0 - 24444, 1 - 1244, 2 - 224444
-
-					#do each game postitions for futher template and other stuff usage
-					if game[:CONSOLE] == "PS4" && (!game[:CONSOLE2] || game[:CONSOLE2] == "PS5v2")
-						game[:TTYPE][0] = true
-						game[:PPOSITIONS] = [2,4,4,4,4,0]
-						game[:CONSOLE2] = "PS5"
-					elsif ( game[:CONSOLE] == "PS5" && !game[:CONSOLE2] ) || ( game[:CONSOLE] == "PS4" && game[:CONSOLE2] == "XXX" )
-						game[:TTYPE][1] = true
-						game[:PPOSITIONS] = [1,2,4,4,0,0]
-					else
-						game[:TTYPE][2] = true
-						game[:PPOSITIONS] = [2,2,4,4,4,4]
-					end
+					p2NO = 0; p3NO = 0; p4NO = 0; troikaNO = 0
 
 					#create display prices
 					if game[:PRICE] > 0
-						game[:PDOWN1] = 0 if !game[:PDOWN1]
 						game[:PDOWN2] = 0 if !game[:PDOWN2]
 						game[:PDOWN3] = 0 if !game[:PDOWN3]
 
-						#calculate prices, for ps4 only game, for ps5 only game, and ps4\ps5 game type
-						if game[:TTYPE][0]
-							game[:P4PRICE1] = 0
+						#calculate prices
+						game[:P4PRICE3] = (game[:PRICE] * 0.38 / 50).floor * 50 # '* 0.38' is '*.76 / 2'
 
-							game[:P4PRICE3] = (game[:PRICE] * 0.88 / 200).floor * 50 # '/200' is '/ 4 / 50'
+						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3]
 
-							game[:P4PRICE2] = game[:PRICE] - 4 * game[:P4PRICE3]
-							
-							p4UP = [0,0,100]
-							if game[:PRICE] < 1001
-								p4UP = [0,0,50]
-							elsif game[:PRICE] > 8001
-								p4UP = [0,50,200]
-							elsif game[:PRICE] > 4001	
-								p4UP = [0,0,150] 
-							end
-
-						elsif game[:TTYPE][1]
-							game[:P4PRICE1] = (game[:PRICE] * 0.13 / 50).ceil * 50
-
-							game[:P4PRICE3] = (game[:PRICE] * 0.33 / 50).floor * 50 # '* 0.33' is '*.66 / 2'
-
-							game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3] - game[:P4PRICE1]
-							
-							p4UP = [0,0,150]
-							if game[:PRICE] < 1001
-								p4UP = [0,0,100]
-							elsif game[:PRICE] > 8001
-								p4UP = [0,50,250]
-							elsif game[:PRICE] > 4001	
-								p4UP = [0,0,200] 
-							end
-
-						else
-							game[:P4PRICE1] = 0
-
-							game[:P4PRICE3] = (game[:PRICE] * 0.82 / 200).floor * 50 # '/200' is '/ 4 / 50'
-
-							game[:P4PRICE2] = (game[:PRICE] - 4 * game[:P4PRICE3]) / 2
-							
-							p4UP = [0,0,100]
-							if game[:PRICE] < 1001
-								p4UP = [0,0,50]
-							elsif game[:PRICE] > 8001
-								p4UP = [0,50,200]
-							elsif game[:PRICE] > 4001	
-								p4UP = [0,0,150] 
-							end
+						p4UP = [100,200]
+						if game[:PRICE] < 1001
+							p4UP = [50,100]
+						elsif game[:PRICE] > 8001
+							p4UP = [200,300]
+						elsif game[:PRICE] > 4001	
+							p4UP = [150,250] 
 						end
-						
-						game[:P4PRICE1] = game[:P4PRICE1] - game[:PDOWN1] + p4UP[0] if game[:TTYPE][1]
-						game[:P4PRICE2] = game[:P4PRICE2] - game[:PDOWN2] + p4UP[1]
-						game[:P4PRICE3] = game[:P4PRICE3] - game[:PDOWN3] + p4UP[2]
-						
+
+						game[:P4PRICE2] = game[:P4PRICE2] - game[:PDOWN2] + p4UP[0]
+						game[:P4PRICE3] = game[:P4PRICE3] - game[:PDOWN3] + p4UP[1]
+
 						#set price to -10 if its x100
-						game[:P4PRICE1] = game[:P4PRICE1] - 10 if game[:TTYPE][1] && game[:P4PRICE1]/100.0 == (game[:P4PRICE1]/100.0).ceil
-						game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
-						game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
+						#game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
+						#game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 
 						#do each game prices for futher template and other stuff usage
-						if game[:TTYPE][0]
-							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3],0]
-						elsif game[:TTYPE][1]
-							game[:PPRICES] = [game[:P4PRICE1], game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3],0,0]
-						else
-							game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE2], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3], game[:P4PRICE3]]
-						end
-
+						game[:PPRICES] = [game[:P4PRICE2], game[:P4PRICE3]]
 					else
-						game[:P4PRICE1] = game[:P4PRICE2] = game[:P4PRICE3] = 0
+						game[:P4PRICE2] = game[:P4PRICE3] = 0
 
-						game[:PPRICES] = [0,0,0,0,0,0]
+						game[:PPRICES] = [0,0]
 					end
 					
 					#see if we have users to display
@@ -170,124 +112,45 @@ after_initialize do
 					game[:TROIKI] = []
 					#do stuff if we do
 					if users
-						#find how many p1 p2 p3 we have, and how many troikas to display
-						if game[:TTYPE][0]
-							p1NO = users[:P2].length if users[:P2]
-							p2NO = users[:P4_4].length / 2.0 if users[:P4_4] #fix because 2 P4 per troika
-							p3NO = users[:P4_5].length / 2.0 if users[:P4_5] #fix because 2 P4 per troika
-							#get how many troikas, roundup p4 numbers cos theres 2 per troika
-							troikaNO = [p1NO, p2NO.ceil, p3NO.ceil].max - 1
-						elsif game[:TTYPE][1]
-							p1NO = users[:P1].length if users[:P1]
-							p2NO = users[:P2].length if users[:P2]
-							p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
-							#get how many troikas, roundup p4 number cos theres 2 per troika
-							troikaNO = [p1NO, p2NO, p3NO.ceil].max - 1
-						else
-							p1NO = users[:P2_4].length if users[:P2_4]
-							p2NO = users[:P2_5].length if users[:P2_5]
-							p3NO = users[:P4_4].length / 2.0 if users[:P4_4] #fix because 2 P4 per troika
-							p4NO = users[:P4_5].length / 2.0 if users[:P4_5] #fix because 2 P4 per troika
-							#get how many troikas, roundup p4 number cos theres 2 per troika
-							troikaNO = [p1NO, p2NO, p3NO.ceil, p4NO.ceil].max - 1
-						end
+						#find how many p2 p3 we have, and how many troikas to display
+						p2NO = users[:P2].length if users[:P2]
+						p3NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+						#get how many troikas, roundup p4 number cos theres 2 per troika
+						troikaNO = [p2NO, p3NO.ceil].max - 1 #-1 cos next line, for i in 0..0 goes 1 time, 0..1 goes 2 times, etc
 
 						#create variables for every troika
 						for i in 0..troikaNO
 							#tons of variables for everything
-							p1 = ''; p2 = ''; p3 = ''; p4 = ''; p5 = ''; p6 = ''; account = ''; nop1ADD = 0
-							p1STATUS = [false,false,false,false]; p2STATUS = [false,false,false,false]
-							p3STATUS = [false,false,false,false]; p4STATUS = [false,false,false,false]
-							p5STATUS = [false,false,false,false]; p6STATUS = [false,false,false,false]
-							p1FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
-							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
-							p5FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }; p6FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
-							p1TAKEN = false; p2TAKEN = false; p3TAKEN = false; p4TAKEN = false; p5TAKEN = false; p6TAKEN = false
-							p1FBred = false; p2FBred = false; p3FBred = false; p4FBred = false; p5FBred = false; p6FBred = false
+							p2 = ''; p3 = ''; p4 = ''; account = ''
+							p2STATUS = [false,false,false,false]
+							p3STATUS = [false,false,false,false]
+							p4STATUS = [false,false,false,false]
+							p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+							p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
+							p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
+							p2FBred = false; p3FBred = false; p4FBred = false
 
 							#fill user info and template variables for statuses
-							if game[:TTYPE][0]
-								if users[:P2] && users[:P2][i]
-									p1 = users[:P2][i][:NAME].strip
-									p1STATUS[users[:P2][i][:STAT]] = true
-								end
-								if users[:P4_4] && users[:P4_4][2*i]
-									p2 = users[:P4_4][2*i][:NAME].strip
-									p2STATUS[users[:P4_4][2*i][:STAT]] = true
-								end
-								if users[:P4_4] && users[:P4_4][2*i+1]
-									p3 = users[:P4_4][2*i+1][:NAME].strip
-									p3STATUS[users[:P4_4][2*i+1][:STAT]] = true
-								end
-								if users[:P4_5] && users[:P4_5][2*i]
-									p4 = users[:P4_5][2*i][:NAME].strip
-									p4STATUS[users[:P4_5][2*i][:STAT]] = true
-								end
-								if users[:P4_5] && users[:P4_5][2*i+1]
-									p5 = users[:P4_5][2*i+1][:NAME].strip
-									p5STATUS[users[:P4_5][2*i+1][:STAT]] = true
-								end
-							elsif game[:TTYPE][1]
-								if users[:P1] && users[:P1][i]
-									p1 = users[:P1][i][:NAME].strip
-									p1STATUS[users[:P1][i][:STAT]] = true
-								end
-								if users[:P2] && users[:P2][i]
-									p2 = users[:P2][i][:NAME].strip
-									p2STATUS[users[:P2][i][:STAT]] = true
-								end
-								if users[:P4] && users[:P4][2*i]
-									p3 = users[:P4][2*i][:NAME].strip
-									p3STATUS[users[:P4][2*i][:STAT]] = true
-								end
-								if users[:P4] && users[:P4][2*i+1]
-									p4 = users[:P4][2*i+1][:NAME].strip
-									p4STATUS[users[:P4][2*i+1][:STAT]] = true
-								end
-							else
-								if users[:P2_4] && users[:P2_4][i]
-									p1 = users[:P2_4][i][:NAME].strip
-									p1STATUS[users[:P2_4][i][:STAT]] = true
-								end
-								if users[:P2_5] && users[:P2_5][i]
-									p2 = users[:P2_5][i][:NAME].strip
-									p2STATUS[users[:P2_5][i][:STAT]] = true
-								end
-								if users[:P4_4] && users[:P4_4][2*i]
-									p3 = users[:P4_4][2*i][:NAME].strip
-									p3STATUS[users[:P4_4][2*i][:STAT]] = true
-								end
-								if users[:P4_4] && users[:P4_4][2*i+1]
-									p4 = users[:P4_4][2*i+1][:NAME].strip
-									p4STATUS[users[:P4_4][2*i+1][:STAT]] = true
-								end
-								if users[:P4_5] && users[:P4_5][2*i]
-									p5 = users[:P4_5][2*i][:NAME].strip
-									p5STATUS[users[:P4_5][2*i][:STAT]] = true
-								end
-								if users[:P4_5] && users[:P4_5][2*i+1]
-									p6 = users[:P4_5][2*i+1][:NAME].strip
-									p6STATUS[users[:P4_5][2*i+1][:STAT]] = true
-								end
+							if users[:P2] && users[:P2][i]
+								p2 = users[:P2][i][:NAME].strip
+								p2STATUS[users[:P2][i][:STAT]] = true
+							end
+							if users[:P4] && users[:P4][2*i]
+								p3 = users[:P4][2*i][:NAME].strip
+								p3STATUS[users[:P4][2*i][:STAT]] = true
+							end
+							if users[:P4] && users[:P4][2*i+1]
+								p4 = users[:P4][2*i+1][:NAME].strip
+								p4STATUS[users[:P4][2*i+1][:STAT]] = true
 							end
 
-							#template variables for when p1 p2 p3 p4 are taken
-							(p1TAKEN = true; p1 = '') if p1 == '-55'
+							#template variables for when p2 p3 p4 are taken
 							(p2TAKEN = true; p2 = '') if p2 == '-55'
 							(p3TAKEN = true; p3 = '') if p3 == '-55'
 							(p4TAKEN = true; p4 = '') if p4 == '-55'
-							(p5TAKEN = true; p5 = '') if p5 == '-55'
-							(p6TAKEN = true; p6 = '') if p6 == '-55'
 
 							#find feedback for users
-							if p1.length > 0
-								feedbackp1 = userFB.find{ |h| h['_id'] == p1.downcase }
-								if feedbackp1
-									p1FEEDBACK[:GOOD] = feedbackp1[:fbG] if feedbackp1[:fbG]
-									p1FEEDBACK[:BAD] = feedbackp1[:fbB] if feedbackp1[:fbB]
-									p1FEEDBACK[:NEUTRAL] = feedbackp1[:fbN] if feedbackp1[:fbN]
-								end
-							end
 							if p2.length > 0
 								feedbackp2 = userFB.find{ |h| h['_id'] == p2.downcase }
 								if feedbackp2
@@ -312,30 +175,11 @@ after_initialize do
 									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
 								end
 							end
-							if p5.length > 0
-								feedbackp5 = userFB.find{ |h| h['_id'] == p5.downcase }
-								if feedbackp5
-									p5FEEDBACK[:GOOD] = feedbackp5[:fbG] if feedbackp5[:fbG]
-									p5FEEDBACK[:BAD] = feedbackp5[:fbB] if feedbackp5[:fbB]
-									p5FEEDBACK[:NEUTRAL] = feedbackp5[:fbN] if feedbackp5[:fbN]
-								end
-							end
-							if p6.length > 0
-								feedbackp6 = userFB.find{ |h| h['_id'] == p6.downcase }
-								if feedbackp6
-									p6FEEDBACK[:GOOD] = feedbackp6[:fbG] if feedbackp6[:fbG]
-									p6FEEDBACK[:BAD] = feedbackp6[:fbB] if feedbackp6[:fbB]
-									p6FEEDBACK[:NEUTRAL] = feedbackp6[:fbN] if feedbackp6[:fbN]
-								end
-							end
 
 							#find feedback percentage
-							p1FEEDBACK[:PERCENT] = (p1FEEDBACK[:GOOD].to_f/(p1FEEDBACK[:GOOD] + p1FEEDBACK[:BAD]) * 100.0).floor if p1FEEDBACK[:GOOD] > 0
 							p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD].to_f/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100.0).floor if p2FEEDBACK[:GOOD] > 0
 							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
 							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
-							p5FEEDBACK[:PERCENT] = (p5FEEDBACK[:GOOD].to_f/(p5FEEDBACK[:GOOD] + p5FEEDBACK[:BAD]) * 100.0).floor if p5FEEDBACK[:GOOD] > 0
-							p6FEEDBACK[:PERCENT] = (p6FEEDBACK[:GOOD].to_f/(p6FEEDBACK[:GOOD] + p6FEEDBACK[:BAD]) * 100.0).floor if p6FEEDBACK[:GOOD] > 0
 
 							#create account variable if it exists //no show account mail anymore edition//
 							if current_user && current_user[:username] == 'H1tomaru' #megaaddhack
@@ -345,30 +189,24 @@ after_initialize do
 							end
 
 							#template again, is feedback green or red?
-							p1FBred = true if p1FEEDBACK[:PERCENT] < 100
 							p2FBred = true if p2FEEDBACK[:PERCENT] < 100
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
-							p5FBred = true if p5FEEDBACK[:PERCENT] < 100
-							p6FBred = true if p6FEEDBACK[:PERCENT] < 100
-
-							#vizmem bez p1?!
-							nop1ADD = (game[:P4PRICE1] / 30.0).ceil * 10 if game[:TTYPE][1] && p1 == ''
 
 							#create final variable
 							game[:TROIKI].push( {
-								USERS: [p1,p2,p3,p4,p5,p6],
-								FEEDBACK: [p1FEEDBACK,p2FEEDBACK,p3FEEDBACK,p4FEEDBACK,p5FEEDBACK,p6FEEDBACK],
-								NOP1ADD: nop1ADD, ACCOUNT: account,
-								PTAKEN: [p1TAKEN,p2TAKEN,p3TAKEN,p4TAKEN,p5TAKEN,p6TAKEN],
-								PFBred: [p1FBred,p2FBred,p3FBred,p4FBred,p5FBred,p6FBred],
-								PSTATUS: [p1STATUS,p2STATUS,p3STATUS,p4STATUS,p5STATUS,p6STATUS]
+								USERS: [p2,p3,p4],
+								FEEDBACK: [p2FEEDBACK,p3FEEDBACK,p4FEEDBACK],
+								ACCOUNT: account,
+								PTAKEN: [p2TAKEN,p3TAKEN,p4TAKEN],
+								PFBred: [p2FBred,p3FBred,p4FBred],
+								PSTATUS: [p2STATUS,p3STATUS,p4STATUS]
 							} )
 						end
 					end
 
 					#set display user numbers since we finished looping through this game users
-					game[:P1NO] = p1NO; game[:P2NO] = p2NO; game[:P3NO] = p3NO; game[:P4NO] = p4NO
+					game[:P2NO] = p2NO; game[:P3NO] = p3NO; game[:P4NO] = p4NO
 
 				end
 
