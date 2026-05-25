@@ -78,9 +78,9 @@ after_initialize do
 						game[:PDOWN3] = 0 if !game[:PDOWN3]
 
 						#calculate prices
-						game[:P4PRICE3] = (game[:PRICE] * 0.38 / 50).floor * 50 # '* 0.38' is '*.76 / 2'
+						game[:PRICE4] = (game[:PRICE] * 0.38 / 50).floor * 50 # '* 0.38' is '*.76 / 2'
 
-						game[:P4PRICE2] = game[:PRICE] - 2 * game[:P4PRICE3]
+						game[:PRICE2] = game[:PRICE] - 2 * game[:PRICE4]
 
 						p4UP = [100,200]
 						if game[:PRICE] < 1001
@@ -91,15 +91,15 @@ after_initialize do
 							p4UP = [150,250] 
 						end
 
-						game[:P4PRICE2] = game[:P4PRICE2] - game[:PDOWN2] + p4UP[0]
-						game[:P4PRICE3] = game[:P4PRICE3] - game[:PDOWN3] + p4UP[1]
+						game[:PRICE2] = game[:PRICE2] - game[:PDOWN2] + p4UP[0]
+						game[:PRICE4] = game[:PRICE4] - game[:PDOWN3] + p4UP[1]
 
 						#set price to -10 if its x100
 						#game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
 						#game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
 
 					else
-						game[:P4PRICE2] = game[:P4PRICE3] = 0
+						game[:PRICE2] = game[:PRICE4] = 0
 					end
 					
 					#see if we have users to display
