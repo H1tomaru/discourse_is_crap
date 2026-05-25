@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 import $ from 'jquery';
 
-export default Ember.Controller.extend({
+export default class MyController extends Controller {
 
 	checked1: true,
 	checked2: false,
@@ -208,4 +208,4 @@ export default Ember.Controller.extend({
 
 	}
 
-})
+}
