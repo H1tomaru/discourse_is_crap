@@ -1,47 +1,66 @@
 import Controller from '@ember/controller';
-import $ from 'jquery';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class MyController extends Controller {
 
-	addstuff: {"GAME": null,
-		  "STRING": null,
-		  "ADDFB": false},
-
-	p4lista: null,
-
-	actions: {
-
-		oops() {
-			$.post("/admin/MegaAdd/", { 
-				GAME: this.get('addstuff.GAME'),
-				STRING: this.get('addstuff.STRING'),
-				ADDFB: this.get('addstuff.ADDFB')
-			}).then(result => {
-				this.set('addstuff', result)
-				this.set('addstuff.ADDFB', false)
-			})
-		},
-
-		Reset() {
-			this.set('addstuff', { "GAME": null, "STRING": null, "ADDFB": false })
-		},
-
-		FeedbacksGo() {
-			this.set('addstuff.ADDFB', true)
-		},
-
-		FeedbacksStop() {
-			this.set('addstuff.ADDFB', false)
- 		},
-
-		P4Lista() {
-			return fetch('/MrBug.json').then(function(response) {
-				return response.json();
-			}).then(result => {
-				this.set('p4lista', result.gamelist)
-			})
-		}
-
+	@tracked addstuff = {
+		GAME: null,
+		STRING: null,
+		ADDFB: false
 	}
+	
+	@tracked p4lista = null
 
+	@action
+	async oops() {
+		try {
+			const response = await fetch("/admin/MegaAdd/", {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					GAME: this.addstuff.GAME,
+					STRING: this.addstuff.STRING,
+					ADDFB: this.addstuff.ADDFB
+				})
+			})
+			const result = await response.json()
+			this.addstuff = result
+			//ember doesnt update on 2nd level variables, so use this shit
+			this.addstuff = { ...this.addstuff, ADDFB: false }
+		} catch (error) {
+			console.error("MegaAdd failed:", error);
+		}
+	}
+	
+	@action
+	Reset() {
+		// Resetting the whole object container cleanly
+		this.addstuff = { GAME: null, STRING: null, ADDFB: false }
+	}
+	
+	@action
+	FeedbacksGo() {
+		// Fix: Reassigning the object container so Ember notices the sub-property change
+		this.addstuff = { ...this.addstuff, ADDFB: true }
+	}
+	
+	@action
+	FeedbacksStop() {
+		// Fix: Same thing here to keep Ember's tracker happy
+		this.addstuff = { ...this.addstuff, ADDFB: false }
+	}
+	
+	@action
+	async P4Lista() {
+		try {
+			// Cleaned up the old return fetch().then() chain with clean async/await
+			const response = await fetch('/MrBug.json');
+			const result = await response.json();
+			
+			this.p4lista = result.gamelist;
+		} catch (error) {
+			console.error("Failed to load P4Lista:", error);
+		}
+	}
 }
