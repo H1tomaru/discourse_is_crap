@@ -424,60 +424,25 @@ after_initialize do
 		end
 
 		def megaadd
-			addstuff = {}, feedbacks = [], chetverk = ''
+			addstuff = {}, feedbacks = []
 			addstuff = params
 			addstuff[:RESULT] = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
 				gameNAME = addstuff[:GAME].strip
 				#regex string #1: remove lines with P1, #2: remove stuff left of " - ", #3: remove prices like "(800 рублей)", #4: make proper new lines
 				newstring = addstuff[:STRING].gsub(/^.*П1 - .*$/,"").gsub(/^.* - /,"").gsub(/(\()(.*)(\))/,"").gsub(/^\s*[\r\n]/,"").split("\n")
-				#check if were doing p2p4p4, p2p4p4p4p4 or p2p2p4p4p4p4
-				if (addstuff[:STRING].include? "П4") && (addstuff[:STRING].exclude? "П4_5")
-					#p2p4p4 version
-					chetverk = 'четверке'
-					newstring.each_slice(4) do |sostav|
-						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3]
-							addstuff[:winrarP244] = true
-							for i in 1..3
-								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
-							end
-							addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last], DATE: Time.now.strftime("%Y.%m.%d") })
-
-							#add those users to a list of users to give them feedback after, if were giving it
-							feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last) if addstuff[:ADDFB]
+				#p2p4p4 version
+				newstring.each_slice(4) do |sostav|
+					if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3]
+						for i in 1..3
+							sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 						end
-					end
-				elsif (addstuff[:STRING].include? "П4_5") && (addstuff[:STRING].include? "П2_5")
-					#p2p2p4p4p4p4 version
-					chetverk = 'шестерке'
-					newstring.each_slice(7) do |sostav|
-						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5] && sostav[6]
-							addstuff[:winrarP224444] = true
-							for i in 1..6
-								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
-							end
-							addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last, sostav[2].last], P4: [sostav[3].last, sostav[4].last, sostav[5].last, sostav[6].last], DATE: Time.now.strftime("%Y.%m.%d") })
+						addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last], DATE: Time.now.strftime("%Y.%m.%d") })
 
-							#add those users to a list of users to give them feedback after, if were giving it
-							feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last, sostav[6].last) if addstuff[:ADDFB]
-						end
+						#add those users to a list of users to give them feedback after, if were giving it
+						feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last) if addstuff[:ADDFB]
 					end
-				else
-					#p2p4p4p4p4 version
-					chetverk = 'пятерке'
-					newstring.each_slice(6) do |sostav|
-						if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3] && sostav[4] && sostav[5]
-							addstuff[:winrarP24444] = true
-							for i in 1..5
-								sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
-							end
-							addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last], DATE: Time.now.strftime("%Y.%m.%d") })
-
-							#add those users to a list of users to give them feedback after, if were giving it
-							feedbacks.push(sostav[1].last, sostav[2].last, sostav[3].last, sostav[4].last, sostav[5].last) if addstuff[:ADDFB]
-						end
-					end
-				end
+				end	
 
 				addstuff[:RESULT].each do |winrar|
 					#save to db
@@ -495,7 +460,7 @@ after_initialize do
 					daTE = Time.now.strftime("%Y.%m.%d")
 					daTE_day = Time.now.strftime("%d")
 					neoFB = {
-						FEEDBACK: "Участвовал в "+chetverk+" на "+gameNAME+". Всё отлично!",
+						FEEDBACK: "Участвовал в тройке на "+gameNAME+". Всё отлично!",
 						pNAME: "MrBug",
 						DATE: daTE,
 						SCORE: 1
@@ -515,7 +480,7 @@ after_initialize do
 							#mark that todays fb is uptodate
 							@@cachedb[:user_FB_date].update_one( { _id: user }, { DATE: daTE_day }, { upsert: true } )
 
-							#add to fb, or create new if there no fb
+							#add to fb, or create new if theres no fb
 							if user_FB
 								#save to db
 								@@userfb[:userfb].update_one( { _id: user }, { 
@@ -575,36 +540,13 @@ after_initialize do
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
-				#get user games from den database
-				#user_DGZ = @@userdb[:PS4db_den].find( 
-				#	{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
-				#	collation: { locale: 'en', strength: 2 }
-				#).to_a
-
-				#user_gamez = user_BGZ + user_DGZ
-				#user_gamez = user_BGZ if user_d == 'den888'
-
 				#do stuff if we have some
 				user_gamez.each do |ugaz| #do stuff if we have some
 					if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
-						#select acc mail between + and @, \+ and \@
-						#if ugaz[:den]
-						#	aCC = 'Den888'
-						#else
-							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
-						#end
-
-						#get positions list
-						poZz = []
-						poZz.push( 2 ) if ugaz[:P2][0] && ugaz[:P2][0].downcase == user_d
-						poZz.push( 2 ) if ugaz[:P2][1] && ugaz[:P2][1].downcase == user_d
-						poZz.push( 4 ) if ugaz[:P4][0] && ugaz[:P4][0].downcase == user_d
-						poZz.push( 4 ) if ugaz[:P4][1] && ugaz[:P4][1].downcase == user_d
-						poZz.push( 4 ) if ugaz[:P4][2] && ugaz[:P4][2].downcase == user_d
-						poZz.push( 4 ) if ugaz[:P4][3] && ugaz[:P4][3].downcase == user_d
-
+						#show simple short mail address
+						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 						#create final variable
-						ugamezfinal.push( { gNAMEid: ugaz[:_id], gNAME: ugaz[:GAME], poZ: poZz, aCC: aCC } ) 
+						ugamezfinal.push( { gNAMEid: ugaz[:_id], gNAME: ugaz[:GAME], aCC: aCC } ) 
 					end
 				end
 
@@ -837,10 +779,6 @@ after_initialize do
 			end
 
 			render json: rentaCache
-			#respond_to do |format|
-			#format.html { render plain: "hello world" }
-			#format.json { render json: rentaCache }
-			#end
 
 		end
 
