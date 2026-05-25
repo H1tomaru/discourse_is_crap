@@ -13,10 +13,6 @@ export default class MyController extends Controller {
 	@tracked showCRAP = false
 	@tracked rulez = false
 
-	LazyLoadLoad: on('init', function() {
-		$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
-	})
-
 	//loads external script
 	constructor() {
 		super(...arguments)
