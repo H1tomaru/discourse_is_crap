@@ -1,64 +1,89 @@
-import Controller from '@ember/controller';
-import { on } from '@ember/object/evented';
-import $ from 'jquery';
+import Controller from '@ember/controller'
+import { action } from '@ember/object'
+import { tracked } from '@glimmer/tracking'
 
 export default class MyController extends Controller {
 
-	showLIST: localStorage.getItem('showLIST') == "true",
-	showTYPE1: true,
-	showTYPE2: true,
-	showTYPE3: true,
-	showTYPE4: true,
-	showGAMEZ: true,
-	showCRAP: false,
-	rulez: false,
+	@tracked showLIST = localStorage.getItem('showLIST') === "true"
+	@tracked showTYPE1 = true
+	@tracked showTYPE2 = true
+	@tracked showTYPE3 = true
+	@tracked showTYPE4 = true
+	@tracked showGAMEZ = true
+	@tracked showCRAP = false
+	@tracked rulez = false
 
 	LazyLoadLoad: on('init', function() {
 		$.getScript('https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js')
-	}),
+	})
 
-	actions: {
-
-		showRULEZ() {
-			this.toggleProperty('rulez')
-		},
-
-		showLIST1() {
-			this.set('showLIST', false)
-			localStorage.setItem('showLIST', "false")
-		},
-
-		showLIST2() {
-			this.set('showLIST', true)
-			localStorage.setItem('showLIST', "true")
-		},
-
-		showGAMEZ() {
-			this.set('showCRAP', false)
-			this.set('showGAMEZ', true)
-		},
-
-		showCRAP() {
-			this.set('showGAMEZ', false)
-			this.set('showCRAP', true)
-		},
-
-		showTYPE1() {
-			this.toggleProperty('showTYPE1')
-		},
-
-		showTYPE2() {
-			this.toggleProperty('showTYPE2')
-		},
-
-		showTYPE3() {
-			this.toggleProperty('showTYPE3')
-		},
-
-		showTYPE4() {
-			this.toggleProperty('showTYPE4')
+	//loads external script
+	constructor() {
+		super(...arguments)
+		this.lazyLoadScripts()
+	}
+	
+	// Pure helper method to handle script injection asynchronously without jQuery
+	async lazyLoadScripts() {
+		try {
+			//check if script already loaded before, if not, load it
+			if (!window.lazySizes) {
+				const script = document.createElement('script')
+				script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js'
+				script.async = true
+				document.head.appendChild(script)
+		  }
+		} catch (error) {
+			console.error("Failed to load lazysizes:", error)
 		}
-
 	}
 
+	@action
+	showRULEZ() {
+		this.rulez = !this.rulez
+	}
+	
+	@action
+	showLIST1() {
+		this.showLIST = false
+		localStorage.setItem('showLIST', "false")
+	}
+	
+	@action
+	showLIST2() {
+		this.showLIST = true
+		localStorage.setItem('showLIST', "true")
+	}
+	
+	@action
+	showGAMEZ() {
+		this.showCRAP = false
+		this.showGAMEZ = true
+	}
+	
+	@action
+	showCRAP() {
+		this.showGAMEZ = false
+		this.showCRAP = true
+	}
+	
+	@action
+	showTYPE1() {
+		this.showTYPE1 = !this.showTYPE1;
+	}
+	
+	@action
+	showTYPE2() {
+		this.showTYPE2 = !this.showTYPE2;
+	}
+	
+	@action
+	showTYPE3() {
+		this.showTYPE3 = !this.showTYPE3;
+	}
+	
+	@action
+	showTYPE4() {
+		this.showTYPE4 = !this.showTYPE4;
+	}
 }
