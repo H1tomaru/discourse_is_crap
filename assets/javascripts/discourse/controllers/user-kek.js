@@ -34,8 +34,9 @@ export default class MyController extends Controller {
 		const rawFeedbacks = this.model?.FEEDBACKS ? [...this.model.FEEDBACKS] : []
 		//loop throug fb and set its color for template, also find last editable fb
 		rawFeedbacks.reverse().forEach((item) => {
-			// Nested ternary: If score > 0 use green, else if score < 0 use blue, otherwise neutral
-			item.COLOR = item.SCORE > 0 ? 'zeG' : (item.SCORE < 0 ? 'zeB' : 'zeN')
+			if (item.SCORE > 0) item.COLOR = 'zeG'
+			if (item.SCORE < 0) item.COLOR = 'zeB'
+			if (item.SCORE === 0) item.COLOR = 'zeN'
 
 			newfbarray.push({
 				FEEDBACK: item.FEEDBACK, pNAME: item.pNAME,
@@ -112,35 +113,46 @@ export default class MyController extends Controller {
 			if (result.winrars_z) {
 				//draw this new fb on a page
 				//find fb color first and increase corresponding fb number
-				//Map configurations using score rules to match counters and colors instantly
-				const scoreProps = { 1: { color: 'zeG', model: 'fbG' }, 0: { color: 'zeN', model: 'fbN' }, '-1': { color: 'zeB', model: 'fbB' } }
-				const scoreKey = this.score > 0 ? 1 : (this.score < 0 ? -1 : 0) // Fast boundary map
-				const config = scoreProps[scoreKey]
+				let color = 'zeN'
 				
-				// Increments the target model total tally counter (e.g. model.fbG++)
-				this.model[config.model] = (this.model[config.model] || 0) + 1
+				// Flat, classic if/else statements for model tracking updates
+				if (this.score > 0) {
+					color = 'zeG'
+					this.model.fbG = (this.model.fbG) + 1
+				} else if (this.score === 0) {
+					color = 'zeN'
+					this.model.fbN = (this.model.fbN) + 1
+				} else if (this.score < 0) {
+					color = 'zeB'
+					this.model.fbB = (this.model.fbB) + 1
+				}
 				
-				// findIndex scans list directly. Disables edit on user's older posts.
+				//remove edit tag from now not last feedback
 				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
 				if (ni >= 0) this.fEEDBACKS.fb1[ni].eDit = false
 				
 				// Unshifts inserts the new feedback live right at the top of the timeline
 				this.fEEDBACKS.fb1.unshift({
-				pNAME: this.currentUser.username,
-				FEEDBACK: this.pisanina,
-				DATE: new Date().toISOString().slice(0, 10).replace(/-/g, '.'), // Fast native YYYY.MM.DD string format
-				COLOR: config.c,
-				eDit: true
+					pNAME: this.currentUser.username,
+					FEEDBACK: this.pisanina,
+					DATE: new Date().toISOString().slice(0, 10).replace(/-/g, '.'), // Fast native YYYY.MM.DD string format
+					COLOR: color,
+					eDit: true
 				})
 				this.model = { ...this.model } // Wake up Ember template tracking
 			}
 			
 			// Executes if updating an existing feedback was successful
 			if (result.winrars_e) {
+				//find last feedback
 				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
 				if (ni >= 0) {
-				this.fEEDBACKS.fb1[ni].FEEDBACK = this.pisanina
-				this.fEEDBACKS.fb1[ni].COLOR = this.score > 0 ? 'zeG' : (this.score < 0 ? 'zeB' : 'zeN')
+					//edit it
+					this.fEEDBACKS.fb1[ni].FEEDBACK = this.pisanina
+					
+					if (this.score > 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeG'
+					if (this.score < 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeB'
+					if (this.score === 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeN'
 				}
 				this.model = { ...this.model } // Wake up Ember template tracking
 			}
@@ -152,102 +164,51 @@ export default class MyController extends Controller {
 		}
 	}
 
+	@action
+	selectOtz(input) {
+		//set variable checked1 2 3 to true and false, for corresponding input
+		this.checked1 = input === 1
+		this.checked2 = input === 2
+		this.checked3 = input === 3
+		
+		if (input === 1) this.score = 1
+		if (input === 2) this.score = 0
+		if (input === 3) this.score = -1
+	}
 
-
-					if ( result.winrars_z == true ) {
-						var color
-
-						if ( this.get('score') > 0 ) {
-							color = 'zeG'
-							this.set('model.fbG', this.get('model.fbG') + 1)
-						} else if ( this.get('score') == 0 ) {
-							color = 'zeN'
-							this.set('model.fbN', this.get('model.fbN') + 1)
-						} else if ( this.get('score') < 0 ) {
-							color = 'zeB'
-							this.set('model.fbB', this.get('model.fbB') + 1)
-						}
-
-						//remove edit tag from now not last feedback
-						if (this.get('fEEDBACKS.fb1').length > 0) {
-							var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-							if ( ni >= 0 ) { Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni), 'eDit', false) }
-						}
-
-						//add this feedback to feedbacks
-						this.get('fEEDBACKS.fb1').unshiftObject({
-							'pNAME': this.get('currentUser.username'),
-							'FEEDBACK': this.get('pisanina'),
-							'DATE': new Date().getFullYear()+"."+String(new Date().getMonth()+1).padStart(2,'0')+"."+String(new Date().getDate()).padStart(2,'0'),
-							'COLOR': color,
-							'eDit': true
-						})
-					}
-
-					if ( result.winrars_e == true ) {
-						//find last feedback
-						var ni = this.get('fEEDBACKS.fb1').map(function(it) { return it.pNAME }).indexOf(this.get('currentUser.username'))
-
-						//edit it
-						Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'FEEDBACK',this.get('pisanina'))
-						if ( this.get('score') > 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeG')
-						if ( this.get('score') == 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeN')
-						if ( this.get('score') < 0 ) Ember.set(this.get('fEEDBACKS.fb1').objectAt(ni),'COLOR','zeB')
-					}
-
-					this.set('checked1', true)
-					this.set('checked2', false)
-					this.set('checked3', false)
-					this.set('score', 1)
-					this.set('pisanina', null)
-
+	@action
+	async troikopoisk(poisk, acc) {
+		Object.assign(this, { accamdal: true, accawait: true, actualgp: false })
+		try {
+			const response = await fetch("/MrBug/troikopoisk/", {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					poisk: btoa(unescape(encodeURIComponent(poisk))),
+					acc: btoa(unescape(encodeURIComponent(acc)))
 				})
-			}
-		},
-
-		selectOtz(input) {
-			if ( input == 1 ) {
-				this.set('checked1', true)
-				this.set('checked2', false)
-				this.set('checked3', false)
-				this.set('score', 1)
-			} else if ( input == 2 ) {
-				this.set('checked1', false)
-				this.set('checked2', true)
-				this.set('checked3', false)
-				this.set('score', 0)
-			} else if ( input == 3 ) {
-				this.set('checked1', false)
-				this.set('checked2', false)
-				this.set('checked3', true)
-				this.set('score', -1)
-			} 
-		},
-
-		troikopoisk(poisk, acc) {
-			this.set('accamdal', true)
-			this.set('accawait', true)
-			this.set('actualgp', false)
-
-			$.post("/MrBug/troikopoisk/", { 
-				poisk: btoa(unescape(encodeURIComponent(poisk))),
-				acc: btoa(unescape(encodeURIComponent(acc)))
-			}).then(result => {
-				this.set('troikopoisk', result)
-				this.set('accawait', false)
 			})
-		},
-
-		getPaZZ(input) {
-			this.set('passwait', true)
-			$.post("/u/"+this.get('currentUser.username')+"/kek/oishiiii", { 
-				myylo: btoa(unescape(encodeURIComponent(input)))
-			}).then(result => {
-				this.set('actualgp', result)
-				this.set('passwait', false)
-			})
+			this.troikopoisk = await response.json()
+			this.accawait = false
+		} catch (error) {
+			console.error("Troikopoisk submission failed:", error)
 		}
-
+	}
+	
+	@action
+	async getPaZZ(input) {
+		this.passwait = true
+		try {
+			const response = await fetch(`/u/${this.currentUser?.username}/kek/oishiiii`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({ myylo: btoa(unescape(encodeURIComponent(input))) })
+			})
+			this.actualgp = await response.json()
+			this.passwait = false
+		} catch (error) {
+			console.error("getPaZZ transaction failed:", error)
+		}
 	}
 
 }
