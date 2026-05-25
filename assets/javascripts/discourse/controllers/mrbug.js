@@ -1,7 +1,7 @@
-import Controller from '@ember/controller';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import Controller from '@ember/controller'
+import { action } from '@ember/object'
+import { service } from '@ember/service'
+import { tracked } from '@glimmer/tracking'
 
 export default class MyController extends Controller {
 	//gets current user?
@@ -9,12 +9,12 @@ export default class MyController extends Controller {
 
 	//default states
 	// Tracked states for automatic template rerendering
-	@tracked bagamdal = false;
-	@tracked mdalready = false;
-	@tracked prezaips = null;
-	@tracked pzposition = null;
-	@tracked zaips = null;
-	@tracked showhideo = [true, true, true];
+	@tracked bagamdal = false
+	@tracked mdalready = false
+	@tracked prezaips = null
+	@tracked pzposition = null
+	@tracked zaips = null
+	@tracked showhideo = [true, true, true]
 
 	get glizt () {
 		//make variables for each game type
@@ -30,7 +30,7 @@ export default class MyController extends Controller {
 			if (currentuser) {
 				//template shit for type 2 and 3 games displaying type 2 and 3 stuff
 				//cool way for simlified true false stuff
-				const gTYPE2 = item.TYPE === 2;
+				const gTYPE2 = item.TYPE === 2
        			const gTYPE3 = item.TYPE === 3
 
 				//loop thorought troikas and see if current user is in it
@@ -79,17 +79,17 @@ export default class MyController extends Controller {
 
 	@action
 	netmudal() {
-		this.bagamdal = false;
-		this.mdalready = false;
-		this.prezaips = null;
-		this.zaips = null;
+		this.bagamdal = false
+		this.mdalready = false
+		this.prezaips = null
+		this.zaips = null
 	}
 
 	@action
 	async zaips(knopk, gcode) {
 		this.bagamdal = true
 		//if not guest, do prezaips, else display guest message
-		const currentuser = this.currentUser?.username;
+		const currentuser = this.currentUser?.username
 		
 		if (currentuser) {
 		  try {
@@ -102,21 +102,21 @@ export default class MyController extends Controller {
 		
 			this.prezaips = result;
 			if (Object.prototype.hasOwnProperty.call(result, 'position')) {
-			  this.pzposition = result['position']?.[0];
+			  this.pzposition = result['position']?.[0]
 			}
-			this.mdalready = true;
+			this.mdalready = true
 		  } catch (error) {
 			console.error("Failed to run prezaips post syntax:", error);
 		  }
 		} else {
-			this.prezaips = { guest: true };
-			this.mdalready = true;
+			this.prezaips = { guest: true }
+			this.mdalready = true
 		}
 	}
 
 	@action
 	async imgoingin() {
-		this.mdalready = false;
+		this.mdalready = false
 		//ember doesnt update on 2nd level variables, so use this shit
 		this.prezaips = { ...this.prezaips, winrars: false }
 		
@@ -134,10 +134,10 @@ export default class MyController extends Controller {
 			const response = await fetch('/MrBug.json')
 			const result = await response.json()
 			
-			this.model = result; // Mutating this automatically updates the glizt getter!
+			this.model = result // Mutating this automatically updates the glizt getter!
 			this.mdalready = true
 		} catch (error) {
-			console.error("Failed to run imgoingin submission:", error);
+			console.error("Failed to run imgoingin submission:", error)
 		}
 	}
 
