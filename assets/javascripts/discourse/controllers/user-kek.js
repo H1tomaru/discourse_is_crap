@@ -107,47 +107,50 @@ export default class MyController extends Controller {
 			})
 			const result = await response.json()
 			this.responz = result
+
 			// Executes if creating a brand new feedback submission was successful
 			if (result.winrars_z) {
-			// Map configurations using score rules to match counters and colors instantly
-			const scoreProps = { 1: { c: 'zeG', m: 'fbG' }, 0: { c: 'zeN', m: 'fbN' }, '-1': { c: 'zeB', m: 'fbB' } }
-			const scoreKey = this.score > 0 ? 1 : (this.score < 0 ? -1 : 0) // Fast boundary map
-			const config = scoreProps[scoreKey]
-			
-			// Increments the target model total tally counter (e.g. model.fbG++)
-			this.model[config.m] = (this.model[config.m] || 0) + 1
-			
-			// findIndex scans list directly. Disables edit on user's older posts.
-			const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
-			if (ni >= 0) this.fEEDBACKS.fb1[ni].eDit = false
-			
-			// Unshifts inserts the new feedback live right at the top of the timeline
-			this.fEEDBACKS.fb1.unshift({
-			pNAME: this.currentUser.username,
-			FEEDBACK: this.pisanina,
-			DATE: new Date().toISOString().slice(0, 10).replace(/-/g, '.'), // Fast native YYYY.MM.DD string format
-			COLOR: config.c,
-			eDit: true
-			})
-			this.model = { ...this.model } // Wake up Ember template tracking
+				//draw this new fb on a page
+				//find fb color first and increase corresponding fb number
+				//Map configurations using score rules to match counters and colors instantly
+				const scoreProps = { 1: { color: 'zeG', model: 'fbG' }, 0: { color: 'zeN', model: 'fbN' }, '-1': { color: 'zeB', model: 'fbB' } }
+				const scoreKey = this.score > 0 ? 1 : (this.score < 0 ? -1 : 0) // Fast boundary map
+				const config = scoreProps[scoreKey]
+				
+				// Increments the target model total tally counter (e.g. model.fbG++)
+				this.model[config.model] = (this.model[config.model] || 0) + 1
+				
+				// findIndex scans list directly. Disables edit on user's older posts.
+				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
+				if (ni >= 0) this.fEEDBACKS.fb1[ni].eDit = false
+				
+				// Unshifts inserts the new feedback live right at the top of the timeline
+				this.fEEDBACKS.fb1.unshift({
+				pNAME: this.currentUser.username,
+				FEEDBACK: this.pisanina,
+				DATE: new Date().toISOString().slice(0, 10).replace(/-/g, '.'), // Fast native YYYY.MM.DD string format
+				COLOR: config.c,
+				eDit: true
+				})
+				this.model = { ...this.model } // Wake up Ember template tracking
 			}
 			
 			// Executes if updating an existing feedback was successful
 			if (result.winrars_e) {
-			const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
-			if (ni >= 0) {
-			this.fEEDBACKS.fb1[ni].FEEDBACK = this.pisanina
-			this.fEEDBACKS.fb1[ni].COLOR = this.score > 0 ? 'zeG' : (this.score < 0 ? 'zeB' : 'zeN')
-			}
-			this.model = { ...this.model } // Wake up Ember template tracking
+				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
+				if (ni >= 0) {
+				this.fEEDBACKS.fb1[ni].FEEDBACK = this.pisanina
+				this.fEEDBACKS.fb1[ni].COLOR = this.score > 0 ? 'zeG' : (this.score < 0 ? 'zeB' : 'zeN')
+				}
+				this.model = { ...this.model } // Wake up Ember template tracking
 			}
 			
 			Object.assign(this, { checked1: true, checked2: false, checked3: false, score: 1, pisanina: null })
 			
-			} catch (error) {
-				console.error("Network call execution failed:", error)
-			}
-			}
+		} catch (error) {
+			console.error("Network call execution failed:", error)
+		}
+	}
 
 
 
