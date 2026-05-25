@@ -1,6 +1,6 @@
-import Controller from '@ember/controller';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import Controller from '@ember/controller'
+import { action } from '@ember/object'
+import { tracked } from '@glimmer/tracking'
 
 export default class MyController extends Controller {
 
@@ -54,13 +54,12 @@ export default class MyController extends Controller {
 	@action
 	async P4Lista() {
 		try {
-			// Cleaned up the old return fetch().then() chain with clean async/await
-			const response = await fetch('/MrBug.json');
-			const result = await response.json();
+			const response = await fetch('/MrBug.json')
+			const result = await response.json()
 			
-			this.p4lista = result.gamelist;
+			this.p4lista = result.gamelist
 		} catch (error) {
-			console.error("Failed to load P4Lista:", error);
+			console.error("Failed to load P4Lista:", error)
 		}
 	}
 }
