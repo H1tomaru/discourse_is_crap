@@ -226,12 +226,8 @@ after_initialize do
 				#decode shit
 				troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
 				acc = Base64.decode64(params[:acc]).strip
-				
-				if acc == 'Den888'
-					accountsDB = @@userdb[:PS4db_den].find( { _id: troikopoisk } ).to_a.first()
-				else
-					accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
-				end
+
+				accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
 	
 				#do stuff when finding acc or not
 				if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
@@ -267,22 +263,19 @@ after_initialize do
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
 					( (zaipsalsq.blank? || zaipsalsq[:count] < 4)  || current_user[:username] == 'MrBug' )
-					#special message if its a p1 zapis with less then 5 mrbug feedback
-					if code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug'
-						render json: { piadin: true, fbcount: user_FB[:fbBuG] }
-					else
-						#get stuff from db
-						prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.first()
-						if prezaips[:imgLINKHQ]
-							prezaips[:imgLINK] = prezaips[:imgLINKHQ]
-							prezaips.except!("imgLINKHQ")
-						end
 
-						prezaips[:position] = code[0]
-						prezaips[:winrars] = true
-
-						render json: prezaips
+					#get stuff from db
+					prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.first()
+					if prezaips[:imgLINKHQ]
+						prezaips[:imgLINK] = prezaips[:imgLINKHQ]
+						prezaips.except!("imgLINKHQ")
 					end
+
+					prezaips[:position] = code[0]
+					prezaips[:winrars] = true
+
+					render json: prezaips
+
 				else
 					render json: { banned: true }
 				end
@@ -348,40 +341,23 @@ after_initialize do
 					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
 					#find this troika index
 					troino = gameuzers["P"+code[0]].count
-					troino = troino / 2.0 if code[0] == "4" || code[0] == "4_4" || code[0] == "4_5"
+					troino = troino / 2.0 if code[0] == "4"
 					trindx = troino - 1
 
 					#dont do shit if troika index not full number
 					#check if troika sobrana
-					if troino.to_i == troino && ( (gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
-						gameuzers["P2"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) ||
-					(gameuzers["P2"] && gameuzers["P4"] &&
-						gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1]) ||
-					(gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"] &&
-						gameuzers["P2_4"][trindx] && gameuzers["P2_5"][trindx] && gameuzers["P4_4"][trindx*2+1] && gameuzers["P4_5"][trindx*2+1]) )
+					if troino.to_i == troino && (gameuzers["P2"] && gameuzers["P4"] && gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1])
 						#add users to userlist
 						usernames = ["MrBug"]
-						usernames.push(gameuzers[:P1][trindx][:NAME])		if gameuzers[:P1] && gameuzers[:P1][trindx] && gameuzers[:P1][trindx][:NAME] != "-55" # && gameuzers[:P1][trindx][:STAT] == 0
 						usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] # && gameuzers[:P2][trindx][:STAT] == 0
 						usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] # && gameuzers[:P4][trindx*2][:STAT] == 0
 						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] # && gameuzers[:P4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[:P2_4][trindx][:NAME])		if gameuzers[:P2_4] # && gameuzers[:P2_4][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P2_5][trindx][:NAME])		if gameuzers[:P2_5] # && gameuzers[:P2_5][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P4_4][trindx*2][:NAME])	if gameuzers[:P4_4] # && gameuzers[:P4_4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4_4][trindx*2+1][:NAME])	if gameuzers[:P4_4] # && gameuzers[:P4_4][trindx*2+1][:STAT] == 0
-						usernames.push(gameuzers[:P4_5][trindx*2][:NAME])	if gameuzers[:P4_5] # && gameuzers[:P4_5][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4_5][trindx*2+1][:NAME])	if gameuzers[:P4_5] # && gameuzers[:P4_5][trindx*2+1][:STAT] == 0
 						usernames.uniq!
 
-						hrenka = "Тройка" 		if gameuzers["P2"] && gameuzers["P4"]
-						hrenka = "Четверка" 	if gameuzers[:P1] && gameuzers[:P1][trindx]
-						hrenka = "Пятерка" 		if gameuzers["P2"] && gameuzers["P4_4"] && gameuzers["P4_5"]
-						hrenka = "Шестерка" 	if gameuzers["P2_4"] && gameuzers["P2_5"] && gameuzers["P4_4"] && gameuzers["P4_5"]	
-
-						troititle = hrenka + " на " + code[3] + " собрана! Ждем оплату!"
+						troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
 						troitext = "Здравствуйте! :robot:\n" +
-						"Случилось невероятное! " + hrenka + " на " + code[3] + " собрана.\n" +
-						"Этого не должно было произойти, но придется теперь как-то с этим жить :robot:\n\n" +
+						"Случилось невероятное! Тройка на " + code[3] + " собрана.\n" +
+						"Этого не должно было произойти, но пути назад теперь нет. :robot:\n\n" +
 						"Вот план дальнейших действий:\n" +
 						"1) Оплатить свою позицию, суммы и реквизиты узнать у [MrBug в личных сообщениях](/u/MrBug)\n" +
 						"2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
