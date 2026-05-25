@@ -16,6 +16,7 @@ export default Ember.Controller.extend({
 		var finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 
 		this.get('model.gamelist').forEach((item, index) => {
+			//template stuff, if paint game red or green
 			item.MODE1 = false; item.MODE2 = false
 
 			//if not guest, check if user is in this troika
@@ -28,21 +29,30 @@ export default Ember.Controller.extend({
 
 				//loop thorought troikas and see if current user is in it
 				item.TROIKI.forEach((troika, index) => {
+					//template stuff, if paint user sostav red or green
 					troika.MODE1 = false; troika.MODE2 = false
 
 					//calculate if user is in this troika, if he is, add user + gname to list, also gamechangecolor = true, troika change color = true
-					for (let i = 0; i < 6; i++) {
+					for (let i = 0; i < 3; i++) {
 						if (currentuser == troika['USERS'][i]) {
+							//see if we are p2 or p4 to show its P position and P price
+							if (i = 0) {
+								PPRICE = item.PRICE2
+								PPOSITION = 2
+							} else {
+								PPRICE = item.PRICE4
+								PPOSITION = 4
+							}
 							if (troika['PSTATUS'][i][0] == true) {
 								item.MODE1 = true; troika.MODE1 = true; item.MODE2 = false; troika.MODE2 = false
 								finalvar.maigamez1.push( {
-									POSITION: item['PPOSITIONS'][i], gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: item['PPRICES'][i],
-									P1ADD: troika.NOP1ADD, DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
+									POSITION: PPOSITION, gNAME: item.gameNAME, gPIC: item.imgLINK, PRICE: PPRICE,
+									DATE: item.DATE, TYPE2: gTYPE2, TYPE3: gTYPE3
 								} )
 							} else {
 								if (item.MODE1 == false) item.MODE2 = true
 								if (troika.MODE1 == false) troika.MODE2 = true
-								finalvar.maigamez2.push( { POSITION: item['PPOSITIONS'][i], gNAME: item.gameNAME, gPIC: item.imgLINK } )
+								finalvar.maigamez2.push( { POSITION: PPOSITION, gNAME: item.gameNAME, gPIC: item.imgLINK } )
 							}
 						}
 					} 
@@ -64,7 +74,6 @@ export default Ember.Controller.extend({
 		netmudal() {
 			this.set('bagamdal', false)
 			this.set('mdalready', false)
-			this.set('troikopoisk', null)
 			this.set('prezaips', null)
 			this.set('zaips', null)
 		},
