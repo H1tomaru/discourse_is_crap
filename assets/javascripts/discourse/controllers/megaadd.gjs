@@ -5,6 +5,8 @@ import MegaAddTemplate from '../templates/megaadd'
 
 export default class MyController extends Controller {
 
+	template = MegaAddTemplate
+
 	@tracked addstuff = {
 		GAME: null,
 		STRING: null,
