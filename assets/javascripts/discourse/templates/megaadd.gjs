@@ -1,7 +1,6 @@
 import { on } from '@ember/modifier'
 import { get } from '@ember/helper'
-import Input from '@ember/component/input'
-import Textarea from '@ember/component/textarea'
+import { Input, Textarea } from '@ember/component'
 
 export default <template>
 	<form class="MegaAdd" {{on "submit" @controller.oops}}>
