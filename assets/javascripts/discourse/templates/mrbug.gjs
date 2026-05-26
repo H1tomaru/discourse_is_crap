@@ -276,7 +276,7 @@ export default <template>
                 <br />
                 {{#if users.USERS.[2]}}
                   <a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{users.USERS.[2]}}'>{{users.USERS.[2]}}</a>
-                  <a class='repala {{if users.PFBred.[3] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+                  <a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
                     {{users.FEEDBACK.[2].PERCENT}}%
                     <span>
                       <i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
@@ -418,7 +418,7 @@ export default <template>
                 <br />
                 {{#if users.USERS.[2]}}
                   <a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{users.USERS.[2]}}'>{{users.USERS.[2]}}</a>
-                  <a class='repala {{if users.PFBred.[3] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+                  <a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
                     {{users.FEEDBACK.[2].PERCENT}}%
                     <span>
                       <i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
@@ -563,7 +563,7 @@ export default <template>
                 <br />
                 {{#if users.USERS.[2]}}
                   <a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{users.USERS.[2]}}'>{{users.USERS.[2]}}</a>
-                  <a class='repala {{if users.PFBred.[3] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+                  <a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
                     {{users.FEEDBACK.[2].PERCENT}}%
                     <span>
                       <i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
