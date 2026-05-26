@@ -13,7 +13,7 @@ export default class MyController extends Controller {
 	@tracked mdalready = false
 	@tracked prezaips = null
 	@tracked pzposition = null
-	@tracked zaips = null
+	@tracked zaipsResult = null;
 	@tracked showhideo = [true, true, true]
 
 	get glizt () {
@@ -79,7 +79,7 @@ export default class MyController extends Controller {
 
 	@action
 	netmudal() {
-		Object.assign(this, { bagamdal: false, mdalready: false, prezaips: null, zaips: null })
+		Object.assign(this, { bagamdal: false, mdalready: false, prezaips: null, zaipsResult: null })
 	}
 
 	@action
