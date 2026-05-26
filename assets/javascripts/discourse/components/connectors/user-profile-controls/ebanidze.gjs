@@ -8,5 +8,3 @@ export default <template>
     </LinkTo>
   </li>
 </template>
-
-import dIcon from 'discourse/helpers/d-icon'
