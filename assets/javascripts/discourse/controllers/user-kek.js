@@ -1,10 +1,10 @@
-import Controller from "@ember/controller"
-import { action } from "@ember/object"
-import { service } from "@ember/service"
-import { tracked } from "@glimmer/tracking"
-import { on } from "@ember/modifier"
-import { fn, get } from "@ember/helper"
-import { Input } from "@ember/component"
+import Controller from '@ember/controller'
+import { action } from '@ember/object'
+import { service } from '@ember/service'
+import { tracked } from '@glimmer/tracking'
+import { on } from '@ember/modifier'
+import { fn, get } from '@ember/helper'
+import { Input } from '@ember/component'
 
 export default class MyController extends Controller {
 	@service currentUser
