@@ -1,10 +1,10 @@
-import Controller from '@ember/controller'
-import { action } from '@ember/object'
-import { service } from '@ember/service'
-import { tracked } from '@glimmer/tracking'
-import { on } from "@ember/modifier";
-import { fn, get } from "@ember/helper";
-import { Input } from "@ember/component";
+import Controller from "@ember/controller"
+import { action } from "@ember/object"
+import { service } from "@ember/service"
+import { tracked } from "@glimmer/tracking"
+import { on } from "@ember/modifier"
+import { fn, get } from "@ember/helper"
+import { Input } from "@ember/component"
 
 export default class MyController extends Controller {
 	@service currentUser
@@ -182,7 +182,7 @@ export default class MyController extends Controller {
 	}
 
 	@action
-	async troikopoisk(poisk, acc) {
+	async runTroikopoisk(poisk, acc) {
 		Object.assign(this, { accamdal: true, accawait: true, actualgp: false })
 		try {
 			const response = await fetch("/MrBug/troikopoisk/", {
