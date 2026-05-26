@@ -550,7 +550,7 @@ after_initialize do
 
 				#do stuff if we have some
 				user_gamez.each do |ugaz| #do stuff if we have some
-					if timeNOW - ugaz[:DATE] < 63_000_000 && ugaz[:P2] && ugaz[:P4]
+					if timeNOW - ugaz[:DATE].to_time < 63_000_000 && ugaz[:P2] && ugaz[:P4]
 						#show simple short mail address
 						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 						#create final variable
