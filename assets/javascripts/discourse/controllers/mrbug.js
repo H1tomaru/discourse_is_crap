@@ -173,4 +173,16 @@ export default class MyController extends Controller {
 		}
 	}
 
+	@action
+	zaips2(gameId, event) {
+		event.stopPropagation();
+		this.zaips("2", gameId);
+	}
+
+	@action
+	zaips4(gameId, event) {
+		event.stopPropagation();
+		this.zaips("4", gameId);
+	}
+
 }
