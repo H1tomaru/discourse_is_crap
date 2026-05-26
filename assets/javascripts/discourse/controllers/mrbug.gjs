@@ -2,8 +2,7 @@ import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { service } from '@ember/service'
 import { tracked } from '@glimmer/tracking'
-import { fn, concat, get } from "@ember/helper"
-import { on } from "@ember/modifier"
+import MrBugTemplate from '../templates/mrbug'
 
 export default class MyController extends Controller {
 	//gets current user?
