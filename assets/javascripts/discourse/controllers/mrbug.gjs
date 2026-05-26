@@ -5,6 +5,9 @@ import { tracked } from '@glimmer/tracking'
 import MrBugTemplate from '../templates/mrbug'
 
 export default class MyController extends Controller {
+
+	template = MrBugTemplate
+
 	//gets current user?
 	@service currentUser
 
