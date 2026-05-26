@@ -35,51 +35,51 @@ export default class MyController extends Controller {
 	}
 
 	@action
-	showRULEZ() {
+	toggleRULEZ() {
 		this.rulez = !this.rulez
 	}
 	
 	@action
-	showLIST1() {
+	setLIST1() {
 		this.showLIST = false
 		localStorage.setItem('showLIST', "false")
 	}
 	
 	@action
-	showLIST2() {
+	setLIST2() {
 		this.showLIST = true
 		localStorage.setItem('showLIST', "true")
 	}
 	
 	@action
-	showGAMEZ() {
+	showGamesTab() {
 		this.showCRAP = false
 		this.showGAMEZ = true
 	}
 	
 	@action
-	showCRAP() {
+	showCrapTab() {
 		this.showGAMEZ = false
 		this.showCRAP = true
 	}
 	
 	@action
-	showTYPE1() {
+	toggleTYPE1() {
 		this.showTYPE1 = !this.showTYPE1;
 	}
 	
 	@action
-	showTYPE2() {
+	toggleTYPE2() {
 		this.showTYPE2 = !this.showTYPE2;
 	}
 	
 	@action
-	showTYPE3() {
+	toggleTYPE3() {
 		this.showTYPE3 = !this.showTYPE3;
 	}
 	
 	@action
-	showTYPE4() {
+	toggleTYPE4() {
 		this.showTYPE4 = !this.showTYPE4;
 	}
 }
