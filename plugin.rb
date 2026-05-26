@@ -65,7 +65,7 @@ after_initialize do
 			autozCache = self.class.cachedb[:autozCache].find.to_a.first
 
 			#drop chache, if its old
-			( elf.class.cachedb[:autozCache].drop; autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
+			( self.class.cachedb[:autozCache].drop; autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none //no show account mail anymore edition//
 			if autozCache.blank? || (current_user && current_user[:username] == 'H1tomaru') #megaaddhack
