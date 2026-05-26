@@ -1,8 +1,8 @@
-import { ajax } from 'discourse/lib/ajax';
-import Ember from 'ember';
+import Route from '@ember/routing/route'
+import { ajax } from 'discourse/lib/ajax'
 
-export default Ember.Route.extend({
+export default class MrBugRoute extends Route {
 	model() {
 		return ajax('/MrBug.json')
 	}
-});
+}
