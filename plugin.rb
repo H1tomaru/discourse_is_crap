@@ -812,14 +812,14 @@ after_initialize do
 				#count and create numbers
 				inputfb[:FEEDBACKS].each do |fb|
 					#look for old ones and delete them
-					if timeNOW - fb[:DATE] > 63_000_000
+					if timeNOW - fb[:DATE].to_time > 63_000_000
 						feedbacks[:fbARC] += 1
 					else #else just count them
 						feedbacks[:fbG] += 1 if fb[:SCORE] > 0
 						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
 						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
 						#count bugofb
-						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE] < 31_500_000)
+						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE].to_time < 31_500_000)
 							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
 							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0
 						end
