@@ -195,7 +195,7 @@ export default <template>
               <span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "2" game._id)}} class='BagButon'>П2<br />
+              <button {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
                 {{#if game.PRICE2}}
                   <h3>{{game.PRICE2}}</h3><br />рублей
                 {{else}}
@@ -205,7 +205,7 @@ export default <template>
               </button>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "4" game._id)}} class='BagButon'>П4<br />
+              <button {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
                 {{#if game.PRICE4}}
                   <h3>{{game.PRICE4}}</h3><br />рублей
                 {{else}}
@@ -337,7 +337,7 @@ export default <template>
               <span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "2" game._id)}} class='BagButon'>П2<br />
+              <button {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
                 {{#if game.PRICE2}}
                   <h3>{{game.PRICE2}}</h3><br />рублей
                 {{else}}
@@ -347,7 +347,7 @@ export default <template>
               </button>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "4" game._id)}} class='BagButon'>П4<br />
+              <button {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
                 {{#if game.PRICE4}}
                   <h3>{{game.PRICE4}}</h3><br />рублей
                 {{else}}
@@ -482,7 +482,7 @@ export default <template>
               <span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "2" game._id)}} class='BagButon'>П2<br />
+              <button {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
                 {{#if game.PRICE2}}
                   <h3>{{game.PRICE2}}</h3><br />рублей
                 {{else}}
@@ -492,7 +492,7 @@ export default <template>
               </button>
             </td>
             <td>
-              <button {{on "click" (fn this.zaips "4" game._id)}} class='BagButon'>П4<br />
+              <button {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
                 {{#if game.PRICE4}}
                   <h3>{{game.PRICE4}}</h3><br />рублей
                 {{else}}
