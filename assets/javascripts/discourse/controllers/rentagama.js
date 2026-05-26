@@ -52,13 +52,13 @@ export default class MyController extends Controller {
 	}
 	
 	@action
-	showGamesTab() {
+	setShowGAMEZ() {
 		this.showCRAP = false
 		this.showGAMEZ = true
 	}
 	
 	@action
-	showCrapTab() {
+	setShowCRAP() {
 		this.showGAMEZ = false
 		this.showCRAP = true
 	}
