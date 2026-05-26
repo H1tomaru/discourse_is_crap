@@ -304,14 +304,14 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+				zaipsalsq = self.class.cachedb[:zaipsalsq].find({ _id: user_d }).to_a.first
 
 				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
-					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
+					self.class.cachedb[:zaipsalsq].delete_one({ _id: user_d })
 					zaipsalsq = 0
 				end
 
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
+				user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#do everything checking again!
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
@@ -319,26 +319,25 @@ after_initialize do
 				!(code[0] == "1" && user_FB[:fbBuG] < 5 && current_user[:username] != 'MrBug')
 					#increase zaips count for user
 					if zaipsalsq && zaipsalsq[:count]
-						@@cachedb[:zaipsalsq].update_one( { _id: user_d }, { 
+						self.class.cachedb[:zaipsalsq].update_one( { _id: user_d }, { 
 							"$inc" => { count: 1 }
 						}, { upsert: true } )
 					else
-						@@cachedb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
+						self.class.cachedb[:zaipsalsq].insert_one( { _id: user_d, count: 1, DATE: Time.now.strftime("%d") } )
 					end
 
 					#do actual zaips, wohoo
 					push = {}
 					push["P"+code[0]] = { NAME: current_user[:username], DATE: Time.now.strftime("%Y.%m.%d"), STAT: 0 }
 
-					@@userlistdb[:uListP4].update_one( { _id: code[2] }, { "$push" => push }, { upsert: true } )
+					self.class.userlistdb[:uListP4].update_one( { _id: code[2] }, { "$push" => push }, { upsert: true } )
 
 					render json: { winrars: true, position: code[0], gameNAME: code[3] }
 
 					#destroy 4tverki cache
-					@@cachedb[:autozCache].drop()
+					self.class.cachedb[:autozCache].drop
 
-
-					msgtext = current_user[:username]+" записался на позицию П"+code[0][0]+" совместной покупки "+code[3]
+					msgtext = "#{current_user[:username]} записался на позицию П#{code[0][0]} совместной покупки #{code[3]}"
 					#add message to old topic
 					PostCreator.create(
 						Discourse.system_user,
@@ -349,7 +348,7 @@ after_initialize do
 
 					#create forum notification if sobrano
 					#get game userlist
-					gameuzers = @@userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
+					gameuzers = self.class.userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
 					#find this troika index
 					troino = gameuzers["P"+code[0]].count
 					troino = troino / 2.0 if code[0] == "4"
@@ -365,7 +364,7 @@ after_initialize do
 						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] # && gameuzers[:P4][trindx*2+1][:STAT] == 0
 						usernames.uniq!
 
-						troititle = "Тройка на " + code[3] + " собрана! Ждем оплату!"
+						troititle = "Тройка на #{code[3]} собрана! Ждем оплату!"
 						troitext = "Здравствуйте! :robot:\n" +
 						"Случилось невероятное! Тройка на " + code[3] + " собрана.\n" +
 						"Этого не должно было произойти, но пути назад теперь нет. :robot:\n\n" +
@@ -389,10 +388,9 @@ after_initialize do
 					unless SiteSetting.chat_webhook.empty?
 						#add message to discourse chat, if enabled
 						begin
-							Faraday::Connection.new.post(
-								SiteSetting.chat_webhook,
-								'text' => msgtext
-							) { |request| request.options.timeout = 20 }
+							Faraday.post(SiteSetting.chat_webhook, { 'text' => msgtext }) do |request|
+								request.options.timeout = 20
+							end
 						rescue => e
 							PostCreator.create(
 								Discourse.system_user,
@@ -406,10 +404,9 @@ after_initialize do
 					unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
 						#add message to telegram bot, if enabled
 						begin
-							Faraday::Connection.new.post(
-								SiteSetting.metatron_id+'/sendMessage',
-								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
-							) { |request| request.options.timeout = 20 }
+							Faraday.post(SiteSetting.chat_webhook, { 'text' => msgtext }) do |request|
+								request.options.timeout = 20
+							end
 						rescue => e
 							PostCreator.create(
 								Discourse.system_user,
@@ -421,7 +418,7 @@ after_initialize do
 					end
 				else
 					render json: { zaipsfail: true }
-					Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking 4tverki!"
+					Rails.logger.warn "###Warning!!!### #{current_user[:username]} is hacking 4tverki!"
 				end
 
 			else
@@ -435,7 +432,7 @@ after_initialize do
 		end
 
 		def megaadd
-			addstuff = {}, feedbacks = []
+			feedbacks = []
 			addstuff = params
 			addstuff[:RESULT] = []
 			if current_user && current_user[:username] == 'H1tomaru' && addstuff[:GAME] && addstuff[:STRING]
@@ -445,7 +442,7 @@ after_initialize do
 				#p2p4p4 version
 				newstring.each_slice(4) do |sostav|
 					if sostav[0] && (sostav[0].include?("@umail.com.de") || sostav[0].include?("@gmail.com") || sostav[0].include?("@union3.vg")) && sostav[1] && sostav[2] && sostav[3]
-						for i in 1..3
+						(1..3).each do |i|
 							sostav[i] = sostav[i].split(" ---> ").map { |item| item.strip }
 						end
 						addstuff[:RESULT].push({ _id: sostav[0].strip, GAME: gameNAME, P2: [sostav[1].last], P4: [sostav[2].last, sostav[3].last], DATE: Time.now.strftime("%Y.%m.%d") })
@@ -457,11 +454,11 @@ after_initialize do
 
 				addstuff[:RESULT].each do |winrar|
 					#save to db
-					@@userdb[:PS4db].replace_one( { _id: winrar[:_id] }, { GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] }, { upsert: true } )
+					self.class.userdb[:PS4db].replace_one( { _id: winrar[:_id] }, { GAME: winrar[:GAME], P2: winrar[:P2], P4: winrar[:P4], DATE: winrar[:DATE] }, { upsert: true } )
 				end
 
 				#drop fbgamezlist cache
-				@@cachedb[:fbglist].drop() #can drop it only for involved users... but eeeehh... drop everything
+				self.class.cachedb[:fbglist].drop #can drop it only for involved users... but eeeehh... drop everything
 
 				render json: addstuff
 
@@ -471,7 +468,7 @@ after_initialize do
 					daTE = Time.now.strftime("%Y.%m.%d")
 					daTE_day = Time.now.strftime("%d")
 					neoFB = {
-						FEEDBACK: "Участвовал в тройке на "+gameNAME+". Всё отлично!",
+						FEEDBACK: "Участвовал в тройке на #{gameNAME}. Всё отлично!",
 						pNAME: "MrBug",
 						DATE: daTE,
 						SCORE: 1
@@ -484,22 +481,22 @@ after_initialize do
 					feedbacks.map!{|uname| uname.downcase}
 
 					feedbacks.each do |user|
-						user_FB = @@userfb[:userfb].find({ _id: user }, projection: { FEEDBACKS: 1 }).to_a.first()
+						user_FB = self.class.userfb[:userfb].find({ _id: user }, projection: { FEEDBACKS: 1 }).to_a.first()
 						#find if we gave user this feedback already
 						hasfb = user_FB[:FEEDBACKS].any? {|h| h[:FEEDBACK] == neoFB[:FEEDBACK] && h[:DATE] == daTE } unless user_FB.blank?
 						unless hasfb
 							#mark that todays fb is uptodate
-							@@cachedb[:user_FB_date].update_one( { _id: user }, { DATE: daTE_day }, { upsert: true } )
+							self.class.cachedb[:user_FB_date].update_one( { _id: user }, { DATE: daTE_day }, { upsert: true } )
 
 							#add to fb, or create new if theres no fb
 							if user_FB
 								#save to db
-								@@userfb[:userfb].update_one( { _id: user }, { 
+								self.class.userfb[:userfb].update_one( { _id: user }, { 
 									"$push" => { FEEDBACKS: neoFB },
 									"$inc" => { fbG: 1, fbBuG: 1 }
 								}, { upsert: true } )
 							else
-								@@userfb[:userfb].insert_one( {
+								self.class.userfb[:userfb].insert_one( {
 									_id: user, FEEDBACKS: [neoFB], troikaBAN: 0, fbG: 1, fbN: 0, fbB: 0, fbBuG: 1, fbBuB: 0, fbARC: 0
 								} )
 							end
@@ -520,12 +517,12 @@ after_initialize do
 			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 
 			#get fb update date
-			fbupdate_date = @@cachedb[:user_FB_date].find( { _id: user_d } ).to_a.first()
+			fbupdate_date = self.class.cachedb[:user_FB_date].find({ _id: user_d }).to_a.first
 			#recount user fb, in case its old
 			ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != timeDAY
 
 			#get userfb
-			user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
+			user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
 
 			#display userfb it it exists
 			unless user_FB.blank?
@@ -537,7 +534,7 @@ after_initialize do
 			end
 
 			#get fbglist cache
-			fbglist = @@cachedb[:fbglist].find({ _id: user_d }).to_a.first()
+			fbglist = self.class.cachedb[:fbglist].find({ _id: user_d }).to_a.first
 
 			#update chache for this user, if its old
 			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
@@ -546,14 +543,14 @@ after_initialize do
 			if fbglist.blank? && current_user && user_d != 'mrbug'
 				#get user games from my database
 				#user_BGZ
-				user_gamez = @@userdb[:PS4db].find( 
+				user_gamez = self.class.userdb[:PS4db].find( 
 					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
 					collation: { locale: 'en', strength: 2 }
 				).to_a
 
 				#do stuff if we have some
 				user_gamez.each do |ugaz| #do stuff if we have some
-					if timeNOW - ugaz[:DATE].to_time < 63000000 && ugaz[:P2] && ugaz[:P4]
+					if timeNOW - ugaz[:DATE] < 63_000_000 && ugaz[:P2] && ugaz[:P4]
 						#show simple short mail address
 						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
 						#create final variable
@@ -567,7 +564,7 @@ after_initialize do
 				fbglist = { ugameZ: ugamezfinal }
 
 				#save it to cache
-				@@cachedb[:fbglist].update_one( { _id: user_d }, {
+				self.class.cachedb[:fbglist].update_one( { _id: user_d }, {
 					ugameZ: ugamezfinal, DATE: timeDAY
 				}, { upsert: true } )
 			end
@@ -595,7 +592,7 @@ after_initialize do
 			if current_user && fedbacks.length == 3 && user_d != pageu_d && (fedbacks[0] == "true" || fedbacks[0] == "false" )
 
 				#get poster fb
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbB: 1 }).to_a.first()
+				user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbB: 1 }).to_a.first()
 
 				#users with negative feedbacks cant do feedbacks!
 				if user_FB && user_FB[:fbB] > 0
@@ -603,7 +600,7 @@ after_initialize do
 				else
 
 					#get user fb
-					pageu_FB = @@userfb[:userfb].find({ _id: pageu_d }).to_a.first()
+					pageu_FB = self.class.userfb[:userfb].find({ _id: pageu_d }).to_a.first()
 
 					#do normal feedback add
 					if fedbacks[0] == "true"
@@ -620,7 +617,7 @@ after_initialize do
 							}
 
 							#if fb exists, add to it, or create new fb if its not
-							@@userfb[:userfb].update_one( { _id: pageu_d }, { "$push" => { FEEDBACKS: new_fb } }, { upsert: true } )
+							self.class.userfb[:userfb].update_one( { _id: pageu_d }, { "$push" => { FEEDBACKS: new_fb } }, { upsert: true } )
 
 							#update and recount fb
 							ufbupdate(pageu_d)
@@ -636,7 +633,7 @@ after_initialize do
 							#if found, do stuff
 							if fb[:pNAME] == current_user[:username]
 								#if edited feedback already, show stuff
-								user_FB_edit = @@cachedb[:user_FB_edit].find( { _id: pageu_d+user_d } ).to_a.first()
+								user_FB_edit = self.class.cachedb[:user_FB_edit].find({ _id: "#{pageu_d}#{user_d}" }).to_a.first
 								if user_FB_edit && user_FB_edit[:DATE] == timeNOW
 									render json: { gavas_e: true }
 								else
@@ -644,9 +641,9 @@ after_initialize do
 									fb[:SCORE] = fedbacks[1]
 
 									#make edited mark
-									@@cachedb[:user_FB_edit].update_one( { _id: pageu_d+user_d }, { DATE: timeNOW }, { upsert: true } )
+									self.class.cachedb[:user_FB_edit].update_one({ _id: "#{pageu_d}#{user_d}" }, { DATE: timeNOW }, { upsert: true })
 
-									@@userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
+									self.class.userfb[:userfb].replace_one( { _id: pageu_d }, pageu_FB )
 
 									#update and recount fb
 									ufbupdate(pageu_d)
@@ -664,7 +661,7 @@ after_initialize do
 
 			else #if that is a guest or a page owner... thats really really wrong...
 				render json: { fail: true }
-				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking otzivs!"
+				Rails.logger.warn "###Warning!!!### #{current_user[:username]} is hacking otzivs!"				
 			end
 
 			end #unless end
@@ -677,7 +674,7 @@ after_initialize do
 			user_d = current_user[:username].downcase
 
 			#recheck if username is in database... just in case... might be a bit unnecessary... but if old page was used...
-			user_BGZ = @@userdb[:PS4db].find( 
+			user_BGZ = self.class.userdb[:PS4db].find( 
 				{ _id: Base64.decode64(params[:myylo]), "$or": [ { P2: user_d }, { P4: user_d } ] },
 				projection: { _id: 1 }, collation: { locale: 'en', strength: 2 }
 			).to_a.first()
@@ -686,12 +683,12 @@ after_initialize do
 			if current_user && params[:myylo] && user_d == params[:username].downcase && !user_BGZ.blank?
 				timeNOW = Time.now
 				#check fb to see if eligible to get pass
-				inputfb = @@userfb[:userfb].find({ _id: user_d }).to_a.first()
+				inputfb = self.class.userfb[:userfb].find({ _id: user_d }).to_a.first()
 
 				if inputfb && inputfb[:FEEDBACKS] && inputfb[:troikaBAN] == 0
 					inputfb[:FEEDBACKS].each do |fb|
 						#look for my recent fb
-						if fb[:pNAME] == "MrBug" && ( timeNOW - fb[:DATE].to_time < 7900000 )
+						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE] < 7_900_000)
 							dukan = true
 							break
 						end
@@ -700,7 +697,7 @@ after_initialize do
 
 				if dukan && inputfb[:fbBuB] == 0
 					#get how many pass times from cache db
-					user_apasaz = @@cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
+					user_apasaz = self.class.cachedb[:user_passzss].find( { _id: user_d } ).to_a.first()
 					ddatte_now = Time.now.strftime("%Y.%m.%d")
 
 					#if already asked pass today, message something about it
@@ -708,7 +705,9 @@ after_initialize do
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
-							res = Faraday::Connection.new.post('http://'+SiteSetting.pbot_ip+'/get_passzss', 'myylo' => params[:myylo]) { |request| request.options.timeout = 20 }
+							res = Faraday.post("http://#{SiteSetting.pbot_ip}/get_passzss", { 'myylo' => params[:myylo] }) do |request|
+								request.options.timeout = 20
+							end
 						rescue => e
 							#message something about error
 							render json: { error: true, status: e.to_s[0..30] }
@@ -719,14 +718,14 @@ after_initialize do
 								#add used up acc in cache db, only if its a new acc for today and not not found message
 								if Base64.decode64(res.body)[4] != '3'
 									if user_apasaz && user_apasaz[:DATE1] == ddatte_now
-										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } ) if user_apasaz[:MAIL1] != params[:myylo]
+										self.class.cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE2: ddatte_now, MAIL2: params[:myylo]}}, { upsert: true } ) if user_apasaz[:MAIL1] != params[:myylo]
 									else
-										@@cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE1: ddatte_now, MAIL1: params[:myylo]}}, { upsert: true } )
+										self.class.cachedb[:user_passzss].update_one( { _id: user_d }, {"$set": { DATE1: ddatte_now, MAIL1: params[:myylo]}}, { upsert: true } )
 									end
 								end
 							else
 								#message something about failure
-								render json: { noconnect: true, status: res.status[0..28] }
+								render json: { noconnect: true, status: res.status.to_s[0..28] }
 							end
 						end
 					end
@@ -736,7 +735,7 @@ after_initialize do
 				end
 			else #if that is a guest or not a page owner... thats really really wrong...
 				render json: { fail: true }
-				Rails.logger.warn "###Warning!!!### "+current_user[:username]+" is hacking passzss!: "+Base64.decode64(params[:myylo])
+				Rails.logger.warn "###Warning!!!### #{current_user[:username]} is hacking passzss!: #{Base64.decode64(params[:myylo])}"
 			end
 
 			else #message something about ban
@@ -746,17 +745,17 @@ after_initialize do
 
 		def rentagama
 			#get cache
-			rentaCache = @@cachedb[:rentaCache].find().to_a.first()
+			rentaCache = self.class.cachedb[:rentaCache].find.to_a.first
 
 			#drop chache if it exists and is old
-			( @@cachedb[:rentaCache].drop(); rentaCache = {} ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
+			( self.class.cachedb[:rentaCache].drop; rentaCache = {} ) if rentaCache && Time.now - rentaCache[:TIME] > 1800
 
 			if rentaCache.blank?
 				finalrenta = { rentaGAMEZ: [], rentaGAMEZ1: [], rentaGAMEZ2: [] }
 				count = [0,0,0,0,0] # #0 - vsego, #1 - type 1, #2 - type 2, #3 - type 3, #4 - type 4
 
 				#find all rentagamez
-				@@rentadb[:rentagadb].find().to_a.each do |games|
+				self.class.rentadb[:rentagadb].find.to_a.each do |games|
 					gTYPE = [false,false,false,false]
 					count[0] += 1
 					( gTYPE[0] = true; count[1] += 1 ) if games[:GTYPE] == 1
@@ -780,13 +779,13 @@ after_initialize do
 
 				#sort this shit
 				finalrenta[:rentaGAMEZ].sort_by! { |k| [-k[:GNEW], k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
-				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE][0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ1].sort_by! { |k| [-k[:PRICE].to_s[0..2].to_i, k[:GNAME].downcase] }
+				finalrenta[:rentaGAMEZ2].sort_by! { |k| [-k[:PRICE].to_s[0..2].to_i, k[:GNAME].downcase] }
 
 				rentaCache = finalrenta
 
 				#save cache to db
-				@@cachedb[:rentaCache].insert_one( finalrenta )
+				self.class.cachedb[:rentaCache].insert_one(finalrenta)
 			end
 
 			render json: rentaCache
@@ -795,7 +794,7 @@ after_initialize do
 
 		#very cute fb update method
 		def ufbupdate(uzar)
-			inputfb = @@userfb[:userfb].find({ _id: uzar }).to_a.first()
+			inputfb = self.class.userfb[:userfb].find({ _id: uzar }).to_a.first
 
 			if inputfb && inputfb[:FEEDBACKS]
 				feedbacks = { troikaBAN: 0, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0 }
@@ -813,14 +812,14 @@ after_initialize do
 				#count and create numbers
 				inputfb[:FEEDBACKS].each do |fb|
 					#look for old ones and delete them
-					if timeNOW - fb[:DATE].to_time > 63000000
+					if timeNOW - fb[:DATE] > 63_000_000
 						feedbacks[:fbARC] += 1
 					else #else just count them
 						feedbacks[:fbG] += 1 if fb[:SCORE] > 0
 						feedbacks[:fbB] += 1 if fb[:SCORE] < 0
 						feedbacks[:fbN] += 1 if fb[:SCORE] == 0
 						#count bugofb
-						if fb[:pNAME] == "MrBug"  && ( timeNOW - fb[:DATE].to_time < 31500000 )
+						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE] < 31_500_000)
 							feedbacks[:fbBuG] += 1 if fb[:SCORE] > 0
 							feedbacks[:fbBuB] += 1 if fb[:SCORE] < 0
 						end
@@ -835,13 +834,13 @@ after_initialize do
 				end
 
 				#mark that todays fb is uptodate
-				@@cachedb[:user_FB_date].update_one( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
+				self.class.cachedb[:user_FB_date].update_one( { _id: uzar }, { DATE: Time.now.strftime("%d") }, { upsert: true } )
 
 				#update shit if numbers are different
 				if feedbacks[:fbG] != inputfb[:fbG] || feedbacks[:fbN] != inputfb[:fbN] || feedbacks[:fbB] != inputfb[:fbB] ||
 				feedbacks[:fbBuG] != inputfb[:fbBuG] || feedbacks[:fbBuB] != inputfb[:fbBuB] || feedbacks[:fbARC] != inputfb[:fbARC]
 					#save to db
-					@@userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
+					self.class.userfb[:userfb].replace_one( { _id: inputfb[:_id] }, { FEEDBACKS: newfbarray, troikaBAN: feedbacks[:troikaBAN],
 						fbG: feedbacks[:fbG], fbN: feedbacks[:fbN], fbB: feedbacks[:fbB],
 						fbBuG: feedbacks[:fbBuG], fbBuB: feedbacks[:fbBuB], fbARC: feedbacks[:fbARC] }, { upsert: true } )
 				end
