@@ -1,3 +1,4 @@
+import LinkTo from '@ember/routing/link-to'
 import dIcon from 'discourse/helpers/d-icon'
 
 export default <template>
