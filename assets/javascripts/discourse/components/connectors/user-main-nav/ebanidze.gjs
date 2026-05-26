@@ -1,8 +1,8 @@
-import Link from '@ember/routing/link-component'
+import { LinkTo } from "@ember/routing"
 import dIcon from 'discourse/helpers/d-icon'
 
 export default <template>
-  <Link @route="user.kek" @model={{@outletArgs.model.username}}>
+  <LinkTo @route="user.kek" @model={{@outletArgs.model.username}}>
     {{dIcon "star-half-stroke"}} Отзывы
-  </Link>
+  </LinkTo>
 </template>
