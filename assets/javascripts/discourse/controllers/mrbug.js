@@ -79,7 +79,7 @@ export default class MyController extends Controller {
 		})
 
 		return finalvar
-	})
+	}
 
 	@action
 	netmudal() {
@@ -141,43 +141,6 @@ export default class MyController extends Controller {
 			this.mdalready = true
 		} catch (error) {
 			console.error("Failed to run imgoingin submission:", error)
-		}
-	}
-
-
-	@action
-	async imgoingin() {
-		this.mdalready = false
-		this.prezaips = { ...this.prezaips, winrars: false }
-		
-		
-		try {
-		const payload = btoa(
-		unescape(
-		encodeURIComponent(
-		`${this.prezaips?.position}~${this.currentUser?.username}~${this.prezaips?._id}~${this.prezaips?.gameNAME}`
-		)
-		)
-		)
-		
-		const zaipsResponse = await fetch("/MrBug/zaips/", {
-		method: "POST",
-		headers: { "Content-Type": "application/x-www-form-urlencoded" },
-		body: new URLSearchParams({ bagatrolit: payload }),
-		})
-		
-		const zaipsResult = await zaipsResponse.json()
-		this.zaipsResult = zaipsResult
-		
-		const response = await fetch("/MrBug.json")
-		const result = await response.json()
-		
-		this.model = result
-		this.mdalready = true
-		} catch (error) {
-		console.error("Failed to run imgoingin submission:", error)
-		this.zaipsResult = { zaipsfail: true }
-		this.mdalready = true
 		}
 	}
 
