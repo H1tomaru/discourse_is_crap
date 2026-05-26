@@ -238,10 +238,10 @@ after_initialize do
 				troikopoisk = Base64.decode64(params[:poisk]).strip.downcase
 				acc = Base64.decode64(params[:acc]).strip
 
-				accountsDB = @@userdb[:PS4db].find( { _id: troikopoisk } ).to_a.first()
+				accountsDB = self.class.userdb[:PS4db].find({ _id: troikopoisk }).to_a.first
 	
 				#do stuff when finding acc or not
-				if accountsDB && ( Time.now - accountsDB[:DATE].to_time < 63000000 )
+				if accountsDB && (Time.now - accountsDB[:DATE] < 63_000_000)
 					render json: { 
 						_id: accountsDB[:_id], GAME: accountsDB[:GAME],
 						P2: accountsDB[:P2], P4: accountsDB[:P4],
@@ -262,24 +262,24 @@ after_initialize do
 				user_d = current_user[:username].downcase
 
 				#delete users zaipsalsq if its old
-				zaipsalsq = @@cachedb[:zaipsalsq].find( { _id: user_d } ).to_a.first()
+				zaipsalsq = self.class.cachedb[:zaipsalsq].find({ _id: user_d }).to_a.first
 
 				if zaipsalsq && zaipsalsq[:DATE] != Time.now.strftime("%d")	
-					@@cachedb[:zaipsalsq].delete_one( { _id: user_d } )
+					self.class.cachedb[:zaipsalsq].delete_one({ _id: user_d })
 					zaipsalsq[:count] = 0
 				end
 
-				user_FB = @@userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
+				user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { fbG: 1, fbBuG: 1, troikaBAN: 1 }).to_a.first()
 
 				#check if positive feedback or spam exists
 				if user_FB && user_FB[:fbG] > 0 && user_FB[:troikaBAN] == 0 && Time.now - current_user[:created_at] > 260000 &&
 					( (zaipsalsq.blank? || zaipsalsq[:count] < 4)  || current_user[:username] == 'MrBug' )
 
 					#get stuff from db
-					prezaips = @@gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.first()
+					prezaips = self.class.gamedb[:gameDB].find( { _id: code[1] }, projection: { imgLINK: 1, imgLINKHQ: 1, gameNAME: 1 } ).to_a.first()
 					if prezaips[:imgLINKHQ]
 						prezaips[:imgLINK] = prezaips[:imgLINKHQ]
-						prezaips.except!("imgLINKHQ")
+						prezaips.delete(:imgLINKHQ)
 					end
 
 					prezaips[:position] = code[0]
