@@ -152,16 +152,16 @@ export default <template>
             </div>
           {{/if}}
 
-          {{#if this.zaips.winrars}}
+          {{#if this.zaipsResult.winrars}}
             <div class="mudalcontent mudaladdon headin3">
               <span>Запись</span>
               <span>на позицию П{{this.pzposition}}</span>
-              <div class="bagariban">{{this.zaips.gameNAME}}</div>
+              <div class="bagariban">{{this.zaipsResult.gameNAME}}</div>
               <span>Успешно произведена!</span>
             </div>
           {{/if}}
 
-          {{#if this.zaips.zaipsfail}}
+          {{#if this.zaipsResult.zaipsfail}}
             <div class="mudalcontent headin3 prezaips">
               <div class="bagato">
                 <div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
