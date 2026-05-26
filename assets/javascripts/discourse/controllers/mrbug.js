@@ -229,6 +229,12 @@ export default class MyController extends Controller {
 }
 
 <template>
+	<link
+	  rel="stylesheet"
+	  href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	  integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	  crossorigin="anonymous"
+	/>
 	<div class="shinbakaz">
 	
 	  <hr />
@@ -825,6 +831,13 @@ export default class MyController extends Controller {
 	
 		</div>
 	  {{/if}}
+
+		<br>
+			<div class='smaladndark tablq'>
+			Пролистали до конца и не нашли нужной Вам игры?<br>
+			Напишите об этом в <a href='/u/MrBug'>Личном Сообщении</a> и мы постараемся её добавить<br>
+			Да и просто пишите игры, которые бы хотели видеть в совместной покупке :)
+		</div>
 	
 	</div>
 </template>
