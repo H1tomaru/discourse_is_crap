@@ -2,7 +2,9 @@ import { LinkTo } from "@ember/routing"
 import dIcon from 'discourse/helpers/d-icon'
 
 export default <template>
-  <LinkTo @route="user.kek" @model={{@outletArgs.model.username}}>
-    {{dIcon "star-half-stroke"}} Отзывы
-  </LinkTo>
+  <li>
+    <LinkTo @route="user.kek" @model={{@outletArgs.model.username}}>
+      {{dIcon "star-half-stroke"}} Отзывы
+    </LinkTo>
+  </li>
 </template>
