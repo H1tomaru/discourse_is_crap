@@ -2,7 +2,7 @@ import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { service } from '@ember/service'
 import { tracked } from '@glimmer/tracking'
-import KekTemplate from '../templates/user/kek'
+import KekTemplate from '../../templates/user/kek'
 
 export default class MyController extends Controller {
 
