@@ -241,7 +241,7 @@ after_initialize do
 				accountsDB = self.class.userdb[:PS4db].find({ _id: troikopoisk }).to_a.first
 	
 				#do stuff when finding acc or not
-				if accountsDB && (Time.now - accountsDB[:DATE] < 63_000_000)
+				if accountsDB && (Time.now - accountsDB[:DATE].to_time < 63_000_000)
 					render json: { 
 						_id: accountsDB[:_id], GAME: accountsDB[:GAME],
 						P2: accountsDB[:P2], P4: accountsDB[:P4],
@@ -688,7 +688,7 @@ after_initialize do
 				if inputfb && inputfb[:FEEDBACKS] && inputfb[:troikaBAN] == 0
 					inputfb[:FEEDBACKS].each do |fb|
 						#look for my recent fb
-						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE] < 7_900_000)
+						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE].to_time < 7_900_000)
 							dukan = true
 							break
 						end
