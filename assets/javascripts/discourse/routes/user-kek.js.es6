@@ -1,9 +1,11 @@
-import { ajax } from 'discourse/lib/ajax';
-import Ember from 'ember';
+import Route from '@ember/routing/route'
+import { ajax } from 'discourse/lib/ajax'
 
-export default Ember.Route.extend({
+export default class UserKekRoute extends Route {
 	model() {
-		var str = this.modelFor("user").username;
-		return ajax('/u/' + encodeURIComponent(str) + '/kek.json');
+		const str = this.modelFor('user').username
+		
+		// Modern backticks (``) let you drop the + plus signs and concatenate strings cleanly
+		return ajax(`/u/${encodeURIComponent(str)}/kek.json`)
 	}
-});
+}
