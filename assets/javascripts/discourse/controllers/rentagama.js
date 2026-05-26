@@ -1,20 +1,21 @@
 import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { tracked } from '@glimmer/tracking'
-import { on } from '@ember/modifier'
 import RentagamaTemplate from '../templates/rentagama'
 
-export default class MyController extends Controller {
+export default class RentagamaController extends Controller {
 
 	template = RentagamaTemplate
 
-	@tracked showLIST = localStorage.getItem('showLIST') === "true"
+	@tracked showLIST = false//localStorage.getItem('showLIST') === "true"
 	@tracked showTYPE1 = true
 	@tracked showTYPE2 = true
 	@tracked showTYPE3 = true
 	@tracked showTYPE4 = true
+
 	@tracked showGAMEZ = true
 	@tracked showCRAP = false
+
 	@tracked rulez = false
 
 	//loads external script
