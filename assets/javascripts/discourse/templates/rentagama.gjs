@@ -1,5 +1,5 @@
 import { on } from '@ember/modifier'
-import { unless, get } from '@ember/helper'
+import { get } from '@ember/helper'
 
 export default <template>
 	<link
