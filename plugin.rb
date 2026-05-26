@@ -37,35 +37,52 @@ after_initialize do
 
 	class ::MrbugController < ::ApplicationController
 
-		SiteSetting.site_ip = 'union3.vg' if SiteSetting.site_ip.empty?
+		SiteSetting.site_ip = 'union3.vg' if SiteSetting.site_ip.blank?
 
-		db = Mongo::Client.new([ SiteSetting.site_ip+':17113' ], user: 'troiko_user', password: '47TTGLRLR3' )
-		@@gamedb = db.use('AutoZ_gameDB')
-		@@userlistdb = db.use('AutoZ_gameZ')
-		@@rentadb = db.use('rentagadb')
+		@mongo_client = Mongo::Client.new(["#{SiteSetting.site_ip}:17113"], user: 'troiko_user', password: '47TTGLRLR3')
 
-		@@userdb = db.use('userdb')
-		@@userfb = db.use('userfb')
-
-		@@cachedb = db.use('cacheDB')
+		def self.gamedb
+			@mongo_client.use('AutoZ_gameDB')
+		end
+		def self.userlistdb
+			@mongo_client.use('AutoZ_gameZ')
+		end
+		def self.rentadb
+			@mongo_client.use('rentagadb')
+		end
+		def self.userdb
+			@mongo_client.use('userdb')
+		end
+		def self.userfb
+			@mongo_client.use('userfb')
+		end
+		def self.cachedb
+			@mongo_client.use('cacheDB')
+		end
 
 		def show
 			#get cache
-			autozCache = @@cachedb[:autozCache].find().to_a.first()
+			autozCache = self.class.cachedb[:autozCache].find.to_a.first
 
 			#drop chache, if its old
-			( @@cachedb[:autozCache].drop(); autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
+			( elf.class.cachedb[:autozCache].drop; autozCache = {} ) if autozCache && Time.now - autozCache[:TIME] > 1800
 
 			#create cache if theres none //no show account mail anymore edition//
 			if autozCache.blank? || (current_user && current_user[:username] == 'H1tomaru') #megaaddhack
 				#get all type 123 games
-				gameDB = @@gamedb[:gameDB].find( { TYPE: { "$in": [1,2,3] } }, projection: { imgLINKHQ: 0 } ).sort( { TYPE: 1, DATE: 1, gameNAME: 1 } ).to_a
+				gameDB = self.class.gamedb[:gameDB].find( { TYPE: { "$in" => [1, 2, 3] } }, projection: { imgLINKHQ: 0 }).sort({ TYPE: 1, DATE: 1, gameNAME: 1 }).to_a
 
 				#get all users 2 list
-				userDB = @@userlistdb[:uListP4].find().to_a
+				userDB = self.class.userlistdb[:uListP4].find.to_a
 
 				#get all user feedbacks
-				userFB = @@userfb[:userfb].find( {}, projection: { fbG: 1, fbN: 1, fbB: 1 } ).to_a
+				userFB = self.class.userfb[:userfb].find({}, projection: { fbG: 1, fbN: 1, fbB: 1 }).to_a
+				#each_with_object does for each loop, every item being fb, and has and empty object variable, names hash
+				#we fill that hash during lopp, and its retured as a value
+				#so we save array as and easy hash map, so no .find will be needed
+				fb_lookup = userFB.each_with_object({}) do |fb, hash|
+					hash[fb['_id']] = fb if fb['_id']
+				end
 
 				#start a loop for every game to display
 				gameDB.each do |game|
@@ -79,16 +96,15 @@ after_initialize do
 
 						#calculate prices
 						game[:PRICE4] = (game[:PRICE] * 0.38 / 50).floor * 50 # '* 0.38' is '*.76 / 2'
-
 						game[:PRICE2] = game[:PRICE] - 2 * game[:PRICE4]
 
-						p4UP = [100,200]
+						p4UP = [100, 200]
 						if game[:PRICE] < 1001
-							p4UP = [50,100]
+							p4UP = [50, 100]
 						elsif game[:PRICE] > 8001
-							p4UP = [200,300]
-						elsif game[:PRICE] > 4001	
-							p4UP = [150,250] 
+							p4UP = [200, 300]
+						elsif game[:PRICE] > 4001  
+							p4UP = [150, 250] 
 						end
 
 						game[:PRICE2] = game[:PRICE2] - game[:PDOWN2] + p4UP[0]
@@ -97,124 +113,123 @@ after_initialize do
 						#set price to -10 if its x100
 						#game[:P4PRICE2] = game[:P4PRICE2] - 10 if game[:P4PRICE2]/100.0 == (game[:P4PRICE2]/100.0).ceil
 						#game[:P4PRICE3] = game[:P4PRICE3] - 10 if game[:P4PRICE3]/100.0 == (game[:P4PRICE3]/100.0).ceil
-
 					else
 						game[:PRICE2] = game[:PRICE4] = 0
 					end
-					
-					#see if we have users to display
-					users = userDB.find{ |h| h['_id'] == game[:_id] }
 
+					#see if we have users to display
+					users = userDB.find { |h| h['_id'] == game[:_id] }
+					
 					game[:TROIKI] = []
+
 					#do stuff if we do
 					if users
 						#find how many p2 p3 we have, and how many troikas to display
 						p2NO = users[:P2].length if users[:P2]
 						p4NO = users[:P4].length / 2.0 if users[:P4] #fix because 2 P4 per troika
+
 						#get how many troikas, roundup p4 number cos theres 2 per troika
-						troikaNO = [p2NO, p4NO.ceil].max - 1 #-1 cos next line, for i in 0..0 goes 1 time, 0..1 goes 2 times, etc
+						troikaNO = [p2NO, p4NO.ceil].max
 
 						#create variables for every troika
-						for i in 0..troikaNO
+						troikaNO.times do |i|
 							#tons of variables for everything
 							p2 = ''; p3 = ''; p4 = ''; account = ''
-							p2STATUS = [false,false,false,false]
-							p3STATUS = [false,false,false,false]
-							p4STATUS = [false,false,false,false]
+							p2STATUS = [false, false, false, false]
+							p3STATUS = [false, false, false, false]
+							p4STATUS = [false, false, false, false]
 							p2FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p3FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p4FEEDBACK = { GOOD: 0, BAD: 0, NEUTRAL: 0, PERCENT: 0 }
 							p2TAKEN = false; p3TAKEN = false; p4TAKEN = false
 							p2FBred = false; p3FBred = false; p4FBred = false
-
+							
 							#fill user info and template variables for statuses
 							if users[:P2] && users[:P2][i]
 								p2 = users[:P2][i][:NAME].strip
 								p2STATUS[users[:P2][i][:STAT]] = true
 							end
-							if users[:P4] && users[:P4][2*i]
-								p3 = users[:P4][2*i][:NAME].strip
-								p3STATUS[users[:P4][2*i][:STAT]] = true
+							if users[:P4] && users[:P4][2 * i]
+								p3 = users[:P4][2 * i][:NAME].strip
+								p3STATUS[users[:P4][2 * i][:STAT]] = true
 							end
-							if users[:P4] && users[:P4][2*i+1]
-								p4 = users[:P4][2*i+1][:NAME].strip
-								p4STATUS[users[:P4][2*i+1][:STAT]] = true
+							if users[:P4] && users[:P4][2 * i + 1]
+								p4 = users[:P4][2 * i + 1][:NAME].strip
+								p4STATUS[users[:P4][2 * i + 1][:STAT]] = true
 							end
-
+							
 							#template variables for when p2 p3 p4 are taken
 							(p2TAKEN = true; p2 = '') if p2 == '-55'
 							(p3TAKEN = true; p3 = '') if p3 == '-55'
 							(p4TAKEN = true; p4 = '') if p4 == '-55'
-
+							
 							#find feedback for users
 							if p2.length > 0
-								feedbackp2 = userFB.find{ |h| h['_id'] == p2.downcase }
+								feedbackp2 = fb_lookup[p2.downcase]
 								if feedbackp2
 									p2FEEDBACK[:GOOD] = feedbackp2[:fbG] if feedbackp2[:fbG]
 									p2FEEDBACK[:BAD] = feedbackp2[:fbB] if feedbackp2[:fbB]
 									p2FEEDBACK[:NEUTRAL] = feedbackp2[:fbN] if feedbackp2[:fbN]
 								end
 							end
+							
 							if p3.length > 0
-								feedbackp3 = userFB.find{ |h| h['_id'] == p3.downcase }
+								feedbackp3 = fb_lookup[p3.downcase]
 								if feedbackp3
 									p3FEEDBACK[:GOOD] = feedbackp3[:fbG] if feedbackp3[:fbG]
 									p3FEEDBACK[:BAD] = feedbackp3[:fbB] if feedbackp3[:fbB]
 									p3FEEDBACK[:NEUTRAL] = feedbackp3[:fbN] if feedbackp3[:fbN]
 								end
 							end
+							
 							if p4.length > 0
-								feedbackp4 = userFB.find{ |h| h['_id'] == p4.downcase }
+								feedbackp4 = fb_lookup[p4.downcase]
 								if feedbackp4
 									p4FEEDBACK[:GOOD] = feedbackp4[:fbG] if feedbackp4[:fbG]
 									p4FEEDBACK[:BAD] = feedbackp4[:fbB] if feedbackp4[:fbB]
 									p4FEEDBACK[:NEUTRAL] = feedbackp4[:fbN] if feedbackp4[:fbN]
 								end
 							end
-
+							
 							#find feedback percentage
-							p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD].to_f/(p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100.0).floor if p2FEEDBACK[:GOOD] > 0
-							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f/(p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
-							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f/(p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
-
+							p2FEEDBACK[:PERCENT] = (p2FEEDBACK[:GOOD].to_f / (p2FEEDBACK[:GOOD] + p2FEEDBACK[:BAD]) * 100.0).floor if p2FEEDBACK[:GOOD] > 0
+							p3FEEDBACK[:PERCENT] = (p3FEEDBACK[:GOOD].to_f / (p3FEEDBACK[:GOOD] + p3FEEDBACK[:BAD]) * 100.0).floor if p3FEEDBACK[:GOOD] > 0
+							p4FEEDBACK[:PERCENT] = (p4FEEDBACK[:GOOD].to_f / (p4FEEDBACK[:GOOD] + p4FEEDBACK[:BAD]) * 100.0).floor if p4FEEDBACK[:GOOD] > 0
+							
 							#create account variable if it exists //no show account mail anymore edition//
 							if current_user && current_user[:username] == 'H1tomaru' #megaaddhack
-								account = users[(i+1).to_s][:ACCOUNT] if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
+								account = users[(i + 1).to_s][:ACCOUNT] if users[(i + 1).to_s] && users[(i + 1).to_s][:ACCOUNT]
 							else
-								account = (i+1).to_s if users[(i+1).to_s] && users[(i+1).to_s][:ACCOUNT]
+								account = (i + 1).to_s if users[(i + 1).to_s] && users[(i + 1).to_s][:ACCOUNT]
 							end
-
+							
 							#template again, is feedback green or red?
 							p2FBred = true if p2FEEDBACK[:PERCENT] < 100
 							p3FBred = true if p3FEEDBACK[:PERCENT] < 100
 							p4FBred = true if p4FEEDBACK[:PERCENT] < 100
-
+							
 							#create final variable
-							game[:TROIKI].push( {
-								USERS: [p2,p3,p4],
-								FEEDBACK: [p2FEEDBACK,p3FEEDBACK,p4FEEDBACK],
+							game[:TROIKI].push({
+								USERS: [p2, p3, p4],
+								FEEDBACK: [p2FEEDBACK, p3FEEDBACK, p4FEEDBACK],
 								ACCOUNT: account,
-								PTAKEN: [p2TAKEN,p3TAKEN,p4TAKEN],
-								PFBred: [p2FBred,p3FBred,p4FBred],
-								PSTATUS: [p2STATUS,p3STATUS,p4STATUS]
-							} )
+								PTAKEN: [p2TAKEN, p3TAKEN, p4TAKEN],
+								PFBred: [p2FBred, p3FBred, p4FBred],
+								PSTATUS: [p2STATUS, p3STATUS, p4STATUS]
+							})
 						end
 					end
-
 					#set display user numbers since we finished looping through this game users
 					game[:P2NO] = p2NO; game[:P4NO] = p4NO
-
 				end
-
+				
 				#save everything to cachedb //no show account mail anymore edition//
-				@@cachedb[:autozCache].insert_one( { gamelist: gameDB, TIME: Time.now } ) unless current_user && current_user[:username] == 'H1tomaru' #megaaddhack
-
+				self.class.cachedb[:autozCache].insert_one({ gamelist: gameDB, TIME: Time.now }) unless current_user && current_user[:username] == 'H1tomaru' #megaaddhack
+				
 				autozCache = { gamelist: gameDB }
-
 			end
-
+			
 			render json: { gamelist: autozCache[:gamelist] }
-
 		end
 
 		def troikopoisk
