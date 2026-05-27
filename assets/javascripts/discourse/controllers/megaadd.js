@@ -54,7 +54,7 @@ export default class MyController extends Controller {
 		// Fix: Same thing here to keep Ember's tracker happy
 		this.addstuff = { ...this.addstuff, ADDFB: false }
 	}
-	
+/*	
 	@action
 	async P4Lista() {
 		try {
@@ -66,5 +66,22 @@ export default class MyController extends Controller {
 			console.error("Failed to load P4Lista:", error)
 		}
 	}
+*/
+	@action
+async P4Lista() {
+    try {
+        const response = await fetch('/MrBug.json')
+        const result = await response.json()
+        
+        // 1. Log the exact data coming from the file to check its structure
+        console.log("RAW JSON RESULT:", result)
+        console.log("GAMELIST DATA:", result?.gamelist)
+        
+        // 2. The assignment that is currently exploding
+        this.p4lista = result.gamelist
+    } catch (error) {
+        console.error("Failed to load P4Lista:", error)
+    }
+}
 
 }
