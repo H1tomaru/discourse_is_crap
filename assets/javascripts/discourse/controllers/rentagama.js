@@ -7,7 +7,7 @@ export default class RentagamaController extends Controller {
 
 	template = RentagamaTemplate
 
-	@tracked showLIST = false//localStorage.getItem('showLIST') === "true"
+	@tracked showLIST = localStorage.getItem('showLIST') === "true"
 	@tracked showTYPE1 = true
 	@tracked showTYPE2 = true
 	@tracked showTYPE3 = true
@@ -70,22 +70,22 @@ export default class RentagamaController extends Controller {
 	
 	@action
 	toggleTYPE1() {
-		this.showTYPE1 = !this.showTYPE1;
+		this.showTYPE1 = !this.showTYPE1
 	}
 	
 	@action
 	toggleTYPE2() {
-		this.showTYPE2 = !this.showTYPE2;
+		this.showTYPE2 = !this.showTYPE2
 	}
 	
 	@action
 	toggleTYPE3() {
-		this.showTYPE3 = !this.showTYPE3;
+		this.showTYPE3 = !this.showTYPE3
 	}
 	
 	@action
 	toggleTYPE4() {
-		this.showTYPE4 = !this.showTYPE4;
+		this.showTYPE4 = !this.showTYPE4
 	}
 	
 }
