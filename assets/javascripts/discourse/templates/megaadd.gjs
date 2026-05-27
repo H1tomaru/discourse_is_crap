@@ -20,11 +20,7 @@ export default <template>
  		{{#if @controller.addstuff.RESULT.length}}
 			Winrars! P244:<br />
 			{{#each @controller.addstuff.RESULT as |game|}}
-				{{game.GAME}}
-				{{game._id}}
-				{{game.P2.[0]}}
-				{{game.P4.[0]}}
-				{{game.P4.[1]}}<br />
+				{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br />
 			{{/each}}
 		{{/if}}
 	
