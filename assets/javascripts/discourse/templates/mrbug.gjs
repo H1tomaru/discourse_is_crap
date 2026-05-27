@@ -370,7 +370,7 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
@@ -546,7 +546,7 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if users.USERS.}}
+											{{#if users.USERS.[0]}}
 												{{#if users.PSTATUS..}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
 												{{#if users.PSTATUS..}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
 												{{#if users.PSTATUS..}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
