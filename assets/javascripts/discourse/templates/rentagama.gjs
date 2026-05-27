@@ -6,7 +6,7 @@ export default <template>
 	<div class="rentobaka">
 		<div class="gname">
 			<h2>Прокат игр PS4 / PS5 от <a href="/u/MrBug">MrBug</a></h2>
-			<button class={{if @controller.rulez "slut"}} {{on "click" @controller.toggleRULEZ}}>ПРАВИЛА &amp; ИНСТРУКЦИИ</button>
+			<button class="{{if @controller.rulez 'slut'}}" {{on "click" @controller.toggleRULEZ}}>ПРАВИЛА &amp; ИНСТРУКЦИИ</button>
 		</div>
 	
 	{{#if @controller.rulez}}
@@ -79,8 +79,8 @@ export default <template>
 	{{/if}}
 	
 	<div class="mimu2">
-		<button class="rentabutt{{unless @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST1}}>Легкий Список</button>
-		<button class="rentabutt{{if @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST2}}>Тяжелый Cписок</button>
+		<button class={{if @controller.showLIST "rentabutt" "rentabutt bi4"}} {{on "click" @controller.showLIST1}}>Легкий Список</button>
+		<button class={{if @controller.showLIST "rentabutt bi4" "rentabutt"}} {{on "click" @controller.showLIST2}}>Тяжелый Cписок</button>
 	</div>
 	
 	{{#unless @controller.showLIST}}
@@ -88,19 +88,19 @@ export default <template>
 			<div class="title">
 				Всего игр в прокате: <span>{{@controller.model.count.[0]}}</span><br />
 				<div>
-					<input type="checkbox" checked={{@controller.showTYPE1}}{{on "change" @controller.toggleTYPE1}}/>
+					<input type="checkbox" checked={{@controller.showTYPE1}} {{on "change" @controller.toggleTYPE1}} />
 					Реально Игр: <span>{{@controller.model.count.[1]}}</span>
 				</div>
 				<div>
-					<input type="checkbox" checked={{@controller.showTYPE2}}{{on "change" @controller.toggleTYPE2}}/>
+					<input type="checkbox" checked={{@controller.showTYPE2}} {{on "change" @controller.toggleTYPE2}} />
 					Легких и Коротких Платин: <span>{{@controller.model.count.[2]}}</span>
 				</div>
 				<div>
-					<input type="checkbox" checked={{@controller.showTYPE3}}{{on "change" @controller.toggleTYPE3}}/>
+					<input type="checkbox" checked={{@controller.showTYPE3}} {{on "change" @controller.toggleTYPE3}} />
 					Легких и Коротких Игр: <span>{{@controller.model.count.[3]}}</span>
 				</div>
 				<div>
-					<input type="checkbox" checked={{@controller.showTYPE4}}{{on "change" @controller.toggleTYPE4}}/>
+					<input type="checkbox" checked={{@controller.showTYPE4}} {{on "change" @controller.toggleTYPE4}} />
 					Хиты Для Избранных: <span>{{@controller.model.count.[4]}}</span>
 				</div>
 			</div>
@@ -153,12 +153,8 @@ export default <template>
 		{{#if @controller.showLIST}}
 			<div class="rentbox2">
 				<div class="mimu">
-					<button class="rentabutt{{if @controller.showGAMEZ ' bi4'}}" {{on "click" @controller.setShowGAMEZ}}>
-						Игры Игры
-					</button>
-					<button class="rentabutt{{if @controller.showCRAP ' bi4'}}" {{on "click" @controller.setShowCRAP}}>
-						Легкие и Короткие
-					</button>
+					<button class={{if @controller.showGAMEZ "rentabutt bi4" "rentabutt"}} {{on "click" @controller.setShowGAMEZ}}>Игры Игры</button>
+					<button class={{if @controller.showCRAP "rentabutt bi4" "rentabutt"}} {{on "click" @controller.setShowCRAP}}>Легкие и Короткие</button>
 				</div>
 			
 				{{#if @controller.showGAMEZ}}
