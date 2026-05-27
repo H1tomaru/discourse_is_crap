@@ -100,9 +100,7 @@ export default <template>
 	  {{/if}}
 	
 	  {{#if @controller.responz.fail}}
-		<div
-		  style="background-image:url('https://i.imgur.com/33FJekg.png'); width: 100%; height: 800px;"
-		>
+		<div style="background-image:url('https://i.imgur.com/33FJekg.png'); width: 100%; height: 800px;">
 		  Epic Fail Is Epic
 		</div>
 	  {{/if}}
@@ -133,21 +131,13 @@ export default <template>
 			  <div>{{feedback.FEEDBACK}}</div>
 	
 			  {{#if feedback.eDit}}
-				<button
-				  class="ediZ"
-				  type="button"
-				  {{on "click" (fn @controller.editOtziv feedback.FEEDBACK)}}
-				>
-				  Изменить отзыв
-				</button>
+				<button class="ediZ" type="button" {{on "click" (fn @controller.editOtziv feedback.FEEDBACK)}}>Изменить отзыв</button>
 			  {{/if}}
 			</div>
 		  {{/each}}
 	
 		  {{#if @controller.mORE}}
-			<button class="morZ" type="button" {{on "click" @controller.showMORZ}}>
-			  ещё
-			</button>
+			<button class="morZ" type="button" {{on "click" @controller.showMORZ}}>ещё</button>
 		  {{else}}
 			{{#if @controller.model.fbARC}}
 			  <div class="kekus zeZ">
@@ -172,17 +162,10 @@ export default <template>
 			  </div>
 			  <div>{{gamez.gNAME}}</div>
 			  <div class="acN">{{gamez.aCC}}</div>
-			  <button
-				class="findZ"
-				type="button"
-				{{on "click" (fn @controller.runTroikopoisk gamez.gNAMEid gamez.aCC)}}
-			  ></button>
+			  <button class="findZ" type="button" {{on "click" (fn @controller.runTroikopoisk gamez.gNAMEid gamez.aCC)}}></button>
 			</div>
 		  {{/each}}
-		  <span class="minihrenvnizu">
-			кто владелец? я владелец! он владелец? жми на аккаунт!? узнай
-			владельцев!
-		  </span>
+		  <span class="minihrenvnizu">кто владелец? я владелец! он владелец? жми на аккаунт!? узнай владельцев!</span>
 		</div>
 	  </div>
 	
@@ -202,34 +185,15 @@ export default <template>
 					{{#if @controller.passwait}}
 					  <div class="tinybagaspin"></div>
 					{{else}}
-					  <button
-						class="buttZ"
-						type="button"
-						{{on "click" (fn @controller.getPaZZ @controller.troikopoisk._id)}}
-					  >
-						&#215; получить пароль &#215;
-					  </button>
+					  <button class="buttZ" type="button" {{on "click" (fn @controller.getPaZZ @controller.troikopoisk._id)}}>&#215; получить пароль &#215;</button>
 					{{/if}}
 				  {{else}}
-					{{#if @controller.actualgp.winrar}}
-					  {{{@controller.actualgp.winrar}}}
-					{{/if}}
-					{{#if @controller.actualgp.spam}}
-					  Бот выдает только <b>два</b> пароля в день, других сегодня
-					  небудет
-					{{/if}}
-					{{#if @controller.actualgp.noconnect}}
-					  Бот не отвечает: {{@controller.actualgp.status}}
-					{{/if}}
-					{{#if @controller.actualgp.error}}
-					  Бот сломался и словил ошибку: {{@controller.actualgp.status}}
-					{{/if}}
-					{{#if @controller.actualgp.noufb}}
-					  Бот не работать без отзывов от организатора
-					{{/if}}
-					{{#if @controller.actualgp.banned}}
-					  Бот не работать когда бан
-					{{/if}}
+					{{#if @controller.actualgp.winrar}}{{@controller.actualgp.winrar}}{{/if}}
+					{{#if @controller.actualgp.spam}}Бот выдает только <b>два</b> пароля в день, других сегодня небудет{{/if}}
+					{{#if @controller.actualgp.noconnect}}Бот не отвечает: {{@controller.actualgp.status}}{{/if}}
+					{{#if @controller.actualgp.error}}Бот сломался и словил ошибку: {{@controller.actualgp.status}}{{/if}}
+					{{#if @controller.actualgp.noufb}}Бот не работать без отзывов от организатора{{/if}}
+					{{#if @controller.actualgp.banned}}Бот не работать когда бан{{/if}}
 				  {{/unless}}
 				</div>
 			  {{/unless}}
@@ -239,121 +203,93 @@ export default <template>
 				  <div style="text-align: center">{{@controller.troikopoisk.GAME}}</div>
 				</div>
 	
-				{{#if (get @controller.troikopoisk.P2 1)}}
+				{{#if @controller.troikopoisk.P2.[1]}}
 				  <div class="kekus zeZ">
 					<div><a>П2 PS4</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P2 0}}">
-						{{get @controller.troikopoisk.P2 0}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a>
 					</div>
 				  </div>
 				  <div class="kekus zeZ">
 					<div><a>П4 PS4</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P4 0}}">
-						{{get @controller.troikopoisk.P4 0}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a>
 					</div>
 				  </div>
 				  <div class="kekus zeZ">
 					<div><a>П4 PS4</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P4 1}}">
-						{{get @controller.troikopoisk.P4 1}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a>
 					</div>
 				  </div>
 	
 				  <div class="kekus zeZ">
 					<div><a>П2 PS5</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P2 1}}">
-						{{get @controller.troikopoisk.P2 1}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P2.[1]}}">{{@controller.troikopoisk.P2.[1]}}</a>
 					</div>
 				  </div>
 				  <div class="kekus zeZ">
 					<div><a>П4 PS5</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P4 2}}">
-						{{get @controller.troikopoisk.P4 2}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P4.[2]}}">{{@controller.troikopoisk.P4.[2]}}</a>
 					</div>
 				  </div>
 				  <div class="kekus zeZ">
 					<div><a>П4 PS5</a></div>
 					<div>
-					  <a href="/u/{{get @controller.troikopoisk.P4 3}}">
-						{{get @controller.troikopoisk.P4 3}}
-					  </a>
+						<a href="/u/{{@controller.troikopoisk.P4.[3]}}">{{@controller.troikopoisk.P4.[3]}}</a>
 					</div>
 				  </div>
 				{{else}}
-				  {{#if (get @controller.troikopoisk.P4 3)}}
+				  {{#if @controller.troikopoisk.P4.[3]}}
 					<div class="kekus zeZ">
 					  <div><a>П2</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P2 0}}">
-						  {{get @controller.troikopoisk.P2 0}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4 PS4</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 0}}">
-						  {{get @controller.troikopoisk.P4 0}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4 PS4</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 1}}">
-						  {{get @controller.troikopoisk.P4 1}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4 PS5</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 2}}">
-						  {{get @controller.troikopoisk.P4 2}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[2]}}">{{@controller.troikopoisk.P4.[2]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4 PS5</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 3}}">
-						  {{get @controller.troikopoisk.P4 3}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[3]}}">{{@controller.troikopoisk.P4.[3]}}</a>
 					  </div>
 					</div>
 				  {{else}}
 					<div class="kekus zeZ">
 					  <div><a>П2</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P2 0}}">
-						  {{get @controller.troikopoisk.P2 0}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 0}}">
-						  {{get @controller.troikopoisk.P4 0}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a>
 					  </div>
 					</div>
 					<div class="kekus zeZ">
 					  <div><a>П4</a></div>
 					  <div>
-						<a href="/u/{{get @controller.troikopoisk.P4 1}}">
-						  {{get @controller.troikopoisk.P4 1}}
-						</a>
+						<a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a>
 					  </div>
 					</div>
 				  {{/if}}
