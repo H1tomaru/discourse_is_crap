@@ -180,9 +180,9 @@ export default <template>
 
 
 		{{#if @controller.glizt.gamedb1}}
-			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
+	{{!-- 	<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 			<div class='MrBug'>
-{{!-- 
+
 				{{#if @controller.showhideo.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
@@ -322,8 +322,8 @@ export default <template>
 					
 					{{/each}}
 				{{/if}}
-	--}}		
-			</div>
+			
+			</div>--}}
 		{{/if}}
 {{!-- 	
 		{{#if @controller.glizt.gamedb2}}
