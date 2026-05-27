@@ -60,13 +60,8 @@ export default class MyController extends Controller {
 		try {
 			const response = await fetch('/MrBug.json')
 			const result = await response.json()
-			console.log("GAMELIST DATA:", result?.gamelist)
 			
-			//this.p4lista = result.gamelist
-			this.p4lista =[
-		        { id: 1, name: "Test Game 1" },
-		        { id: 2, name: "Test Game 2" }
-		    ]
+			this.p4lista = result.gamelist
 		} catch (error) {
 			console.error("Failed to load P4Lista:", error)
 		}
