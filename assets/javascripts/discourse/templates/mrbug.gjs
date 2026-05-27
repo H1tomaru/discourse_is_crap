@@ -180,7 +180,7 @@ export default <template>
 			
 			</div>
 		{{/if}}
-	{{!-- 
+	/{{!--/
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 
@@ -620,6 +620,6 @@ export default <template>
 			Напишите об этом в <a href='/u/MrBug'>Личном Сообщении</a> и мы постараемся её добавить<br>
 			Да и просто пишите игры, которые бы хотели видеть в совместной покупке :)
 		</div>
-	  --}}
+	  /--}}/
 	</div>
 </template>
