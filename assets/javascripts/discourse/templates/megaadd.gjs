@@ -33,7 +33,7 @@ export default <template>
 	
 	  MegaAdd List some Pokemans<br />
 	
-	  <button type="button" {{on "click" @controller.P4Lista}}>P4 lista:</button><br />
+	  <button type="button" {{on "click" @controller.showP4Lista}}>P4 lista:</button><br />
 	
 	{{#if @controller.p4lista.length}}
 		{{#each @controller.p4lista as |game|}}
