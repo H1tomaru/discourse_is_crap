@@ -145,49 +145,49 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo(index) {
-		// Unpacks list reference array to toggle dashboard filter tab visibility flags
-		const newShowHideo = [...this.showhideo]
-		newShowHideo[index] = !newShowHideo[index]
-		this.showhideo = newShowHideo
+		this.showhideo = this.showhideo.with(index, !this.showhideo[index])
 	}
 
 	@action
 	showhideo1(index) {
 		const item = this.glizt.gamedb1?.[index]
+		
 		if (item) {
-			item.SHOWHIDEO = !item.SHOWHIDEO
-			this.model = { ...this.model }
+		    item.SHOWHIDEO = !item.SHOWHIDEO
+		    this.glizt.gamedb1 = [...this.glizt.gamedb1]
 		}
 	}
 
 	@action
 	showhideo2(index) {
 		const item = this.glizt.gamedb2?.[index]
+		
 		if (item) {
-			item.SHOWHIDEO = !item.SHOWHIDEO
-			this.model = { ...this.model }
+		    item.SHOWHIDEO = !item.SHOWHIDEO
+		    this.glizt.gamedb2 = [...this.glizt.gamedb2]
 		}
 	}
 
 	@action
 	showhideo3(index) {
 		const item = this.glizt.gamedb3?.[index]
+		
 		if (item) {
-			item.SHOWHIDEO = !item.SHOWHIDEO
-			this.model = { ...this.model }
+		    item.SHOWHIDEO = !item.SHOWHIDEO
+		    this.glizt.gamedb3 = [...this.glizt.gamedb3]
 		}
 	}
 
 	@action
 	zaips2(gameId, event) {
-		event.stopPropagation();
-		this.zaips("2", gameId);
+		event.stopPropagation()
+		this.zaips("2", gameId)
 	}
 
 	@action
 	zaips4(gameId, event) {
-		event.stopPropagation();
-		this.zaips("4", gameId);
+		event.stopPropagation()
+		this.zaips("4", gameId)
 	}
 
 }
