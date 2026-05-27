@@ -180,64 +180,45 @@ export default <template>
 	</div>
 	
 	
-	<span class="textright2">Неделя / Месяц</span>
+		<span class="textright2">Неделя / Месяц</span>
 	
-	<div class="innerbox">
-	{{#each @controller.model.rentaGAMEZ as |game|}}
-	<div
-	class="
-	{{unless @controller.showTYPE1 (if game.TYPE1 'rentahideoz')}}
-	{{unless @controller.showTYPE2 (if game.TYPE2 'rentahideoz')}}
-	{{unless @controller.showTYPE3 (if game.TYPE3 'rentahideoz')}}
-	{{unless @controller.showTYPE4 (if game.TYPE4 'rentahideoz')}}
-	"
-	>
-	{{#if game.STATUS}}
-	<span class="red">
-	<b>[</b>
-	<span class="hideoS">Занят</span>
-	<i class="fas fa-times hideoB"></i>
-	до
-	{{game.STATUS}}
-	<b>]</b>
-	{{#if game.LINE}}
-	<b>[</b>
-	+{{game.LINE}}
-	в очереди
-	<b>]</b>
-	{{/if}}
-	<b>[</b>
-	{{game.POSITION}}
-	<b>]</b>
-	</span>
-	{{else}}
-	<span class="green">
-	<b>[</b>
-	<span class="hideoS">Cвободен</span>
-	<i class="fas fa-check hideoB"></i>
-	<b>]</b>
-	<b>[</b>
-	{{game.POSITION}}
-	<b>]</b>
-	</span>
-	{{/if}}
-	
-	{{game.GNAME}}
-	
-	{{#if game.TYPE2}}
-	<span class="t2text hideoS">{{game.GCOMMENT}}</span>
-	{{/if}}
-	{{#if game.TYPE3}}
-	<span class="t2text hideoS">{{game.GCOMMENT}}</span>
-	{{/if}}
-	{{#if game.GNEW}}
-	<img src="https://i.imgur.com/84UQp3G.gif" />
-	{{/if}}
-	
-	<span class="textright">{{game.PRICE}}</span>
-	</div>
-	{{/each}}
-	</div>
+		<div class="innerbox">
+			{{#each @controller.model.rentaGAMEZ as |game|}}
+				<div class="
+				{{unless @controller.showTYPE1 (if game.TYPE1 'rentahideoz')}} {{unless @controller.showTYPE2 (if game.TYPE2 'rentahideoz')}}
+				{{unless @controller.showTYPE3 (if game.TYPE3 'rentahideoz')}} {{unless @controller.showTYPE4 (if game.TYPE4 'rentahideoz')}}
+				">
+					{{#if game.STATUS}}
+						<span class="red">
+							<b>[</b><span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}}<b>]</b>
+							{{#if game.LINE}}
+								<b>[</b>+{{game.LINE}}в очереди<b>]</b>
+							{{/if}}
+							<b>[</b>{{game.POSITION}}<b>]</b>
+						</span>
+					{{else}}
+						<span class="green">
+							<b>[</b><span class="hideoS">Cвободен</span><i class="fas fa-check hideoB"></i><b>]</b>
+							<b>[</b>{{game.POSITION}}<b>]</b>
+						</span>
+					{{/if}}
+				
+					{{game.GNAME}}
+				
+					{{#if game.TYPE2}}
+						<span class="t2text hideoS">{{game.GCOMMENT}}</span>
+					{{/if}}
+					{{#if game.TYPE3}}
+						<span class="t2text hideoS">{{game.GCOMMENT}}</span>
+					{{/if}}
+					{{#if game.GNEW}}
+						<img src="https://i.imgur.com/84UQp3G.gif" />
+					{{/if}}
+				
+					<span class="textright">{{game.PRICE}}</span>
+				</div>
+			{{/each}}
+		</div>
 	</div>
 	{{/unless}}
 	
