@@ -251,7 +251,7 @@ export default <template>
 												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
+													Cвободно {{if game.PRICE2 game.PRICE2}}р
 												{{/if}}
 											{{/if}}
 										</td>
@@ -278,7 +278,7 @@ export default <template>
 												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 											<br />
@@ -296,7 +296,7 @@ export default <template>
 												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 										</td>
@@ -396,7 +396,7 @@ export default <template>
 												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
+													Cвободно {{if game.PRICE2 game.PRICE2}}р
 												{{/if}}
 											{{/if}}
 										</td>
@@ -423,7 +423,7 @@ export default <template>
 												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 											<br />
@@ -441,7 +441,7 @@ export default <template>
 												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 										</td>
@@ -544,7 +544,7 @@ export default <template>
 												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
+													Cвободно {{if game.PRICE2 game.PRICE2}}р
 												{{/if}}
 											{{/if}}
 										</td>
@@ -571,7 +571,7 @@ export default <template>
 												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 											<br />
@@ -589,7 +589,7 @@ export default <template>
 												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
-													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
+													Cвободно {{if game.PRICE4 game.PRICE4}}р
 												{{/if}}
 											{{/if}}
 										</td>
