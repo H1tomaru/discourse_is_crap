@@ -240,7 +240,7 @@ export default <template>
 											{{#if users.USERS.[0]}}
 												<a title="{{if game.PRICE2 game.PRICE2}}р" href='/u/{{users.USERS.0}}'>{{users.USERS.[0]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
-													{{users.FEEDBACK.0.PERCENT}}%
+													{{users.FEEDBACK.[0].PERCENT}}%
 													<span>
 														<i class='far fa-smile'></i> {{users.FEEDBACK.[0].GOOD}}
 														<i class='far fa-meh'></i> {{users.FEEDBACK.[0].NEUTRAL}}
