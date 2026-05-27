@@ -10,7 +10,7 @@ export default <template>
 	<div class="shinbakaz">
 	
 		<hr />
-		<h1 class="razdelhe">Совместная покупка игр для PS4 / PS5</h1>
+		//<h1 class="razdelhe">Совместная покупка игр для PS4 / PS5</h1>
 		<hr />
 	
 		<table class="bagahe">
