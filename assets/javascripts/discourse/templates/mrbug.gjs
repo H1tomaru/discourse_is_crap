@@ -1,8 +1,6 @@
 import { on } from "@ember/modifier"
 
 export default <template>
-тест тест 123
- {{!-- 
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
 
@@ -182,7 +180,7 @@ export default <template>
 			
 			</div>
 		{{/if}}
-	
+	{{!-- 
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless (get @controller.showhideo 0) "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 
@@ -622,7 +620,6 @@ export default <template>
 			Напишите об этом в <a href='/u/MrBug'>Личном Сообщении</a> и мы постараемся её добавить<br>
 			Да и просто пишите игры, которые бы хотели видеть в совместной покупке :)
 		</div>
-	
+	  --}}
 	</div>
-  --}}
 </template>
