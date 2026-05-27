@@ -322,9 +322,8 @@ export default <template>
 					
 					{{/each}}
 				{{/if}}
-			
+	--}}		
 			</div>
---}}
 		{{/if}}
 {{!-- 	
 		{{#if @controller.glizt.gamedb2}}
