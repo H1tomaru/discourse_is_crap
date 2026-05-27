@@ -16,7 +16,7 @@ export default class MyController extends Controller {
 	@tracked prezaips = null
 	@tracked pzposition = null
 	@tracked zaipsResult = null
-	@tracked showhideo = [true, true, true]
+	@tracked hideostates = [true, true, true]
 
 	get glizt () {
 		//make variables for each game type
@@ -142,7 +142,7 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo(index) {
-		this.showhideo = this.showhideo.with(index, !this.showhideo[index])
+		this.hideostates = this.hideostates.with(index, !this.hideostates[index])
 	}
 
 	@action
