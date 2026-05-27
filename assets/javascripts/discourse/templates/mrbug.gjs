@@ -265,33 +265,33 @@ export default <template>
 											{{#if users.USERS.[1]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if (users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS[1]}}/kek'>
-													{{get (get users.FEEDBACK 1) "PERCENT"}}%
+													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 1) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 1) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 1) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[1].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[1].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[1].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 1)}}
+												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
-											{{#if (get users.USERS 2)}}
+											{{#if users.USERS.[2]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
-												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
-													{{get (get users.FEEDBACK 2) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 2) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 2) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 2) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[2].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[2].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 2)}}
+												{{#if (users.PTAKEN.[2]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
@@ -299,17 +299,17 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
-												{{#if (get (get users.PSTATUS 1) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[1]}}
+												{{#if users.PSTATUS.[1].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
-											{{#if (get users.USERS 2)}}
-												{{#if (get (get users.PSTATUS 2) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[2]}}
+												{{#if users.PSTATUS.[2].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 									</tr>
@@ -326,10 +326,10 @@ export default <template>
 		{{/if}}
 	
 		{{#if @controller.glizt.gamedb2}}
-			<div class='ghed {{unless (get @controller.showhideo 1) "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
-			
+			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
+
 			<div class='MrBug'>
-				{{#if (get @controller.showhideo 1)}}
+				{{#if @controller.showhideo.[1]}}
 					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
@@ -378,18 +378,18 @@ export default <template>
 											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
+											{{#if users.USERS.[0]}}
 												<a title={{#if game.PRICE2}}{{game.PRICE2}}р{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 0}}/kek'>
-													{{get (get users.FEEDBACK 0) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
+													{{users.FEEDBACK.[0].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 0) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 0) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 0) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[0].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[0].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[0].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 0)}}
+												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
@@ -397,44 +397,44 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
-												{{#if (get (get users.PSTATUS 0) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[0]}}
+												{{#if users.PSTATUS.[0].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
+											{{#if users.USERS.[1]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 1}}/kek'>
-													{{get (get users.FEEDBACK 1) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
+													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 1) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 1) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 1) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[1].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[1].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[1].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 1)}}
+												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
-											{{#if (get users.USERS 2)}}
+											{{#if users.USERS.[2]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
-												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
-													{{get (get users.FEEDBACK 2) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 2) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 2) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 2) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[2].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[2].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 2)}}
+												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
@@ -442,17 +442,17 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
-												{{#if (get (get users.PSTATUS 1) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[1]}}
+												{{#if users.PSTATUS.[1].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
-											{{#if (get users.USERS 2)}}
-												{{#if (get (get users.PSTATUS 2) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[2]}}
+												{{#if users.PSTATUS.[2].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 									</tr>
@@ -469,10 +469,10 @@ export default <template>
 		{{/if}}
 	
 		{{#if @controller.glizt.gamedb3}}
-			<div class='ghed {{unless (get @controller.showhideo 2) "slut"}}' {{on "click" (fn @controller.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
+			<div class='ghed {{unless @controller.showhideo.[2] "slut"}}' {{on "click" (fn @controller.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
 			<div class='MrBug'>
 				
-				{{#if (get @controller.showhideo 2)}}
+				{{#if @controller.showhideo.[2]}}
 					{{#each @controller.glizt.gamedb3 as |game index|}}
 						
 						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
@@ -524,18 +524,18 @@ export default <template>
 											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
+											{{#if users.USERS.[0]}}
 												<a title={{#if game.PRICE2}}{{game.PRICE2}}р{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 0}}/kek'>
-													{{get (get users.FEEDBACK 0) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
+													{{users.FEEDBACK.[0].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 0) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 0) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 0) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[0].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[0].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[0].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 0)}}
+												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
@@ -543,44 +543,44 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
-												{{#if (get (get users.PSTATUS 0) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.}}
+												{{#if users.PSTATUS..}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS..}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS..}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS..}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
+											{{#if users.USERS.[1]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 1}}/kek'>
-													{{get (get users.FEEDBACK 1) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
+													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 1) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 1) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 1) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[1].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[1].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[1].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 1)}}
+												{{#if users.PTAKEN.[1]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
-											{{#if (get users.USERS 2)}}
+											{{#if users.USERS.[2]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
-												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
-													{{get (get users.FEEDBACK 2) "PERCENT"}}%
+												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
+													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 2) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 2) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 2) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[2].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[2].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[2].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 2)}}
+												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
@@ -588,17 +588,17 @@ export default <template>
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
-												{{#if (get (get users.PSTATUS 1) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 1) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[1]}}
+												{{#if users.PSTATUS.[1].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[1].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
-											{{#if (get users.USERS 2)}}
-												{{#if (get (get users.PSTATUS 2) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 2) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[2]}}
+												{{#if users.PSTATUS.[2].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[2].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 									</tr>
