@@ -3,11 +3,8 @@ import { action } from '@ember/object'
 import { service } from '@ember/service'
 import { tracked } from '@glimmer/tracking'
 import { ajax } from 'discourse/lib/ajax'
-import MrBugTemplate from '../templates/mrbug'
 
 export default class MyController extends Controller {
-
-	template = MrBugTemplate
 
 	//gets current user?
 	@service currentUser
