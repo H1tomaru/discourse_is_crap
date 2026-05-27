@@ -177,6 +177,10 @@ export default <template>
 			
 			</div>
 		{{/if}}
+
+		{{#if @controller.glizt.gamedb1}}
+			@controller.glizt.gamedb1
+		{{/if}}
 {{!-- 
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
