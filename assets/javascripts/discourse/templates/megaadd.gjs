@@ -18,7 +18,7 @@ export default <template>
 	
 	  <br />
 	
- 		{{#if @controller.addstuff.RESULT}}
+ 		{{#if @controller.addstuff.RESULT.length}}
 			Winrars! P244:<br />
 			{{#each @controller.addstuff.RESULT as |game|}}
 				{{game.GAME}}
