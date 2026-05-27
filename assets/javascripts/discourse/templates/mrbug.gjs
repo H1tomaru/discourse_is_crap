@@ -238,7 +238,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
-												<a {{#if game.PRICE2}}title='{{game.PRICE2}}р'{{/if}} href='/u/{{users.USERS.[0]}}'>{{users.USERS.[0]}}</a>
+												<a title="{{if game.PRICE2 game.PRICE2}}р" href='/u/{{users.USERS.[0]}}'>{{users.USERS.[0]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
 													{{users.FEEDBACK.0.PERCENT}}%
 													<span>
@@ -265,7 +265,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[1]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
 													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
@@ -283,7 +283,7 @@ export default <template>
 											{{/if}}
 											<br />
 											{{#if users.USERS.[2]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
 													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
@@ -383,7 +383,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
-												<a {{#if game.PRICE2}}title='{{game.PRICE2}}р'{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
+												<a title="{{if game.PRICE2 game.PRICE2}}р" href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
 													{{users.FEEDBACK.[0].PERCENT}}%
 													<span>
@@ -410,7 +410,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[1]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
 													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
@@ -428,7 +428,7 @@ export default <template>
 											{{/if}}
 											<br />
 											{{#if users.USERS.[2]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
 													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
@@ -531,7 +531,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
-												<a {{#if game.PRICE2}}title='{{game.PRICE2}}р'{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
+												<a title="{{if game.PRICE2 game.PRICE2}}р" href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
 													{{users.FEEDBACK.[0].PERCENT}}%
 													<span>
@@ -558,7 +558,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[1]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
 													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
@@ -576,7 +576,7 @@ export default <template>
 											{{/if}}
 											<br />
 											{{#if users.USERS.[2]}}
-												<a {{#if game.PRICE4}}title='{{game.PRICE4}}р'{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
+												<a title="{{if game.PRICE4 game.PRICE4}}р" href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if users.PFBred.[2] "bgred" "bggr2"}}' href='/u/{{users.USERS.[2]}}/kek'>
 													{{users.FEEDBACK.[2].PERCENT}}%
 													<span>
