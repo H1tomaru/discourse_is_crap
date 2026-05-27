@@ -4,322 +4,318 @@ export default <template>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
 	
 	<div class="rentobaka">
-	  <div class="gname">
-		<h2>
-		  Прокат игр PS4 / PS5 от <a href="/u/MrBug">MrBug</a>
-		</h2>
-		<button class={{if @controller.rulez "slut"}} {{on "click" @controller.toggleRULEZ}}>
-		  ПРАВИЛА &amp; ИНСТРУКЦИИ
-		</button>
-	  </div>
+	<div class="gname">
+	<h2>
+	Прокат игр PS4 / PS5 от <a href="/u/MrBug">MrBug</a>
+	</h2>
+	<button class={{if @controller.rulez "slut"}} {{on "click" @controller.toggleRULEZ}}>
+	ПРАВИЛА &amp; ИНСТРУКЦИИ
+	</button>
+	</div>
 	
-	  {{#if @controller.rulez}}
-		<div class="bagalert">
-		  <ul>
-			<h3>Для аренды игры необходимо выполнить следующие действия</h3>
-			<li>
-			  Определиться с выбором игры и уведомить
-			  <a href="/u/MrBug">MrBug</a>, написав ему личное сообщение:
-			  Название игры и срок на который Вы хотите взять игру в прокат
-			</li>
-			<li>
-			  В ближайшее время Бага оставит вам реквизиты для оплаты проката
-			</li>
-			<li>После оплаты проката вам будут переданы данные аккаунта</li>
-		  </ul>
-		  <ul>
-			<h3>Оплата</h3>
-			<li>
-			  Новичкам аренда предоставляется только после внесения залога за
-			  игру (зависит от игры, обычно 1000р, 2000р или 3000р)
-			</li>
-			<li>Постояльцам аренда предоставляется с минимальным залогом</li>
-			<li>
-			  Залог вносится на срок проката игры и возвращается по окончанию
-			  проката
-			</li>
-			<li>Невостребованный Залог в течении 7 дней сгорает</li>
-		  </ul>
-		  <ul>
-			<h3>
-			  Порядок действий после оплаты и получения данных аккаунта с игрой
-			</h3>
-			<li>
-			  После получения логина и пароля, Вы включаете приставку и создаете
-			  нового пользователя
-			</li>
-			<li>
-			  В появившемся меню ввода логина и пароля вписываем полученные
-			  данные
-			</li>
-			<br />
-			<h5>При создании аккаунта П4</h5>
-			<li>
-			  После ввода данных аккаунт активируется как основной автоматически
-			</li>
-			<br />
-			<li>
-			  Заходим на аккаунт, выбираем вкладку "Библиотека". Находим игру в
-			  списке. Нажимаем на неё и ставим игру на загрузку
-			</li>
-		  </ul>
-		  <ul>
-			<h3>Порядок действий после окончания проката П4</h3>
-			<li>
-			  Сообщить о готовности завершить прокат в личном сообщение
-			  <a href="/u/MrBug">MrBug</a>
-			</li>
-			<li>
-			  После ответа от <a href="/u/MrBug">MrBug</a>, заходим на
-			  прокатный аккаунт и выполняем деактивацию
-			</li>
-			<br />
-			<h5>На PS4</h5>
-			<li>Выбираем настройки</li>
-			<li>Выбираем пункт Управление учетной записью</li>
-			<li>
-			  Выбираем пункт Активировать учетную запись как основную и нажимаем
-			  пункт Деактивировать
-			</li>
-			<li>
-			  В случае если пункт Деактивировать неактивен, сначала нажимаем
-			  пункт Активировать, затем нажимаем появившийся пункт
-			  Деактивировать
-			</li>
-			<li>Выбираем Пользователи - Удалить Пользователя</li>
-			<br />
-			<h5>На PS5</h5>
-			<li>Выбираем настройки</li>
-			<li>Выбираем пункт пользователи и учетные записи</li>
-			<li>
-			  Выбираем пункт Другое - Общий доступ к консоли и автономная игра -
-			  Отключить
-			</li>
-			<li>
-			  В случае если пункт Отключить общий доступ неактивен, сначала
-			  нажимаем пункт Включить общий доступ, затем нажимаем появившийся
-			  пункт Отключить общий доступ
-			</li>
-			<li>Выбираем Пользователи - Удалить Пользователя</li>
-			<br />
-			<li>
-			  После деактивации и удаления профиля, сообщаем в личном сообщении
-			  <a href="/u/MrBug">MrBug</a>
-			  что Вы деактивировали аккаунт и удалили профиль со своей консоли
-			</li>
-			<li>Укажите реквизиты и сумму для возврата залога</li>
-			<li>
-			  Бага проверяет аккаунт и если деактивация выполнена правильно,
-			  возвращает залог
-			</li>
-		  </ul>
-		  <ul>
-			<h3>Сроки проката</h3>
-			<li>
-			  Срок на который Вы взяли игру в прокат начинается со следующего
-			  дня от передачи Вам данных аккаунта
-			</li>
-			<li>При желании Вы можете вернуть аккаунт раньше срока</li>
-			<li>
-			  Вы можете продлить прокат по окончанию срока, сколько угодно раз,
-			  независимо от очереди
-			</li>
-		  </ul>
-		</div>
-	  {{/if}}
+	{{#if @controller.rulez}}
+	<div class="bagalert">
+	<ul>
+	<h3>Для аренды игры необходимо выполнить следующие действия</h3>
+	<li>
+	Определиться с выбором игры и уведомить
+	<a href="/u/MrBug">MrBug</a>, написав ему личное сообщение:
+	Название игры и срок на который Вы хотите взять игру в прокат
+	</li>
+	<li>
+	В ближайшее время Бага оставит вам реквизиты для оплаты проката
+	</li>
+	<li>После оплаты проката вам будут переданы данные аккаунта</li>
+	</ul>
+	<ul>
+	<h3>Оплата</h3>
+	<li>
+	Новичкам аренда предоставляется только после внесения залога за
+	игру (зависит от игры, обычно 1000р, 2000р или 3000р)
+	</li>
+	<li>Постояльцам аренда предоставляется с минимальным залогом</li>
+	<li>
+	Залог вносится на срок проката игры и возвращается по окончанию
+	проката
+	</li>
+	<li>Невостребованный Залог в течении 7 дней сгорает</li>
+	</ul>
+	<ul>
+	<h3>
+	Порядок действий после оплаты и получения данных аккаунта с игрой
+	</h3>
+	<li>
+	После получения логина и пароля, Вы включаете приставку и создаете
+	нового пользователя
+	</li>
+	<li>
+	В появившемся меню ввода логина и пароля вписываем полученные
+	данные
+	</li>
+	<br />
+	<h5>При создании аккаунта П4</h5>
+	<li>
+	После ввода данных аккаунт активируется как основной автоматически
+	</li>
+	<br />
+	<li>
+	Заходим на аккаунт, выбираем вкладку "Библиотека". Находим игру в
+	списке. Нажимаем на неё и ставим игру на загрузку
+	</li>
+	</ul>
+	<ul>
+	<h3>Порядок действий после окончания проката П4</h3>
+	<li>
+	Сообщить о готовности завершить прокат в личном сообщение
+	<a href="/u/MrBug">MrBug</a>
+	</li>
+	<li>
+	После ответа от <a href="/u/MrBug">MrBug</a>, заходим на
+	прокатный аккаунт и выполняем деактивацию
+	</li>
+	<br />
+	<h5>На PS4</h5>
+	<li>Выбираем настройки</li>
+	<li>Выбираем пункт Управление учетной записью</li>
+	<li>
+	Выбираем пункт Активировать учетную запись как основную и нажимаем
+	пункт Деактивировать
+	</li>
+	<li>
+	В случае если пункт Деактивировать неактивен, сначала нажимаем
+	пункт Активировать, затем нажимаем появившийся пункт
+	Деактивировать
+	</li>
+	<li>Выбираем Пользователи - Удалить Пользователя</li>
+	<br />
+	<h5>На PS5</h5>
+	<li>Выбираем настройки</li>
+	<li>Выбираем пункт пользователи и учетные записи</li>
+	<li>
+	Выбираем пункт Другое - Общий доступ к консоли и автономная игра -
+	Отключить
+	</li>
+	<li>
+	В случае если пункт Отключить общий доступ неактивен, сначала
+	нажимаем пункт Включить общий доступ, затем нажимаем появившийся
+	пункт Отключить общий доступ
+	</li>
+	<li>Выбираем Пользователи - Удалить Пользователя</li>
+	<br />
+	<li>
+	После деактивации и удаления профиля, сообщаем в личном сообщении
+	<a href="/u/MrBug">MrBug</a>
+	что Вы деактивировали аккаунт и удалили профиль со своей консоли
+	</li>
+	<li>Укажите реквизиты и сумму для возврата залога</li>
+	<li>
+	Бага проверяет аккаунт и если деактивация выполнена правильно,
+	возвращает залог
+	</li>
+	</ul>
+	<ul>
+	<h3>Сроки проката</h3>
+	<li>
+	Срок на который Вы взяли игру в прокат начинается со следующего
+	дня от передачи Вам данных аккаунта
+	</li>
+	<li>При желании Вы можете вернуть аккаунт раньше срока</li>
+	<li>
+	Вы можете продлить прокат по окончанию срока, сколько угодно раз,
+	независимо от очереди
+	</li>
+	</ul>
+	</div>
+	{{/if}}
 	
-	  <div class="mimu2">
-		<button class="rentabutt{{unless @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST1}}>
-		  Легкий Список
-		</button>
-		<button class="rentabutt{{if @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST2}}>
-		  Тяжелый Cписок
-		</button>
-	  </div>
+	<div class="mimu2">
+	<button class="rentabutt{{unless @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST1}}>
+	Легкий Список
+	</button>
+	<button class="rentabutt{{if @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST2}}>
+	Тяжелый Cписок
+	</button>
+	</div>
 	
-	  {{#unless @controller.showLIST}}
-		<div class="rentbox">
-		  <div class="title">
-			Всего игр в прокате: <span>{{@controller.model.count.[0]}}</span><br />
-			<div>
-			  <input
-				type="checkbox"
-				checked={{@controller.showTYPE1}}
-				{{on "change" @controller.toggleTYPE1}}
-			  />
-			  Реально Игр:
-			  <span>{{@controller.model.count.[1]}}</span>
-			</div>
-			<div>
-			  <input
-				type="checkbox"
-				checked={{@controller.showTYPE2}}
-				{{on "change" @controller.toggleTYPE2}}
-			  />
-			  Легких и Коротких Платин:
-			  <span>{{@controller.model.count.[2]}}</span>
-			</div>
-			<div>
-			  <input
-				type="checkbox"
-				checked={{@controller.showTYPE3}}
-				{{on "change" @controller.toggleTYPE3}}
-			  />
-			  Легких и Коротких Игр:
-			  <span>{{@controller.model.count.[3]}}</span>
-			</div>
-			<div>
-			  <input
-				type="checkbox"
-				checked={{@controller.showTYPE4}}
-				{{on "change" @controller.toggleTYPE4}}
-			  />
-			  Хиты Для Избранных:
-			  <span>{{@controller.model.count.[4]}}</span>
-			</div>
-		  </div>
-
+	{{#unless @controller.showLIST}}
+	<div class="rentbox">
+	<div class="title">
+	Всего игр в прокате: <span>{{@controller.model.count.[0]}}</span><br />
+	<div>
+	<input
+	type="checkbox"
+	checked={{@controller.showTYPE1}}
+	{{on "change" @controller.toggleTYPE1}}
+	/>
+	Реально Игр:
+	<span>{{@controller.model.count.[1]}}</span>
+	</div>
+	<div>
+	<input
+	type="checkbox"
+	checked={{@controller.showTYPE2}}
+	{{on "change" @controller.toggleTYPE2}}
+	/>
+	Легких и Коротких Платин:
+	<span>{{@controller.model.count.[2]}}</span>
+	</div>
+	<div>
+	<input
+	type="checkbox"
+	checked={{@controller.showTYPE3}}
+	{{on "change" @controller.toggleTYPE3}}
+	/>
+	Легких и Коротких Игр:
+	<span>{{@controller.model.count.[3]}}</span>
+	</div>
+	<div>
+	<input
+	type="checkbox"
+	checked={{@controller.showTYPE4}}
+	{{on "change" @controller.toggleTYPE4}}
+	/>
+	Хиты Для Избранных:
+	<span>{{@controller.model.count.[4]}}</span>
+	</div>
+	</div>
 	
-		  <span class="textright2">Неделя / Месяц</span>
 	
-		  <div class="innerbox">
-			{{#each @controller.model.rentaGAMEZ as |game|}}
-			  <div
-				class="
-				  {{unless @controller.showTYPE1 (if game.TYPE1 'rentahideoz')}}
-				  {{unless @controller.showTYPE2 (if game.TYPE2 'rentahideoz')}}
-				  {{unless @controller.showTYPE3 (if game.TYPE3 'rentahideoz')}}
-				  {{unless @controller.showTYPE4 (if game.TYPE4 'rentahideoz')}}
-				"
-			  >
-				{{#if game.STATUS}}
-				  <span class="red">
-					<b>[</b>
-					<span class="hideoS">Занят</span>
-					<i class="fas fa-times hideoB"></i>
-					до
-					{{game.STATUS}}
-					<b>]</b>
-					{{#if game.LINE}}
-					  <b>[</b>
-					  +{{game.LINE}}
-					  в очереди
-					  <b>]</b>
-					{{/if}}
-					<b>[</b>
-					{{game.POSITION}}
-					<b>]</b>
-				  </span>
-				{{else}}
-				  <span class="green">
-					<b>[</b>
-					<span class="hideoS">Cвободен</span>
-					<i class="fas fa-check hideoB"></i>
-					<b>]</b>
-					<b>[</b>
-					{{game.POSITION}}
-					<b>]</b>
-				  </span>
+	<span class="textright2">Неделя / Месяц</span>
+	
+	<div class="innerbox">
+	{{#each @controller.model.rentaGAMEZ as |game|}}
+	<div
+	class="
+	{{unless @controller.showTYPE1 (if game.TYPE1 'rentahideoz')}}
+	{{unless @controller.showTYPE2 (if game.TYPE2 'rentahideoz')}}
+	{{unless @controller.showTYPE3 (if game.TYPE3 'rentahideoz')}}
+	{{unless @controller.showTYPE4 (if game.TYPE4 'rentahideoz')}}
+	"
+	>
+	{{#if game.STATUS}}
+	<span class="red">
+	<b>[</b>
+	<span class="hideoS">Занят</span>
+	<i class="fas fa-times hideoB"></i>
+	до
+	{{game.STATUS}}
+	<b>]</b>
+	{{#if game.LINE}}
+	<b>[</b>
+	+{{game.LINE}}
+	в очереди
+	<b>]</b>
+	{{/if}}
+	<b>[</b>
+	{{game.POSITION}}
+	<b>]</b>
+	</span>
+	{{else}}
+	<span class="green">
+	<b>[</b>
+	<span class="hideoS">Cвободен</span>
+	<i class="fas fa-check hideoB"></i>
+	<b>]</b>
+	<b>[</b>
+	{{game.POSITION}}
+	<b>]</b>
+	</span>
+	{{/if}}
+	
+	{{game.GNAME}}
+	
+	{{#if game.TYPE2}}
+	<span class="t2text hideoS">{{game.GCOMMENT}}</span>
+	{{/if}}
+	{{#if game.TYPE3}}
+	<span class="t2text hideoS">{{game.GCOMMENT}}</span>
+	{{/if}}
+	{{#if game.GNEW}}
+	<img src="https://i.imgur.com/84UQp3G.gif" />
+	{{/if}}
+	
+	<span class="textright">{{game.PRICE}}</span>
+	</div>
+	{{/each}}
+	</div>
+	</div>
+	{{/unless}}
+	
+		{{#if @controller.showLIST}}
+			<div class="rentbox2">
+				<div class="mimu">
+					<button class="rentabutt{{if @controller.showGAMEZ ' bi4'}}" {{on "click" @controller.setShowGAMEZ}}>
+						Игры Игры
+					</button>
+					<button class="rentabutt{{if @controller.showCRAP ' bi4'}}" {{on "click" @controller.setShowCRAP}}>
+						Легкие и Короткие
+					</button>
+				</div>
+			
+				{{#if @controller.showGAMEZ}}
+					<table class="list">
+						{{#each @controller.model.rentaGAMEZ1 as |game index|}}
+							<tbody>
+								<tr>
+									<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
+									<td class="rentaimg" rowspan="2">
+										<img class="lazyload" data-src={{game.GPIC}} />
+										<span>{{game.GCOMMENT}}</span>
+									</td>
+								</tr>
+							
+								<tr>
+									{{#if game.STATUS}}
+										<td class="malabela2 bgred3">
+											Занят до {{game.STATUS}}
+											{{#if game.LINE}}
+												+{{game.LINE}} в очереди
+											{{/if}}
+										</td>
+									{{else}}
+										<td class="malabela2 bggr">Cвободен</td>
+									{{/if}}
+								
+									<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+									<td class="malabela2">{{game.PRICE}}</td>
+								</tr>
+							</tbody>
+						{{/each}}
+					</table>
 				{{/if}}
-	
-				{{game.GNAME}}
-	
-				{{#if game.TYPE2}}
-				  <span class="t2text hideoS">{{game.GCOMMENT}}</span>
+			
+				{{#if @controller.showCRAP}}
+					<table class="list">
+						{{#each @controller.model.rentaGAMEZ2 as |game index|}}
+							<tbody>
+								<tr>
+									<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
+									<td class="rentaimg" rowspan="2">
+										<img class="lazyload" data-src={{game.GPIC}} />
+										<span>{{game.GCOMMENT}}</span>
+									</td>
+								</tr>
+							
+								<tr>
+									{{#if game.STATUS}}
+										<td class="malabela2 bgred3">
+											Занят до {{game.STATUS}}
+											{{#if game.LINE}}
+												+{{game.LINE}} в очереди
+											{{/if}}
+										</td>
+									{{else}}
+										<td class="malabela2 bggr">Cвободен</td>
+									{{/if}}
+								
+									<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
+									<td class="malabela2">{{game.PRICE}}</td>
+								</tr>
+							</tbody>
+						{{/each}}
+					</table>
 				{{/if}}
-				{{#if game.TYPE3}}
-				  <span class="t2text hideoS">{{game.GCOMMENT}}</span>
-				{{/if}}
-				{{#if game.GNEW}}
-				  <img src="https://i.imgur.com/84UQp3G.gif" />
-				{{/if}}
-	
-				<span class="textright">{{game.PRICE}}</span>
-			  </div>
-			{{/each}}
-		  </div>
-		</div>
-	  {{/unless}}
-	
-	  {{#if @controller.showLIST}}
-		<div class="rentbox2">
-		  <div class="mimu">
-			<button class="rentabutt{{if @controller.showGAMEZ ' bi4'}}" {{on "click" @controller.setShowGAMEZ}}>
-			  Игры Игры
-			</button>
-			<button class="rentabutt{{if @controller.showCRAP ' bi4'}}" {{on "click" @controller.setShowCRAP}}>
-			  Легкие и Короткие
-			</button>
-		  </div>
-	
-		  {{#if @controller.showGAMEZ}}
-			<table class="list">
-			  {{#each @controller.model.rentaGAMEZ1 as |game index|}}
-				<tbody>
-				  <tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2">
-					  <img class="lazyload" data-src={{game.GPIC}} />
-					  <span>{{game.GCOMMENT}}</span>
-					</td>
-				  </tr>
-	
-				  <tr>
-					{{#if game.STATUS}}
-					  <td class="malabela2 bgred3">
-						Занят до
-						{{game.STATUS}}
-						{{#if game.LINE}}
-						  +{{game.LINE}}
-						  в очереди
-						{{/if}}
-					  </td>
-					{{else}}
-					  <td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-	
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-				  </tr>
-				</tbody>
-			  {{/each}}
-			</table>
-		  {{/if}}
-	
-		  {{#if @controller.showCRAP}}
-			<table class="list">
-			  {{#each @controller.model.rentaGAMEZ2 as |game index|}}
-				<tbody>
-				  <tr>
-					<td class="gname" colspan="4"><h3>{{game.GNAME}}</h3></td>
-					<td class="rentaimg" rowspan="2">
-					  <img class="lazyload" data-src={{game.GPIC}} />
-					  <span>{{game.GCOMMENT}}</span>
-					</td>
-				  </tr>
-	
-				  <tr>
-					{{#if game.STATUS}}
-					  <td class="malabela2 bgred3">
-						Занят до
-						{{game.STATUS}}
-						{{#if game.LINE}}
-						  +{{game.LINE}}
-						  в очереди
-						{{/if}}
-					  </td>
-					{{else}}
-					  <td class="malabela2 bggr">Cвободен</td>
-					{{/if}}
-	
-					<td class="malabela2"><strong>{{game.POSITION}}</strong></td>
-					<td class="malabela2">{{game.PRICE}}</td>
-				  </tr>
-				</tbody>
-			  {{/each}}
-			</table>
-		  {{/if}}
-		</div>
-	  {{/if}}
+			</div>
+		{{/if}}
 	</div>
 </template>
