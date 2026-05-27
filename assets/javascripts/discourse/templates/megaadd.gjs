@@ -34,10 +34,7 @@ export default <template>
 	
 	  <button type="button" {{on "click" @controller.showP4Lista}}>P4 lista:</button><br />
 	
-	{{#if @controller.p4lista.length}}
 		{{#each @controller.p4lista as |game|}}
-
-			{{#if game.TROIKI.length}}
 				{{#each game.TROIKI as |troika index|}}
 
 					{{#if troika.ACCOUNT.length}}
@@ -46,16 +43,13 @@ export default <template>
 						{{/unless}}
 						<br />
 						{{troika.ACCOUNT}}<br />
-						П2 - {{troika.USERS 0}}<br />
-						П4 - {{troika.USERS 1}}<br />
-						П4 - {{troika.USERS 2}}<br />
+						П2 - {{troika.USERS.0}}<br />
+						П4 - {{troika.USERS.1}}<br />
+						П4 - {{troika.USERS.2}}<br />
 					{{/if}}
 
 				{{/each}}
-			{{/if}}
-
 		{{/each}}
-	{{/if}}
 
 	</form>
 </template>
