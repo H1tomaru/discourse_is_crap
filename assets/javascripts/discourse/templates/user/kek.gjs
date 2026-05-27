@@ -189,6 +189,7 @@ export default <template>
 							<span class="minihrenvnizu">пользователи без отзывов от организатора узнают пароль через личные сообщения</span>
 						{{/unless}}
 					</div>
+					</div>
 				{{else}}
 					<h1 style="text-align: center">Epic Fail Is Epic</h1>
 					<img src="https://i.imgur.com/33FJekg.png" style="width: 100%" />
