@@ -232,7 +232,9 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
+											{{#if users.ACCOUNT}}
+												{{users.ACCOUNT}}
+											{{/if}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
@@ -375,7 +377,9 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
+											{{#if users.ACCOUNT}}
+												{{users.ACCOUNT}}
+											{{/if}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
@@ -521,7 +525,9 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
+											{{#if users.ACCOUNT}}
+												{{users.ACCOUNT}}
+											{{/if}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
