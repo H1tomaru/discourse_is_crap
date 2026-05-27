@@ -137,116 +137,63 @@ export default <template>
 		</div>
 		
 		<br />
-000	
-	{{#if @controller.accamdal}}
-	{{#if @controller.accawait}}
-		<div class="bagaspin"></div>
-	{{else}}
-	{{#if @controller.troikopoisk.poiskwin}}
-		<div class="kekkok">
-			<h2>{{@controller.troikopoisk._id}}</h2>
-		
-			{{#unless @controller.model.MENOSHO}}
-				<div class="xdux">
-					{{#unless @controller.actualgp}}
-						{{#if @controller.passwait}}
-							<div class="tinybagaspin"></div>
-						{{else}}
-							<button class="buttZ" type="button" {{on "click" (fn @controller.getPaZZ @controller.troikopoisk._id)}}>&#215; получить пароль &#215;</button>
-						{{/if}}
-					{{else}}
-						{{#if @controller.actualgp.winrar}}{{@controller.actualgp.winrar}}{{/if}}
-						{{#if @controller.actualgp.spam}}Бот выдает только <b>два</b> пароля в день, других сегодня небудет{{/if}}
-						{{#if @controller.actualgp.noconnect}}Бот не отвечает: {{@controller.actualgp.status}}{{/if}}
-						{{#if @controller.actualgp.error}}Бот сломался и словил ошибку: {{@controller.actualgp.status}}{{/if}}
-						{{#if @controller.actualgp.noufb}}Бот не работать без отзывов от организатора{{/if}}
-						{{#if @controller.actualgp.banned}}Бот не работать когда бан{{/if}}
-					{{/unless}}
-				</div>
-			{{/unless}}
-		
-			<div class="keklist gamZ">
-				<div class="kekus zeZ" style="width: 100%">
-				<div style="text-align: center">{{@controller.troikopoisk.GAME}}</div>
-			</div>
-			
-			{{#if @controller.troikopoisk.P2.[1]}}
-				<div class="kekus zeZ">
-					<div><a>П2 PS4</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
-				</div>
-				<div class="kekus zeZ">
-					<div><a>П4 PS4</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
-				</div>
-				<div class="kekus zeZ">
-					<div><a>П4 PS4</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
-				</div>
-				
-				<div class="kekus zeZ">
-					<div><a>П2 PS5</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P2.[1]}}">{{@controller.troikopoisk.P2.[1]}}</a></div>
-				</div>
-				<div class="kekus zeZ">
-					<div><a>П4 PS5</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P4.[2]}}">{{@controller.troikopoisk.P4.[2]}}</a></div>
-				</div>
-				<div class="kekus zeZ">
-					<div><a>П4 PS5</a></div>
-					<div><a href="/u/{{@controller.troikopoisk.P4.[3]}}">{{@controller.troikopoisk.P4.[3]}}</a></div>
-				</div>
+
+		{{#if @controller.accamdal}}
+			{{#if @controller.accawait}}
+				<div class="bagaspin"></div>
 			{{else}}
-				{{#if @controller.troikopoisk.P4.[3]}}
-					<div class="kekus zeZ">
-						<div><a>П2</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4 PS4</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4 PS4</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4 PS5</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[2]}}">{{@controller.troikopoisk.P4.[2]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4 PS5</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[3]}}">{{@controller.troikopoisk.P4.[3]}}</a></div>
+				{{#if @controller.troikopoisk.poiskwin}}
+					<div class="kekkok">
+						<h2>{{@controller.troikopoisk._id}}</h2>
+					
+						{{#unless @controller.model.MENOSHO}}
+							<div class="xdux">
+								{{#unless @controller.actualgp}}
+									{{#if @controller.passwait}}
+										<div class="tinybagaspin"></div>
+									{{else}}
+										<button class="buttZ" type="button" {{on "click" (fn @controller.getPaZZ @controller.troikopoisk._id)}}>&#215; получить пароль &#215;</button>
+									{{/if}}
+								{{else}}
+									{{#if @controller.actualgp.winrar}}{{@controller.actualgp.winrar}}{{/if}}
+									{{#if @controller.actualgp.spam}}Бот выдает только <b>два</b> пароля в день, других сегодня небудет{{/if}}
+									{{#if @controller.actualgp.noconnect}}Бот не отвечает: {{@controller.actualgp.status}}{{/if}}
+									{{#if @controller.actualgp.error}}Бот сломался и словил ошибку: {{@controller.actualgp.status}}{{/if}}
+									{{#if @controller.actualgp.noufb}}Бот не работать без отзывов от организатора{{/if}}
+									{{#if @controller.actualgp.banned}}Бот не работать когда бан{{/if}}
+								{{/unless}}
+							</div>
+						{{/unless}}
+					
+						<div class="keklist gamZ">
+							<div class="kekus zeZ" style="width: 100%">
+							<div style="text-align: center">{{@controller.troikopoisk.GAME}}</div>
+						</div>
+			
+						<div class="kekus zeZ">
+							<div><a>П2</a></div>
+							<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
+						</div>
+						<div class="kekus zeZ">
+							<div><a>П4</a></div>
+							<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
+						</div>
+						<div class="kekus zeZ">
+							<div><a>П4</a></div>
+							<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
+						</div>
+					
+						{{#unless @controller.model.MENOSHO}}
+							<span class="minihrenvnizu">пароль устарел? пароль сменили! жми получить пароль!? узнай пароль!</span>
+							<span class="minihrenvnizu">узнать можно только один пароль в день</span>
+							<span class="minihrenvnizu">пользователи без отзывов от организатора узнают пароль через личные сообщения</span>
+						{{/unless}}
 					</div>
 				{{else}}
-					<div class="kekus zeZ">
-						<div><a>П2</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
-					</div>
-					<div class="kekus zeZ">
-						<div><a>П4</a></div>
-						<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
-					</div>
+					<h1 style="text-align: center">Epic Fail Is Epic</h1>
+					<img src="https://i.imgur.com/33FJekg.png" style="width: 100%" />
 				{{/if}}
 			{{/if}}
-		
-			{{#unless @controller.model.MENOSHO}}
-				<span class="minihrenvnizu">пароль устарел? пароль сменили! жми получить пароль!? узнай пароль!</span>
-				<span class="minihrenvnizu">узнать можно только один пароль в день</span>
-				<span class="minihrenvnizu">пользователи без отзывов от организатора узнают пароль через личные сообщения</span>
-			{{/unless}}
-		</div>
-	</div>
-	{{else}}
-		<h1 style="text-align: center">Epic Fail Is Epic</h1>
-		<img src="https://i.imgur.com/33FJekg.png" style="width: 100%" />
-	{{/if}}
-	{{/if}}
-	{{/if}}
-	
+		{{/if}}
 	</div>
 </template>
