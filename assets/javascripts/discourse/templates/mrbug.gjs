@@ -32,7 +32,7 @@ export default <template>
 	
 		<br />
 	
-		{{#if this.glizt.maigamez1}}
+		{{#if @controller.glizt.maigamez1}}
 			<div class="ghead red"><h2>ЖДЕМ ОПЛАТУ</h2></div>
 
 			<table class="atats kadu">
@@ -45,7 +45,7 @@ export default <template>
 						<col width="50px" />
 					</colgroup>
 
-				{{#each this.glizt.maigamez1 as |game|}}
+				{{#each @controller.glizt.maigamez1 as |game|}}
 					<tr>
 						<td>
 							<img src="{{game.gPIC}}" alt="{{game.gNAME}}" />
@@ -87,7 +87,7 @@ export default <template>
 	
 		<br />
 	
-		{{#if this.glizt.maigamez2}}
+		{{#if @controller.glizt.maigamez2}}
 			<div class="ghead green"><h2>ОПЛАЧЕНО</h2></div>
 
 			<table class="atats udak">
@@ -97,7 +97,7 @@ export default <template>
 					<col width="100%" />
 				</colgroup>
 
-				{{#each this.glizt.maigamez2 as |game|}}
+				{{#each @controller.glizt.maigamez2 as |game|}}
 					<tr>
 						<td>
 							<img src="{{game.gPIC}}" alt="{{game.gNAME}}" />
@@ -121,47 +121,47 @@ export default <template>
 			<hr />
 		{{/if}}
 	
-		{{#if this.bagamdal}}
+		{{#if @controller.bagamdal}}
 			<div class="etomudal">
 			
-				{{#if this.mdalready}}
+				{{#if @controller.mdalready}}
 				
-					<button class="netmudal" type="button" {{on "click" this.netmudal}}></button>
+					<button class="netmudal" type="button" {{on "click" @controller.netmudal}}></button>
 					
-					{{#if this.prezaips.guest}}
+					{{#if @controller.prezaips.guest}}
 						<div class="mudalcontent mudaladdon headin3">
 							<div class="bagariban">ВНИМАНИЕ</div>
 							<span>Для участия в совместной покупке игр требуется <a href="/signup">Регистрация</a></span>
 						</div>
 					{{/if}}
 					
-					{{#if this.prezaips.banned}}
+					{{#if @controller.prezaips.banned}}
 						<div class="mudalcontent mudaladdon headin3">
 							<div class="bagariban">ВНИМАНИЕ</div>
 							<span>Запись возможна только через личное сообщение <a href="/u/MrBug">Организатору</a></span>
 						</div>
 					{{/if}}
 					
-					{{#if this.prezaips.winrars}}
+					{{#if @controller.prezaips.winrars}}
 						<div class="mudalcontent headin3 prezaips">
 							<div class="bagato">
-								<div class="bagapi" style="background-image:url('{{this.prezaips.imgLINK}}')"></div>
-								<h1><a>{{this.prezaips.gameNAME}}</a> Запись</h1>
+								<div class="bagapi" style="background-image:url('{{@controller.prezaips.imgLINK}}')"></div>
+								<h1><a>{{@controller.prezaips.gameNAME}}</a> Запись</h1>
 							</div>
-							<button type="button" {{on "click" this.imgoingin}}>Записаться на П{{this.pzposition}}</button><button type="button" {{on "click" this.netmudal}}>Закрыть</button>
+							<button type="button" {{on "click" @controller.imgoingin}}>Записаться на П{{@controller.pzposition}}</button><button type="button" {{on "click" @controller.netmudal}}>Закрыть</button>
 						</div>
 					{{/if}}
 					
-					{{#if this.zaipsResult.winrars}}
+					{{#if @controller.zaipsResult.winrars}}
 						<div class="mudalcontent mudaladdon headin3">
 							<span>Запись</span>
-							<span>на позицию П{{this.pzposition}}</span>
-							<div class="bagariban">{{this.zaipsResult.gameNAME}}</div>
+							<span>на позицию П{{@controller.pzposition}}</span>
+							<div class="bagariban">{{@controller.zaipsResult.gameNAME}}</div>
 							<span>Успешно произведена!</span>
 						</div>
 					{{/if}}
 					
-					{{#if this.zaipsResult.zaipsfail}}
+					{{#if @controller.zaipsResult.zaipsfail}}
 						<div class="mudalcontent headin3 prezaips">
 							<div class="bagato">
 								<div class="bagapi" style="background-image:url('https://i.imgur.com/33FJekg.png')">Epic Fail Is Epic</div>
@@ -178,20 +178,20 @@ export default <template>
 			</div>
 		{{/if}}
 
-		{{#if this.glizt.gamedb1}}
+		{{#if @controller.glizt.gamedb1}}
 			test
-			{{this.glizt.gamedb1}}
+			@controller.glizt.gamedb1
 			test
 		{{/if}}
 {{!-- 
-		{{#if this.glizt.gamedb1}}
-			<div class='ghed {{unless this.showhideo.[0] "slut"}}' {{on "click" (fn this.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
+		{{#if @controller.glizt.gamedb1}}
+			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 			<div class='MrBug'>
 
-				{{#if this.showhideo.[0]}}
-					{{#each this.glizt.gamedb1 as |game index|}}
+				{{#if @controller.showhideo.[0]}}
+					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
-						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn this.showhideo1 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
 								<td class='flagco'>
 									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
@@ -206,7 +206,7 @@ export default <template>
 								</td>
 					
 								<td>
-									<button type="button" {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
+									<button type="button" {{on "click" (fn @controller.zaips2 game._id)}} class='BagButon'>П2<br />
 										{{#if game.PRICE2}}
 											<h3>{{game.PRICE2}}</h3><br />рублей
 										{{else}}
@@ -216,7 +216,7 @@ export default <template>
 									</button>
 								</td>
 								<td>
-									<button type="button" {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
+									<button type="button" {{on "click" (fn @controller.zaips4 game._id)}} class='BagButon'>П4<br />
 										{{#if game.PRICE4}}
 											<h3>{{game.PRICE4}}</h3><br />рублей
 										{{else}}
@@ -331,14 +331,14 @@ export default <template>
 			</div>
 		{{/if}}
 	
-		{{#if this.glizt.gamedb2}}
-			<div class='ghed {{unless this.showhideo.[1] "slut"}}' {{on "click" (fn this.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
+		{{#if @controller.glizt.gamedb2}}
+			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
 			<div class='MrBug'>
 
-				{{#if this.showhideo.[1]}}
-					{{#each this.glizt.gamedb2 as |game index|}}
+				{{#if @controller.showhideo.[1]}}
+					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
-						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn this.showhideo2 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
 							<tr>
 								<td class='flagco'>
 									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
@@ -352,7 +352,7 @@ export default <template>
 									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 								</td>
 								<td>
-									<button type="button" {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
+									<button type="button" {{on "click" (fn @controller.zaips2 game._id)}} class='BagButon'>П2<br />
 										{{#if game.PRICE2}}
 											<h3>{{game.PRICE2}}</h3><br />рублей
 										{{else}}
@@ -362,7 +362,7 @@ export default <template>
 									</button>
 								</td>
 								<td>
-									<button type="button" {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
+									<button type="button" {{on "click" (fn @controller.zaips4 game._id)}} class='BagButon'>П4<br />
 										{{#if game.PRICE4}}
 											<h3>{{game.PRICE4}}</h3><br />рублей
 										{{else}}
@@ -477,14 +477,14 @@ export default <template>
 			</div>
 		{{/if}}
 	
-		{{#if this.glizt.gamedb3}}
-			<div class='ghed {{unless this.showhideo.[2] "slut"}}' {{on "click" (fn this.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
+		{{#if @controller.glizt.gamedb3}}
+			<div class='ghed {{unless @controller.showhideo.[2] "slut"}}' {{on "click" (fn @controller.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
 			<div class='MrBug'>
 				
-				{{#if this.showhideo.[2]}}
-					{{#each this.glizt.gamedb3 as |game index|}}
+				{{#if @controller.showhideo.[2]}}
+					{{#each @controller.glizt.gamedb3 as |game index|}}
 						
-						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn this.showhideo3 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
 							<tr>
 								<td class='flagco'>
 									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
@@ -499,7 +499,7 @@ export default <template>
 									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 								</td>
 								<td>
-									<button type="button" {{on "click" (fn this.zaips2 game._id)}} class='BagButon'>П2<br />
+									<button type="button" {{on "click" (fn @controller.zaips2 game._id)}} class='BagButon'>П2<br />
 										{{#if game.PRICE2}}
 											<h3>{{game.PRICE2}}</h3><br />рублей
 										{{else}}
@@ -509,7 +509,7 @@ export default <template>
 									</button>
 								</td>
 								<td>
-									<button type="button" {{on "click" (fn this.zaips4 game._id)}} class='BagButon'>П4<br />
+									<button type="button" {{on "click" (fn @controller.zaips4 game._id)}} class='BagButon'>П4<br />
 										{{#if game.PRICE4}}
 											<h3>{{game.PRICE4}}</h3><br />рублей
 										{{else}}
