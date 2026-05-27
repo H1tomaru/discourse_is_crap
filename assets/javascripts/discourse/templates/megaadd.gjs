@@ -35,7 +35,7 @@ export default <template>
 	
 	  <button type="button" {{on "click" @controller.P4Lista}}>P4 lista:</button><br />
 	
-	  {{#if @controller.p4lista}}
+	  {{#if @controller.p4lista.length}}
 		{{#each @controller.p4lista as |game|}}
 		  {{#each game.TROIKI as |troika index|}}
 			{{#if troika.ACCOUNT}}
