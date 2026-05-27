@@ -8,9 +8,9 @@ export default <template>
 	
 	  <Input class="poiskbox" type="text" size="64" @value={{@controller.addstuff.GAME}} />
 	  <button type="submit">GoGoGo</button>
-	  <button type="button" {{on "click" @controller.reset}}>Reset</button><br />
-	  <button type="button" {{on "click" @controller.feedbacksGo}}>Add Feedback</button>
-	  <button type="button" {{on "click" @controller.feedbacksStop}}>No Feedback</button><br /><br />
+	  <button type="button" {{on "click" @controller.Reset}}>Reset</button><br />
+	  <button type="button" {{on "click" @controller.FeedbacksGo}}>Add Feedback</button>
+	  <button type="button" {{on "click" @controller.FeedbacksStop}}>No Feedback</button><br /><br />
 	
 	  Add Feedback?: {{@controller.addstuff.ADDFB}}<br /><br />
 	
@@ -33,7 +33,7 @@ export default <template>
 	
 	  MegaAdd List some Pokemans<br />
 	
-	  <button type="button" {{on "click" @controller.p4Lista}}>P4 lista:</button><br />
+	  <button type="button" {{on "click" @controller.P4Lista}}>P4 lista:</button><br />
 	
 	  {{#if @controller.p4lista}}
 		{{#each @controller.p4lista as |game|}}
