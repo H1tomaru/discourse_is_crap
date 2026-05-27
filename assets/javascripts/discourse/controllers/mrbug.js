@@ -71,7 +71,7 @@ export default class MyController extends Controller {
 			}
 
 			//fill 3 variables for each game type
-			if (item.TYPE == 1) finalvar.gamedb1.push( { POSITION: PPOSITION, gNAME: item.gameNAME, gPIC: item.imgLINK } )//.push(item)
+			if (item.TYPE == 1) finalvar.gamedb1.push( { POSITION: "PPOSITION", gNAME: "gameNAME", gPIC: "imgLINK" } )//.push(item)
 			if (item.TYPE == 2) finalvar.gamedb2.push(item)
 			if (item.TYPE == 3) finalvar.gamedb3.push(item)
 		})
