@@ -323,9 +323,9 @@ export default <template>
 					
 					{{/each}}
 				{{/if}}
-			
+		 --}}	
 			</div>
-		{{/if}} --}}
+		{{/if}}
 {{!-- 	
 		{{#if @controller.glizt.gamedb2}}
 			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
