@@ -225,12 +225,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
@@ -370,12 +370,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{if users.MODE1 "bgred2"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
@@ -518,12 +518,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
