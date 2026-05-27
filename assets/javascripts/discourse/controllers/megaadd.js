@@ -9,12 +9,12 @@ export default class MyController extends Controller {
 	template = MegaAddTemplate
 
 	@tracked addstuff = {
-		GAME: '',
-		STRING: '',
+		GAME: null',
+		STRING: null,
 		ADDFB: false
 	}
 	
-	@tracked p4lista = []
+	@tracked p4lista = null
 
 	@action
 	async oops(event) {
@@ -40,7 +40,7 @@ export default class MyController extends Controller {
 	@action
 	Reset() {
 		// Resetting the whole object container cleanly
-		this.addstuff = { GAME: '', STRING: '', ADDFB: false }
+		this.addstuff = { GAME: null, STRING: null, ADDFB: false }
 	}
 	
 	@action
