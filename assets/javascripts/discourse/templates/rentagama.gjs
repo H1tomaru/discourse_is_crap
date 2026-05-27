@@ -1,5 +1,4 @@
 import { on } from '@ember/modifier'
-import { each, unless, get } from '@ember/helper'
 
 export default <template>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
@@ -141,7 +140,7 @@ export default <template>
 	  {{#unless @controller.showLIST}}
 		<div class="rentbox">
 		  <div class="title">
-			Всего игр в прокате: <span>{{get @controller.model.count 0}}</span><br />
+			Всего игр в прокате: <span>{{@controller.model.count.[0]}}</span><br />
 			<div>
 			  <input
 				type="checkbox"
@@ -149,7 +148,7 @@ export default <template>
 				{{on "change" @controller.toggleTYPE1}}
 			  />
 			  Реально Игр:
-			  <span>{{get @controller.model.count 1}}</span>
+			  <span>{{@controller.model.count.[1]}}</span>
 			</div>
 			<div>
 			  <input
@@ -158,7 +157,7 @@ export default <template>
 				{{on "change" @controller.toggleTYPE2}}
 			  />
 			  Легких и Коротких Платин:
-			  <span>{{get @controller.model.count 2}}</span>
+			  <span>{{@controller.model.count.[2]}}</span>
 			</div>
 			<div>
 			  <input
@@ -167,7 +166,7 @@ export default <template>
 				{{on "change" @controller.toggleTYPE3}}
 			  />
 			  Легких и Коротких Игр:
-			  <span>{{get @controller.model.count 3}}</span>
+			  <span>{{@controller.model.count.[3]}}</span>
 			</div>
 			<div>
 			  <input
@@ -176,9 +175,10 @@ export default <template>
 				{{on "change" @controller.toggleTYPE4}}
 			  />
 			  Хиты Для Избранных:
-			  <span>{{get @controller.model.count 4}}</span>
+			  <span>{{@controller.model.count.[4]}}</span>
 			</div>
 		  </div>
+
 	
 		  <span class="textright2">Неделя / Месяц</span>
 	
