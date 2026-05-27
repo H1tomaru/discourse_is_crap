@@ -167,28 +167,28 @@ export default <template>
 					
 						<div class="keklist gamZ">
 							<div class="kekus zeZ" style="width: 100%">
-							<div style="text-align: center">{{@controller.troikopoisk.GAME}}</div>
-						</div>
+								<div style="text-align: center">{{@controller.troikopoisk.GAME}}</div>
+							</div>
 			
-						<div class="kekus zeZ">
-							<div><a>П2</a></div>
-							<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
-						</div>
-						<div class="kekus zeZ">
-							<div><a>П4</a></div>
-							<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
-						</div>
-						<div class="kekus zeZ">
-							<div><a>П4</a></div>
-							<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
-						</div>
+							<div class="kekus zeZ">
+								<div><a>П2</a></div>
+								<div><a href="/u/{{@controller.troikopoisk.P2.[0]}}">{{@controller.troikopoisk.P2.[0]}}</a></div>
+							</div>
+							<div class="kekus zeZ">
+								<div><a>П4</a></div>
+								<div><a href="/u/{{@controller.troikopoisk.P4.[0]}}">{{@controller.troikopoisk.P4.[0]}}</a></div>
+							</div>
+							<div class="kekus zeZ">
+								<div><a>П4</a></div>
+								<div><a href="/u/{{@controller.troikopoisk.P4.[1]}}">{{@controller.troikopoisk.P4.[1]}}</a></div>
+							</div>
 					
-						{{#unless @controller.model.MENOSHO}}
-							<span class="minihrenvnizu">пароль устарел? пароль сменили! жми получить пароль!? узнай пароль!</span>
-							<span class="minihrenvnizu">узнать можно только один пароль в день</span>
-							<span class="minihrenvnizu">пользователи без отзывов от организатора узнают пароль через личные сообщения</span>
-						{{/unless}}
-					</div>
+							{{#unless @controller.model.MENOSHO}}
+								<span class="minihrenvnizu">пароль устарел? пароль сменили! жми получить пароль!? узнай пароль!</span>
+								<span class="minihrenvnizu">узнать можно только один пароль в день</span>
+								<span class="minihrenvnizu">пользователи без отзывов от организатора узнают пароль через личные сообщения</span>
+							{{/unless}}
+						</div>
 					</div>
 				{{else}}
 					<h1 style="text-align: center">Epic Fail Is Epic</h1>
