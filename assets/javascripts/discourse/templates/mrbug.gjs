@@ -188,7 +188,7 @@ export default <template>
 				{{#if @controller.showhideo.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
-						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
 								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
@@ -225,12 +225,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
@@ -334,7 +334,7 @@ export default <template>
 				{{#if @controller.showhideo.[1]}}
 					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
-						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
 							<tr>
 								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
@@ -370,12 +370,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
@@ -479,7 +479,7 @@ export default <template>
 				{{#if @controller.showhideo.[2]}}
 					{{#each @controller.glizt.gamedb3 as |game index|}}
 						
-						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
+						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
 							<tr>
 								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
@@ -518,12 +518,12 @@ export default <template>
 						{{#if game.SHOWHIDEO}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td></td>
 										<td colspan='2'>П2</td>
 										<td colspan='2'>П4</td>
 									</tr>
-									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
+									<tr class='{{if users.MODE1 "bgred2"}} {{if users.MODE2 "bggr3"}}'>
 										<td>
 											{{#if users.ACCOUNT}}
 												{{users.ACCOUNT}}
