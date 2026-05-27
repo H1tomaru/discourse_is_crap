@@ -547,10 +547,10 @@ export default <template>
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
-												{{#if users.PSTATUS..}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if users.PSTATUS..}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if users.PSTATUS..}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if users.PSTATUS..}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 										<td>
