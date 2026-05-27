@@ -266,7 +266,7 @@ export default <template>
 										<td>
 											{{#if users.USERS.[1]}}
 												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
-												<a class='repala {{if (users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS[1]}}/kek'>
+												<a class='repala {{if users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS.[1]}}/kek'>
 													{{users.FEEDBACK.[1].PERCENT}}%
 													<span>
 														<i class='far fa-smile'></i> {{users.FEEDBACK.[1].GOOD}}
@@ -293,7 +293,7 @@ export default <template>
 													</span>
 												</a>
 											{{else}}
-												{{#if (users.PTAKEN.[2]}}
+												{{#if users.PTAKEN.[2]}}
 													Нету
 												{{else}}
 													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
