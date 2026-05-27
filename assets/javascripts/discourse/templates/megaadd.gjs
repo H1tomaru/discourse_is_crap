@@ -37,18 +37,24 @@ export default <template>
 	
 	{{#if @controller.p4lista.length}}
 		{{#each @controller.p4lista as |game|}}
-			{{#each game.TROIKI as |troika index|}}
-				{{#if troika.ACCOUNT}}
-					{{#unless index}}
-						<br /><br /><br />{{game.gameNAME}}<br />
-					{{/unless}}
-					<br />
-					{{troika.ACCOUNT}}<br />
-					П2 - {{get troika.USERS 0}}<br />
-					П4 - {{get troika.USERS 1}}<br />
-					П4 - {{get troika.USERS 2}}<br />
-				{{/if}}
-			{{/each}}
+
+			{{#if game.TROIKI.length}}
+				{{#each game.TROIKI as |troika index|}}
+
+					{{#if troika.ACCOUNT.length}}
+						{{#unless index}}
+							<br /><br /><br />{{game.gameNAME}}<br />
+						{{/unless}}
+						<br />
+						{{troika.ACCOUNT}}<br />
+						П2 - {{get troika.USERS 0}}<br />
+						П4 - {{get troika.USERS 1}}<br />
+						П4 - {{get troika.USERS 2}}<br />
+					{{/if}}
+
+				{{/each}}
+			{{/if}}
+
 		{{/each}}
 	{{/if}}
 
