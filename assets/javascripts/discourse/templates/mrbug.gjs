@@ -178,16 +178,11 @@ export default <template>
 			</div>
 		{{/if}}
 
-		{{#if @controller.glizt.gamedb1}}
-			test
-			{{@controller.glizt.gamedb1}}
-			test
-		{{/if}}
-{{!-- 
+
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 			<div class='MrBug'>
-
+{{!-- 
 				{{#if @controller.showhideo.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
@@ -329,8 +324,9 @@ export default <template>
 				{{/if}}
 			
 			</div>
+--}}
 		{{/if}}
-	
+{{!-- 	
 		{{#if @controller.glizt.gamedb2}}
 			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
 			<div class='MrBug'>
