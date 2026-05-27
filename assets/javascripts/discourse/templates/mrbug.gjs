@@ -179,7 +179,9 @@ export default <template>
 		{{/if}}
 
 		{{#if @controller.glizt.gamedb1}}
+			test
 			@controller.glizt.gamedb1
+			test
 		{{/if}}
 {{!-- 
 		{{#if @controller.glizt.gamedb1}}
