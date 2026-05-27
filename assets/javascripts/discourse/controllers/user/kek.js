@@ -2,11 +2,8 @@ import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { service } from '@ember/service'
 import { tracked } from '@glimmer/tracking'
-import KekTemplate from '../../templates/user/kek'
 
 export default class MyController extends Controller {
-
-	template = KekTemplate
 
 	@service currentUser
 	// UI state variables tracking checkboxes, modal boxes, and loading spinners
