@@ -56,14 +56,13 @@ export default class MyController extends Controller {
 	}
 
 	@action
-	async P4Lista() {
+	async showP4Lista() {
 		try {
 			const response = await fetch('/MrBug.json')
-			const result = await response//.json()
+			const result = await response.json()
 			console.log("GAMELIST DATA:", result?.gamelist)
 			
-			//this.p4lista = result.gamelist
-			this.p4lista = JSON.parse(JSON.stringify(result.gamelist));
+			this.p4lista = result.gamelist
 		} catch (error) {
 			console.error("Failed to load P4Lista:", error)
 		}
