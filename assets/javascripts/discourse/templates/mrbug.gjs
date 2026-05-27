@@ -324,7 +324,7 @@ export default <template>
 			
 			</div>
 		{{/if}}
-	
+{{!-- 	
 		{{#if @controller.glizt.gamedb2}}
 			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
 			<div class='MrBug'>
@@ -617,7 +617,7 @@ export default <template>
 				
 			</div>
 		{{/if}}
-	
+	--}}
 		<br>
 		<div class='smaladndark tablq'>
 			Пролистали до конца и не нашли нужной Вам игры?<br>
