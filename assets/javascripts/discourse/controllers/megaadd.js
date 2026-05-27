@@ -2,11 +2,8 @@ import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { tracked } from '@glimmer/tracking'
 import { ajax } from 'discourse/lib/ajax'
-import MegaAddTemplate from '../templates/megaadd'
 
 export default class MyController extends Controller {
-
-	template = MegaAddTemplate
 
 	@tracked addstuff = {
 		GAME: null,
