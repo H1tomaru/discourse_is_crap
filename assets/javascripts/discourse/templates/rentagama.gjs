@@ -130,16 +130,10 @@ export default <template>
 	  {{/if}}
 	
 	  <div class="mimu2">
-		<button
-		  class="rentabutt{{unless @controller.showLIST ' bi4'}}"
-		  {{on "click" @controller.showLIST1}}
-		>
+		<button class="rentabutt{{unless @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST1}}>
 		  Легкий Список
 		</button>
-		<button
-		  class="rentabutt{{if @controller.showLIST ' bi4'}}"
-		  {{on "click" @controller.showLIST2}}
-		>
+		<button class="rentabutt{{if @controller.showLIST ' bi4'}}" {{on "click" @controller.showLIST2}}>
 		  Тяжелый Cписок
 		</button>
 	  </div>
@@ -250,16 +244,10 @@ export default <template>
 	  {{#if @controller.showLIST}}
 		<div class="rentbox2">
 		  <div class="mimu">
-			<button
-			  class="rentabutt{{if @controller.showGAMEZ ' bi4'}}"
-			  {{on "click" @controller.setShowGAMEZ}}
-			>
+			<button class="rentabutt{{if @controller.showGAMEZ ' bi4'}}" {{on "click" @controller.setShowGAMEZ}}>
 			  Игры Игры
 			</button>
-			<button
-			  class="rentabutt{{if @controller.showCRAP ' bi4'}}"
-			  {{on "click" @controller.setShowCRAP}}
-			>
+			<button class="rentabutt{{if @controller.showCRAP ' bi4'}}" {{on "click" @controller.setShowCRAP}}>
 			  Легкие и Короткие
 			</button>
 		  </div>
