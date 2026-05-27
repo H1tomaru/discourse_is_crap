@@ -59,7 +59,7 @@ export default class MyController extends Controller {
 	async P4Lista() {
 		try {
 			const response = await fetch('/MrBug.json')
-			const result = await response
+			const result = await response.json()
 			
 			this.p4lista = result.gamelist
 		} catch (error) {
