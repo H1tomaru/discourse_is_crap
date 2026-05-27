@@ -84,9 +84,9 @@ export default class MyController extends Controller {
 
 	@action
 	netmudal() {
-		this.bagamdal: false
-		this.mdalready: false
-		this.prezaips: null
+		this.bagamdal: false,
+		this.mdalready: false,
+		this.prezaips: null,
 		this.zaipsResult: null
 	}
 
