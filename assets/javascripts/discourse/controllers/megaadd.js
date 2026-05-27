@@ -54,26 +54,18 @@ export default class MyController extends Controller {
 		// Fix: Same thing here to keep Ember's tracker happy
 		this.addstuff = { ...this.addstuff, ADDFB: false }
 	}
-/*
+
 	@action
 	async P4Lista() {
 		try {
 			const response = await fetch('/MrBug.json')
-			const result = await response.json()
+			const result = await response//.json()
 			
-			this.p4lista = result.gamelist
+			//this.p4lista = result.gamelist
+			this.p4lista = JSON.parse(JSON.stringify(result.gamelist));
 		} catch (error) {
 			console.error("Failed to load P4Lista:", error)
 		}
-	}
-*/
-
-	@action
-	P4Lista() {
-	    fetch('/MrBug.json')
-	        .then(response => response.json())
-	        .then(result => this.p4lista = result.gamelist)
-	        .catch(error => console.error("Failed to load:", error));
 	}
 
 }
