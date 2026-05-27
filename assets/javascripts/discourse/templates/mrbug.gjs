@@ -180,7 +180,7 @@ export default <template>
 
 		{{#if @controller.glizt.gamedb1}}
 			test
-			@controller.glizt.gamedb1
+			{{@controller.glizt.gamedb1}}
 			test
 		{{/if}}
 {{!-- 
