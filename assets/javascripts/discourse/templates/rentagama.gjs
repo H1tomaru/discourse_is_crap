@@ -110,7 +110,12 @@ export default <template>
 		
 			<div class="innerbox">
 				{{#each @controller.model.rentaGAMEZ as |game|}}
-					<div>
+					<div class="
+						  {{unless @controller.showTYPE1 (if game.TYPE1 'rentahideoz')}}
+						  {{unless @controller.showTYPE2 (if game.TYPE2 'rentahideoz')}}
+						  {{unless @controller.showTYPE3 (if game.TYPE3 'rentahideoz')}}
+						  {{unless @controller.showTYPE4 (if game.TYPE4 'rentahideoz')}}
+					">
 						{{#if game.STATUS}}
 							<span class="red">
 								<b>[</b><span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}}<b>]</b>
