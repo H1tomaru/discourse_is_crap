@@ -39,9 +39,9 @@ export default <template>
 						{{/unless}}
 						<br />
 						{{troika.ACCOUNT}}<br />
-						П2 - {{troika.USERS.0}}<br />
-						П4 - {{troika.USERS.1}}<br />
-						П4 - {{troika.USERS.2}}<br />
+						П2 - {{troika.USERS.[0]}}<br />
+						П4 - {{troika.USERS.[1]}}<br />
+						П4 - {{troika.USERS.[2]}}<br />
 					{{/if}}
 
 				{{/each}}
