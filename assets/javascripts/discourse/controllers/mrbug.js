@@ -86,7 +86,7 @@ export default class MyController extends Controller {
 	netmudal() {
 		this.bagamdal = false
 		this.mdalready = false
-		this.prezaips: =null
+		this.prezaips = null
 		this.zaipsResult = null
 	}
 
