@@ -42,13 +42,13 @@ export default class RentagamaController extends Controller {
 	}
 	
 	@action
-	setLIST1() {
+	showLIST1() {
 		this.showLIST = false
 		localStorage.setItem('showLIST', "false")
 	}
 	
 	@action
-	setLIST2() {
+	showLIST2() {
 		this.showLIST = true
 		localStorage.setItem('showLIST', "true")
 	}
