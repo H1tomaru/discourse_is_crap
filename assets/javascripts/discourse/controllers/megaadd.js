@@ -9,7 +9,7 @@ export default class MyController extends Controller {
 	template = MegaAddTemplate
 
 	@tracked addstuff = {
-		GAME: null',
+		GAME: null,
 		STRING: null,
 		ADDFB: false
 	}
