@@ -181,10 +181,10 @@ export default <template>
 
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
-{{!-- 	<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>--}}
+{{!-- 	<div class='ghed {{unless @controller.hideostates.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>--}}
 			<div class='MrBug'>
 {{!--
-				{{#if @controller.showhideo.[0]}}
+				{{#if @controller.hideostates.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
@@ -328,10 +328,10 @@ export default <template>
 		{{/if}}
 {{!-- 	
 		{{#if @controller.glizt.gamedb2}}
-			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
+			<div class='ghed {{unless @controller.hideostates.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
 			<div class='MrBug'>
 
-				{{#if @controller.showhideo.[1]}}
+				{{#if @controller.hideostates.[1]}}
 					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
@@ -474,10 +474,10 @@ export default <template>
 		{{/if}}
 	
 		{{#if @controller.glizt.gamedb3}}
-			<div class='ghed {{unless @controller.showhideo.[2] "slut"}}' {{on "click" (fn @controller.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
+			<div class='ghed {{unless @controller.hideostates.[2] "slut"}}' {{on "click" (fn @controller.showhideo 2)}}><i class='fas fa-history'></i> Предзаказы <span class='smaladndark'>Хотел купить, теперь не уверен</span></div>
 			<div class='MrBug'>
 				
-				{{#if @controller.showhideo.[2]}}
+				{{#if @controller.hideostates.[2]}}
 					{{#each @controller.glizt.gamedb3 as |game index|}}
 						
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
