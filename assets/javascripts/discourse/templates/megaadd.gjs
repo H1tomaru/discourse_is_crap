@@ -1,5 +1,4 @@
 import { on } from '@ember/modifier'
-import { each, unless, get } from '@ember/helper'
 import { Input, Textarea } from '@ember/component'
 
 export default <template>
@@ -23,9 +22,9 @@ export default <template>
 			{{#each @controller.addstuff.RESULT as |game|}}
 				{{game.GAME}}
 				{{game._id}}
-				{{get game.P2 0}}
-				{{get game.P4 0}}
-				{{get game.P4 1}}<br />
+				{{game.P2 0}}
+				{{game.P4 0}}
+				{{game.P4 1}}<br />
 			{{/each}}
 		{{/if}}
 	
@@ -47,9 +46,9 @@ export default <template>
 						{{/unless}}
 						<br />
 						{{troika.ACCOUNT}}<br />
-						П2 - {{get troika.USERS 0}}<br />
-						П4 - {{get troika.USERS 1}}<br />
-						П4 - {{get troika.USERS 2}}<br />
+						П2 - {{troika.USERS 0}}<br />
+						П4 - {{troika.USERS 1}}<br />
+						П4 - {{troika.USERS 2}}<br />
 					{{/if}}
 
 				{{/each}}
