@@ -1,6 +1,7 @@
 import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { tracked } from '@glimmer/tracking'
+import { ajax } from 'discourse/lib/ajax'
 import MegaAddTemplate from '../templates/megaadd'
 
 export default class MyController extends Controller {
@@ -16,19 +17,18 @@ export default class MyController extends Controller {
 	@tracked p4lista = []
 
 	@action
-		async oops(event) {
-		event?.preventDefault();
+	async oops(event) {
+		event?.preventDefault()
+
 		try {
-			const response = await fetch("/admin/MegaAdd/", {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: new URLSearchParams({
+			const result = await ajax("/admin/MegaAdd", {
+				type: "POST",
+				data: {
 					GAME: this.addstuff.GAME,
 					STRING: this.addstuff.STRING,
 					ADDFB: this.addstuff.ADDFB
-				})
+				}
 			})
-			const result = await response.json()
 			this.addstuff = result
 			//ember doesnt update on 2nd level variables, so use this shit
 			this.addstuff = { ...this.addstuff, ADDFB: false }
@@ -58,8 +58,7 @@ export default class MyController extends Controller {
 	@action
 	async showP4Lista() {
 		try {
-			const response = await fetch('/MrBug.json')
-			const result = await response.json()
+			const result = await ajax('/MrBug.json')
 			
 			this.p4lista = result.gamelist
 		} catch (error) {
