@@ -84,7 +84,10 @@ export default class MyController extends Controller {
 
 	@action
 	netmudal() {
-		Object.assign(this, { bagamdal: false, mdalready: false, prezaips: null, zaipsResult: null })
+		this.bagamdal: false
+		this.mdalready: false
+		this.prezaips: null
+		this.zaipsResult: null
 	}
 
 	@action
@@ -95,17 +98,16 @@ export default class MyController extends Controller {
 		
 		if (currentuser) {
 			try {
-				const response = await fetch("/MrBug/prezaips/", {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: new URLSearchParams({ bagakruta: btoa(`${knopk}~${gcode}`) })
+				const result = await ajax("/MrBug/prezaips/", {
+					type: "POST",
+					data: {
+						bagakruta: btoa(`${knopk}~${gcode}`)
+					}
 				})
-				const result = await response.json()
 				this.prezaips = result
-			  
-				if (result?.position) {
-					this.pzposition = result['position']?.[0]
-				}
+
+				this.pzposition = result['position']?.[0]
+
 				this.mdalready = true
 		 	} catch (error) {
 				console.error("Failed to run prezaips post syntax:", error)
@@ -123,22 +125,18 @@ export default class MyController extends Controller {
 		this.prezaips = { ...this.prezaips, winrars: false }
 		
 		try {
-			const payload = btoa(unescape(encodeURIComponent(
-				`${this.prezaips?.position}~${this.currentUser?.username}~${this.prezaips?._id}~${this.prezaips?.gameNAME}`
-			)))
-			
-			const response = await fetch("/MrBug/zaips/", {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: new URLSearchParams({ bagatrolit: payload })
+			const result = await ajax("/MrBug/zaips/", {
+				type: "POST",
+				data: {
+					bagatrolit: btoa(unescape(encodeURIComponent(`${this.prezaips?.position}~${this.currentUser?.username}~${this.prezaips?._id}~${this.prezaips?.gameNAME}`)))
+				}
 			})
-			const result = await response.json()
 			this.zaipsResult = result
-			
-			const response2 = await fetch('/MrBug.json')
-			const result2 = await response2.json()
-			
+
+			//do full page reaload
+			const result2 = await ajax("/MrBug.json")
 			this.model = result2 // Mutating this automatically updates the glizt getter!
+
 			this.mdalready = true
 		} catch (error) {
 			console.error("Failed to run imgoingin submission:", error)
