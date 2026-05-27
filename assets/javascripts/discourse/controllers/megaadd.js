@@ -60,6 +60,7 @@ export default class MyController extends Controller {
 		try {
 			const response = await fetch('/MrBug.json')
 			const result = await response//.json()
+			console.log("GAMELIST DATA:", result?.gamelist)
 			
 			//this.p4lista = result.gamelist
 			this.p4lista = JSON.parse(JSON.stringify(result.gamelist));
