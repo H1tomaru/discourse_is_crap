@@ -1,4 +1,5 @@
 import { on } from "@ember/modifier"
+import { fn } from "@ember/helper"
 
 export default <template>
 
