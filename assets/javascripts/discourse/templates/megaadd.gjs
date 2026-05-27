@@ -18,14 +18,16 @@ export default <template>
 	
 	  <br />
 	
-	  Winrars! P244:<br />
-	  {{#each @controller.addstuff.RESULT as |game|}}
-		{{game.GAME}}
-		{{game._id}}
-		{{get game.P2 0}}
-		{{get game.P4 0}}
-		{{get game.P4 1}}<br />
-	  {{/each}}
+ 		{{#if @controller.addstuff.RESULT}}
+			Winrars! P244:<br />
+			{{#each @controller.addstuff.RESULT as |game|}}
+				{{game.GAME}}
+				{{game._id}}
+				{{get game.P2 0}}
+				{{get game.P4 0}}
+				{{get game.P4 1}}<br />
+			{{/each}}
+		{{/if}}
 	
 	  <br />
 	
