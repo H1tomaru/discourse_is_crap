@@ -56,12 +56,8 @@ export default <template>
 
 						<td>
 							<a>{{game.gNAME}}</a>
-							{{#if game.TYPE2}}
-								<br /><span class="smaladndark">Акция до: {{game.DATE}}</span>
-							{{/if}}
-							{{#if game.TYPE3}}
-								<br /><span class="smaladndark">Дата выхода: {{game.DATE}}</span>
-							{{/if}}
+							{{#if game.TYPE2}}<br /><span class="smaladndark">Акция до: {{game.DATE}}</span>{{/if}}
+							{{#if game.TYPE3}}<br /><span class="smaladndark">Дата выхода: {{game.DATE}}</span>{{/if}}
 						</td>
 
 						{{#if game.PRICE}}
@@ -183,14 +179,17 @@ export default <template>
 
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
-
 			<div class='MrBug'>
+
 				{{#if @controller.showhideo.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
-								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+								<td class='flagco'>
+									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
+									<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i>
+								</td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
 					
 								<td class='mainco'>
@@ -232,9 +231,7 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}
-												{{users.ACCOUNT}}
-											{{/if}}
+											{{if users.ACCOUNT users.ACCOUNT}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
@@ -329,14 +326,17 @@ export default <template>
 	
 		{{#if @controller.glizt.gamedb2}}
 			<div class='ghed {{unless @controller.showhideo.[1] "slut"}}' {{on "click" (fn @controller.showhideo 1)}}><i class='fas fa-tags'></i> Распродажи <span class='smaladndark'>Самые (о)х#$@&%*ые! скидки в PSN</span></div>
-
 			<div class='MrBug'>
+
 				{{#if @controller.showhideo.[1]}}
 					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
 							<tr>
-								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+								<td class='flagco'>
+									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
+									<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i>
+								</td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
@@ -377,9 +377,7 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}
-												{{users.ACCOUNT}}
-											{{/if}}
+											{{if users.ACCOUNT users.ACCOUNT}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
@@ -481,15 +479,16 @@ export default <template>
 						
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
 							<tr>
-								<td class='flagco'>{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i></td>
+								<td class='flagco'>
+									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
+									<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i>
+								</td>
 								<td class='imgco'><img src='{{game.imgLINK}}' alt='{{game.gameNAME}}' /></td>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
 									<span class='text'>Дата выхода {{game.DATE}}</span>
 									<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-									{{#if game.CONSOLE2}}
-										<span class='baga baga-{{game.CONSOLE2}}'>{{game.CONSOLE2}}</span>
-									{{/if}}
+									{{#if game.CONSOLE2}}<span class='baga baga-{{game.CONSOLE2}}'>{{game.CONSOLE2}}</span>{{/if}}
 									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 								</td>
 								<td>
@@ -525,9 +524,7 @@ export default <template>
 									</tr>
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
 										<td>
-											{{#if users.ACCOUNT}}
-												{{users.ACCOUNT}}
-											{{/if}}
+											{{if users.ACCOUNT users.ACCOUNT}}
 										</td>
 										<td>
 											{{#if users.USERS.[0]}}
