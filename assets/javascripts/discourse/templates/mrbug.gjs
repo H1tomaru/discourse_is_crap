@@ -148,7 +148,7 @@ export default <template>
 					{{#if @controller.prezaips.winrars}}
 						<div class="mudalcontent headin3 prezaips">
 							<div class="bagato">
-								<div class="bagapi" style="{{concat "background-image:url('" @controller.prezaips.imgLINK "')"}}"></div>
+								<div class="bagapi" style="background-image:url('{{@controller.prezaips.imgLINK}}')"></div>
 								<h1><a>{{@controller.prezaips.gameNAME}}</a> Запись</h1>
 							</div>
 							<button type="button" {{on "click" @controller.imgoingin}}>Записаться на П{{@controller.pzposition}}</button><button type="button" {{on "click" @controller.netmudal}}>Закрыть</button>
@@ -182,10 +182,10 @@ export default <template>
 		{{/if}}
 	{{!-- 
 		{{#if @controller.glizt.gamedb1}}
-			<div class='ghed {{unless (get @controller.showhideo 0) "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
+			<div class='ghed {{unless @controller.showhideo.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 
 			<div class='MrBug'>
-				{{#if (get @controller.showhideo 0)}}
+				{{#if @controller.showhideo.[0]}}
 					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}}{{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
@@ -235,36 +235,36 @@ export default <template>
 											{{#if users.ACCOUNT}}{{users.ACCOUNT}}{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
-												<a title='{{if game.PRICE2 (concat game.PRICE2 "р")}}' href='/u/{{get users.USERS 0}}'>{{get users.USERS 0}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 0}}/kek'>
-													{{get (get users.FEEDBACK 0) "PERCENT"}}%
+											{{#if users.USERS.[0]}}
+												<a title='{{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}' href='/u/{{users.USERS.[0]}}'>{{users.USERS.[0]}}</a>
+												<a class='repala {{if users.PFBred.[1]) "bgred" "bggr2"}}' href='/u/{{users.USERS.[0]}}/kek'>
+													{{users.FEEDBACK.0.PERCENT}}%
 													<span>
-														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 0) "GOOD"}}
-														<i class='far fa-meh'></i> {{get (get users.FEEDBACK 0) "NEUTRAL"}}
-														<i class='far fa-frown'></i> {{get (get users.FEEDBACK 0) "BAD"}}
+														<i class='far fa-smile'></i> {{users.FEEDBACK.[0].GOOD}}
+														<i class='far fa-meh'></i> {{users.FEEDBACK.[0].NEUTRAL}}
+														<i class='far fa-frown'></i> {{users.FEEDBACK.[0].BAD}}
 													</span>
 												</a>
 											{{else}}
-												{{#if (get users.PTAKEN 0)}}
+												{{#if users.PTAKEN.[0]}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE2 (concat game.PRICE2 "р")}}
+													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 0)}}
-												{{#if (get (get users.PSTATUS 0) 0)}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 1)}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 2)}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
-												{{#if (get (get users.PSTATUS 0) 3)}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
+											{{#if users.USERS.[0]}}
+												{{#if users.PSTATUS.[0].[0]}}<div class='malabela bgred3'><span>ждем оплату</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[1]}}<div class='malabela bggr'><span>оплатил</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[2]}}<div class='malabela bgred'><span>получил данные</span></div>{{/if}}
+												{{#if users.PSTATUS.[0].[3]}}<div class='malabela bggr'><span>скачал</span></div>{{/if}}
 											{{/if}}
 										</td>
 										<td>
-											{{#if (get users.USERS 1)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 1}}'>{{get users.USERS 1}}</a>
-												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 1}}/kek'>
+											{{#if users.USERS.[1]}}
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
+												<a class='repala {{if (users.PFBred.[1] "bgred" "bggr2"}}' href='/u/{{users.USERS[1]}}/kek'>
 													{{get (get users.FEEDBACK 1) "PERCENT"}}%
 													<span>
 														<i class='far fa-smile'></i> {{get (get users.FEEDBACK 1) "GOOD"}}
@@ -276,12 +276,12 @@ export default <template>
 												{{#if (get users.PTAKEN 1)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
 											{{#if (get users.USERS 2)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 2}}'>{{get users.USERS 2}}</a>
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
 													{{get (get users.FEEDBACK 2) "PERCENT"}}%
 													<span>
@@ -294,7 +294,7 @@ export default <template>
 												{{#if (get users.PTAKEN 2)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
@@ -379,7 +379,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if (get users.USERS 0)}}
-												<a title='{{if game.PRICE2 (concat game.PRICE2 "р")}}' href='/u/{{get users.USERS 0}}'>{{get users.USERS 0}}</a>
+												<a title={{#if game.PRICE2}}{{game.PRICE2}}р{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
 												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 0}}/kek'>
 													{{get (get users.FEEDBACK 0) "PERCENT"}}%
 													<span>
@@ -392,7 +392,7 @@ export default <template>
 												{{#if (get users.PTAKEN 0)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE2 (concat game.PRICE2 "р")}}
+													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
@@ -406,7 +406,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if (get users.USERS 1)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 1}}'>{{get users.USERS 1}}</a>
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 1}}/kek'>
 													{{get (get users.FEEDBACK 1) "PERCENT"}}%
 													<span>
@@ -419,12 +419,12 @@ export default <template>
 												{{#if (get users.PTAKEN 1)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
 											{{#if (get users.USERS 2)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 2}}'>{{get users.USERS 2}}</a>
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
 													{{get (get users.FEEDBACK 2) "PERCENT"}}%
 													<span>
@@ -437,7 +437,7 @@ export default <template>
 												{{#if (get users.PTAKEN 2)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
@@ -525,7 +525,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if (get users.USERS 0)}}
-												<a title='{{if game.PRICE2 (concat game.PRICE2 "р")}}' href='/u/{{get users.USERS 0}}'>{{get users.USERS 0}}</a>
+												<a title={{#if game.PRICE2}}{{game.PRICE2}}р{{/if}} href="/u/{{users.USERS.[0]}}">{{users.USERS.[0]}}</a>
 												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 0}}/kek'>
 													{{get (get users.FEEDBACK 0) "PERCENT"}}%
 													<span>
@@ -538,7 +538,7 @@ export default <template>
 												{{#if (get users.PTAKEN 0)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE2 (concat game.PRICE2 "р")}}
+													Cвободно {{#if game.PRICE2}}{{game.PRICE2}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
@@ -552,7 +552,7 @@ export default <template>
 										</td>
 										<td>
 											{{#if (get users.USERS 1)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 1}}'>{{get users.USERS 1}}</a>
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[1]}}">{{users.USERS.[1]}}</a>
 												<a class='repala {{if (get users.PFBred 1) "bgred" "bggr2"}}' href='/u/{{get users.USERS 1}}/kek'>
 													{{get (get users.FEEDBACK 1) "PERCENT"}}%
 													<span>
@@ -565,12 +565,12 @@ export default <template>
 												{{#if (get users.PTAKEN 1)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 											<br />
 											{{#if (get users.USERS 2)}}
-												<a title='{{if game.PRICE4 (concat game.PRICE4 "р")}}' href='/u/{{get users.USERS 2}}'>{{get users.USERS 2}}</a>
+												<a title={{#if game.PRICE4}}{{game.PRICE4}}р{{/if}} href="/u/{{users.USERS.[2]}}">{{users.USERS.[2]}}</a>
 												<a class='repala {{if (get users.PFBred 2) "bgred" "bggr2"}}' href='/u/{{get users.USERS 2}}/kek'>
 													{{get (get users.FEEDBACK 2) "PERCENT"}}%
 													<span>
@@ -583,7 +583,7 @@ export default <template>
 												{{#if (get users.PTAKEN 2)}}
 													Нету
 												{{else}}
-													Cвободно {{if game.PRICE4 (concat game.PRICE4 "р")}}
+													Cвободно {{#if game.PRICE4}}{{game.PRICE4}}р{{/if}}
 												{{/if}}
 											{{/if}}
 										</td>
