@@ -76,7 +76,7 @@ export default class MyController extends Controller {
 			if (item.TYPE == 3) finalvar.gamedb3.push(item)
 		})
 
-		return 0//finalvar
+		return finalvar
 	}
 
 	@action
