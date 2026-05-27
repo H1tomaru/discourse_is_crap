@@ -2,24 +2,24 @@ import { on } from '@ember/modifier'
 import { Input, Textarea } from '@ember/component'
 
 export default <template>
-	<form class="MegaAdd" {{on "submit" this.oops}}>
+	<form class="MegaAdd" {{on "submit" oops}}>
 	  MegaAdd some Pokemans<br /><br />
 	
-	  <Input class="poiskbox" type="text" size="64" @value={{this.addstuff.GAME}} />
+	  <Input class="poiskbox" type="text" size="64" @value={{addstuff.GAME}} />
 	  <button type="submit">GoGoGo</button>
-	  <button type="button" {{on "click" this.Reset}}>Reset</button><br />
-	  <button type="button" {{on "click" this.FeedbacksGo}}>Add Feedback</button>
-	  <button type="button" {{on "click" this.FeedbacksStop}}>No Feedback</button><br /><br />
+	  <button type="button" {{on "click" Reset}}>Reset</button><br />
+	  <button type="button" {{on "click" FeedbacksGo}}>Add Feedback</button>
+	  <button type="button" {{on "click" FeedbacksStop}}>No Feedback</button><br /><br />
 	
-	  Add Feedback?: {{this.addstuff.ADDFB}}<br /><br />
+	  Add Feedback?: {{addstuff.ADDFB}}<br /><br />
 	
-	  <Textarea style="width: 100%" rows="20" @value={{this.addstuff.STRING}} />
+	  <Textarea style="width: 100%" rows="20" @value={{addstuff.STRING}} />
 	
 	  <br />
 	
- 		{{#if this.addstuff.RESULT.length}}
+ 		{{#if addstuff.RESULT.length}}
 			Winrars! P244:<br />
-			{{#each this.addstuff.RESULT as |game|}}
+			{{#each addstuff.RESULT as |game|}}
 				{{game.GAME}} {{game._id}} {{game.P2.[0]}} {{game.P4.[0]}} {{game.P4.[1]}}<br />
 			{{/each}}
 		{{/if}}
@@ -28,9 +28,9 @@ export default <template>
 	
 	  MegaAdd List some Pokemans<br />
 	
-	  <button type="button" {{on "click" this.showP4Lista}}>P4 lista:</button><br />
+	  <button type="button" {{on "click" showP4Lista}}>P4 lista:</button><br />
 	
-		{{#each this.p4lista as |game|}}
+		{{#each p4lista as |game|}}
 				{{#each game.TROIKI as |troika index|}}
 
 					{{#if troika.ACCOUNT.length}}
