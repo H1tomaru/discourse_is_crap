@@ -22,6 +22,11 @@ export default class MyController extends Controller {
 	@tracked hideo3states = []
 
 	get glizt () {
+		// FORCE GLIMMER TO WATCH THESE ARRAYS FOR RENDERING CHANGES
+		this.hideo1states
+		this.hideo2states
+		this.hideo3states
+
 		//make variables for each game type
 		const finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 		const currentuser = this.currentUser?.username
