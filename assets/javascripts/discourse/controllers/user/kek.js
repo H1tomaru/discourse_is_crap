@@ -104,7 +104,7 @@ export default class MyController extends Controller {
 		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
 
 		try {
-			const result = await ajax(`/u/${this.model?.uzar}/kek`, {
+			const result = await ajax(`/u/${this.model?.uZar}/kek`, {
 				type: "POST",
 				data: {	fedbakibaki: btoa(unescape(encodeURIComponent(`${this.ozmode}~${this.score}~${this.pisanina}`))) }
 			})
