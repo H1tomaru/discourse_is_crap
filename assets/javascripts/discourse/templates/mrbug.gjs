@@ -179,6 +179,7 @@ export default <template>
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
+								{{! PreButtonsGame }}
 								<td class='flagco'>
 									{{#if game.MODE1}}<i class='fas fa-exclamation fa-2x fa-pulse'></i>{{/if}}
 									<i title='{{game.STORE}} Store' class='flag {{game.STORE}}'></i>
@@ -188,9 +189,10 @@ export default <template>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
 									<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-									<span class='smaladndark minihrenvnizu'>111{{@controller.hideo1states}}111 &gt;&gt; открыть {{index}} составы &lt;&lt; 111{{@controller.hideo1states.[index]}}111</span>
+									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 								</td>
-					
+								{{! PreButtonsGame }}
+								{{! Buttons244 }}
 								<td>
 									<button type="button" {{on "click" (fn @controller.zaips2 game._id)}} class='BagButon'>П2<br />
 										{{#if game.PRICE2}}
@@ -211,6 +213,7 @@ export default <template>
 										{{#if game.P4NO}}<div class='statustr status-1'>{{game.P4NO}}</div>{{/if}}
 									</button>
 								</td>
+								{{! Buttons244 }}
 							</tr>
 						</table>
 						
