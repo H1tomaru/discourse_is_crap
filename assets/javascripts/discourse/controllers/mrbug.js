@@ -150,17 +150,21 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo1(index) {
-		this.hideo1states = this.hideo1states.with(index, !this.hideo1states[index])
+		this.hideo1states[index] = !this.hideo1states[index]
+		//ember doesnt update when doing just index, so this
+		this.hideo1states = [...this.hideo1states]
 	}
 
 	@action
 	showhideo2(index) {
-		this.hideo2states = this.hideo2states.with(index, !this.hideo2states[index])
+		this.hideo2states[index] = !this.hideo2states[index]
+		this.hideo2states = [...this.hideo2states]
 	}
 
 	@action
 	showhideo3(index) {
-		this.hideo3states = this.hideo3states.with(index, !this.hideo3states[index])
+		this.hideo3states[index] = !this.hideo3states[index]
+		this.hideo3states = [...this.hideo3states]
 	}
 
 	@action
