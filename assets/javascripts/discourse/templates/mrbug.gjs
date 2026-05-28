@@ -189,7 +189,7 @@ export default <template>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
 									<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-									<span class='smaladndark minihrenvnizu'>{{game.SHOWHIDEO}} &gt;&gt; открыть составы &lt;&lt; {{game.SHOWHIDEO}}</span>
+									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
 								</td>
 					
 								<td>
@@ -215,7 +215,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if @controller.hideo1states.index}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
@@ -361,7 +361,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if @controller.hideo2states.index}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
@@ -508,7 +508,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if @controller.hideo3states.index}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
