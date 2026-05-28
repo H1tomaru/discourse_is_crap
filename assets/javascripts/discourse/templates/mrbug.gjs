@@ -19,14 +19,6 @@ export default <template>
 						<div class="headin"><a href="/u/MrBug">MrBug</a></div>
 					</td>
 				</tr>
-			
-				<tr>
-					<td colspan="2">
-						<span class="smaladndark">
-							Реквизиты на оплату можно получить через <a href="/u/MrBug">Личные Сообщения</a>
-						</span>
-					</td>
-				</tr>
 			</tbody>
 		</table>
 	
