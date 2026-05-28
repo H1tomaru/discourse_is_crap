@@ -98,9 +98,11 @@ export default class MyController extends Controller {
 		
 		if (currentuser) {
 			try {
-				const result = await ajax('/MrBug/prezaips/', {
+				//must use `, not ' or "
+				const result = await ajax(`/MrBug/prezaips/`, {
 					type: "POST",
 					data: {
+						//must use `, not ' or "
 						bagakruta: btoa(`${knopk}~${gcode}`)
 					}
 				})
@@ -125,16 +127,18 @@ export default class MyController extends Controller {
 		this.prezaips = { ...this.prezaips, winrars: false }
 		
 		try {
-			const result = await ajax('/MrBug/zaips/', {
+			//must use `, not ' or "
+			const result = await ajax(`/MrBug/zaips/`, {
 				type: "POST",
 				data: {
+					//must use `, not ' or "
 					bagatrolit: btoa(unescape(encodeURIComponent(`${this.prezaips?.position}~${this.currentUser?.username}~${this.prezaips?._id}~${this.prezaips?.gameNAME}`)))
 				}
 			})
 			this.zaipsResult = result
 
 			//do full page reaload
-			const result2 = await ajax('/MrBug.json')
+			const result2 = await ajax(`/MrBug.json`)
 			this.model = result2 // Mutating this automatically updates the glizt getter!
 
 			this.mdalready = true
