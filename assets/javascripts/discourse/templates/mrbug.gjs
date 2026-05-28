@@ -170,7 +170,6 @@ export default <template>
 			</div>
 		{{/if}}
 
-111{{@controller.hideo1states}}111
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.hideostates.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 			<div class='MrBug'>
@@ -189,7 +188,7 @@ export default <template>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
 									<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; {{@controller.hideo1states.[index]}}</span>
+									<span class='smaladndark minihrenvnizu'>111{{@controller.hideo1states}}111 &gt;&gt; открыть {{index}} составы &lt;&lt; 111{{@controller.hideo1states.[index]}}111</span>
 								</td>
 					
 								<td>
