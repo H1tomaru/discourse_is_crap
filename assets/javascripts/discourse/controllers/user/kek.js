@@ -69,7 +69,13 @@ export default class MyController extends Controller {
 	@action
 	addOtziv() {
 		// Object.assign resets multiple trackable states at once on a single line
-		Object.assign(this, { responz: null, otzivmdal: true, ozmode: true, pisanina: null })
+		Object.assign(this, { responz: null, ozmode: true, pisanina: null })
+		this.otzivmdal = !this.otzivmdal
+	}
+
+	@action
+	clozOtziv() {
+		this.otzivmdal = false
 	}
 	
 	@action
@@ -100,7 +106,7 @@ export default class MyController extends Controller {
 		const fbLength = this.pisanina?.length
 		if (fbLength < 21) return this.otzivsmall = true
 		if (fbLength > 200) return this.otzivbig = true
-		// do stuff of all ok
+		// do stuff if all ok
 		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
 
 		try {
