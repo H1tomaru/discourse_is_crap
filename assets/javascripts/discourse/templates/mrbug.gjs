@@ -175,7 +175,7 @@ export default <template>
 			<div class='MrBug'>
 
 				{{#if @controller.hideostates.[0]}}
-					{{#each @controller.glizt.gamedb1 as |game index|}}
+					{{#each @controller.glizt.gamedb1 key="@index" as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
@@ -217,7 +217,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if (get @controller.hideo1states index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
