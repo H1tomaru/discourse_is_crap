@@ -170,7 +170,7 @@ export default <template>
 			</div>
 		{{/if}}
 
-
+111{{@controller.hideo1states}}111
 		{{#if @controller.glizt.gamedb1}}
 			<div class='ghed {{unless @controller.hideostates.[0] "slut"}}' {{on "click" (fn @controller.showhideo 0)}}><i class='fas fa-users'></i> Просто Игры <span class='smaladndark'>Ждут своих героев</span></div>
 			<div class='MrBug'>
