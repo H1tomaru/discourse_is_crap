@@ -175,7 +175,7 @@ export default <template>
 			<div class='MrBug'>
 
 				{{#if @controller.hideostates.[0]}}
-					{{#each @controller.glizt.gamedb1 key="@index" as |game index|}}
+					{{#each @controller.glizt.gamedb1 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo1 index)}}>
 							<tr>
@@ -325,7 +325,7 @@ export default <template>
 			<div class='MrBug'>
 
 				{{#if @controller.hideostates.[1]}}
-					{{#each @controller.glizt.gamedb2 key="@index" as |game index|}}
+					{{#each @controller.glizt.gamedb2 as |game index|}}
 					
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo2 index)}}>
 							<tr>
@@ -475,7 +475,7 @@ export default <template>
 			<div class='MrBug'>
 				
 				{{#if @controller.hideostates.[2]}}
-					{{#each @controller.glizt.gamedb3 key="@index" as |game index|}}
+					{{#each @controller.glizt.gamedb3 as |game index|}}
 						
 						<table class='ggg {{if game.MODE1 "bgred2"}} {{if game.MODE2 "bggr3"}}' {{on "click" (fn @controller.showhideo3 index)}}>
 							<tr>
