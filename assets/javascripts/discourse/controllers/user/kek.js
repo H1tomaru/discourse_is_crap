@@ -33,7 +33,7 @@ export default class MyController extends Controller {
 		let fbedit = false
 
 		// [...array] safely clones the data so .reverse() doesn't modify the source model
-		const rawFeedbacks = this.model?.FEEDBACKS ? [...this.model.FEEDBACKS] : []
+		const rawFeedbacks = [...this.model.FEEDBACKS]
 		//loop throug fb and set its color for template, also find last editable fb
 		rawFeedbacks.reverse().forEach((item) => {
 			if (item.SCORE > 0) item.COLOR = 'zeG'
