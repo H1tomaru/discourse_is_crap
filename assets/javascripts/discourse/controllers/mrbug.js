@@ -159,12 +159,14 @@ export default class MyController extends Controller {
 	showhideo2(index) {
 		this.hideo2states[index] = !this.hideo2states[index]
 		this.hideo2states = {...this.hideo2states}
+		notifyPropertyChange(this, 'glizt')
 	}
 
 	@action
 	showhideo3(index) {
 		this.hideo3states[index] = !this.hideo3states[index]
-		this.hideo3states = {...this.hideo3states}
+		//this.hideo3states = {...this.hideo3states}
+		notifyPropertyChange(this, 'glizt')
 	}
 
 	@action
