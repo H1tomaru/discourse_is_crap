@@ -2,6 +2,7 @@ import Controller from '@ember/controller'
 import { action } from '@ember/object'
 import { service } from '@ember/service'
 import { tracked } from '@glimmer/tracking'
+import { ajax } from 'discourse/lib/ajax'
 
 export default class MyController extends Controller {
 
@@ -103,13 +104,10 @@ export default class MyController extends Controller {
 		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
 
 		try {
-			const payload = btoa(unescape(encodeURIComponent(`${this.ozmode}~${this.score}~${this.pisanina}`)))
-			const response = await fetch(`/u/${this.model?.uZar}/kek`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: new URLSearchParams({ fedbakibaki: payload })
+			const result = await ajax("/u/${this.model?.uZar}/kek", {
+				type: "POST",
+				data: {	fedbakibaki: btoa(unescape(encodeURIComponent(`${this.ozmode}~${this.score}~${this.pisanina}`))) }
 			})
-			const result = await response.json()
 			this.responz = result
 
 			// Executes if creating a brand new feedback submission was successful
@@ -183,15 +181,13 @@ export default class MyController extends Controller {
 	async runTroikopoisk(poisk, acc) {
 		Object.assign(this, { accamdal: true, accawait: true, actualgp: false })
 		try {
-			const response = await fetch("/MrBug/troikopoisk/", {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: new URLSearchParams({
+			this.troikopoisk = await ajax("/MrBug/troikopoisk/", {
+				type: "POST",
+				data: {
 					poisk: btoa(unescape(encodeURIComponent(poisk))),
 					acc: btoa(unescape(encodeURIComponent(acc)))
-				})
+				}
 			})
-			this.troikopoisk = await response.json()
 			this.accawait = false
 		} catch (error) {
 			console.error("Troikopoisk submission failed:", error)
@@ -202,12 +198,10 @@ export default class MyController extends Controller {
 	async getPaZZ(input) {
 		this.passwait = true
 		try {
-			const response = await fetch(`/u/${this.currentUser?.username}/kek/oishiiii`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body: new URLSearchParams({ myylo: btoa(unescape(encodeURIComponent(input))) })
+			this.actualgp = await ajax("/u/${this.currentUser?.username}/kek/oishiiii", {
+				type: "POST",
+				data: {	myylo: btoa(unescape(encodeURIComponent(input))) }
 			})
-			this.actualgp = await response.json()
 			this.passwait = false
 		} catch (error) {
 			console.error("getPaZZ transaction failed:", error)
