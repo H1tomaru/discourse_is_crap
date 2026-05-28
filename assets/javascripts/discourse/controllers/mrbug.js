@@ -150,12 +150,8 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo1(index) {
-		let game = this.glizt.gamedb1[index];
-		if (game) {
-			game.SHOWHIDEO = !game.SHOWHIDEO;
-			//Force Ember to redraw the template loop immediately!
-			notifyPropertyChange(this, 'glizt');
-		}
+		this.hideo1states[index] = !this.hideo1states[index]
+		notifyPropertyChange(this, 'glizt')
 	}
 
 	@action
