@@ -104,7 +104,7 @@ export default class MyController extends Controller {
 		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
 
 		try {
-			const result = await ajax("/u/${this.model?.uZar}/kek", {
+			const result = await ajax(`/u/${this.model?.uzar}/kek`, {
 				type: "POST",
 				data: {	fedbakibaki: btoa(unescape(encodeURIComponent(`${this.ozmode}~${this.score}~${this.pisanina}`))) }
 			})
@@ -181,7 +181,7 @@ export default class MyController extends Controller {
 	async runTroikopoisk(poisk, acc) {
 		Object.assign(this, { accamdal: true, accawait: true, actualgp: false })
 		try {
-			this.troikopoisk = await ajax("/MrBug/troikopoisk/", {
+			this.troikopoisk = await ajax('/MrBug/troikopoisk/', {
 				type: "POST",
 				data: {
 					poisk: btoa(unescape(encodeURIComponent(poisk))),
@@ -198,7 +198,7 @@ export default class MyController extends Controller {
 	async getPaZZ(input) {
 		this.passwait = true
 		try {
-			this.actualgp = await ajax("/u/${this.currentUser?.username}/kek/oishiiii", {
+			this.actualgp = await ajax('/u/${this.currentUser?.username}/kek/oishiiii', {
 				type: "POST",
 				data: {	myylo: btoa(unescape(encodeURIComponent(input))) }
 			})
