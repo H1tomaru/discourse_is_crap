@@ -1,5 +1,5 @@
 import { on } from "@ember/modifier"
-import { fn } from "@ember/helper"
+import { fn get } from "@ember/helper"
 
 export default <template>
 
@@ -217,7 +217,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if (get @controller.showhideo1 index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
@@ -367,7 +367,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if (get @controller.showhideo2 index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
@@ -518,7 +518,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if game.SHOWHIDEO}}
+						{{#if (get @controller.showhideo3 index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
