@@ -189,7 +189,7 @@ export default <template>
 								<td class='mainco'>
 									<a>{{game.gameNAME}}</a><br />
 									<span class='baga baga-{{game.CONSOLE}}'>{{game.CONSOLE}}</span>
-									<span class='smaladndark minihrenvnizu'> &gt;&gt; открыть составы &lt;&lt; </span>
+									<span class='smaladndark minihrenvnizu'>{{game.SHOWHIDEO}} &gt;&gt; открыть составы &lt;&lt; {{game.SHOWHIDEO}}</span>
 								</td>
 					
 								<td>
