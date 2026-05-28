@@ -17,6 +17,9 @@ export default class MyController extends Controller {
 	@tracked pzposition = null
 	@tracked zaipsResult = null
 	@tracked hideostates = [true, true, true]
+	@tracked hideo1states = []
+	@tracked hideo2states = []
+	@tracked hideo3states = []
 
 	get glizt () {
 		//make variables for each game type
@@ -147,32 +150,17 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo1(index) {
-		const item = this.glizt.gamedb1?.[index]
-		
-		if (item) {
-		    item.SHOWHIDEO = !item.SHOWHIDEO
-		    this.glizt.gamedb1 = [...this.glizt.gamedb1]
-		}
+		this.hideo1states = this.hideo1states.with(index, !this.hideo1states[index])
 	}
 
 	@action
 	showhideo2(index) {
-		const item = this.glizt.gamedb2?.[index]
-		
-		if (item) {
-		    item.SHOWHIDEO = !item.SHOWHIDEO
-		    this.glizt.gamedb2 = [...this.glizt.gamedb2]
-		}
+		this.hideo2states = this.hideo2states.with(index, !this.hideo2states[index])
 	}
 
 	@action
 	showhideo3(index) {
-		const item = this.glizt.gamedb3?.[index]
-		
-		if (item) {
-		    item.SHOWHIDEO = !item.SHOWHIDEO
-		    this.glizt.gamedb3 = [...this.glizt.gamedb3]
-		}
+		this.hideo3states = this.hideo3states.with(index, !this.hideo3states[index])
 	}
 
 	@action
