@@ -614,9 +614,8 @@ div.shinbakaz {
 					text-align: right;
 					white-space: nowrap;
 					overflow: hidden;
-					padding-left: 1%;
-					text-align: right;
-    				padding-right: 1%;
+				    text-align: left;
+				    padding-left: 20%;
 				}
 			}
 
@@ -865,6 +864,13 @@ div.shinbakaz {
 		.MrBug table.djuke {
 			
 			font-size: .65em;
+
+			tr:nth-child(even) {
+
+				td:nth-child(even) {
+				    padding-left: 10%;
+				}
+			}
 
 		}
 
