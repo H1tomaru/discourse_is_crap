@@ -118,7 +118,7 @@ export default <template>
 								<span class="red">
 									<b>[</b><span class="hideoS">Занят</span><i class="fas fa-times hideoB"></i> до {{game.STATUS}}<b>]</b>
 									{{#if game.LINE}}
-										<b>[</b>+{{game.LINE}}в очереди<b>]</b>
+										<b>[</b>+{{game.LINE}} в очереди<b>]</b>
 									{{/if}}
 									<b>[</b>{{game.POSITION}}<b>]</b>
 								</span>
