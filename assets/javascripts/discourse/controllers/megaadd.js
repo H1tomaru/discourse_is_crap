@@ -18,7 +18,7 @@ export default class MyController extends Controller {
 		event?.preventDefault()
 
 		try {
-			const result = await ajax('/admin/MegaAdd', {
+			const result = await ajax(`/admin/MegaAdd`, {
 				type: "POST",
 				data: {
 					GAME: this.addstuff.GAME,
@@ -55,7 +55,7 @@ export default class MyController extends Controller {
 	@action
 	async showP4Lista() {
 		try {
-			const result = await ajax('/MrBug.json')
+			const result = await ajax(`/MrBug.json`)
 			
 			this.p4lista = result.gamelist
 		} catch (error) {
