@@ -367,7 +367,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if (get @controller.showhideo2 index)}}
+						{{#if (get @controller.hideo2states index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
@@ -518,7 +518,7 @@ export default <template>
 							</tr>
 						</table>
 						
-						{{#if (get @controller.showhideo3 index)}}
+						{{#if (get @controller.hideo3states index)}}
 							<table class="djuke">
 								{{#each game.TROIKI as |users|}}
 									<tr class='{{if users.MODE1 "bgred2"}}{{if users.MODE2 "bggr3"}}'>
