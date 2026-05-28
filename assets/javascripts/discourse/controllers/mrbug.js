@@ -27,9 +27,14 @@ export default class MyController extends Controller {
 		const currentuser = this.currentUser?.username
 		const gameList = this.model?.gamelist
 
-		gameList.forEach((item) => {
+		gameList.forEach((item, index) => {
 			//template stuff, if paint game red or green
 			item.MODE1 = false; item.MODE2 = false
+
+			//create showhideo stuff
+			if (item.TYPE == 1) item.SHOWHIDEO = this.hideo1states[index]
+			if (item.TYPE == 2) item.SHOWHIDEO = this.hideo2states[index]
+			if (item.TYPE == 3) item.SHOWHIDEO = this.hideo3states[index]
 
 			//if not guest, check if user is in this troika
 			if (currentuser) {
