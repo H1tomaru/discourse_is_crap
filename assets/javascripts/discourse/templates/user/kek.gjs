@@ -8,10 +8,15 @@ export default <template>
 	
 		{{#if @controller.otzivmdal}}
 			<form {{on "submit" @controller.OtzivZaips}}>
-				<div>
+				<div style="position: relative">
 					<button	type="button" class={{if @controller.checked1 "bi4"}} {{on "click" (fn @controller.selectOtz 1)}}><img src="https://i.imgur.com/rmydNkF.png" /></button>
 					<button	type="button" class={{if @controller.checked2 "bi4"}} {{on "click" (fn @controller.selectOtz 2)}}><img src="https://i.imgur.com/OMygNKW.png" /></button>
 					<button	type="button" class={{if @controller.checked3 "bi4"}} {{on "click" (fn @controller.selectOtz 3)}}><img src="https://i.imgur.com/ZcxqN8c.png" /></button>
+					<button type="button" style="position: absolute; right: -10px; top: 5px;" {{on "click" (fn @controller.clozOtziv)}}>
+						<svg width="20" height="20" viewBox="0 0 16 16">
+  							<path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"></path>
+						</svg>
+					</button>
 				</div>
 				
 				<div class="{{if @controller.checked1 'bi4G'}}{{if @controller.checked2 'bi4N'}}{{if @controller.checked3 'bi4B'}}">
