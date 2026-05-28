@@ -80,7 +80,7 @@ export default class MyController extends Controller {
 	@action
 	respCLOZ() {
 		// Closes small/big length error validation notifications
-		Object.assign(this, { responz: null, otzivsmall: false, otzivbig: false })
+		Object.assign(this, { responz: null, : false, otzivbig: false })
 	}
 	
 	@action
@@ -96,8 +96,8 @@ export default class MyController extends Controller {
 	async OtzivZaips(event) {
 		event?.preventDefault()
 
-		const fbLength = this.pisanina?.length || 0
-		if (fbLength < 20) return this.otzivsmall = true
+		const fbLength = this.pisanina?.length
+		if (fbLength < 21) return this.otzivsmall = true
 		if (fbLength > 200) return this.otzivbig = true
 		// do stuff of all ok
 		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
