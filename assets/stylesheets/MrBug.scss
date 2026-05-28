@@ -601,19 +601,22 @@ div.shinbakaz {
 
 				td:first-child {
 
-					//make small?
+					text-align: center
 
 				}
 
 				td:nth-child(odd):not(:first-child) {
-					width: 94px;
+					width: 100px;
 					padding-right: 0.5%;
 				}
 	
 				td:nth-child(even) {
+					text-align: right;
 					white-space: nowrap;
 					overflow: hidden;
 					padding-left: 1%;
+					text-align: right;
+    				padding-right: 1%;
 				}
 			}
 
