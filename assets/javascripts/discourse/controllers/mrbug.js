@@ -150,9 +150,13 @@ export default class MyController extends Controller {
 
 	@action
 	showhideo1(index) {
-		this.hideo1states[index] = !this.hideo1states[index]
-		//ember doesnt update when doing just index, so this
-		this.hideo1states = {...this.hideo1states}
+		let game = this.glizt.gamedb1[index]
+		
+		if (game) {
+			game.SHOWHIDEO = !game.SHOWHIDEO
+			//Trigger Ember's template re-render by refreshing the array reference
+			this.glizt.gamedb1 = [...this.glizt.gamedb1]
+		}
 	}
 
 	@action
