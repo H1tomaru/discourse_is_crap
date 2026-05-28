@@ -17,9 +17,9 @@ export default class MyController extends Controller {
 	@tracked pzposition = null
 	@tracked zaipsResult = null
 	@tracked hideostates = [true, true, true]
-	@tracked hideo1states = []
-	@tracked hideo2states = []
-	@tracked hideo3states = []
+	@tracked hideo1states = {}
+	@tracked hideo2states = {}
+	@tracked hideo3states = {}
 
 	get glizt () {
 		//make variables for each game type
@@ -152,19 +152,19 @@ export default class MyController extends Controller {
 	showhideo1(index) {
 		this.hideo1states[index] = !this.hideo1states[index]
 		//ember doesnt update when doing just index, so this
-		this.hideo1states = [...this.hideo1states]
+		this.hideo1states = {...this.hideo1states}
 	}
 
 	@action
 	showhideo2(index) {
 		this.hideo2states[index] = !this.hideo2states[index]
-		this.hideo2states = [...this.hideo2states]
+		this.hideo2states = {...this.hideo2states}
 	}
 
 	@action
 	showhideo3(index) {
 		this.hideo3states[index] = !this.hideo3states[index]
-		this.hideo3states = [...this.hideo3states]
+		this.hideo3states = {...this.hideo3states}
 	}
 
 	@action
