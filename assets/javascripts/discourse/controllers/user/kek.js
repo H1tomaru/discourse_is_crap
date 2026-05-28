@@ -81,7 +81,7 @@ export default class MyController extends Controller {
 	@action
 	respCLOZ() {
 		// Closes small/big length error validation notifications
-		Object.assign(this, { responz: null, : false, otzivbig: false })
+		Object.assign(this, { responz: null, otzivsmall: false, otzivbig: false })
 	}
 	
 	@action
