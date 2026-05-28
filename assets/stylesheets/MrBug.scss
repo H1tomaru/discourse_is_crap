@@ -593,35 +593,27 @@ div.shinbakaz {
 				
 				text-align: center;
 
-				td:nth-child(even) {
-					display: none
-				}
-
-				td:first-child {
-
-					position: relative;
-
-					span {
-						position: absolute;
-						left: -24px;
-						top: 22px;
-					}
-				}
 			}
 
 			tr:nth-child(even) {
 
-				border-bottom: 1px dashed #ddd;
+				border-bottom: 1px dashed #ddd
 
-				td:nth-child(odd) {
-					white-space: nowrap;
-					overflow: hidden;
-					padding-left: 1%;
+				td:first-child {
+
+					//make small?
+
+				}
+
+				td:nth-child(odd):not(:first-child) {
+					width: 94px;
+					padding-right: 0.5%;
 				}
 	
 				td:nth-child(even) {
-					width: 94px;
-					padding-right: 0.5%;
+					white-space: nowrap;
+					overflow: hidden;
+					padding-left: 1%;
 				}
 			}
 
@@ -631,7 +623,7 @@ div.shinbakaz {
 
 			tr:nth-child(4n+1),tr:nth-child(4n+2)  {
 
-				td:nth-child(4n+1), td:nth-child(4n+2) {
+				td:nth-child(4n+2), td:nth-child(4n+3) {
 					background-color: #f2f2f2
 				}
 
@@ -639,7 +631,7 @@ div.shinbakaz {
 			
 			tr:nth-child(4n+3),tr:nth-child(4n+4)  {
 
-				td:nth-child(4n+3), td:nth-child(4n+4) {
+				td:nth-child(4n+4), td:nth-child(4n+5) {
 					background-color: #f2f2f2
 				}
 
