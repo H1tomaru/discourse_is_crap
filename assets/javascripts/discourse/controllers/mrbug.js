@@ -22,11 +22,6 @@ export default class MyController extends Controller {
 	@tracked hideo3states = []
 
 	get glizt () {
-		// FORCE GLIMMER TO WATCH THESE ARRAYS FOR RENDERING CHANGES
-		this.hideo1states
-		this.hideo2states
-		this.hideo3states
-
 		//make variables for each game type
 		const finalvar = {gamedb1: [], gamedb2: [], gamedb3: [], maigamez1: [], maigamez2: []}
 		const currentuser = this.currentUser?.username
@@ -35,11 +30,6 @@ export default class MyController extends Controller {
 		gameList.forEach((item, index) => {
 			//template stuff, if paint game red or green
 			item.MODE1 = false; item.MODE2 = false
-
-			//create showhideo stuff
-			if (item.TYPE == 1) item.SHOWHIDEO = this.hideo1states[index]
-			if (item.TYPE == 2) item.SHOWHIDEO = this.hideo2states[index]
-			if (item.TYPE == 3) item.SHOWHIDEO = this.hideo3states[index]
 
 			//if not guest, check if user is in this troika
 			if (currentuser) {
