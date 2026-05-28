@@ -404,7 +404,7 @@ after_initialize do
 					unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
 						#add message to telegram bot, if enabled
 						begin
-							Faraday.post(SiteSetting.chat_webhook, { 'text' => msgtext }) do |request|
+							Faraday.post(SiteSetting.metatron_id+'/sendMessage', { 'text' => msgtext }) do |request|
 								request.options.timeout = 20
 							end
 						rescue => e
