@@ -388,7 +388,10 @@ after_initialize do
 					unless SiteSetting.chat_webhook.empty?
 						#add message to discourse chat, if enabled
 						begin
-							Faraday.post(SiteSetting.chat_webhook, { 'text' => msgtext }) do |request|
+							Faraday.post(
+								SiteSetting.chat_webhook,
+								{ 'text' => msgtext }
+							) do |request|
 								request.options.timeout = 20
 							end
 						rescue => e
@@ -404,7 +407,10 @@ after_initialize do
 					unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
 						#add message to telegram bot, if enabled
 						begin
-							Faraday.post(SiteSetting.metatron_id+'/sendMessage', { 'text' => msgtext }) do |request|
+							Faraday.post(
+								SiteSetting.metatron_id+'/sendMessage',
+								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
+							) do |request|
 								request.options.timeout = 20
 							end
 						rescue => e
@@ -705,7 +711,10 @@ after_initialize do
 						render json: { spam: true }
 					else #if first time ask pass today, go
 						begin
-							res = Faraday.post("http://#{SiteSetting.pbot_ip}/get_passzss", { 'myylo' => params[:myylo] }) do |request|
+							res = Faraday.post(
+								"http://#{SiteSetting.pbot_ip}/get_passzss",
+								{ 'myylo' => params[:myylo] }
+							) do |request|
 								request.options.timeout = 20
 							end
 						rescue => e
