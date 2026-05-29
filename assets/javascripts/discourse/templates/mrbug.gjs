@@ -350,7 +350,7 @@ export default <template>
 										{{else}}
 											<h3>НЕТ</h3><br />цены
 										{{/if}}
-										{{#if game.P2NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
+										{{#if game.P2NO}}<div class='statustr status-2'>{{game.P2NO}}</div>{{/if}}
 									</button>
 								</td>
 								<td>
@@ -360,7 +360,7 @@ export default <template>
 										{{else}}
 											<h3>НЕТ</h3><br />цены
 										{{/if}}
-										{{#if game.P4NO}}<div class='statustr status-1'>{{game.P4NO}}</div>{{/if}}
+										{{#if game.P4NO}}<div class='statustr status-2'>{{game.P4NO}}</div>{{/if}}
 									</button>
 								</td>
 								{{! Buttons244 }}
@@ -501,7 +501,7 @@ export default <template>
 										{{else}}
 											<h3>НЕТ</h3><br />цены
 										{{/if}}
-										{{#if game.P2NO}}<div class='statustr status-1'>{{game.P2NO}}</div>{{/if}}
+										{{#if game.P2NO}}<div class='statustr status-3'>{{game.P2NO}}</div>{{/if}}
 									</button>
 								</td>
 								<td>
@@ -511,7 +511,7 @@ export default <template>
 										{{else}}
 											<h3>НЕТ</h3><br />цены
 										{{/if}}
-										{{#if game.P4NO}}<div class='statustr status-1'>{{game.P4NO}}</div>{{/if}}
+										{{#if game.P4NO}}<div class='statustr status-3'>{{game.P4NO}}</div>{{/if}}
 									</button>
 								</td>
 								{{! Buttons244 }}
