@@ -847,7 +847,11 @@ div.rentobaka {
 		text-decoration: none;
 	}
 
-	.rentahideoz {
+	.hideoS {
+		display: initial
+	}
+
+	.hideoB, .rentahideoz {
 		display: none
 	}
 
@@ -1040,6 +1044,14 @@ div.rentobaka {
 	button.rentabutt:hover::before, button.rentabutt.bi4::before {
 		width: 20px;
 		background: gray;
+	}
+
+	.hideoS {
+		display: none
+	}
+
+	.hideoB {
+		display: inherit
 	}
 
 	.rentbox2 {
