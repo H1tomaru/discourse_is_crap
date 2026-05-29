@@ -55,11 +55,8 @@ export default class MyController extends Controller {
 		})
 		//save final variable
 		// Inline conditional: extracts 11 elements if MENOSHO is true, otherwise extracts 12
-    	finalvar = newfbarray.splice(0, this.model?.MENOSHO ? 11 : 12)
-		//add more items to view when more pages are viewed
-		for (let i = 0; i < this.mOREdoShoW; i++) {
-			finalvar.push(newfbarray.splice(0, 12))
-		}
+		//amdadd more items to view when more pages are viewed
+    	finalvar = newfbarray.splice(0, (this.model?.MENOSHO ? 11 : 12) + this.mOREdoShoW * 12)
 
 		return finalvar
 	}
