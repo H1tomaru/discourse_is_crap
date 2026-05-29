@@ -5,6 +5,10 @@ import { Input } from '@ember/component'
 export default <template>
 	<div class="kekbakaz">
 		<br />
+
+		{{#if @controller.otzvwait}}
+			<div class="bagaspin"></div>
+		{{/if}}
 	
 		{{#if @controller.otzivmdal}}
 			<form {{on "submit" @controller.OtzivZaips}}>
