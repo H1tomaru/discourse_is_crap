@@ -115,7 +115,7 @@ export default <template>
 				{{/each}}
 		
 				{{#if @controller.mORE}}
-					<button class="morZ" type="button" {{on "click" @controller.addOtziv}}>ещё</button>
+					<button class="morZ" type="button" {{on "click" @controller.showMORZ}}>ещё</button>
 				{{else}}
 					{{#if @controller.model.fbARC}}
 						<div class="kekus zeZ">
