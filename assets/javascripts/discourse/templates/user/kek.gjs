@@ -102,7 +102,7 @@ export default <template>
 					</div>
 				{{/if}}
 		
-				{{#each @controller.fEEDBACKS.fb1 as |feedback|}}
+				{{#each @controller.fEEDBACKS as |feedback|}}
 					<div class="kekus {{feedback.COLOR}}">
 						<div><a href="/u/{{feedback.pNAME}}">{{feedback.pNAME}}</a></div>
 						<div>{{feedback.DATE}}</div>
