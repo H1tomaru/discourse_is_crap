@@ -21,13 +21,13 @@ export default class MyController extends Controller {
 	@tracked otzivbig = false
 	
 	@tracked accamdal = false
+	@tracked otzvwait = false
 	@tracked accawait = false
 	@tracked passwait = false
 	@tracked actualgp = false
 	@tracked pisanina = null
 
 	get fEEDBACKS() {
-		const finalvar = { fb1: [], fb2: [] }
 		const newfbarray = []
 		const currentuser = this.currentUser?.username
 		let fbedit = false
@@ -107,7 +107,7 @@ export default class MyController extends Controller {
 		if (fbLength < 21) return this.otzivsmall = true
 		if (fbLength > 200) return this.otzivbig = true
 		// do stuff if all ok
-		Object.assign(this, { otzivmdal: false, otzivsmall: false, otzivbig: false })
+		Object.assign(this, { otzvwait: true, otzivmdal: false, otzivsmall: false, otzivbig: false })
 
 		try {
 			//must use `, not ' or "
@@ -125,7 +125,7 @@ export default class MyController extends Controller {
 				this.model = result2 // Mutating this automatically updates
 			}
 			
-			Object.assign(this, { checked1: true, checked2: false, checked3: false, score: 1, pisanina: null })
+			Object.assign(this, { otzvwait: false, checked1: true, checked2: false, checked3: false, score: 1, pisanina: null })
 			
 		} catch (error) {
 			console.error("Network call execution failed:", error)
