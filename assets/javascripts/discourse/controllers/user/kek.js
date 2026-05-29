@@ -56,7 +56,7 @@ export default class MyController extends Controller {
 		// Inline conditional: extracts 11 elements if MENOSHO is true, otherwise extracts 12
 		//amdadd more items to view when more pages are viewed
 
-		return newfbarray.splice(0, (this.model?.MENOSHO ? 11 : 12) + this.mOREdoShoW * 12)
+		return newfbarray.slice(0, (this.model?.MENOSHO ? 11 : 12) + this.mOREdoShoW * 12)
 	}
 
 	get mORE() {
