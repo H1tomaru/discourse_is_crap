@@ -119,51 +119,10 @@ export default class MyController extends Controller {
 			this.responz = result
 
 			// Executes if creating a brand new feedback submission was successful
-			if (result.winrars_z) {
-				//draw this new fb on a page
-				//find fb color first and increase corresponding fb number
-				let color = 'zeN'
-				
-				// Flat, classic if/else statements for model tracking updates
-				if (this.score > 0) {
-					color = 'zeG'
-					this.model.fbG = (this.model.fbG) + 1
-				} else if (this.score === 0) {
-					color = 'zeN'
-					this.model.fbN = (this.model.fbN) + 1
-				} else if (this.score < 0) {
-					color = 'zeB'
-					this.model.fbB = (this.model.fbB) + 1
-				}
-				
-				//remove edit tag from now not last feedback
-				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
-				if (ni >= 0) this.fEEDBACKS.fb1[ni].eDit = false
-				
-				// Unshifts inserts the new feedback live right at the top of the timeline
-				this.fEEDBACKS.fb1.unshift({
-					pNAME: this.currentUser.username,
-					FEEDBACK: this.pisanina,
-					DATE: new Date().toISOString().slice(0, 10).replace(/-/g, '.'), // Fast native YYYY.MM.DD string format
-					COLOR: color,
-					eDit: true
-				})
-				this.model = { ...this.model } // Wake up Ember template tracking
-			}
-			
-			// Executes if updating an existing feedback was successful
-			if (result.winrars_e) {
-				//find last feedback
-				const ni = this.fEEDBACKS.fb1.findIndex(it => it.pNAME === this.currentUser.username)
-				if (ni >= 0) {
-					//edit it
-					this.fEEDBACKS.fb1[ni].FEEDBACK = this.pisanina
-					
-					if (this.score > 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeG'
-					if (this.score < 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeB'
-					if (this.score === 0) this.fEEDBACKS.fb1[ni].COLOR = 'zeN'
-				}
-				this.model = { ...this.model } // Wake up Ember template tracking
+			if (result.winrars_z || result.winrars_e) {
+				//do full page reaload
+				const result2 = await ajax(`/u/${this.model?.uZar}/kek.json`)
+				this.model = result2 // Mutating this automatically updates
 			}
 			
 			Object.assign(this, { checked1: true, checked2: false, checked3: false, score: 1, pisanina: null })
