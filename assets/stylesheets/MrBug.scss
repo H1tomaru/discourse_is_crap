@@ -1046,14 +1046,6 @@ div.rentobaka {
 		background: gray;
 	}
 
-	.hideoS {
-		display: none
-	}
-
-	.hideoB {
-		display: inherit
-	}
-
 	.rentbox2 {
 
 		.mimu:after {
@@ -1204,6 +1196,14 @@ div.rentobaka {
 	}
 
 	@media (max-width: 600px) {
+
+		.hideoS {
+			display: none
+		}
+
+		.hideoB {
+			display: inherit
+		}
 
 		.rentbox2 {
 
