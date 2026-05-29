@@ -28,23 +28,25 @@ export default class MyController extends Controller {
 	@tracked pisanina = null
 
 	get fEEDBACKS() {
+		const finalvar = []
 		const newfbarray = []
 		const currentuser = this.currentUser?.username
 		let fbedit = false
 
 		// [...array] safely clones the data so .reverse() doesn't modify the source model
 		const rawFeedbacks = [...this.model.FEEDBACKS]
-		//loop throug fb and set its color for template, also find last editable fb
+		//loop through fb from newest to oldest
 		rawFeedbacks.reverse().forEach((item) => {
+			//set fb color based on scrore
 			if (item.SCORE > 0) item.COLOR = 'zeG'
 			if (item.SCORE < 0) item.COLOR = 'zeB'
 			if (item.SCORE === 0) item.COLOR = 'zeN'
-
+			//create new final fb item
 			newfbarray.push({
 				FEEDBACK: item.FEEDBACK, pNAME: item.pNAME,
 				DATE: item.DATE, COLOR: item.COLOR
 			})
-			//onetime check for users last feedback to flag it as editable
+			//onetime check to find and mark users single editable feedback
 		    if (!fbedit && currentuser && item.pNAME === currentuser) { 
 				newfbarray[newfbarray.length - 1].eDit = true; fbedit = true
 		    }
@@ -53,6 +55,7 @@ export default class MyController extends Controller {
 		// Inline conditional: extracts 11 elements if MENOSHO is true, otherwise extracts 12
     	finalvar.fb1 = newfbarray.splice(0, this.model?.MENOSHO ? 11 : 12)
 
+		
 		// Dynamically chunks all remaining feedbacks into blocks of 12 for page 2+
 		while (newfbarray.length > 0) {
 			finalvar.fb2.push(newfbarray.splice(0, 12))
