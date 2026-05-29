@@ -15,6 +15,8 @@ export default class MyController extends Controller {
 	@tracked ozmode = true
 	@tracked troikopoisk = null
 	@tracked responz = null
+
+	@tracked mOREdoShoW = 0
 	
 	@tracked otzivmdal = false
 	@tracked otzivsmall = false
@@ -28,7 +30,7 @@ export default class MyController extends Controller {
 	@tracked pisanina = null
 
 	get fEEDBACKS() {
-		const finalvar = []
+		let finalvar = []
 		const newfbarray = []
 		const currentuser = this.currentUser?.username
 		let fbedit = false
@@ -53,20 +55,29 @@ export default class MyController extends Controller {
 		})
 		//save final variable
 		// Inline conditional: extracts 11 elements if MENOSHO is true, otherwise extracts 12
-    	finalvar.fb1 = newfbarray.splice(0, this.model?.MENOSHO ? 11 : 12)
-
-		
-		// Dynamically chunks all remaining feedbacks into blocks of 12 for page 2+
-		while (newfbarray.length > 0) {
-			finalvar.fb2.push(newfbarray.splice(0, 12))
+    	finalvar = newfbarray.splice(0, this.model?.MENOSHO ? 11 : 12)
+		//add more items to view when more pages are viewed
+		for (let i = 0; i < this.mOREdoShoW; i++) {
+			finalvar.push(newfbarray.splice(0, 12))
 		}
 
 		return finalvar
 	}
 
-	// Boolean check: returns true if there is a second page of feedbacks to display
 	get mORE() {
-		return this.fEEDBACKS.fb2.length > 0
+		// see how many items are on the screen right now
+		const initial = this.model?.MENOSHO ? 11 : 12
+		const mOREdoShoWByPages = this.mOREdoShoW * 12
+		const currentlyShowingCount = initialBatch + loadedByPages
+		
+		// see if we have more fb to display, true or false
+		return this.model?.FEEDBACKS?.length > currentlyShowingCount
+	}
+
+	@action
+	showMORZ() {
+		//increase viewed pages number
+		this.mOREdoShoW++
 	}
 
 	@action
@@ -93,15 +104,6 @@ export default class MyController extends Controller {
 		Object.assign(this, { responz: null, otzivsmall: false, otzivbig: false })
 	}
 	
-	@action
-	showMORZ() {
-		// Unpacks exactly the first 12-item chunk from page 2 into page 1
-		this.fEEDBACKS.fb1.push(...this.fEEDBACKS.fb2[0])
-		
-		this.fEEDBACKS.fb2.shift() // Deletes the chunk we just moved out
-		this.model = { ...this.model } // Alerts Ember to redraw the page
-	}
-
 	@action
 	async OtzivZaips(event) {
 		event?.preventDefault()
