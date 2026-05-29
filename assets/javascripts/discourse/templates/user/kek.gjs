@@ -72,7 +72,7 @@ export default <template>
 		{{#if @controller.responz.bakas}}
 			<div class="netmudal">
 				Вы не можете оставлять отзывы имея отрицательный отзыв<br />
-				Обратитетсь к <a href="/u/MrBug">Организатору</a> чтобы исправить отзыв
+				Обратитетсь к <a href="/u/MrBug">Админу</a> чтобы исправить отзыв
 				<button type="button" {{on "click" @controller.respCLOZ}}></button>
 			</div>
 		{{/if}}
