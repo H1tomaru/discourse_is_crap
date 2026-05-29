@@ -39,40 +39,6 @@ div.shinbakaz {
 			padding: 20px 10px
 		}
 
-		.headin, .headin2 {
-			font-weight: 700;
-			font-size: 1.85em;
-			position: relative;
-			color: gray;
-			transition-duration: 0.7s;
-			background: none;
-			border: none;
-		}
-
-		.headin:hover, .bi4 {
-			color: #00b0ff;
-			transition-duration: 0.7s;
-		}
-
-		.headin::before {
-			content: "";
-			width: 60px;
-			height: 2px;
-			background: #00b0ff;
-			position: absolute;
-			left: 0;
-			bottom: -4px;
-			left: 50%;
-			transform: translateX(-50%);
-			transition-duration: 1s;
-		}
-
-		.headin:hover::before, .bi4::before {
-			width: 20px;
-			background: gray;
-			transition-duration: 1s;
-		}
-
 	}
 
 	.etomudal {
@@ -167,42 +133,6 @@ div.shinbakaz {
 		@keyframes spin {
 			0% { transform: rotate(0deg); }
 			100% { transform: rotate(360deg); }
-		}
-
-	}
-
-	.Bagoqz {
-
-		button {
-			width: 100px;
-			height: 70px;
-			background: #489BCF;
-			border: none;
-			color: #fff;
-			border-radius: 5px;
-			margin: 0 5px 10px;
-			font-size: 3.5em;	
-		}
-
-		div.select {
-			overflow: hidden;
-			width: 330px;
-			border-radius: 5px;
-			height: 29px;
-			margin: auto;
-		}
-
-		select {
-			background: #489BCF;
-			border: none;
-			padding: 5px;
-			width: 350px;
-			color: white;
-			text-align: center;
-		}
-
-		select:focus {
-			color: white
 		}
 
 	}
@@ -524,15 +454,6 @@ div.shinbakaz {
 			width: 26px;
 		}
 
-		.statustr.baga {
-			top: 0;
-			left: 50%;
-			border-radius: 3px 3px 3px 3px;
-			transform: translate(-50%, -50%);
-			width: 30px;
-			opacity: 0.8;
-		}
-
 		.BagButon {
 			position: relative;
 			width: 90px;
@@ -667,20 +588,6 @@ div.shinbakaz {
 		letter-spacing: 0
 	}
 
-	.blakarand {
-		color: white;
-		background: black;
-		border-radius: 25px;
-		padding: .2em .4em .2em;
-		opacity: 0.5;
-		font-size: .75em;
-	}
-
-	.blakarand.big {
-		text-align: center;
-		font-size: 1em;
-	}
-
 	.malabela {
 		text-align: center;
 		font-size: 82%;
@@ -689,10 +596,6 @@ div.shinbakaz {
 		border-radius: .25em;
 		letter-spacing: -0.6px;
 		margin: 6px 0;
-	}
-
-	.bggrey {
-		background-color: gray
 	}
 
 	.bgred {
@@ -719,23 +622,7 @@ div.shinbakaz {
 		background: rgba(0, 255, 0, 0.2)
 	}
 
-	.hideoS {
-		display: initial
-	}
-
-	.hideoB {
-		display: none
-	}
-
 	@media (max-width: 600px) {
-
-		.hideoS {
-			display: none
-		}
-
-		.hideoB {
-			display: inherit
-		}
 
 		table.bagahe {
 
@@ -806,7 +693,7 @@ div.shinbakaz {
 				bottom: 0px;
 			}
 
-			repala {
+			.repala {
 				display: none
 			}
 
@@ -926,11 +813,7 @@ div.rentobaka {
 		text-decoration: none;
 	}
 
-	.hideoS {
-		display: initial
-	}
-
-	.hideoB, .rentahideoz {
+	.rentahideoz {
 		display: none
 	}
 
@@ -1213,16 +1096,6 @@ div.rentobaka {
 				height: 10px;
 				color: black;
 
-				.tinybagaspin {
-					border: 5px solid #f3f3f3;
-					border-radius: 50%;
-					border-top: 5px solid #3498db;
-					width: 5px;
-					height: 5px;
-					animation: spin 2s linear infinite;
-					margin: 0 auto;
-				}
-
 				button {
 					background: none;
 					border: none;
@@ -1285,14 +1158,6 @@ div.rentobaka {
 	}
 
 	@media (max-width: 600px) {
-
-		.hideoS {
-			display: none
-		}
-
-		.hideoB {
-			display: inherit
-		}
 
 		.rentbox2 {
 
@@ -1379,17 +1244,6 @@ div.kekbakaz {
 		top: 10%;
 		position: relative;
 		margin: 0 auto;
-	}
-
-	.tinybagaspin {
-		border: 4px solid #f3f3f3;
-		border-radius: 50%;
-		border-top: 4px solid #3498db;
-		height: 8px;
-		width: 8px;
-		right: 200%;
-		animation: spin 2s linear infinite;
-		position: relative;
 	}
 
 	.netmudal {
@@ -1663,16 +1517,5 @@ div.kekbakaz {
 		}
 
 	}
-
-}
-
-.chatbro_container {
-	margin: 0 10%;
-}
-
-.user-content-wrapper div.kekbakaz {
-
-	grid-column-start: 1;
-	grid-column-end: 3;
 
 }
