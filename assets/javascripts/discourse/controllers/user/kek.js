@@ -68,7 +68,7 @@ export default class MyController extends Controller {
 		// see how many items are on the screen right now
 		const initial = this.model?.MENOSHO ? 11 : 12
 		const mOREdoShoWByPages = this.mOREdoShoW * 12
-		const currentlyShowingCount = initialBatch + loadedByPages
+		const currentlyShowingCount = initial + mOREdoShoWByPages
 		
 		// see if we have more fb to display, true or false
 		return this.model?.FEEDBACKS?.length > currentlyShowingCount
