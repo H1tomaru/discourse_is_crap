@@ -98,7 +98,7 @@ after_initialize do
 						game[:PRICE4] = (game[:PRICE] * 0.38 / 50).floor * 50 # '* 0.38' is '*.76 / 2'
 						game[:PRICE2] = game[:PRICE] - 2 * game[:PRICE4]
 
-						p4UP = [100, 200]
+						p4UP = [0, 200]
 						if game[:PRICE] < 1501
 							p4UP = [50, 100]
 						elsif game[:PRICE] > 8501
