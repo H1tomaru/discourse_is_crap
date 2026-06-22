@@ -691,7 +691,7 @@ after_initialize do
 				#check fb to see if eligible to get pass
 				inputfb = self.class.userfb[:userfb].find({ _id: user_d }).to_a.first()
 
-				if inputfb && inputfb[:FEEDBACKS] && inputfb[:troikaBAN] == 0
+				if inputfb && inputfb[:FEEDBACKS] #&& inputfb[:troikaBAN] == 0
 					inputfb[:FEEDBACKS].each do |fb|
 						#look for my recent fb
 						if fb[:pNAME] == "MrBug" && (timeNOW - fb[:DATE].to_time < 7_900_000)
