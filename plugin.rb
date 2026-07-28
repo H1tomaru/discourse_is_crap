@@ -513,75 +513,77 @@ after_initialize do
 		end
 
 		def feedbacks
-			unless !current_user || current_user[:trust_level] == 0 || !current_user[:silenced_till].nil?
+			@target_user = User.find_by_username(params[:username])
 
-			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
-			timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
-			user_d = params[:username].downcase
-				
-			#page owners cant do feedbacks!
-			feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
+			if current_user && current_user[:trust_level] > 0 && !current_user[:silenced_till] && (!@target_user.suspended? || current_user.username == 'H1tomaru')
 
-			#get fb update date
-			fbupdate_date = self.class.cachedb[:user_FB_date].find({ _id: user_d }).to_a.first
-			#recount user fb, in case its old
-			ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != timeDAY
-
-			#get userfb
-			user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
-
-			#display userfb it it exists
-			unless user_FB.blank?
-				feedbacks[:FEEDBACKS] = user_FB[:FEEDBACKS]
-				feedbacks[:fbG] = user_FB[:fbG]
-				feedbacks[:fbN] = user_FB[:fbN]
-				feedbacks[:fbB] = user_FB[:fbB]
-				feedbacks[:fbARC] = user_FB[:fbARC]
-			end
-
-			#get fbglist cache
-			fbglist = self.class.cachedb[:fbglist].find({ _id: user_d }).to_a.first
-
-			#update chache for this user, if its old
-			fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
-
-			#do the games owned display for logged in users only
-			if fbglist.blank? && current_user && user_d != 'mrbug'
-				#get user games from my database
-				#user_BGZ
-				user_gamez = self.class.userdb[:PS4db].find( 
-					{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
-					collation: { locale: 'en', strength: 2 }
-				).to_a
-
-				#do stuff if we have some
-				user_gamez.each do |ugaz| #do stuff if we have some
-					if timeNOW - ugaz[:DATE].to_time < 63_000_000 && ugaz[:P2] && ugaz[:P4]
-						#show simple short mail address
-						aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
-						#create final variable
-						ugamezfinal.push( { gNAMEid: ugaz[:_id], gNAME: ugaz[:GAME], aCC: aCC } ) 
-					end
+				feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
+				timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
+				user_d = params[:username].downcase
+	
+				#page owners cant do feedbacks!
+				feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
+	
+				#get fb update date
+				fbupdate_date = self.class.cachedb[:user_FB_date].find({ _id: user_d }).to_a.first
+				#recount user fb, in case its old
+				ufbupdate(user_d) if fbupdate_date.blank? || fbupdate_date[:DATE] != timeDAY
+	
+				#get userfb
+				user_FB = self.class.userfb[:userfb].find({ _id: user_d }, projection: { FEEDBACKS: 1, fbG: 1, fbN: 1, fbB: 1, fbARC: 1 }).to_a.first()
+	
+				#display userfb it it exists
+				unless user_FB.blank?
+					feedbacks[:FEEDBACKS] = user_FB[:FEEDBACKS]
+					feedbacks[:fbG] = user_FB[:fbG]
+					feedbacks[:fbN] = user_FB[:fbN]
+					feedbacks[:fbB] = user_FB[:fbB]
+					feedbacks[:fbARC] = user_FB[:fbARC]
 				end
+	
+				#get fbglist cache
+				fbglist = self.class.cachedb[:fbglist].find({ _id: user_d }).to_a.first
+	
+				#update chache for this user, if its old
+				fbglist = {} if fbglist && fbglist[:DATE] != timeDAY
+	
+				#do the games owned display for logged in users only
+				if fbglist.blank? && current_user && user_d != 'mrbug'
+					#get user games from my database
+					#user_BGZ
+					user_gamez = self.class.userdb[:PS4db].find( 
+						{ "$or": [ { P2: params[:username] }, { P4: params[:username] } ] },
+						collation: { locale: 'en', strength: 2 }
+					).to_a
+	
+					#do stuff if we have some
+					user_gamez.each do |ugaz| #do stuff if we have some
+						if timeNOW - ugaz[:DATE].to_time < 63_000_000 && ugaz[:P2] && ugaz[:P4]
+							#show simple short mail address
+							aCC = ugaz[:_id][/\+(.*?)\@/m, 1]
+							#create final variable
+							ugamezfinal.push( { gNAMEid: ugaz[:_id], gNAME: ugaz[:GAME], aCC: aCC } ) 
+						end
+					end
+	
+					#do sorting web side? eeeh... cached anyway...
+					ugamezfinal.sort_by! { |k| k[:gNAME].downcase }
+	
+					fbglist = { ugameZ: ugamezfinal }
+	
+					#save it to cache
+					self.class.cachedb[:fbglist].update_one( { _id: user_d }, {
+						ugameZ: ugamezfinal, DATE: timeDAY
+					}, { upsert: true } )
+				end
+	
+				#show for logged in users only
+				feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank?
+	
+				#render fb
+				render json: feedbacks
 
-				#do sorting web side? eeeh... cached anyway...
-				ugamezfinal.sort_by! { |k| k[:gNAME].downcase }
-
-				fbglist = { ugameZ: ugamezfinal }
-
-				#save it to cache
-				self.class.cachedb[:fbglist].update_one( { _id: user_d }, {
-					ugameZ: ugamezfinal, DATE: timeDAY
-				}, { upsert: true } )
-			end
-
-			#show for logged in users only
-			feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank?
-
-			#render fb
-			render json: feedbacks
-
-			end #unless end
+			end #first if end
 		end
 
 		def zafeedback
