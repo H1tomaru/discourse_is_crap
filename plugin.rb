@@ -515,12 +515,13 @@ after_initialize do
 		def feedbacks
 			@target_user = User.find_by_username(params[:username])
 
+			feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
+
 			if current_user && current_user[:trust_level] > 0 && !current_user[:silenced_till] && (!@target_user.suspended? || current_user.username == 'H1tomaru')
 
-				feedbacks = { FEEDBACKS: [], MENOSHO: true, fbG: 0, fbN: 0, fbB: 0, fbBuG: 0, fbBuB: 0, fbARC: 0, uZar: params[:username] }
 				timeNOW = Time.now; timeDAY = Time.now.strftime("%d"); ugamezfinal = []
 				user_d = params[:username].downcase
-	
+
 				#page owners cant do feedbacks!
 				feedbacks[:MENOSHO] = false if current_user && current_user[:username].downcase == user_d
 	
@@ -580,10 +581,11 @@ after_initialize do
 				#show for logged in users only
 				feedbacks[:ugameZ] = fbglist[:ugameZ] unless fbglist.blank?
 	
-				#render fb
-				render json: feedbacks
-
 			end #first if end
+
+			#render fb
+			render json: feedbacks
+
 		end
 
 		def zafeedback
