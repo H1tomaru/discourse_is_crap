@@ -411,9 +411,15 @@ after_initialize do
 								SiteSetting.metatron_id+'/sendMessage',
 								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
 							) do |request|
-								request.options.timeout = 20
+								request.options.timeout = 50
 							end
 						rescue => e
+							#retry incase timeout first time
+							if (attempts += 1) <= 4
+								sleep 10 # Optional brief pause before trying again
+								retry
+							end
+
 							PostCreator.create(
 								Discourse.system_user,
 								skip_validations: true,
