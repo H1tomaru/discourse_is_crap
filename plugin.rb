@@ -388,7 +388,7 @@ after_initialize do
 					unless SiteSetting.chat_webhook.empty?
 						#add message to discourse chat, if enabled
 						begin
-							.post(
+							Faraday.post(
 								SiteSetting.chat_webhook,
 								{ 'text' => msgtext }
 							) do |request|
