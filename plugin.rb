@@ -388,7 +388,7 @@ after_initialize do
 					unless SiteSetting.chat_webhook.empty?
 						#add message to discourse chat, if enabled
 						begin
-							Faraday.post(
+							.post(
 								SiteSetting.chat_webhook,
 								{ 'text' => msgtext }
 							) do |request|
@@ -411,7 +411,7 @@ after_initialize do
 								SiteSetting.metatron_id+'/sendMessage',
 								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
 							) do |request|
-								request.options.timeout = 50
+								request.options.timeout = 60
 							end
 						rescue => e
 							#retry incase timeout first time
