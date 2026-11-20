@@ -337,97 +337,102 @@ after_initialize do
 					#destroy 4tverki cache
 					self.class.cachedb[:autozCache].drop
 
-					msgtext = "#{current_user[:username]} записался на позицию П#{code[0][0]} совместной покупки #{code[3]}"
-					#add message to old topic
-					PostCreator.create(
-						Discourse.system_user,
-						skip_validations: true,
-						topic_id: 61653,
-						raw: msgtext
-					)
+					Thread.new do
+    					Rails.application.executor.wrap do
 
-					#create forum notification if sobrano
-					#get game userlist
-					gameuzers = self.class.userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
-					#find this troika index
-					troino = gameuzers["P"+code[0]].count
-					troino = troino / 2.0 if code[0] == "4"
-					trindx = troino - 1
-
-					#dont do shit if troika index not full number
-					#check if troika sobrana
-					if troino.to_i == troino && (gameuzers["P2"] && gameuzers["P4"] && gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1])
-						#add users to userlist
-						usernames = ["MrBug"]
-						usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] # && gameuzers[:P2][trindx][:STAT] == 0
-						usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] # && gameuzers[:P4][trindx*2][:STAT] == 0
-						usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] # && gameuzers[:P4][trindx*2+1][:STAT] == 0
-						usernames.uniq!
-
-						troititle = "Тройка на #{code[3]} собрана! Ждем оплату!"
-						troitext = "Здравствуйте! :robot:\n" +
-						"Случилось невероятное! Тройка на " + code[3] + " собрана.\n" +
-						"Этого не должно было произойти, но пути назад теперь нет. :robot:\n\n" +
-						"Вот план дальнейших действий:\n" +
-						"1) Оплатить свою позицию, суммы и реквизиты узнать у [MrBug в личных сообщениях](/u/MrBug)\n" +
-						"2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
-						"3) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
-						"Держитесь! И да поможет вам :bug:"
-
-						PostCreator.create(
-							Discourse.system_user,
-							skip_validations: true,
-							target_usernames: usernames.join(","),
-							archetype: Archetype.private_message,
-							subtype: TopicSubtype.system_message,
-							title: troititle,
-							raw: troitext
-						)
-					end
-
-					unless SiteSetting.chat_webhook.empty?
-						#add message to discourse chat, if enabled
-						begin
-							Faraday.post(
-								SiteSetting.chat_webhook,
-								{ 'text' => msgtext }
-							) do |request|
-								request.options.timeout = 20
-							end
-						rescue => e
+							msgtext = "#{current_user[:username]} записался на позицию П#{code[0][0]} совместной покупки #{code[3]}"
+							#add message to old topic
 							PostCreator.create(
 								Discourse.system_user,
 								skip_validations: true,
 								topic_id: 61653,
-								raw: 'Chat webhook fail: ' + e.message
+								raw: msgtext
 							)
-						end
-					end
-
-					unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
-						#add message to telegram bot, if enabled
-						begin
-							Faraday.post(
-								SiteSetting.metatron_id+'/sendMessage',
-								{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
-							) do |request|
-								request.options.timeout = 60
+		
+							#create forum notification if sobrano
+							#get game userlist
+							gameuzers = self.class.userlistdb[:uListP4].find( _id: code[2] ).to_a.first()
+							#find this troika index
+							troino = gameuzers["P"+code[0]].count
+							troino = troino / 2.0 if code[0] == "4"
+							trindx = troino - 1
+		
+							#dont do shit if troika index not full number
+							#check if troika sobrana
+							if troino.to_i == troino && (gameuzers["P2"] && gameuzers["P4"] && gameuzers["P2"][trindx] && gameuzers["P4"][trindx*2+1])
+								#add users to userlist
+								usernames = ["MrBug"]
+								usernames.push(gameuzers[:P2][trindx][:NAME])		if gameuzers[:P2] # && gameuzers[:P2][trindx][:STAT] == 0
+								usernames.push(gameuzers[:P4][trindx*2][:NAME])		if gameuzers[:P4] # && gameuzers[:P4][trindx*2][:STAT] == 0
+								usernames.push(gameuzers[:P4][trindx*2+1][:NAME])	if gameuzers[:P4] # && gameuzers[:P4][trindx*2+1][:STAT] == 0
+								usernames.uniq!
+		
+								troititle = "Тройка на #{code[3]} собрана! Ждем оплату!"
+								troitext = "Здравствуйте! :robot:\n" +
+								"Случилось невероятное! Тройка на " + code[3] + " собрана.\n" +
+								"Этого не должно было произойти, но пути назад теперь нет. :robot:\n\n" +
+								"Вот план дальнейших действий:\n" +
+								"1) Оплатить свою позицию, суммы и реквизиты узнать у [MrBug в личных сообщениях](/u/MrBug)\n" +
+								"2) Ознакомиться с [инструкциями в разделе FAQ](/faq)\n" +
+								"3) Написать в общем чате как вам не повезло с товарищами по составу\n\n" +
+								"Держитесь! И да поможет вам :bug:"
+		
+								PostCreator.create(
+									Discourse.system_user,
+									skip_validations: true,
+									target_usernames: usernames.join(","),
+									archetype: Archetype.private_message,
+									subtype: TopicSubtype.system_message,
+									title: troititle,
+									raw: troitext
+								)
 							end
-						rescue => e
-							#retry incase timeout first time
-							if (attempts += 1) <= 4
-								sleep 10 # Optional brief pause before trying again
-								retry
+		
+							unless SiteSetting.chat_webhook.empty?
+								#add message to discourse chat, if enabled
+								begin
+									Faraday.post(
+										SiteSetting.chat_webhook,
+										{ 'text' => msgtext }
+									) do |request|
+										request.options.timeout = 20
+									end
+								rescue => e
+									PostCreator.create(
+										Discourse.system_user,
+										skip_validations: true,
+										topic_id: 61653,
+										raw: 'Chat webhook fail: ' + e.message
+									)
+								end
 							end
-
-							PostCreator.create(
-								Discourse.system_user,
-								skip_validations: true,
-								topic_id: 61653,
-								raw: 'TG webhook fail: ' + e.message
-							)
-						end
-					end
+		
+							unless SiteSetting.telegram_id.empty? || SiteSetting.metatron_id.empty?
+								#add message to telegram bot, if enabled
+								begin
+									Faraday.post(
+										SiteSetting.metatron_id+'/sendMessage',
+										{ 'chat_id' => SiteSetting.telegram_id, 'text' => msgtext }
+									) do |request|
+										request.options.timeout = 60
+									end
+								rescue => e
+									#retry incase timeout first time
+									if (attempts += 1) <= 4
+										sleep 10 # Optional brief pause before trying again
+										retry
+									end
+		
+									PostCreator.create(
+										Discourse.system_user,
+										skip_validations: true,
+										topic_id: 61653,
+										raw: 'TG webhook fail: ' + e.message
+									)
+								end
+							end
+						end #wrap end
+					end #thread end
 				else
 					render json: { zaipsfail: true }
 					Rails.logger.warn "###Warning!!!### #{current_user[:username]} is hacking 4tverki!"
