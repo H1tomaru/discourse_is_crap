@@ -337,10 +337,13 @@ after_initialize do
 					#destroy 4tverki cache
 					self.class.cachedb[:autozCache].drop
 
+					#variables for thread
+					thread_user = current_user[:username]
+
 					Thread.new do
     					Rails.application.executor.wrap do
 
-							msgtext = "#{current_user[:username]} записался на позицию П#{code[0][0]} совместной покупки #{code[3]}"
+							msgtext = "#{thread_user} записался на позицию П#{code[0][0]} совместной покупки #{code[3]}"
 							#add message to old topic
 							PostCreator.create(
 								Discourse.system_user,
